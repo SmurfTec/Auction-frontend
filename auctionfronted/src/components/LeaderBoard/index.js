@@ -10,7 +10,7 @@ const LeaderBoard = () => {
   const classes = styles();
   return (
     <>
-      <Navbar />
+      <Navbar user='user' />
       <Container>
         <section className={classes.containerMargin}>
           <Box my={2}>

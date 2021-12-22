@@ -4,27 +4,33 @@ import {
   Grid,
   makeStyles,
   Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Menu,
+  MenuItem,
+  MenuList,
 } from '@material-ui/core';
+
 import React from 'react';
 import Navbar from 'components/common/NavBar';
 import styles from 'styles/commonStyles';
 import HeroCarousel from 'components/common/HeroCarousel';
-import Auctions from 'components/Auction';
 import Footer from 'components/common/Footer';
+import { auctions, categories } from 'data';
+import Card from 'components/Auction/Card';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 const useStyles = makeStyles((theme) => ({
   filter: {
+    marginTop: theme.spacing(3),
     display: 'flex',
-    // alignItems: 'center',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'row',
     },
     [theme.breakpoints.up('sm')]: {
       flexDirection: 'column',
       flexWrap: 'nowrap',
-      // '&:first-child': {
-      //   rowGap: theme.spacing(2),
-      // },
-      rowGap: theme.spacing(2),
     },
   },
 }));
@@ -32,6 +38,11 @@ const useStyles = makeStyles((theme) => ({
 const HomePage = () => {
   const classes = styles();
   const classes_s = useStyles();
+
+  const handleFilter = (e) => {
+    const { filter } = e.currentTarget.dataset;
+    // console.log(`e.`, filter);
+  };
   return (
     <>
       <Navbar user='user' />
@@ -43,22 +54,92 @@ const HomePage = () => {
         <section className={`${classes.containerMargin} ${classes.topSection}`}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={3}>
+              <Typography variant='h5'>Filter By</Typography>
               <div className={classes_s.filter}>
-                <Typography variant='h5'>Filter By</Typography>
-                <Typography variant='subtitle2'>Price (low-high)</Typography>
-                <Typography variant='subtitle2'>Price (high-low)</Typography>
-                {/* <Typography variant='subtitle2' fullWidth>
-                  Location
-                </Typography> */}
-                <Typography variant='subtitle2'>Mostly Viewed</Typography>
-                <Typography variant='subtitle2'>Categories</Typography>
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls='panel1a-content'
+                    id='panel1a-header'
+                  >
+                    <Typography variant='subtitle2' className={classes.heading}>
+                      Price
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Box>
+                      <Typography
+                        variant='body1'
+                        style={{ cursor: 'pointer' }}
+                        onClick={handleFilter}
+                        data-filter='priceAsc'
+                        fullWidth
+                      >
+                        Price (low-high)
+                      </Typography>
+                      <Typography
+                        variant='body1'
+                        style={{ cursor: 'pointer' }}
+                        onClick={handleFilter}
+                        data-filter='priceDesc'
+                      >
+                        Price (high-low)
+                      </Typography>
+                    </Box>
+                  </AccordionDetails>
+                </Accordion>
+
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls='panel1a-content'
+                    id='panel1a-header'
+                  >
+                    <Typography variant='subtitle2' className={classes.heading}>
+                      Categories
+                    </Typography>
+                  </AccordionSummary>
+                  {/* <MenuList> */}
+                  {categories &&
+                    categories.map((cat) => (
+                      <AccordionDetails>
+                        <Typography
+                          variant='body1'
+                          style={{ cursor: 'pointer' }}
+                          onClick={handleFilter}
+                          data-filter={cat}
+                        >
+                          {cat}
+                        </Typography>
+                        {/* <MenuItem>{cat}</MenuItem> */}
+                      </AccordionDetails>
+                    ))}
+                  {/* </MenuList> */}
+                </Accordion>
+
+                <Accordion>
+                  <AccordionDetails>
+                    <Typography
+                      variant='subtitle2'
+                      className={classes.heading}
+                      style={{ cursor: 'pointer', marginTop: 5 }}
+                      onClick={handleFilter}
+                      data-filter='mostViewed'
+                    >
+                      Most Viewed
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
               </div>
             </Grid>
             <Grid item xs={12} sm={9}>
               <Typography variant='h5'>
                 <Box mb={3}>Featured Auctions</Box>
               </Typography>
-              <Auctions />
+              {auctions &&
+                auctions.map((auc) => (
+                  <Card {...auc} key={auc.id} showImg={true} />
+                ))}
             </Grid>
           </Grid>
         </section>

@@ -70,7 +70,7 @@ const Navbar = (props) => {
           <MenuItem>
             <AccountPopover />
           </MenuItem>
-          <MenuItem>{/* <Search /> */}</MenuItem>
+          {/* <MenuItem><Search /></MenuItem> */}
           <MenuItem>
             <Typography variant='subtitle2' className={classes.NavItem}>
               <NavLink to='/auction/create'>Create Auction</NavLink>

@@ -43,3 +43,25 @@ export const footerInfo = {
     helpEmail: 'tauctions_help@gmail.com',
   },
 };
+
+export const categories = [
+  'item',
+  'experience',
+  'food',
+  'influencer focused',
+  'location based',
+  'brand',
+  'business',
+  'celebrity',
+  'random',
+  'risky',
+  'luxury',
+];
+
+export const location = [
+  'Asia',
+  'Africa',
+  'Europe',
+  'North America',
+  'South America',
+];
