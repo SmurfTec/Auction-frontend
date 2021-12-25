@@ -2,7 +2,7 @@ import watchImg from 'assets/watchImg.png';
 export const auctions = [
   {
     id: 122,
-    title: 'Rolex',
+    title: 'Siko',
     img: watchImg,
     description:
       'Sea-Dweller reference 126603, a stainless steel and gold wristwatch, Circa 2019',

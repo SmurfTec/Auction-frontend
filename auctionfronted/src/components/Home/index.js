@@ -137,9 +137,7 @@ const HomePage = () => {
                 <Box mb={3}>Featured Auctions</Box>
               </Typography>
               {auctions &&
-                auctions.map((auc) => (
-                  <Card {...auc} key={auc.id} showImg={true} />
-                ))}
+                auctions.map((auc) => <Card {...auc} key={auc.id} />)}
             </Grid>
           </Grid>
         </section>

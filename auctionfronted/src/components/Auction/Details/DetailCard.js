@@ -2,17 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 import { Box, Chip, IconButton } from '@material-ui/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import ShareIcon from '@material-ui/icons/Share';
-import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -43,7 +39,6 @@ export default function FeaturedPost(props) {
     const { item } = e.currentTarget.dataset;
     // console.log(`item`, item);
   };
-
   const handleShare = (e) => {
     const { item } = e.currentTarget.dataset;
     // console.log(`item`, item);
@@ -52,44 +47,45 @@ export default function FeaturedPost(props) {
   return (
     <>
       <Card className={classes.card}>
-        <Hidden xsDown>
-          <CardMedia className={classes.cardMedia} image={img} title={title} />
-        </Hidden>
-
         <div className={classes.cardDetails}>
           <CardContent>
-            <div className={classes.shareBtn}>
-              <IconButton
-                aria-label='Share'
-                aria-haspopup='true'
-                data-item={id}
-                onClick={handleShare}
-                style={{
-                  marginLeft: 'auto',
-                  color: '#000',
+            <Box
+              display='flex'
+              // columnGap={5}
+              justifyContent='space-between'
+              //   flexBasis='40%'
+              sx={{
+                columnGap: 20,
+              }}
+            >
+              <Box
+                sx={{
+                  flexBasis: '40%',
                 }}
               >
-                <ShareIcon />
-              </IconButton>
-            </div>
-
-            <Typography component='h2' variant='h5'>
-              {title}
-            </Typography>
-            <Typography variant='h3' color='textSecondary'>
-              {price}
-            </Typography>
-            {/* <Typography variant='subtitle1' paragraph>
-              {description}
-            </Typography> */}
-            <Typography variant='subtitle1' paragraph>
-              {location}
-            </Typography>
+                <Typography component='h2' variant='h5'>
+                  {title}
+                </Typography>
+                <Typography variant='h3' color='textSecondary'>
+                  {price}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  flexBasis: '55%',
+                }}
+              >
+                <Typography variant='subtitle1' paragraph>
+                  {description}
+                </Typography>
+              </Box>
+            </Box>
             <Box
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
+                marginTop: 20,
               }}
             >
               <Box display='flex' flexDirection='column' sx={{ rowGap: 5 }}>
@@ -105,25 +101,18 @@ export default function FeaturedPost(props) {
                   color='primary'
                 />
               </Box>
-              <Box>
-                <IconButton
-                  aria-label='bookmark'
-                  aria-haspopup='true'
-                  data-item={id}
-                  onClick={handleBookMark}
-                >
-                  <VisibilityIcon fontSize='small' color='primary' />
-                </IconButton>
-                <IconButton
-                  aria-label='bookmark'
-                  aria-haspopup='true'
-                  data-item={id}
-                >
-                  <Link to={`/auctionDetails/${id}`}>
-                    <OpenInNewIcon fontSize='small' color='primary' />
-                  </Link>
-                </IconButton>
-              </Box>
+              <IconButton
+                aria-label='bookmark'
+                aria-haspopup='true'
+                data-item={id}
+                onClick={handleBookMark}
+                style={{
+                  marginLeft: 'auto',
+                  color: '#000',
+                }}
+              >
+                <VisibilityIcon color='primary' />
+              </IconButton>
             </Box>
             {/* //! Apply time remaining algo logic   */}
             {/* <Typography variant='subtitle1' paragraph>

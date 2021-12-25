@@ -1,40 +1,10 @@
 import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
-import auctionmg from 'assets/auctionBanner.jpg';
+// import auctionmg from 'assets/auctionBanner.jpg';
 import auctionHero from 'assets/auctionHero.jpg';
-import { Box, makeStyles, Typography } from '@material-ui/core';
-
-const styles = makeStyles((theme) => ({
-  heroCarousel: {
-    position: 'relative',
-    '& img': {
-      maxHeight: 350,
-      objectFit: 'cover',
-    },
-    '& span': {
-      position: 'absolute',
-      width: '100%',
-      height: '100%',
-      backgroundColor: `${theme.palette.primary.main}bf`,
-    },
-    '& .carousel .legend': {
-      position: 'absolute',
-      top: '50%',
-      zIndex: 5,
-      opacity: 1,
-    },
-  },
-  contentContainer: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  title: {
-    color: '#fff',
-    position: 'absolute',
-    top: '25%',
-    width: '70%',
-  },
-}));
+import { Box, Button, Typography } from '@material-ui/core';
+import { auctions } from 'data';
+import styles from 'styles/heroCarouselStyles';
 const HeroCarousel = () => {
   const classes = styles();
   return (
@@ -51,19 +21,61 @@ const HeroCarousel = () => {
       //   onClickThumb={onClickThumb}
       className={classes.heroCarousel}
     >
-      <Box display='flex' justifyContent='center'>
+      <div className={classes.introDec}>
         <img src={auctionHero} alt='Legend1' />
         <span />
-        {/* <p className='legend'>Legend 1</p> */}
         <Typography variant='h2' className={classes.title}>
-          Enhance your auction with online bidding
+          {/* Enhance your auction with online bidding */}
+          Turning Assets Into Cash.
         </Typography>
-      </Box>
-      {/* <div>
-        <img src={auctionHero} alt='Legend1' />
+      </div>
 
-        <p className='legend'>Legend 2</p>
-      </div> */}
+      {auctions &&
+        auctions.map((auc) => (
+          <div className={classes.wrapper}>
+            <span />
+            <img src={auctionHero} alt={`${auc.title}`} />
+            <div className={classes.aucItemContainer}>
+              <div
+                className={classes.aucImg}
+                style={{
+                  background: `white url(${auc.img}) center top no-repeat`,
+                  backgroundSize: 'contain',
+                }}
+              />
+              <div className={classes.heroDesc}>
+                <Typography variant='h2' fullWidth align='left'>
+                  {auc.title}
+                </Typography>
+                <Typography variant='h4' fullWidth align='left'>
+                  {auc.price}
+                </Typography>
+                <Box
+                  pt={1}
+                  sx={{
+                    overflow: 'hidden',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 3,
+                    WebkitBoxOrient: 'vertical',
+                  }}
+                >
+                  <Typography variant='subtitle1' fullWidth align='left'>
+                    {auc.description}
+                  </Typography>
+                </Box>
+              </div>
+            </div>
+            {/* <div className='legend'>
+              <Typography variant='h2' className={classes.heroAuctContent}>
+                Enhance your auction with online bidding
+              </Typography>
+            </div>
+            <div
+              className={classes.right}
+              style={{ backgroundImage: `url(${auc.img})` }}
+            ></div> */}
+          </div>
+        ))}
       {/* <div>
         <img src={auctionmg} alt='Legend1' />
 

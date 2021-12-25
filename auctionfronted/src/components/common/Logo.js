@@ -16,8 +16,8 @@ function Logo({ variant, color }) {
       <ButtonBase disableRipple component={Link} to='/'>
         <Typography
           variant={variant}
-          color={color}
-          style={{ color: color === 'light' && '#fff' }}
+          // color={color !== 'light' && color}
+          style={{ color: color === 'light' ? '#fff' : '#000' }}
           className={classes.logoTitle}
         >
           Auction

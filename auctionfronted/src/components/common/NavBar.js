@@ -79,7 +79,7 @@ const Navbar = (props) => {
 
           <MenuItem>
             <Typography variant='subtitle2' className={classes.NavItem}>
-              <NavLink to='/myauctions'>My Auctions</NavLink>
+              <NavLink to='myauctions'>My Auctions</NavLink>
             </Typography>
           </MenuItem>
         </>
