@@ -17,7 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import Navbar from 'components/common/NavBar';
 import { Box } from '@material-ui/core';
 
@@ -88,6 +88,9 @@ const useStyles = makeStyles((theme) => ({
   list: {
     '& a': {
       color: '#000',
+      '&.active': {
+        color: 'red',
+      },
     },
   },
 }));
@@ -131,9 +134,9 @@ const DrawerLayout = () => {
           <List className={classes.list}>
             {drawerList.map((item) => (
               <ListItem button key={item.id}>
-                <Link to={`/myauctions/${item.link}`}>
+                <NavLink to={`/myauctions/${item.link}`}>
                   <ListItemText primary={item.title} />
-                </Link>
+                </NavLink>
               </ListItem>
             ))}
           </List>

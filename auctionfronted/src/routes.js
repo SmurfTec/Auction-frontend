@@ -8,7 +8,7 @@ import Home from 'components/Home';
 import DrawerLayout from 'components/layouts/DrawerLayout';
 import FormLayout from 'components/layouts/FormLayout';
 import LeaderBoard from 'components/LeaderBoard';
-import { Navigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
 
 export const protectedRoutes = [
   {

@@ -12,7 +12,7 @@ import { Box, Chip, IconButton } from '@material-ui/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import ShareIcon from '@material-ui/icons/Share';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -38,6 +38,8 @@ export default function FeaturedPost(props) {
   const classes = useStyles();
   const { id, title, location, img, price, startedBy, timeLeft, description } =
     props;
+
+  const navigate = useNavigate();
 
   const handleBookMark = (e) => {
     const { item } = e.currentTarget.dataset;
@@ -118,10 +120,11 @@ export default function FeaturedPost(props) {
                   aria-label='bookmark'
                   aria-haspopup='true'
                   data-item={id}
+                  onClick={() => {
+                    navigate(`/auctionDetails/${id}`);
+                  }}
                 >
-                  <Link to={`/auctionDetails/${id}`}>
-                    <OpenInNewIcon fontSize='small' color='primary' />
-                  </Link>
+                  <OpenInNewIcon fontSize='small' color='primary' />
                 </IconButton>
               </Box>
             </Box>
