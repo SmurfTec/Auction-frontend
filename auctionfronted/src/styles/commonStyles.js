@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
   containerMargin: {
     marginBlock: theme.spacing(4),
   },
+  gridAlign: {
+    justifyContent: 'center',
+  },
 }));
 
 export default useStyles;

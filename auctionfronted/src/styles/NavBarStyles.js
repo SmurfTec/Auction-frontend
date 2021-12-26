@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
     // backgroundColor: '#1462aa',
     backgroundColor: '#fff',
     // color: '#B033fa',
+    '& .MuiToolbar-regular': {
+      justifyContent: 'space-between',
+    },
   },
   grow: {
     flexGrow: 1,

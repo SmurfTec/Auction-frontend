@@ -9,6 +9,7 @@ export const auctions = [
     price: '$440',
     location: 'Fine Art Gallery, Islamabad',
     startedby: 'Ali Hamza',
+    createdAt: '12/2/2022',
     timeLeft: '12/2/2022',
   },
   {
@@ -20,6 +21,8 @@ export const auctions = [
     price: '$440',
     location: 'Fine Art Gallery, Islamabad',
     startedby: 'Ali Hamza',
+    createdAt: '12/2/2022',
+
     timeLeft: '12/2/2022',
   },
   {
@@ -31,6 +34,7 @@ export const auctions = [
     price: '$440',
     location: 'Fine Art Gallery, Islamabad',
     startedby: 'Ali Hamza',
+    createdAt: '12/1/2022',
     timeLeft: '12/2/2022',
   },
 ];
@@ -45,17 +49,17 @@ export const footerInfo = {
 };
 
 export const categories = [
-  'item',
-  'experience',
-  'food',
-  'influencer focused',
-  'location based',
-  'brand',
-  'business',
-  'celebrity',
-  'random',
-  'risky',
-  'luxury',
+  'item (10)',
+  'experience (20)',
+  'food (5)',
+  'influencer focused (1)',
+  'location based (4)',
+  'brand (15)',
+  'business (3)',
+  'celebrity (1)',
+  'random (0)',
+  'risky (8)',
+  'luxury (2)',
 ];
 
 export const location = [

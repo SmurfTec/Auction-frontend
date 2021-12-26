@@ -8,6 +8,7 @@ import Home from 'components/Home';
 import DrawerLayout from 'components/layouts/DrawerLayout';
 import FormLayout from 'components/layouts/FormLayout';
 import LeaderBoard from 'components/LeaderBoard';
+import CreateAuction from 'components/Auction/Create';
 // import { Navigate } from 'react-router-dom';
 
 export const protectedRoutes = [
@@ -54,6 +55,10 @@ export const protectedRoutes = [
         element: <Login />,
       },
     ],
+  },
+  {
+    path: 'createAuction',
+    element: <CreateAuction />,
   },
 ];
 

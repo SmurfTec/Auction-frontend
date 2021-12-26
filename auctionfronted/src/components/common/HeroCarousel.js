@@ -16,6 +16,7 @@ const HeroCarousel = () => {
       swipeable={false}
       showStatus={false}
       autoPlay={true}
+      infiniteLoop={true}
       //   onChange={onChange}
       //   onClickItem={onClickItem}
       //   onClickThumb={onClickThumb}

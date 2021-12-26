@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from '@material-ui/core';
+import { Box, Container, Grid, Typography } from '@material-ui/core';
 import Navbar from 'components/common/NavBar';
 import React from 'react';
 import styles from 'styles/commonStyles';
@@ -18,9 +18,12 @@ const LeaderBoard = () => {
               Leaderboard
             </Typography>
           </Box>
-          <Box my={2}>
-            {auctions && auctions.map((auc) => <Card {...auc} key={auc.id} />)}
-          </Box>
+          <Grid my={2} container className={classes.gridAlign}>
+            <Grid item xs={12} sm={10} md={8}>
+              {auctions &&
+                auctions.map((auc) => <Card {...auc} key={auc.id} />)}
+            </Grid>
+          </Grid>
         </section>
       </Container>
       <section>

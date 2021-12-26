@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -28,12 +29,29 @@ const useStyles = makeStyles((theme) => ({
     top: 10,
     right: 10,
   },
+
+  createdInfo: {
+    marginTop: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+    flexWrap: 'wrap',
+  },
 }));
 
 export default function FeaturedPost(props) {
   const classes = useStyles();
-  const { id, title, location, img, price, startedBy, timeLeft, description } =
-    props;
+  const {
+    id,
+    title,
+    location,
+    img,
+    price,
+    startedby,
+    timeLeft,
+    description,
+    createdAt,
+  } = props;
 
   const handleBookMark = (e) => {
     const { item } = e.currentTarget.dataset;
@@ -75,12 +93,13 @@ export default function FeaturedPost(props) {
                   flexBasis: '55%',
                 }}
               >
-                <Typography variant='subtitle1' paragraph>
+                <Typography variant='body1' paragraph>
                   {description}
                 </Typography>
               </Box>
             </Box>
             <Box
+              mb={3}
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
@@ -114,10 +133,15 @@ export default function FeaturedPost(props) {
                 <VisibilityIcon color='primary' />
               </IconButton>
             </Box>
-            {/* //! Apply time remaining algo logic   */}
-            {/* <Typography variant='subtitle1' paragraph>
-              {timeLeft}
-            </Typography> */}
+            <Divider />
+            <div className={classes.createdInfo}>
+              <Typography variant='body1' color='textSecondary'>
+                Created By : {startedby}
+              </Typography>
+              <Typography variant='body1' color='textSecondary'>
+                Created At : {createdAt}
+              </Typography>
+            </div>
           </CardContent>
         </div>
       </Card>

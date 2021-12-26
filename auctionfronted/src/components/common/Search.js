@@ -5,67 +5,64 @@ import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import { Box } from '@material-ui/core';
+import Search from '@material-ui/icons/Search';
 // import { useThemeContext } from 'Components/theme';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  container: {
+    cursor: 'text',
     display: 'flex',
-    alignItems: 'center',
-    // justifyContent: 'space-evenly',
-    border: '1px solid #00000075',
-
-    borderRadius: 20,
-    // paddingInline: theme.spacing(2),
-    // backgroundColor: (props) =>
-    //   props.themeMode
-    //     ? theme.mode['dark'][1]
-    //     : theme.mode['light'][1],
-    minHeight: '2em',
-    // '& h6, h4':{
-    //   lign
-    // },
-
+    backgroundColor: 'rgb(255, 255, 255)',
+    borderRadius: 10,
+    border: '1px solid rgb(229, 232, 235)',
+    width: '100%',
+    padding: 12,
+    height: 45,
+    maxWidth: 700,
+    '& input': {
+      backgroundColor: 'transparent',
+      border: 'none',
+      outline: 'none',
+      width: '100%',
+    },
     '& svg': {
-      width: '0.7em',
-      height: '0.7em',
-      // marginInline: theme.spacing(1),
-      marginLeft: 12,
-      marginRight: 6,
-      color: theme.palette.grey[600],
+      color: '#707a83',
     },
   },
-  input: {
-    fontSize: '0.8rem',
-    letterSpacing: 0.8,
-    // color: (props) => (props.themeMode ? '#FFF' : '#000'),
-    marginLeft: theme.spacing(1),
-    // paddingInline: '4px 14px',
-  },
-  divider: {
-    height: 20,
-    margin: 4,
+  searchIcon: {
+    display: 'flex',
+    marginRight: 8,
   },
 }));
 
 export default function CustomizedInputBase() {
-  // const themeMode = useThemeContext();
   const classes = useStyles();
+  const [search, setSearch] = React.useState('');
+
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+  };
 
   return (
-    <Paper className={classes.root} elevation={0}>
-      <SearchIcon />
-      {/* <IconButton
-        type='submit'
-        className={classes.iconButton}
-        aria-label='search'
-      >
-      </IconButton> */}
-      <Divider className={classes.divider} orientation='vertical' />
-      <InputBase
-        className={classes.input}
-        placeholder='Search Files'
-        inputProps={{ 'aria-label': 'search files' }}
-      />
-    </Paper>
+    <Box display='flex' width='100%'>
+      <Box height='45px' width='100%'>
+        <div className={classes.container}>
+          <div className={classes.searchIcon}>
+            <Search fontSize='small' />
+          </div>
+          <input
+            aria-invalid='false'
+            aria-autocomplete='list'
+            aria-controls='NavSearch--results'
+            placeholder='Search items & collections'
+            type='search'
+            value={search}
+            onChange={handleChange}
+            style={{ cursor: 'text' }}
+          />
+        </div>
+      </Box>
+    </Box>
   );
 }

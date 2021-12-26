@@ -101,12 +101,20 @@ const Navbar = (props) => {
     <div className={`${classes.root}`}>
       <AppBar position='fixed' className={classes.Appbar}>
         <Toolbar>
-          <Box display='flex' sx={{ alignItems: 'center', columnGap: 30 }}>
+          <Box
+            display='flex'
+            sx={{
+              alignItems: 'center',
+              columnGap: 30,
+              width: '100%',
+              maxWidth: 500,
+            }}
+          >
             <Logo variant={'h4'} color='textPrimary' />
             <Search />
           </Box>
 
-          <div
+          {/* <div
             style={{
               display: 'flex',
               justifyContent: 'center',
@@ -114,13 +122,13 @@ const Navbar = (props) => {
               marginInline: 'auto',
             }}
             className={classes.SearchBar}
-          />
+          /> */}
           <div className={classes.sectionDesktop}>
             <Box
               display='flex'
               justifyContent='space-around'
               alignItems='center'
-              sx={{ marginLeft: 'auto' }}
+              sx={{ marginLeft: 'auto', textAlign: 'center' }}
             >
               {user ? (
                 <>

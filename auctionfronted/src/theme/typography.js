@@ -18,9 +18,9 @@ function responsiveFontSizes({ sm, md, lg }) {
   };
 }
 
-// const FONT_PRIMARY = 'Public Sans, sans-serif';
+const FONT_PRIMARY = 'Poppins, sans-serif';
 // const FONT_PRIMARY = "'Corinthia', cursive";
-const FONT_PRIMARY = "'Quicksand', sans-serif";
+// const FONT_PRIMARY = "'Quicksand', sans-serif";
 
 const typography = {
   fontFamily: FONT_PRIMARY,
