@@ -10,6 +10,7 @@ import Logo from './Logo';
 import { NavLink } from 'react-router-dom';
 import Search from 'components/common/Search';
 import { Add } from '@material-ui/icons';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const Navbar = (props) => {
   const classes = useStyles();
@@ -37,22 +38,6 @@ const Navbar = (props) => {
 
   const handleSwitchUser = () => {};
 
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
@@ -70,10 +55,9 @@ const Navbar = (props) => {
           <MenuItem>
             <AccountPopover />
           </MenuItem>
-          {/* <MenuItem><Search /></MenuItem> */}
           <MenuItem>
             <Typography variant='subtitle2' className={classes.NavItem}>
-              <NavLink to='/auction/create'>Create Auction</NavLink>
+              <NavLink to='/createAuction'>Create Auction</NavLink>
             </Typography>
           </MenuItem>
 
@@ -110,7 +94,7 @@ const Navbar = (props) => {
               maxWidth: 500,
             }}
           >
-            <Logo variant={'h4'} color='textPrimary' />
+            <Logo w={35} h={35} />
             <Search />
           </Box>
 
@@ -138,15 +122,18 @@ const Navbar = (props) => {
                     sx={{
                       marginInline: 20,
                       columnGap: 25,
-                      alignItems: 'end',
+                      alignItems: 'center',
                     }}
                   >
                     <Typography variant='subtitle2' className={classes.NavItem}>
-                      <NavLink to='/auction/create'>Create Auction</NavLink>
+                      <NavLink to='/createAuction'>Create Auction</NavLink>
                     </Typography>
                     <Typography variant='subtitle2' className={classes.NavItem}>
                       <NavLink to='/myauctions'>My Auctions</NavLink>
                     </Typography>
+                    <IconButton aria-label='delete'>
+                      <NotificationsIcon fontSize='small' />
+                    </IconButton>
                   </Box>
                   <AccountPopover />
                 </>
@@ -184,6 +171,9 @@ const Navbar = (props) => {
             </Box>
           </div>
           <div className={classes.sectionMobile}>
+            <IconButton aria-label='delete'>
+              <NotificationsIcon fontSize='small' />
+            </IconButton>
             <IconButton
               aria-label='show more'
               aria-controls={mobileMenuId}
@@ -200,7 +190,6 @@ const Navbar = (props) => {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
 
       <Box paddingTop={'64px'}> </Box>
     </div>

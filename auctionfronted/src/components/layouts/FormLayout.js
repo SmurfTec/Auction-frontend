@@ -20,7 +20,7 @@ const FormLayout = ({ children }) => {
       <Card className={classes.formContent}>
         <Grid container>
           <Grid item sx={{ mb: 5 }} colspacing={5} xs={12}>
-            <Logo variant='h3' color='textPrimary' />
+            <Logo w={35} h={35} />
           </Grid>
         </Grid>
         <Outlet />

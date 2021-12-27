@@ -14,6 +14,7 @@ import {
   FormControlLabel,
   Checkbox,
   Paper,
+  IconButton,
 } from '@material-ui/core';
 
 import React from 'react';
@@ -32,6 +33,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import { Pagination } from '@material-ui/lab';
+import AuctionStepper from 'components/Auction/AuctionStepperM';
+import ShareIcon from '@material-ui/icons/Share';
+
 // import { Pagination } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
@@ -58,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   pagination: {
+    justifyContent: 'center',
     '& .MuiTablePagination-spacer': {
       flex: 0,
       display: 'none',
@@ -77,7 +83,7 @@ const HomePage = () => {
   const classes = styles();
   const classes_s = useStyles();
 
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(50);
 
   const initialState = {
@@ -98,6 +104,12 @@ const HomePage = () => {
     const { filter } = e.currentTarget.dataset;
     // console.log(`e.`, filter);
   };
+
+  const handleShare = (e) => {
+    const { item } = e.currentTarget.dataset;
+    // console.log(`item`, item);
+  };
+
   return (
     <>
       <Navbar user='user' />
@@ -222,7 +234,7 @@ const HomePage = () => {
                 <Box mb={3}>Featured Auctions</Box>
               </Typography>
 
-              <TableContainer className={classes.container}>
+              {/* <TableContainer className={classes.container}>
                 <Table>
                   <TableBody>
                     {auctions
@@ -244,27 +256,51 @@ const HomePage = () => {
                                   ? column.format(value)
                                   : value}
                               </TableCell> */}
-                          </TableRow>
+              {/* </TableRow>
                         );
                       })}
                   </TableBody>
                 </Table>
-              </TableContainer>
+              </TableContainer> */}
               <div className={classes_s.pagination}>
-                {/* <Pagination
-                  count={auctions.length}
+                {auctions
+                  .slice(
+                    (page - 1) * rowsPerPage,
+                    (page - 1) * rowsPerPage + rowsPerPage
+                  )
+                  .map((auc) => {
+                    return (
+                      <div className={classes.cardContainer}>
+                        <div className={classes.auctDetailCont}>
+                          <AuctionStepper auction={auc} />
+
+                          <div className={classes.content}>
+                            <Card {...auc} />
+                          </div>
+                        </div>
+                        <Box>
+                          <IconButton
+                            aria-label='Share'
+                            aria-haspopup='true'
+                            data-item={auc.id}
+                            onClick={handleShare}
+                            style={{
+                              marginLeft: 'auto',
+                              color: '#000',
+                            }}
+                          >
+                            <ShareIcon />
+                          </IconButton>
+                        </Box>
+                      </div>
+                    );
+                  })}
+
+                <Pagination
+                  color='secondary'
+                  count={Math.ceil(auctions.length / rowsPerPage)}
                   page={page}
                   onChange={handleChangePage}
-                /> */}
-                <TablePagination
-                  // rowsPerPageOptions={[2, 25, 50]}
-                  component='div'
-                  labelRowsPerPage=''
-                  count={auctions.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  // onRowsPerPageChange={handleChangeRowsPerPage}
                 />
               </div>
             </Grid>

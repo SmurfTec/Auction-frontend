@@ -56,6 +56,12 @@ const GlobalStyles = withStyles((theme) => ({
     },
     '#logo': {
       textAlign: 'center',
+      color: '#000',
+
+      '& img': {
+        marginRight: '0.5rem',
+      },
+
       '& a': {
         textDecoration: 'none',
         '&:hover': {

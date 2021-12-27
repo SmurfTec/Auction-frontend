@@ -20,6 +20,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import Navbar from 'components/common/NavBar';
 import { Box } from '@material-ui/core';
+import Footer from 'components/common/Footer';
 
 const drawerWidth = 200;
 
@@ -110,7 +111,7 @@ const DrawerLayout = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar user='user' />
       <div className={classes.root}>
         <Drawer
           className={classes.drawer}
@@ -152,6 +153,7 @@ const DrawerLayout = () => {
           <Outlet />
         </main>
       </div>
+      <Footer />
     </>
   );
 };

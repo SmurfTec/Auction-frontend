@@ -69,14 +69,16 @@ const Login = () => {
   };
   return (
     <>
-      <Typography
-        vaiant='subtitle2'
-        sx={{ color: 'textSecondary' }}
-        gutterBottom
-        align='center'
-      >
-        Welcome Back
-      </Typography>
+      <Box mt={2}>
+        <Typography
+          vaiant='subtitle2'
+          sx={{ color: 'textSecondary' }}
+          gutterBottom
+          align='center'
+        >
+          Welcome Back
+        </Typography>
+      </Box>
       <section className={classes.wrapper}>
         <form onSubmit={onFormSubmit}>
           <Grid container spacing={3}>

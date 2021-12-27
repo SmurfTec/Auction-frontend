@@ -88,7 +88,7 @@ export default function AccountPopover() {
 
         <Divider sx={{ my: 1 }} />
         <Box sx={{ my: 1.5, px: 2.5 }}>
-          <Link to='/profile'>
+          <Link to='/account'>
             <Typography variant='body1' color='textPrimary' noWrap>
               Account
             </Typography>

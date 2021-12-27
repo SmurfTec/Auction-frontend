@@ -32,7 +32,7 @@ const Footer = () => {
     <>
       <footer className={classes.root}>
         <Container>
-          <Logo variant='h4' color='light' />
+          <Logo w={35} h={35} textColor='#fff' />
           <div className={classes.footer}>
             <div className={classes.footerItem}>
               <Typography variant='h5'>
@@ -44,13 +44,35 @@ const Footer = () => {
             </div>
 
             <div className={classes.footerItem}>
-              <Typography variant='h5'>Contact Us</Typography>
-              <Typography variant='body1'>
-                Press & Media : {footerInfo.contactUs.pressEmail}
-              </Typography>
-              <Typography variant='body1'>
-                Help & Support : {footerInfo.contactUs.helpEmail}
-              </Typography>
+              <Link to='/contact-us'>
+                <Typography
+                  variant='subtitle1'
+                  style={{ color: '#fff', textDecoration: 'underline' }}
+                >
+                  Contact Us
+                </Typography>
+              </Link>
+              <Link to='/faq'>
+                <Typography
+                  variant='subtitle1'
+                  style={{ color: '#fff', textDecoration: 'underline' }}
+                >
+                  FAQ
+                </Typography>
+              </Link>
+
+              <Box mt={2}>
+                <Typography variant='body1'>
+                  {' '}
+                  for queries feel free to contact,
+                </Typography>
+                <Typography variant='body2'>
+                  Press & Media : {footerInfo.contactUs.pressEmail}
+                </Typography>
+                <Typography variant='body2'>
+                  Help & Support : {footerInfo.contactUs.helpEmail}
+                </Typography>
+              </Box>
 
               <Box
                 display='flex'

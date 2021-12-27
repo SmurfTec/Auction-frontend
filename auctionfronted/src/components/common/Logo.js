@@ -1,27 +1,22 @@
 import React from 'react';
 import { ButtonBase, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-// import LogoImg from 'assets/logo.svg';
-import { makeStyles } from '@material-ui/core/styles';
+import LogoImg from 'assets/logo1.svg';
 
-const styles = makeStyles((theme) => ({
-  logoTitle: {
-    fontFamily: "'Lobster', cursive",
-  },
-}));
-function Logo({ variant, color }) {
-  const classes = styles();
+function Logo({ w, h, fontSize = '1.2rem', textColor = '#000' }) {
   return (
     <div id='logo'>
       <ButtonBase disableRipple component={Link} to='/'>
-        <Typography
-          variant={variant}
-          // color={color !== 'light' && color}
-          style={{ color: color === 'light' ? '#fff' : '#000' }}
-          className={classes.logoTitle}
+        <img src={LogoImg} width={w} height={h} alt='Logo' />
+        <span
+          style={{
+            fontSize: fontSize,
+            color: textColor,
+            // fontFamily: "'Lobster', cursive",
+          }}
         >
           Auction
-        </Typography>
+        </span>
       </ButtonBase>
     </div>
   );

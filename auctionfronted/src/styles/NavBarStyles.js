@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
       // boxShadow: 'rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px',
     },
 
-    '& h6, h4': {
+    '& h4': {
       alignSelf: 'start',
     },
   },

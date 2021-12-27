@@ -9,6 +9,8 @@ import DrawerLayout from 'components/layouts/DrawerLayout';
 import FormLayout from 'components/layouts/FormLayout';
 import LeaderBoard from 'components/LeaderBoard';
 import CreateAuction from 'components/Auction/Create';
+import Profile from 'components/Profile';
+import ContactUs from 'components/ContactUs';
 // import { Navigate } from 'react-router-dom';
 
 export const protectedRoutes = [
@@ -59,6 +61,14 @@ export const protectedRoutes = [
   {
     path: 'createAuction',
     element: <CreateAuction />,
+  },
+  {
+    path: 'account',
+    element: <Profile />,
+  },
+  {
+    path: 'contact-us',
+    element: <ContactUs />,
   },
 ];
 

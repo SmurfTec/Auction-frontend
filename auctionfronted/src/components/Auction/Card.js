@@ -18,37 +18,29 @@ const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
     flex: 2,
-    borderRadius: 8,
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
     '& .MuiCardActionArea-root': {
       display: 'flex',
-      // [theme.breakpoints.down('sm')]: {
-      //   flexDirection: 'column',
-      // },
     },
   },
   cardDetails: {
     flex: 1,
     position: 'relative',
+    minHeight: 250,
   },
   cardMedia: {
     width: 160,
     height: 200,
   },
   createdInfo: {
-    marginTop: theme.spacing(2),
-    display: 'flex',
-    justifyContent: 'space-between',
     width: '100%',
+    display: 'flex',
+    marginTop: theme.spacing(2),
+    justifyContent: 'space-between',
     flexWrap: 'wrap',
-    // [theme.breakpoints.down('sm')]: {
-    //   flexDirection: 'column',
-    // },
+    columnGap: 10,
   },
-  // shareBtn: {
-  //   position: 'absolute',
-  //   top: 10,
-  //   right: 10,
-  // },
 }));
 
 export default function FeaturedPost(props) {
@@ -80,20 +72,20 @@ export default function FeaturedPost(props) {
   };
 
   return (
-    <Box mb={3} display='flex' sx={{ columnGap: 10, alignItems: 'center' }}>
+    <Box display='flex' sx={{ columnGap: 10, alignItems: 'center' }}>
       <Card className={classes.card}>
         <CardActionArea
           onClick={() => {
             navigate(`/auctionDetails/${id}`);
           }}
         >
-          <Hidden xsDown>
+          {/* <Hidden xsDown>
             <CardMedia
               className={classes.cardMedia}
               image={img}
               title={title}
             />
-          </Hidden>
+          </Hidden> */}
 
           <div className={classes.cardDetails}>
             <CardContent>
@@ -117,12 +109,6 @@ export default function FeaturedPost(props) {
                 }}
               >
                 <Box display='flex' flexDirection='column' sx={{ rowGap: 10 }}>
-                  {/* <Chip
-                    size='small'
-                    variant='outlined'
-                    label={`At : ${location}`}
-                    color='primary'
-                  /> */}
                   <Chip
                     size='small'
                     label={`Time Left : ${timeLeft}`}
@@ -153,7 +139,7 @@ export default function FeaturedPost(props) {
           </div>
         </CardActionArea>
       </Card>
-      <Box>
+      {/* <Box>
         <IconButton
           aria-label='Share'
           aria-haspopup='true'
@@ -166,7 +152,7 @@ export default function FeaturedPost(props) {
         >
           <ShareIcon />
         </IconButton>
-      </Box>
+      </Box> */}
     </Box>
   );
 }

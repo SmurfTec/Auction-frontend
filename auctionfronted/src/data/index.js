@@ -1,9 +1,12 @@
 import watchImg from 'assets/watchImg.png';
+import car from 'assets/car.jpg';
+import jewelery from 'assets/c.png';
+import art from 'assets/art.jpg';
 export const auctions = [
   {
     id: 122,
     title: 'Siko',
-    img: watchImg,
+    img: [watchImg],
     description:
       'Sea-Dweller reference 126603, a stainless steel and gold wristwatch, Circa 2019',
     price: '$440',
@@ -11,31 +14,46 @@ export const auctions = [
     startedby: 'Ali Hamza',
     createdAt: '12/2/2022',
     timeLeft: '12/2/2022',
+    video: 'rokGy0huYEA',
   },
   {
     id: 123,
-    title: 'Rolex',
-    img: watchImg,
+    title: 'Red Mercedes AMG',
+    img: [car],
     description:
-      'Sea-Dweller reference 126603, a stainless steel and gold wristwatch, Circa 2019',
-    price: '$440',
+      'Product galati a reality sandwich before you walk back in that boardroom fire up your browser, for it’s about managing expectations yet baseline into the weeds.',
+    price: '$20000',
     location: 'Fine Art Gallery, Islamabad',
     startedby: 'Ali Hamza',
     createdAt: '12/2/2022',
-
     timeLeft: '12/2/2022',
+    video: 'rokGy0huYEA',
   },
   {
     id: 124,
-    title: 'Rolex',
-    img: watchImg,
+    title: 'Onyx Black Pearl',
+    img: [jewelery],
     description:
-      'Sea-Dweller reference 126603, a stainless steel and gold wristwatch, Circa 2019',
+      'Product galati a reality sandwich before you walk back in that boardroom fire up your browser, for it’s about managing expectations yet baseline into the weeds.',
     price: '$440',
-    location: 'Fine Art Gallery, Islamabad',
-    startedby: 'Ali Hamza',
+    location: 'Manchester',
+    startedby: 'James Colins',
     createdAt: '12/1/2022',
     timeLeft: '12/2/2022',
+    video: 'rokGy0huYEA',
+  },
+  {
+    id: 125,
+    title: 'Bosque Nevado',
+    img: [art],
+    description:
+      'Product galati a reality sandwich before you walk back in that boardroom fire up your browser, for it’s about managing expectations yet baseline into the weeds.',
+    price: '$1400',
+    location: 'Indonesia',
+    startedby: 'James Colins',
+    createdAt: '12/1/2022',
+    timeLeft: '12/2/2022',
+    video: 'rokGy0huYEA',
   },
 ];
 
@@ -69,3 +87,10 @@ export const location = [
   'North America',
   'South America',
 ];
+
+export const user = {
+  fname: 'Ali',
+  lname: 'Hamza',
+  email: 'alihamza@gmail.com',
+  phone: '041231231',
+};

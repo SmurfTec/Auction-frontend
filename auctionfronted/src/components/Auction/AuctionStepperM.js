@@ -74,11 +74,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AuctionStepper = () => {
+const AuctionStepper = ({ auction }) => {
   const classes = useStyles();
+
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = tutorialSteps.length;
+  const [carousel, setCarousel] = React.useState(null);
+  //   const maxSteps = carousel.length;
+
+  React.useEffect(() => {
+    const arr = [];
+
+    if (auction) {
+      arr.push({ type: 'video', url: auction?.['video'] });
+      auction.img.map((i) => arr.push({ type: 'img', images: i }));
+
+      setCarousel(arr);
+    } else return;
+  }, []);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -93,48 +106,56 @@ const AuctionStepper = () => {
   };
 
   return (
-    <Paper className={classes.root}>
-      {tutorialSteps[activeStep].type === 'video' ? (
-        <EmbedVideo embedUrl='rokGy0huYEA' />
-      ) : (
-        <img
-          className={classes.img}
-          src={tutorialSteps[activeStep].imgPath}
-          alt={tutorialSteps[activeStep].label}
-        />
+    <>
+      {carousel && (
+        <Paper className={classes.root}>
+          {carousel?.[activeStep].type === 'video' ? (
+            <EmbedVideo embedUrl='rokGy0huYEA' />
+          ) : (
+            <img
+              className={classes.img}
+              src={carousel[activeStep].images}
+              alt={carousel[activeStep].label}
+            />
+          )}
+          <MobileStepper
+            steps={carousel.length}
+            position='static'
+            variant='dots'
+            activeStep={activeStep}
+            className={classes.mobileStepper}
+            nextButton={
+              <Button
+                size='small'
+                onClick={handleNext}
+                disabled={activeStep === carousel.length - 1}
+              >
+                Next
+                {theme.direction === 'rtl' ? (
+                  <KeyboardArrowLeft />
+                ) : (
+                  <KeyboardArrowRight />
+                )}
+              </Button>
+            }
+            backButton={
+              <Button
+                size='small'
+                onClick={handleBack}
+                disabled={activeStep === 0}
+              >
+                {theme.direction === 'rtl' ? (
+                  <KeyboardArrowRight />
+                ) : (
+                  <KeyboardArrowLeft />
+                )}
+                Back
+              </Button>
+            }
+          />
+        </Paper>
       )}
-      <MobileStepper
-        steps={maxSteps}
-        position='static'
-        variant='dots'
-        activeStep={activeStep}
-        className={classes.mobileStepper}
-        nextButton={
-          <Button
-            size='small'
-            onClick={handleNext}
-            disabled={activeStep === maxSteps - 1}
-          >
-            Next
-            {theme.direction === 'rtl' ? (
-              <KeyboardArrowLeft />
-            ) : (
-              <KeyboardArrowRight />
-            )}
-          </Button>
-        }
-        backButton={
-          <Button size='small' onClick={handleBack} disabled={activeStep === 0}>
-            {theme.direction === 'rtl' ? (
-              <KeyboardArrowRight />
-            ) : (
-              <KeyboardArrowLeft />
-            )}
-            Back
-          </Button>
-        }
-      />
-    </Paper>
+    </>
   );
 };
 

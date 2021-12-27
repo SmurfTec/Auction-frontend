@@ -10,7 +10,7 @@ import {
 import Navbar from 'components/common/NavBar';
 import React, { useEffect, useState } from 'react';
 import styles from 'styles/commonStyles';
-import AuctionStepper from '../AuctionStepper';
+import AuctionStepper from '../AuctionStepperM';
 import Card from './DetailCard';
 import { auctions } from 'data';
 import Footer from 'components/common/Footer';
@@ -20,28 +20,18 @@ import ScrollToTop from 'utils/ScrollToTop';
 const useStyles = makeStyles((theme) => ({
   auctDetailCont: {
     display: 'flex',
+    justifyContent: 'center',
     flexWrap: 'nowrap',
-    flex: '1 65%',
+    flexDirection: 'row',
 
     '& .MuiCard-root': {
       marginBottom: 0,
     },
-
     [theme.breakpoints.down('xs')]: {
       flexDirection: 'column',
     },
   },
-  content: {
-    flex: 2,
-    '& .MuiPaper-root': {
-      height: '100%',
-      borderRadius: 0,
-      borderTopRightRadius: 5,
-      borderBottomRightRadius: 5,
-    },
-  },
 }));
-
 const AuctionDetails = () => {
   const classes = styles();
   const classes_s = useStyles();
@@ -71,8 +61,8 @@ const AuctionDetails = () => {
         {auction ? (
           <section className={classes.containerMargin}>
             <div className={classes_s.auctDetailCont}>
-              <AuctionStepper />
-              <div className={classes_s.content}>
+              <AuctionStepper auction={auction} />
+              <div className={classes.content}>
                 <Card {...auction} />
               </div>
             </div>
