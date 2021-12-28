@@ -83,26 +83,31 @@ const styles = makeStyles((theme) => ({
   twtIcon: {
     backgroundColor: '#5da9dd',
     color: '#fff',
-    '&:hover': {
-      border: `1px solid #5da9dd`,
-      color: '#5da9dd',
-      backgroundColor: 'white',
-    },
   },
   verfIcon: {
     marginLeft: 10,
     color: '#FFF',
     backgroundColor: theme.custom.success,
   },
+  twitterHover: {
+    '&:hover': {
+      border: `1px solid #5da9dd`,
+      color: '#5da9dd',
+      backgroundColor: 'white',
+    },
+  },
   insIcon: {
     backgroundColor: '#ee653d',
     color: '#fff',
+  },
+  instaHover: {
     '&:hover': {
       border: `1px solid #ee653d`,
       color: '#ee653d',
       backgroundColor: 'white',
     },
   },
+
   accountsCard: {
     '&  .MuiCardContent-root:last-child': {
       paddingBlock: 40,
@@ -265,7 +270,10 @@ const Profile = () => {
                 Use the button below to verify and pair your twitter account
               </Typography>
               <Box mt={2}>
-                <Button variant='contained' className={classes.twtIcon}>
+                <Button
+                  variant='contained'
+                  className={`${classes.twtIcon} ${classes.twitterHover}`}
+                >
                   Connect Twitter Account
                 </Button>
               </Box>
@@ -286,7 +294,10 @@ const Profile = () => {
                 Use the button below to verify and pair your instagram account
               </Typography>
               <Box mt={2}>
-                <Button variant='contained' className={classes.insIcon}>
+                <Button
+                  variant='contained'
+                  className={`${classes.insIcon} ${classes.instaHover}`}
+                >
                   Connect Instagram Account
                 </Button>
               </Box>

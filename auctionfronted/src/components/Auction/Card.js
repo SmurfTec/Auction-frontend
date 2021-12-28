@@ -127,10 +127,10 @@ export default function FeaturedPost(props) {
               </Box>
               <Divider />
               <div className={classes.createdInfo}>
-                <Typography variant='body1' color='textSecondary'>
+                <Typography variant='body2' color='textSecondary'>
                   Created By : {startedby}
                 </Typography>
-                <Typography variant='body1' color='textSecondary'>
+                <Typography variant='body2' color='textSecondary'>
                   Created At : {createdAt}
                 </Typography>
               </div>

@@ -129,7 +129,7 @@ const Navbar = (props) => {
                       <NavLink to='/createAuction'>Create Auction</NavLink>
                     </Typography>
                     <Typography variant='subtitle2' className={classes.NavItem}>
-                      <NavLink to='/myauctions'>My Auctions</NavLink>
+                      <NavLink to='/myauctions/watchlist'>My Auctions</NavLink>
                     </Typography>
                     <IconButton aria-label='delete'>
                       <NotificationsIcon fontSize='small' />

@@ -20,7 +20,7 @@ export const protectedRoutes = [
     element: <Home />,
   },
   {
-    path: 'leaderboard',
+    path: '/leaderboard',
     element: <LeaderBoard />,
   },
   {
@@ -28,11 +28,11 @@ export const protectedRoutes = [
     element: <AuctionDetails />,
   },
   {
-    path: 'myauctions',
+    path: '/myauctions',
     element: <DrawerLayout />,
     children: [
       {
-        path: '',
+        path: 'watchlist',
         element: <WatchList />,
       },
       {

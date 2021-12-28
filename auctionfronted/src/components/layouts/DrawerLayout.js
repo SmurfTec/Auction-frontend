@@ -28,7 +28,7 @@ const drawerList = [
   {
     id: 122,
     title: 'Watch List',
-    link: '',
+    link: 'watchlist',
   },
   {
     id: 123,
@@ -122,23 +122,16 @@ const DrawerLayout = () => {
             paper: classes.drawerPaper,
           }}
         >
-          {/* <div className={classes.drawerHeader}>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'ltr' ? (
-                <ChevronLeftIcon />
-              ) : (
-                <ChevronRightIcon />
-              )}
-            </IconButton>
-          </div>
-          <Divider /> */}
           <List className={classes.list}>
             {drawerList.map((item) => (
-              <ListItem button key={item.id}>
+              <>
                 <NavLink to={`/myauctions/${item.link}`}>
-                  <ListItemText primary={item.title} />
+                  <ListItem button key={item.id}>
+                    <ListItemText primary={item.title} />
+                  </ListItem>
                 </NavLink>
-              </ListItem>
+                <Divider />
+              </>
             ))}
           </List>
         </Drawer>

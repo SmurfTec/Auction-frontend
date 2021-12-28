@@ -6,6 +6,7 @@ import {
   IconButton,
   Box,
   Container,
+  Button,
 } from '@material-ui/core';
 import { styles } from 'styles/FooterStyles';
 
@@ -44,22 +45,13 @@ const Footer = () => {
             </div>
 
             <div className={classes.footerItem}>
-              <Link to='/contact-us'>
-                <Typography
-                  variant='subtitle1'
-                  style={{ color: '#fff', textDecoration: 'underline' }}
-                >
-                  Contact Us
-                </Typography>
-              </Link>
-              <Link to='/faq'>
-                <Typography
-                  variant='subtitle1'
-                  style={{ color: '#fff', textDecoration: 'underline' }}
-                >
-                  FAQ
-                </Typography>
-              </Link>
+              <Button
+                color='primary'
+                variant='contained'
+                onClick={() => history('/contact-us')}
+              >
+                Contact Us
+              </Button>
 
               <Box mt={2}>
                 <Typography variant='body1'>
