@@ -2,11 +2,11 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(1),
+    // marginTop: theme.spacing(2),
+    // marginBottom: theme.spacing(2),
 
     '& form': {
-      marginBottom: theme.spacing(3),
+      // marginBottom: theme.spacing(3),
     },
   },
   Carousel: {
@@ -23,6 +23,13 @@ const useStyles = makeStyles((theme) => ({
   },
   gridAlign: {
     justifyContent: 'center',
+  },
+
+  textWithlink: {
+    display: 'flex',
+    columnGap: 5,
+    alignItems: 'center',
+    '& h6': { display: 'contents' },
   },
 
   // ^ Image Carousel Styles
@@ -66,6 +73,21 @@ const useStyles = makeStyles((theme) => ({
 
     [theme.breakpoints.between('xs', 'sm')]: {
       flexDirection: 'column',
+    },
+  },
+
+  // ^ Tabs of join page
+  Tabs: {
+    marginTop: 20,
+    '& .MuiTab-root': {
+      minWidth: 120,
+      paddingInline: 0,
+      border: '1px solid #ccc',
+    },
+    '& .Mui-selected': {
+      backgroundColor: theme.palette.primary.main,
+      transition: '0.5s',
+      color: '#fff',
     },
   },
 }));

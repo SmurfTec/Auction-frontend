@@ -25,6 +25,10 @@ const Theme = ({ children }) => {
       },
       breakpoints,
       typography,
+      custom: {
+        error: '#FF4842',
+        success: '#49a64d',
+      },
     };
   }, []);
 

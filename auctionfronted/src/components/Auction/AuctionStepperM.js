@@ -86,9 +86,9 @@ const AuctionStepper = ({ auction }) => {
     const arr = [];
 
     if (auction) {
+      console.log(`auction`, auction);
       arr.push({ type: 'video', url: auction?.['video'] });
-      auction.img.map((i) => arr.push({ type: 'img', images: i }));
-
+      auction?.img.map((i) => arr.push({ type: 'img', images: i }));
       setCarousel(arr);
     } else return;
   }, []);
@@ -130,7 +130,6 @@ const AuctionStepper = ({ auction }) => {
                 onClick={handleNext}
                 disabled={activeStep === carousel.length - 1}
               >
-                Next
                 {theme.direction === 'rtl' ? (
                   <KeyboardArrowLeft />
                 ) : (
@@ -149,7 +148,6 @@ const AuctionStepper = ({ auction }) => {
                 ) : (
                   <KeyboardArrowLeft />
                 )}
-                Back
               </Button>
             }
           />

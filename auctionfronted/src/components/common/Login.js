@@ -5,22 +5,25 @@ import {
   Typography,
   CircularProgress,
   TextField,
+  Tab,
+  Tabs,
 } from '@material-ui/core';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import { Alert } from 'components/common/Alert';
 // import FormLayout from 'components/layouts/formLayout';
 import useManyInputs from 'hooks/useManyInputs';
-import styles from 'styles/commonStyles';
+import globalStyles from 'styles/commonStyles';
+import { useStyles as formStyles } from 'styles/FormLayoutStyles';
 // import { AuthContext } from 'contexts/AuthContext';
-import axios from 'axios';
 // import { API_BASE_URL, handleCatch } from 'utils/makeReq';
 const Login = () => {
   //   const { token, user, signInUser } = useContext(AuthContext);
-  const classes = styles();
+  const classes = globalStyles();
+  const formClasses = formStyles();
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  // const navigate = useNavigate();
+  // const location = useLocation();
 
   const initialState = {
     email: '',
@@ -67,9 +70,27 @@ const Login = () => {
       setLoading(false);
     }
   };
+
+  const [tabState, setTabState] = useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setTabState(newValue);
+    setInputstate((st) => ({
+      ...st,
+      form: newValue === 0 ? 'join' : 'login',
+    }));
+  };
   return (
-    <>
-      <Box mt={2}>
+    <div className={formClasses.mainContainer}>
+      <div className={formClasses.formSelection}>
+        <NavLink to='/login'>
+          <Typography variant='subtitle1'>LOGIN</Typography>
+        </NavLink>
+        <Link to='/register'>
+          <Typography variant='subtitle1'>JOIN</Typography>
+        </Link>
+      </div>
+      <div className={formClasses.formContent}>
         <Typography
           vaiant='subtitle2'
           sx={{ color: 'textSecondary' }}
@@ -78,74 +99,84 @@ const Login = () => {
         >
           Welcome Back
         </Typography>
-      </Box>
-      <section className={classes.wrapper}>
-        <form onSubmit={onFormSubmit}>
-          <Grid container spacing={3}>
-            {error !== null && (
+        <section className={classes.wrapper}>
+          <form onSubmit={onFormSubmit}>
+            <Grid container spacing={3}>
+              {error !== null && (
+                <Grid item xs={12}>
+                  <Alert severity='error'>{error}</Alert>
+                </Grid>
+              )}
+
               <Grid item xs={12}>
-                <Alert severity='error'>{error}</Alert>
+                <TextField
+                  name='email'
+                  value={inputState.email}
+                  label='Email'
+                  type='email'
+                  onChange={handleTxtChange}
+                  variant='outlined'
+                  fullWidth
+                  size='small'
+                />
               </Grid>
-            )}
 
-            <Grid item xs={12}>
-              <TextField
-                name='email'
-                value={inputState.email}
-                label='Email'
-                type='email'
-                onChange={handleTxtChange}
-                variant='outlined'
-                fullWidth
-              />
+              <Grid item xs={12}>
+                <TextField
+                  name='password'
+                  value={inputState.password}
+                  label='Password'
+                  type='password'
+                  onChange={handleTxtChange}
+                  variant='outlined'
+                  fullWidth
+                  size='small'
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <Button
+                  type='submit'
+                  fullWidth
+                  variant='contained'
+                  color='primary'
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <CircularProgress size={20} color='inherit' />
+                  ) : (
+                    'Sign In'
+                  )}
+                </Button>
+              </Grid>
+              <Grid item xs={6}>
+                <Box sx={{ textAlign: 'right' }}>
+                  <Link to='/forgotpassword' variant='body2'>
+                    Forgot password?
+                  </Link>
+                </Box>
+              </Grid>
             </Grid>
+          </form>
+        </section>
 
-            <Grid item xs={12}>
-              <TextField
-                name='password'
-                value={inputState.password}
-                label='Password'
-                type='password'
-                onChange={handleTxtChange}
-                variant='outlined'
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={5}>
-              <Button
-                type='submit'
-                fullWidth
-                variant='contained'
-                color='primary'
-                disabled={loading}
-              >
-                {loading ? (
-                  <CircularProgress size={20} color='inherit' />
-                ) : (
-                  'Sign In'
-                )}
-              </Button>
-            </Grid>
-            {/* <Grid item>
-              <Link to='/forgotpassword' variant='body2'>
-                Forgot password?
-              </Link>
-            </Grid> */}
-          </Grid>
-        </form>
-
-        <Box
-          sx={{
-            mt: 6,
-            color: 'primary.main',
-          }}
-        >
-          <Typography variant='subtitle2'>
-            <Link to='/register'>Register new account</Link>
-          </Typography>
-        </Box>
-      </section>
-    </>
+        <Grid item xs={6} sm={12}>
+          <Box
+            mt={2}
+            className={classes.textWithlink}
+            sx={{
+              columnGap: 4,
+              height: '100%',
+              justifyContent: 'center',
+            }}
+          >
+            <Typography variant='subtitle2'>
+              not a member?
+              <Link to='/register'>Join </Link>
+            </Typography>
+          </Box>
+        </Grid>
+      </div>
+    </div>
   );
 };
 

@@ -27,11 +27,10 @@ const useStyles = makeStyles((theme) => ({
   cardDetails: {
     flex: 1,
     position: 'relative',
-    minHeight: 250,
-  },
-  cardMedia: {
-    width: 160,
-    height: 200,
+
+    [theme.breakpoints.up('sm')]: {
+      minHeight: 250,
+    },
   },
   createdInfo: {
     width: '100%',

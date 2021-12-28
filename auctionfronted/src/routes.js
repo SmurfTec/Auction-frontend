@@ -11,6 +11,7 @@ import LeaderBoard from 'components/LeaderBoard';
 import CreateAuction from 'components/Auction/Create';
 import Profile from 'components/Profile';
 import ContactUs from 'components/ContactUs';
+import Register from 'components/common/Register';
 // import { Navigate } from 'react-router-dom';
 
 export const protectedRoutes = [
@@ -55,6 +56,16 @@ export const protectedRoutes = [
       {
         path: '',
         element: <Login />,
+      },
+    ],
+  },
+  {
+    path: 'register',
+    element: <FormLayout />,
+    children: [
+      {
+        path: '',
+        element: <Register />,
       },
     ],
   },

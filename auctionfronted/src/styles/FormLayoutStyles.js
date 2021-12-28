@@ -1,16 +1,22 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
-  mainContainer: {
+  root: {
     position: 'relative',
     marginLeft: 0,
     marginRight: 0,
     height: '100%',
-    display: 'flex',
     flexWrap: 'wrap',
     [theme.breakpoints.up('sm')]: {
       background: 'transparent',
     },
+  },
+  mainContainer: {
+    marginBlock: '4rem',
+    maxWidth: 500,
+    width: '85%',
+    textAlign: 'center',
+    margin: '0 auto',
   },
   backImgContainer: {
     display: 'none',
@@ -34,12 +40,14 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   formContent: {
-    maxWidth: 350,
+    // maxWidth: 350,
+    backgroundColor: '#fff',
     margin: 'auto',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    padding: theme.spacing(3),
+    rowGap: 15,
+    padding: 30,
     zIndex: 2,
 
     '& h4': {
@@ -52,6 +60,19 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       borderRadius: 10,
       boxShadow: '0 6px 15px rgb(0 0 0 / 16%)',
+    },
+  },
+  formSelection: {
+    display: 'flex',
+    marginBottom: 20,
+    '& a': {
+      color: '#000',
+      flex: 1,
+      padding: 20,
+      '&.active': {
+        backgroundColor: theme.palette.primary.main,
+        color: '#fff',
+      },
     },
   },
 }));

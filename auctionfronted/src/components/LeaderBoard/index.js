@@ -36,11 +36,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   container: {
-    maxWidth: 1000,
+    // maxWidth: 1000,
     '& .MuiChip-root': {
       marginRight: '1rem',
       [theme.breakpoints.down('xs')]: {
         display: 'none',
+      },
+    },
+    '& .MuiCardContent-root': {
+      [theme.breakpoints.up('md')]: {
+        minWidth: 525,
       },
     },
   },
