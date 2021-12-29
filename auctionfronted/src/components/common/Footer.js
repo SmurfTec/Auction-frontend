@@ -49,6 +49,7 @@ const Footer = () => {
                 color='primary'
                 variant='contained'
                 onClick={() => history('/contact-us')}
+                style={{ maxWidth: 170 }}
               >
                 Contact Us
               </Button>

@@ -147,7 +147,7 @@ const Navbar = (props) => {
                     gridColumnGap='20px'
                   >
                     <Button
-                      // variant='outlined'
+                      variant='outlined'
                       style={{
                         minWidth: 100,
                       }}
@@ -156,7 +156,7 @@ const Navbar = (props) => {
                       LOGIN
                     </Button>
                     <Button
-                      // variant='contained'
+                      variant='contained'
                       className={classes.RegisterBtn}
                       style={{
                         minWidth: 100,

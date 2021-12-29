@@ -65,6 +65,7 @@ export const useStyles = makeStyles((theme) => ({
   formSelection: {
     display: 'flex',
     marginBottom: 20,
+    border: `1px solid ${theme.palette.primary.main}`,
     '& a': {
       color: '#000',
       flex: 1,

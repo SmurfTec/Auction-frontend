@@ -19,8 +19,14 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import Navbar from 'components/common/NavBar';
-import { Box } from '@material-ui/core';
+import { Box, Hidden } from '@material-ui/core';
 import Footer from 'components/common/Footer';
+import SideMenu from './SideMenu';
+import MHidden from './MHidden';
+import ViewListIcon from '@material-ui/icons/ViewList';
+import SpeakerNotesOffIcon from '@material-ui/icons/SpeakerNotesOff';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 const drawerWidth = 200;
 
@@ -29,6 +35,7 @@ const drawerList = [
     id: 122,
     title: 'Watch List',
     link: 'watchlist',
+    icon: '',
   },
   {
     id: 123,
@@ -37,8 +44,8 @@ const drawerList = [
   },
   {
     id: 124,
-    title: 'Previous completed auctions ',
-    link: 'previous',
+    title: 'Completed auctions ',
+    link: 'completed',
   },
   {
     id: 125,
@@ -46,6 +53,19 @@ const drawerList = [
     link: 'unpublished',
   },
 ];
+
+const getIcon = (name) => {
+  switch (name) {
+    case 'unclaimed':
+      return <SpeakerNotesOffIcon />;
+    case 'unpublished':
+      return <CancelIcon />;
+    case 'completed':
+      return <AssignmentTurnedInIcon />;
+    default:
+      return <ViewListIcon />;
+  }
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,10 +77,16 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
-    height: '100vh',
+    // height: '100vh',
+    [theme.breakpoints.up('md')]: {
+      width: drawerWidth + 50,
+    },
   },
   drawerPaper: {
     width: drawerWidth,
+    [theme.breakpoints.up('md')]: {
+      width: drawerWidth + 50,
+    },
   },
   drawerHeader: {
     display: 'flex',
@@ -72,12 +98,16 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
+    minHeight: 600,
     padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: -drawerWidth,
+
+    '& h5': {
+      textAlign: 'center',
+    },
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
@@ -89,8 +119,12 @@ const useStyles = makeStyles((theme) => ({
   list: {
     '& a': {
       color: '#000',
+
       '&.active': {
-        color: 'red',
+        color: theme.palette.primary.main,
+        '& svg': {
+          color: theme.palette.primary.main,
+        },
       },
     },
   },
@@ -99,42 +133,65 @@ const useStyles = makeStyles((theme) => ({
 const DrawerLayout = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const [open, setOpen] = React.useState(false);
+
+  const toggleSideBar = () => {
+    setOpen((prev) => !prev);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const drawerContent = (
+    <>
+      <List className={classes.list}>
+        {drawerList.map((item) => (
+          <>
+            <NavLink to={`/myauctions/${item.link}`}>
+              <ListItem button key={item.id}>
+                <ListItemIcon style={{ minWidth: 40 }}>
+                  {getIcon(item.link)}
+                </ListItemIcon>
+                <ListItemText primary={item.title} />
+              </ListItem>
+            </NavLink>
+            <Divider />
+          </>
+        ))}
+      </List>
+    </>
+  );
 
   return (
     <>
       <Navbar user='user' />
       <div className={classes.root}>
-        <Drawer
-          className={classes.drawer}
-          variant='persistent'
-          anchor='left'
-          open={open}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-        >
-          <List className={classes.list}>
-            {drawerList.map((item) => (
-              <>
-                <NavLink to={`/myauctions/${item.link}`}>
-                  <ListItem button key={item.id}>
-                    <ListItemText primary={item.title} />
-                  </ListItem>
-                </NavLink>
-                <Divider />
-              </>
-            ))}
-          </List>
-        </Drawer>
+        <MHidden width='smDown'>
+          <Drawer
+            className={classes.drawer}
+            variant='persistent'
+            onClose={toggleSideBar}
+            open
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+          >
+            {drawerContent}
+          </Drawer>
+        </MHidden>
+        <MHidden width='mdUp'>
+          <SideMenu onOpenSidebar={toggleSideBar} open={open} />
+          <Drawer
+            className={classes.drawer}
+            onClose={toggleSideBar}
+            open={open}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+          >
+            <Toolbar />
+            {drawerContent}
+          </Drawer>
+        </MHidden>
+
         <main
           className={clsx(classes.content, {
             [classes.contentShift]: open,

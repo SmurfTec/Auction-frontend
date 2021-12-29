@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(8),
   },
   containerMargin: {
-    marginBlock: theme.spacing(4),
+    marginBlock: theme.spacing(6),
   },
   gridAlign: {
     justifyContent: 'center',

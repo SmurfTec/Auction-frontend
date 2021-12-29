@@ -4,7 +4,7 @@ export const styles = makeStyles((theme) => ({
   root: {
     color: '#fff',
     backgroundColor: '#000',
-    marginTop: theme.spacing(5),
+    // marginTop: theme.spacing(5),
     padding: theme.spacing(6, 5),
     userSelect: 'none',
     //  borderTopRightRadius: 15,

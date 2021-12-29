@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: 0,
     },
 
+    [theme.breakpoints.up('md')]: {
+      minWidth: 650,
+    },
     [theme.breakpoints.up('sm')]: {
       alignItems: 'center',
     },
@@ -38,11 +41,7 @@ const AuctionList = ({ data }) => {
 
   return (
     <>
-      <Box
-        display='flex'
-        flexDirection='column'
-        sx={{ rowGap: 10, flexWrap: 'nowrap' }}
-      >
+      <Box display='flex' flexDirection='column' sx={{ flexWrap: 'nowrap' }}>
         {data ? (
           data.map((auc) => (
             <div className={classes.cardContainer} key={auc.id}>

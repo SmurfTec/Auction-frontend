@@ -5,7 +5,7 @@ import Unpulished from 'components/Auction/MyAuctions/Unpublished';
 import WatchList from 'components/Auction/MyAuctions/WatchList';
 import Login from 'components/common/Login';
 import Home from 'components/Home';
-import DrawerLayout from 'components/layouts/DrawerLayout';
+import DrawerLayout from 'components/layouts/DrawerLayout/DrawerLayout';
 import FormLayout from 'components/layouts/FormLayout';
 import LeaderBoard from 'components/LeaderBoard';
 import CreateAuction from 'components/Auction/Create';
@@ -44,7 +44,7 @@ export const protectedRoutes = [
         element: <Unpulished />,
       },
       {
-        path: 'previous',
+        path: 'completed',
         element: <Previous />,
       },
     ],
