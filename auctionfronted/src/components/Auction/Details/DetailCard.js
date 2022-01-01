@@ -14,8 +14,8 @@ import ShareIcon from '@material-ui/icons/Share';
 const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
-    borderRadius: 8,
-    marginBottom: theme.spacing(2),
+    // borderRadius: 8,
+    // marginBottom: theme.spacing(2),
   },
   cardDetails: {
     flex: 1,
@@ -78,7 +78,7 @@ export default function FeaturedPost(props) {
             >
               <Box
                 sx={{
-                  flexBasis: '40%',
+                  flexBasis: '35%',
                 }}
               >
                 <Typography component='h2' variant='h5'>
@@ -90,7 +90,7 @@ export default function FeaturedPost(props) {
               </Box>
               <Box
                 sx={{
-                  flexBasis: '55%',
+                  flexBasis: '60%',
                 }}
               >
                 <Typography variant='body1' paragraph>

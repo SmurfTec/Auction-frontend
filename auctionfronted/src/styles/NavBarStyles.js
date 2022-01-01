@@ -19,6 +19,17 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiToolbar-regular': {
       justifyContent: 'space-between',
     },
+    '& a': {
+      color: theme.palette.text.primary,
+      '&.active': {
+        color: theme.palette.primary.main,
+      },
+      '&:hover': {
+        color: theme.palette.primary.main,
+        transition: '0.3s',
+      },
+    },
+    columnGap: 20,
   },
   grow: {
     flexGrow: 1,
@@ -34,20 +45,19 @@ const useStyles = makeStyles((theme) => ({
       display: 'block',
     },
   },
-  NavItem: {
-    display: 'block',
-    color: '#000',
-    cursor: 'pointer',
-    textDecoration: 'none',
-    '& a': {
-      color: theme.palette.text.primary,
-    },
-    '&:hover': {
-      // borderBottom: '2px solid #B033fa',
-      color: 'deepskyblue',
-      transition: '0.3s',
-    },
-  },
+  // NavItem: {
+  //   display: 'block',
+  //   // color: '#000',
+  //   // textDecoration: 'none',
+  //   // '& a': {
+  //   //   color: theme.palette.text.primary,
+  //   // },
+  //   // '&:hover': {
+  //   //   // borderBottom: '2px solid #B033fa',
+  //   //   color: 'deepskyblue',
+  //   //   transition: '0.3s',
+  //   // },
+  // },
   darkBtn: {
     overflow: 'unset !important',
     '&button': {},
@@ -87,6 +97,17 @@ const useStyles = makeStyles((theme) => ({
   navLink: {
     '&.active': {
       color: theme.palette.primary.main,
+    },
+    '& svg': {
+      color: theme.palette.primary.main,
+    },
+  },
+  navSearch: {
+    columnGap: 30,
+    maxWidth: 550,
+    flex: 2,
+    [theme.breakpoints.up('md')]: {
+      width: '80%',
     },
   },
 }));

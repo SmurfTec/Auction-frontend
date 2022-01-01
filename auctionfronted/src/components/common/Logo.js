@@ -6,7 +6,7 @@ import LogoImg from 'assets/logo1.svg';
 function Logo({ w, h, fontSize = '1.2rem', textColor = '#000' }) {
   return (
     <div id='logo'>
-      <ButtonBase disableRipple component={Link} to='/'>
+      <Link component={Link} to='/'>
         <img src={LogoImg} width={w} height={h} alt='Logo' />
         <span
           style={{
@@ -17,7 +17,7 @@ function Logo({ w, h, fontSize = '1.2rem', textColor = '#000' }) {
         >
           Auction
         </span>
-      </ButtonBase>
+      </Link>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { alpha } from '@material-ui/core/styles';
 import {
   Button,
@@ -15,6 +15,7 @@ import MenuPopover from './MenuPopover';
 import { toast } from 'react-toastify';
 // import { AuthContext } from 'contexts/AuthContext';
 import userImg from 'assets/user.jpg';
+import MHidden from 'components/layouts/DrawerLayout/MHidden';
 
 const styles = makeStyles((theme) => ({
   iconButton: {
@@ -87,19 +88,23 @@ export default function AccountPopover() {
         </Box>
 
         <Divider sx={{ my: 1 }} />
+
+        <MHidden width='mdUp'>
+          <Box sx={{ my: 1.5, px: 2.5 }}>
+            <NavLink to='/myauctions/watchlist'>
+              <Typography variant='body1' color='textPrimary' noWrap>
+                My Auctions
+              </Typography>
+            </NavLink>
+          </Box>
+        </MHidden>
+
         <Box sx={{ my: 1.5, px: 2.5 }}>
-          <Link to='/account'>
+          <NavLink to='/account'>
             <Typography variant='body1' color='textPrimary' noWrap>
               Account
             </Typography>
-          </Link>
-        </Box>
-        <Box sx={{ my: 1.5, px: 2.5 }}>
-          <Link to='/leaderboard'>
-            <Typography variant='body1' color='textPrimary' noWrap>
-              Leaderboard
-            </Typography>
-          </Link>
+          </NavLink>
         </Box>
 
         <Box>

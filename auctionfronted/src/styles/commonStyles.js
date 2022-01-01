@@ -1,6 +1,27 @@
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
+  // ^ Common for all
+  flexAlignDisp: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+
+  flexJustDisp: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+
+  flexDisp: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  paddingRoot: {
+    paddingInline: '2rem',
+  },
+
   wrapper: {
     // marginTop: theme.spacing(2),
     // marginBottom: theme.spacing(2),
@@ -35,8 +56,9 @@ const useStyles = makeStyles((theme) => ({
   // ^ Image Carousel Styles
   content: {
     width: '100%',
-    maxWidth: 620,
+    // maxWidth: 620,
     display: 'flex',
+    flex: 3,
     flexDirection: 'column',
     rowGap: 10,
     '& hr:last-child': {
@@ -53,11 +75,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   cardContainer: {
-    display: 'flex',
-    justifyContent: 'center',
     flexWrap: 'nowrap',
     flexDirection: 'row',
-    alignItems: 'center',
     marginBottom: '2rem',
 
     '& .MuiCard-root': {
@@ -89,6 +108,40 @@ const useStyles = makeStyles((theme) => ({
       transition: '0.5s',
       color: '#fff',
     },
+  },
+
+  // ^ Custom box having box shadow and border
+  customStyledBox: {
+    boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 10px 0px',
+    // rgb(4 17 29 / 25%) 0px 0px 8px 0px
+    // #04111d40
+    borderRadius: 12,
+    overflow: 'hidden',
+    width: '100%',
+
+    '& .MuiPaper-rounded': {
+      height: '100%',
+      borderRadius: 0,
+    },
+
+    '& .MuiPaper-elevation1': {
+      boxShadow: 'none',
+    },
+    '&:hover': {
+      boxShadow: `${theme.palette.primary.main}73 0px 0px 10px 0px`,
+    },
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    },
+  },
+  customStyledWidth: {
+    width: '100%',
+  },
+  downColor: {
+    color: theme.custom.error,
+  },
+  upColor: {
+    color: theme.custom.success,
   },
 }));
 

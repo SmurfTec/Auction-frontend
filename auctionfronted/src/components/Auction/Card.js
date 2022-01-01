@@ -13,6 +13,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import ShareIcon from '@material-ui/icons/Share';
 import { Link, useNavigate } from 'react-router-dom';
+import styles from 'styles/commonStyles';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -27,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
   cardDetails: {
     flex: 1,
     position: 'relative',
-
     [theme.breakpoints.up('sm')]: {
       minHeight: 250,
     },
@@ -43,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FeaturedPost(props) {
-  const classes = useStyles();
+  const customClasses = useStyles();
+  const globalClasses = styles();
   const {
     id,
     title,
@@ -61,7 +62,6 @@ export default function FeaturedPost(props) {
   const handleBookMark = (e) => {
     e.stopPropagation();
     const { item } = e.currentTarget.dataset;
-
     // console.log(`item`, item);
   };
 
@@ -71,22 +71,14 @@ export default function FeaturedPost(props) {
   };
 
   return (
-    <Box display='flex' sx={{ columnGap: 10, alignItems: 'center' }}>
-      <Card className={classes.card}>
+    <Box className={globalClasses.flexAlignDisp} sx={{ columnGap: 10 }}>
+      <Card className={customClasses.card}>
         <CardActionArea
           onClick={() => {
             navigate(`/auctionDetails/${id}`);
           }}
         >
-          {/* <Hidden xsDown>
-            <CardMedia
-              className={classes.cardMedia}
-              image={img}
-              title={title}
-            />
-          </Hidden> */}
-
-          <div className={classes.cardDetails}>
+          <div className={customClasses.cardDetails}>
             <CardContent>
               <Typography component='h2' variant='h5'>
                 {title}
@@ -94,17 +86,14 @@ export default function FeaturedPost(props) {
               <Typography variant='h3' color='textSecondary'>
                 {price}
               </Typography>
-              {/* <Typography variant='subtitle1' paragraph>
-              {description}
-            </Typography> */}
+
               <Typography variant='subtitle1' paragraph>
                 {location}
               </Typography>
               <Box
+                className={globalClasses.flexAlignDisp}
                 sx={{
-                  display: 'flex',
                   justifyContent: 'space-between',
-                  alignItems: 'center',
                 }}
               >
                 <Box display='flex' flexDirection='column' sx={{ rowGap: 10 }}>
@@ -126,7 +115,7 @@ export default function FeaturedPost(props) {
                 </Box>
               </Box>
               <Divider />
-              <div className={classes.createdInfo}>
+              <div className={customClasses.createdInfo}>
                 <Typography variant='body2' color='textSecondary'>
                   Created By : {startedby}
                 </Typography>

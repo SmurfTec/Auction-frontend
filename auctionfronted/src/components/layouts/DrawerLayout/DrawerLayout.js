@@ -27,6 +27,7 @@ import ViewListIcon from '@material-ui/icons/ViewList';
 import SpeakerNotesOffIcon from '@material-ui/icons/SpeakerNotesOff';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import CancelIcon from '@material-ui/icons/Cancel';
+import useStyles from 'styles/DrawerStyles';
 
 const drawerWidth = 200;
 
@@ -67,69 +68,6 @@ const getIcon = (name) => {
   }
 };
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    '& .MuiDrawer-paper': {
-      position: 'static',
-    },
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    // height: '100vh',
-    [theme.breakpoints.up('md')]: {
-      width: drawerWidth + 50,
-    },
-  },
-  drawerPaper: {
-    width: drawerWidth,
-    [theme.breakpoints.up('md')]: {
-      width: drawerWidth + 50,
-    },
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-  },
-  content: {
-    flexGrow: 1,
-    minHeight: 600,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-
-    '& h5': {
-      textAlign: 'center',
-    },
-  },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  },
-  list: {
-    '& a': {
-      color: '#000',
-
-      '&.active': {
-        color: theme.palette.primary.main,
-        '& svg': {
-          color: theme.palette.primary.main,
-        },
-      },
-    },
-  },
-}));
-
 const DrawerLayout = () => {
   const classes = useStyles();
   const theme = useTheme();
@@ -164,7 +102,7 @@ const DrawerLayout = () => {
     <>
       <Navbar user='user' />
       <div className={classes.root}>
-        <MHidden width='smDown'>
+        <MHidden width='xsDown'>
           <Drawer
             className={classes.drawer}
             variant='persistent'
@@ -177,7 +115,7 @@ const DrawerLayout = () => {
             {drawerContent}
           </Drawer>
         </MHidden>
-        <MHidden width='mdUp'>
+        <MHidden width='smUp'>
           <SideMenu onOpenSidebar={toggleSideBar} open={open} />
           <Drawer
             className={classes.drawer}

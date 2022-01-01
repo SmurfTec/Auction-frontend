@@ -6,13 +6,12 @@ const useStyles = makeStyles((theme) => ({
   videoResponsive: {
     overflow: 'hidden',
     position: 'relative',
-    height: 200,
-    width: '100%',
-    flex: 2,
-
-    [theme.breakpoints.down('sm')]: {
-      height: 300,
+    objectFit: 'contain',
+    height: 300,
+    [theme.breakpoints.up('md')]: {
+      height: '100%',
     },
+    width: '100%',
   },
 
   iframe: {
@@ -24,14 +23,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EmbedVideo = ({ embedUrl }) => {
+const VideoEmbed = ({ embedUrl }) => {
   const classes = useStyles();
   return (
     <div className={classes.videoResponsive}>
       <iframe
         className={classes.iframe}
         // width='400'
-        height='200'
+        // height='200'
         src={`https://www.youtube.com/embed/${embedUrl}`}
         //   src={embedUrl}
         frameBorder='0'
@@ -43,8 +42,8 @@ const EmbedVideo = ({ embedUrl }) => {
   );
 };
 
-EmbedVideo.propTypes = {
+VideoEmbed.propTypes = {
   embedUrl: PropTypes.string.isRequired,
 };
 
-export default EmbedVideo;
+export default VideoEmbed;

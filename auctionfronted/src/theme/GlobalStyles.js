@@ -63,6 +63,9 @@ const GlobalStyles = withStyles((theme) => ({
       },
 
       '& a': {
+        display: 'flex',
+        alignItems: 'center',
+        width: 'max-content',
         textDecoration: 'none',
         '&:hover': {
           border: 'none',

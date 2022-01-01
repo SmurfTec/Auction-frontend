@@ -28,7 +28,7 @@ import { Link } from 'react-router-dom';
 const styles = makeStyles((theme) => ({
   root: {
     width: '85%',
-    maxWidth: 750,
+    maxWidth: 1024,
     padding: '30px 0',
     margin: '0 auto',
     marginTop: '3rem',

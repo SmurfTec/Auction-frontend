@@ -34,7 +34,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import { Pagination } from '@material-ui/lab';
-import AuctionStepper from 'components/Auction/AuctionStepperM';
+import AuctionStepper from 'components/Auction/AuctionStepper';
 import ShareIcon from '@material-ui/icons/Share';
 
 // import { Pagination } from '@material-ui/lab';
@@ -80,8 +80,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const HomePage = () => {
-  const classes = styles();
-  const classes_s = useStyles();
+  const globalClasses = styles();
+  const customClasses = useStyles();
 
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(50);
@@ -116,125 +116,136 @@ const HomePage = () => {
       <section>
         <HeroCarousel />
       </section>
-      <section className={classes.topSection} />
-      <Container>
-        <section className={`${classes.containerMargin} ${classes.topSection}`}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={3}>
-              <Typography variant='h5'>Filter By</Typography>
-              <div className={classes_s.filter}>
-                <Accordion>
-                  <AccordionDetails>
+      <section className={globalClasses.topSection} />
+      {/* <Container> */}
+      <section
+        className={`${globalClasses.containerMargin} ${globalClasses.topSection} ${globalClasses.paddingRoot}`}
+      >
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={4} md={3}>
+            <Typography variant='h5'>Filter By</Typography>
+            <div className={customClasses.filter}>
+              <Accordion>
+                <AccordionDetails>
+                  <Typography
+                    variant='subtitle2'
+                    className={globalClasses.heading}
+                    style={{ cursor: 'pointer', marginTop: 5 }}
+                    onClick={handleFilter}
+                    data-filter='mostViewed'
+                  >
+                    Most Viewed
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion defaultExpanded>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls='panel1a-content'
+                  id='panel1a-header'
+                >
+                  <Typography
+                    variant='subtitle1'
+                    className={globalClasses.heading}
+                  >
+                    Price
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <div className={customClasses.content}>
                     <Typography
-                      variant='subtitle2'
-                      className={classes.heading}
-                      style={{ cursor: 'pointer', marginTop: 5 }}
+                      variant='body1'
+                      style={{ cursor: 'pointer' }}
                       onClick={handleFilter}
-                      data-filter='mostViewed'
+                      data-filter='priceAsc'
+                      fullWidth
                     >
-                      Most Viewed
+                      Price (low-high)
                     </Typography>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion defaultExpanded>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls='panel1a-content'
-                    id='panel1a-header'
-                  >
-                    <Typography variant='subtitle1' className={classes.heading}>
-                      Price
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <div className={classes_s.content}>
-                      <Typography
-                        variant='body1'
-                        style={{ cursor: 'pointer' }}
-                        onClick={handleFilter}
-                        data-filter='priceAsc'
-                        fullWidth
-                      >
-                        Price (low-high)
-                      </Typography>
-                      <Divider />
+                    <Divider />
 
-                      <Typography
-                        variant='body1'
-                        style={{ cursor: 'pointer' }}
-                        onClick={handleFilter}
-                        data-filter='priceDesc'
-                      >
-                        Price (high-low)
-                      </Typography>
-                    </div>
-                  </AccordionDetails>
-                </Accordion>
-
-                <Accordion defaultExpanded>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls='panel1a-content'
-                    id='panel1a-header'
-                  >
-                    <Typography variant='subtitle2' className={classes.heading}>
-                      Location
+                    <Typography
+                      variant='body1'
+                      style={{ cursor: 'pointer' }}
+                      onClick={handleFilter}
+                      data-filter='priceDesc'
+                    >
+                      Price (high-low)
                     </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <div className={classes_s.content}>
-                      {location &&
-                        location.map((loc) => (
-                          <>
-                            <Typography
-                              variant='body1'
-                              style={{ cursor: 'pointer' }}
-                              onClick={handleFilter}
-                              data-filter='priceDesc'
-                            >
-                              {loc}
-                            </Typography>
-                            <Divider />
-                          </>
-                        ))}
-                    </div>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion defaultExpanded>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls='panel1a-content'
-                    id='panel1a-header'
-                  >
-                    <Typography variant='subtitle2' className={classes.heading}>
-                      Categories
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <div className={classes_s.content}>
-                      {categories &&
-                        categories.map((cat) => (
-                          <>
-                            <FormControlLabel
-                              value={cat.replace(/\s/g, '')}
-                              control={<Checkbox color='primary' />}
-                              label={cat}
-                              labelPlacement='end'
-                            />
-                            <Divider />
-                          </>
-                        ))}
-                    </div>
-                  </AccordionDetails>
-                </Accordion>
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={9}>
-              <Typography variant='h5'>
-                <Box mb={3}>Featured Auctions</Box>
-              </Typography>
+                  </div>
+                </AccordionDetails>
+              </Accordion>
 
-              {/* <TableContainer className={classes.container}>
+              <Accordion defaultExpanded>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls='panel1a-content'
+                  id='panel1a-header'
+                >
+                  <Typography
+                    variant='subtitle2'
+                    className={globalClasses.heading}
+                  >
+                    Location
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <div className={customClasses.content}>
+                    {location &&
+                      location.map((loc) => (
+                        <>
+                          <Typography
+                            variant='body1'
+                            style={{ cursor: 'pointer' }}
+                            onClick={handleFilter}
+                            data-filter='priceDesc'
+                          >
+                            {loc}
+                          </Typography>
+                          <Divider />
+                        </>
+                      ))}
+                  </div>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion defaultExpanded>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls='panel1a-content'
+                  id='panel1a-header'
+                >
+                  <Typography
+                    variant='subtitle2'
+                    className={globalClasses.heading}
+                  >
+                    Categories
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <div className={customClasses.content}>
+                    {categories &&
+                      categories.map((cat) => (
+                        <>
+                          <FormControlLabel
+                            value={cat.replace(/\s/g, '')}
+                            control={<Checkbox color='primary' />}
+                            label={cat}
+                            labelPlacement='end'
+                          />
+                          <Divider />
+                        </>
+                      ))}
+                  </div>
+                </AccordionDetails>
+              </Accordion>
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={8} md={9}>
+            <Typography variant='h5'>
+              <Box mb={3}>Featured Auctions</Box>
+            </Typography>
+
+            {/* <TableContainer className={globalClasses.container}>
                 <Table>
                   <TableBody>
                     {auctions
@@ -256,57 +267,72 @@ const HomePage = () => {
                                   ? column.format(value)
                                   : value}
                               </TableCell> */}
-              {/* </TableRow>
+            {/* </TableRow>
                         );
                       })}
                   </TableBody>
                 </Table>
               </TableContainer> */}
-              <div className={classes_s.pagination}>
-                {auctions
-                  .slice(
-                    (page - 1) * rowsPerPage,
-                    (page - 1) * rowsPerPage + rowsPerPage
-                  )
-                  .map((auc) => {
-                    return (
-                      <div className={classes.cardContainer}>
-                        <div className={classes.auctDetailCont}>
+            <div className={customClasses.pagination}>
+              {auctions
+                .slice(
+                  (page - 1) * rowsPerPage,
+                  (page - 1) * rowsPerPage + rowsPerPage
+                )
+                .map((auc, ind) => {
+                  return (
+                    <div
+                      className={`${globalClasses.flexDisp} ${globalClasses.cardContainer}`}
+                    >
+                      <div
+                        className={`${globalClasses.flexJustDisp} ${globalClasses.customStyledWidth}`}
+                      >
+                        <div
+                          className={`${globalClasses.customStyledBox} ${globalClasses.flexJustDisp} ${globalClasses.customStyledWidth}`}
+                        >
                           <AuctionStepper auction={auc} />
-
-                          <div className={classes.content}>
+                          <div className={globalClasses.content}>
                             <Card {...auc} />
                           </div>
                         </div>
-                        <Box>
-                          <IconButton
-                            aria-label='Share'
-                            aria-haspopup='true'
-                            data-item={auc.id}
-                            onClick={handleShare}
-                            style={{
-                              marginLeft: 'auto',
-                              color: '#000',
-                            }}
-                          >
-                            <ShareIcon />
-                          </IconButton>
-                        </Box>
                       </div>
-                    );
-                  })}
+                      {/* <div className={globalClasses.auctDetailCont}>
+                          <AuctionStepper auction={auc} />
 
-                <Pagination
-                  color='secondary'
-                  count={Math.ceil(auctions.length / rowsPerPage)}
-                  page={page}
-                  onChange={handleChangePage}
-                />
-              </div>
-            </Grid>
+                          <div className={globalClasses.content}>
+                            <Card {...auc} />
+                          </div>
+                        </div> */}
+                      <Box>
+                        <IconButton
+                          aria-label='Share'
+                          aria-haspopup='true'
+                          data-item={auc.id}
+                          onClick={handleShare}
+                          style={{
+                            marginLeft: 'auto',
+                            color: '#000',
+                          }}
+                        >
+                          <ShareIcon />
+                          {/* {ind + 1} */}
+                        </IconButton>
+                      </Box>
+                    </div>
+                  );
+                })}
+
+              <Pagination
+                color='secondary'
+                count={Math.ceil(auctions.length / rowsPerPage)}
+                page={page}
+                onChange={handleChangePage}
+              />
+            </div>
           </Grid>
-        </section>
-      </Container>
+        </Grid>
+      </section>
+      {/* </Container> */}
       <section>
         <Footer />
       </section>

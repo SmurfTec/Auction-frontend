@@ -2,7 +2,6 @@ import React from 'react';
 import TuneIcon from '@material-ui/icons/Tune';
 import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles, IconButton } from '@material-ui/core';
-// import { useThemeContext } from 'Components/theme';
 
 const DRAWER_WIDTH = 200;
 
@@ -12,7 +11,8 @@ const useStyles = makeStyles((theme) => ({
     bottom: 12,
     left: -4,
     position: 'fixed',
-    zIndex: 2001,
+    // zIndex: 2001,
+    zIndex: 1102,
   },
 
   sideBarBtn: {

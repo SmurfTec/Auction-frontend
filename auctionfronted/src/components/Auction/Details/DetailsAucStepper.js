@@ -1,18 +1,22 @@
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { MobileStepper, Paper, Button } from '@material-ui/core';
+import { MobileStepper, Paper, Button, Box } from '@material-ui/core';
 
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
-import EmbedVideo from './EmbedVideo';
+import styles from 'styles/commonStyles';
+// import EmbedVideo from './EmbedVideo';
+import EmbedVideo from '../EmbedVideo';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     // maxWidth: 350,
-    flex: 2,
     backgroundColor: '#fff',
     borderRight: '1px solid rgb(229, 232, 235)',
     [theme.breakpoints.up('md')]: {
-      maxWidth: 350,
+      display: 'flex',
+      flexDirection: 'column',
+      flex: 2,
+      // maxWidth: 350,
     },
   },
   header: {
@@ -22,29 +26,43 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(4),
     backgroundColor: theme.palette.background.default,
   },
+  imgDiv: {
+    width: '100%',
+    height: '100%',
+    overflow: 'hidden',
+    position: 'relative',
+  },
   img: {
-    height: 200,
-    display: 'block',
+    // /height: 285,
+    // display: 'block',
     overflow: 'hidden',
     width: '100%',
-    // margin: '0 auto',
+    height: 300,
     objectFit: 'contain',
 
-    [theme.breakpoints.down('sm')]: {
-      height: 300,
-    },
-
     // [theme.breakpoints.up('md')]: {
-    //   height: '84.2%',
+    //   height: '100%',
     // },
   },
   mobileStepper: {
     background: '#fff',
+    minHeight: 70,
+  },
+  imgCont: {
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    height: 300,
+
+    [theme.breakpoints.up('md')]: {
+      flex: 2,
+    },
   },
 }));
 
-const AuctionStepper = ({ auction }) => {
+const DetailsAucStepper = ({ auction }) => {
   const classes = useStyles();
+  const globalClasses = styles();
 
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -76,15 +94,24 @@ const AuctionStepper = ({ auction }) => {
   return (
     <>
       {carousel && (
-        <Paper className={classes.root}>
+        <Paper className={`${classes.root}`}>
           {carousel?.[activeStep].type === 'video' ? (
             <EmbedVideo embedUrl='rokGy0huYEA' />
           ) : (
-            <img
-              className={classes.img}
-              src={carousel[activeStep].images}
-              alt={carousel[activeStep].label}
+            // <div className={classes.imgDiv}>
+            <Box
+              className={classes.imgCont}
+              sx={{
+                backgroundImage: `url(${carousel[activeStep].images})`,
+              }}
             />
+            //   <img
+            //   className={classes.img}
+            //   src={carousel[activeStep].images}
+            //   alt={carousel[activeStep].label}
+            // />
+            // </Box>
+            // </div>
           )}
           <MobileStepper
             steps={carousel.length}
@@ -125,4 +152,4 @@ const AuctionStepper = ({ auction }) => {
   );
 };
 
-export default AuctionStepper;
+export default DetailsAucStepper;
