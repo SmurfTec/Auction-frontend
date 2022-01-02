@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   cardDetails: {
     flex: 1,
     position: 'relative',
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       minHeight: 250,
     },
   },

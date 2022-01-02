@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Button,
   Grid,
@@ -6,30 +6,31 @@ import {
   CircularProgress,
   TextField,
   Checkbox,
-  FormControlLabel,
 } from '@material-ui/core';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import { Alert } from 'components/common/Alert';
-// import FormLayout from 'components/layouts/formLayout';
 import useManyInputs from 'hooks/useManyInputs';
 import globalStyles from 'styles/commonStyles';
 import { useStyles as formStyles } from 'styles/FormLayoutStyles';
-// import { AuthContext } from 'contexts/AuthContext';
-// import { API_BASE_URL, handleCatch } from 'utils/makeReq';
+import { AuthContext } from 'contexts/AuthContext';
+import { API_BASE_URL, handleCatch } from 'utils/makeReq';
+import axios from 'axios';
+
 const Register = () => {
-  //   const { token, user, signInUser } = useContext(AuthContext);
+  const { user, signInUser } = useContext(AuthContext);
   const classes = globalStyles();
   const formClasses = formStyles();
 
-  // const navigate = useNavigate();
-  // const location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const initialState = {
-    fname: '',
-    lname: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
+    passwordConfirm: '',
     privacy: false,
   };
 
@@ -45,57 +46,38 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  //   let redirect = location.search ? location.search.split('=')[1] : '/';
+  let redirect = location.search ? location.search.split('=')[1] : '/';
 
-  //   useEffect(() => {
-  //     console.log(`redirect`, redirect);
-
-  //     // if (user) {
-  //     //   navigate(redirect);
-  //     // }
-  //   }, [user, navigate, redirect]);
+  useEffect(() => {
+    if (user) {
+      navigate(redirect);
+    }
+  }, [user, navigate, redirect]);
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      //   const res = await axios.post(`${API_BASE_URL}/auth/login/freelancer`, {
-      //     ...inputState,
-      //   });
-      //   console.log(`res`, res);
+      if (inputState.password !== inputState.passwordConfirm) {
+        return setError('Passwords do not match');
+      } else {
+        const res = await axios.post(`${API_BASE_URL}/auth/signup`, {
+          ...inputState,
+        });
+        // console.log(`res`, res);
 
-      //   signInUser(res.data.token, res.data.user);
-
-      resetState();
+        signInUser(res.data.token, res.data.user);
+        resetState();
+      }
     } catch (error) {
-      //   handleCatch(error);
+      handleCatch(error);
     } finally {
       setLoading(false);
     }
   };
 
-  const [tabState, setTabState] = useState(0);
-
-  const handleTabChange = (event, newValue) => {
-    setTabState(newValue);
-    setInputstate((st) => ({
-      ...st,
-      form: newValue === 0 ? 'join' : 'login',
-    }));
-  };
   return (
     <div className={formClasses.mainContainer}>
-      {/* <Tabs
-        value={tabState}
-        onChange={handleTabChange}
-        indicatorColor=''
-        textColor='primary'
-        centered
-        // className={classes.Tabs}
-      >
-        <Tab label='Buyer' />
-        <Tab label='Seller' />
-      </Tabs> */}
       <div className={formClasses.formSelection}>
         <NavLink to='/login'>
           <Typography variant='subtitle1'>LOGIN</Typography>
@@ -122,25 +104,27 @@ const Register = () => {
                 </Grid>
               )}
 
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
-                  name='fname'
-                  value={inputState.fname}
+                  name='firstName'
+                  value={inputState.firstName}
                   label='First Name'
                   onChange={handleTxtChange}
                   variant='outlined'
                   fullWidth
                   size='small'
+                  InputProps={{ required: true }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
-                  name='lname'
-                  value={inputState.lname}
+                  name='lastName'
+                  value={inputState.lastName}
                   label='Last Name'
                   onChange={handleTxtChange}
                   variant='outlined'
                   fullWidth
+                  InputProps={{ required: true }}
                   size='small'
                 />
               </Grid>
@@ -153,6 +137,7 @@ const Register = () => {
                   onChange={handleTxtChange}
                   variant='outlined'
                   size='small'
+                  InputProps={{ required: true }}
                   fullWidth
                 />
               </Grid>
@@ -167,6 +152,22 @@ const Register = () => {
                   variant='outlined'
                   fullWidth
                   size='small'
+                  InputProps={{ required: true }}
+                  inputProps={{ min: 8 }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name='passwordConfirm'
+                  value={inputState.passwordConfirm}
+                  label='Confirm Password'
+                  type='password'
+                  onChange={handleTxtChange}
+                  variant='outlined'
+                  fullWidth
+                  size='small'
+                  InputProps={{ required: true }}
+                  inputProps={{ min: 8 }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -176,6 +177,7 @@ const Register = () => {
                     name='privacy'
                     checked={inputState.privacy}
                     onChange={(e) => handleToggleChange(e)}
+                    required
                   />
                   <Typography variant='subtitle2'>
                     Agree to the
@@ -195,7 +197,7 @@ const Register = () => {
                   {loading ? (
                     <CircularProgress size={20} color='inherit' />
                   ) : (
-                    'Sign In'
+                    'Sign Up'
                   )}
                 </Button>
               </Grid>
@@ -209,7 +211,7 @@ const Register = () => {
                 >
                   <Typography variant='subtitle2'>
                     already have account?
-                    <Link to='/register'>Login </Link>
+                    <Link to='/login'>Login </Link>
                   </Typography>
                 </Box>
               </Grid>

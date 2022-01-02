@@ -6,8 +6,6 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import Footer from 'components/common/Footer';
-import Navbar from 'components/common/NavBar';
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import bgImg from 'assets/contact_bg.jpg';
@@ -70,7 +68,6 @@ const ContactUs = () => {
 
   return (
     <>
-      <Navbar user='user' />
       <section className={classes.container}>
         <div className={classes.innerCont}>
           <Box my={2}>
@@ -140,7 +137,6 @@ const ContactUs = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 };

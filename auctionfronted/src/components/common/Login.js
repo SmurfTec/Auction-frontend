@@ -5,25 +5,24 @@ import {
   Typography,
   CircularProgress,
   TextField,
-  Tab,
-  Tabs,
 } from '@material-ui/core';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import { Alert } from 'components/common/Alert';
-// import FormLayout from 'components/layouts/formLayout';
 import useManyInputs from 'hooks/useManyInputs';
 import globalStyles from 'styles/commonStyles';
 import { useStyles as formStyles } from 'styles/FormLayoutStyles';
-// import { AuthContext } from 'contexts/AuthContext';
-// import { API_BASE_URL, handleCatch } from 'utils/makeReq';
+import { AuthContext } from 'contexts/AuthContext';
+import { API_BASE_URL, handleCatch } from 'utils/makeReq';
+import axios from 'axios';
+
 const Login = () => {
-  //   const { token, user, signInUser } = useContext(AuthContext);
+  const { user, signInUser } = useContext(AuthContext);
   const classes = globalStyles();
   const formClasses = formStyles();
 
-  // const navigate = useNavigate();
-  // const location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const initialState = {
     email: '',
@@ -42,44 +41,33 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  //   let redirect = location.search ? location.search.split('=')[1] : '/';
+  let redirect = location.search ? location.search.split('=')[1] : '/';
 
-  //   useEffect(() => {
-  //     console.log(`redirect`, redirect);
-
-  //     // if (user) {
-  //     //   navigate(redirect);
-  //     // }
-  //   }, [user, navigate, redirect]);
+  useEffect(() => {
+    if (user) {
+      console.log(`userr`, user);
+      navigate(redirect || '/');
+    }
+  }, [user, navigate, redirect]);
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      //   const res = await axios.post(`${API_BASE_URL}/auth/login/freelancer`, {
-      //     ...inputState,
-      //   });
-      //   console.log(`res`, res);
+      const res = await axios.post(`${API_BASE_URL}/auth/login/freelancer`, {
+        ...inputState,
+      });
+      // console.log(`res`, res);
 
-      //   signInUser(res.data.token, res.data.user);
-
+      signInUser(res.data.token, res.data.user);
       resetState();
     } catch (error) {
-      //   handleCatch(error);
+      handleCatch(error);
     } finally {
       setLoading(false);
     }
   };
 
-  const [tabState, setTabState] = useState(0);
-
-  const handleTabChange = (event, newValue) => {
-    setTabState(newValue);
-    setInputstate((st) => ({
-      ...st,
-      form: newValue === 0 ? 'join' : 'login',
-    }));
-  };
   return (
     <div className={formClasses.mainContainer}>
       <div className={formClasses.formSelection}>
@@ -118,6 +106,7 @@ const Login = () => {
                   variant='outlined'
                   fullWidth
                   size='small'
+                  InputProps={{ required: true }}
                 />
               </Grid>
 
@@ -131,6 +120,7 @@ const Login = () => {
                   variant='outlined'
                   fullWidth
                   size='small'
+                  InputProps={{ required: true }}
                 />
               </Grid>
               <Grid item xs={6}>

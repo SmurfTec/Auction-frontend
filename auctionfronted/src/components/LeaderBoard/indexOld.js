@@ -5,12 +5,10 @@ import {
   IconButton,
   Typography,
 } from '@material-ui/core';
-import Navbar from 'components/common/NavBar';
 import React from 'react';
 import styles from 'styles/commonStyles';
 import { auctions } from 'data';
 import Card from 'components/Auction/Card';
-import Footer from 'components/common/Footer';
 import AuctionStepper from 'components/Auction/AuctionStepper';
 import { makeStyles } from '@material-ui/core';
 import ShareIcon from '@material-ui/icons/Share';
@@ -61,7 +59,6 @@ const LeaderBoard = () => {
 
   return (
     <>
-      <Navbar user='user' />
       <Container>
         <section className={classes.containerMargin}>
           <Box my={2}>
@@ -106,9 +103,6 @@ const LeaderBoard = () => {
           </div>
         </section>
       </Container>
-      <section>
-        <Footer />
-      </section>
     </>
   );
 };

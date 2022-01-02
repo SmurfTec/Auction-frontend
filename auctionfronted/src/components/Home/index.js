@@ -1,43 +1,26 @@
+import React from 'react';
 import {
   Box,
-  Container,
   Grid,
   makeStyles,
   Typography,
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Menu,
-  MenuItem,
-  MenuList,
   Divider,
   FormControlLabel,
   Checkbox,
-  Paper,
   IconButton,
 } from '@material-ui/core';
+import { Pagination } from '@material-ui/lab';
 
-import React from 'react';
-import Navbar from 'components/common/NavBar';
-import styles from 'styles/commonStyles';
 import HeroCarousel from 'components/common/HeroCarousel';
-import Footer from 'components/common/Footer';
-import { auctions, categories, location } from 'data';
 import Card from 'components/Auction/Card';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import { Pagination } from '@material-ui/lab';
 import AuctionStepper from 'components/Auction/AuctionStepper';
 import ShareIcon from '@material-ui/icons/Share';
-
-// import { Pagination } from '@material-ui/lab';
+import { auctions, categories, location } from 'data';
+import styles from 'styles/commonStyles';
 
 const useStyles = makeStyles((theme) => ({
   filter: {
@@ -112,7 +95,6 @@ const HomePage = () => {
 
   return (
     <>
-      <Navbar user='user' />
       <section>
         <HeroCarousel />
       </section>
@@ -193,7 +175,7 @@ const HomePage = () => {
                   <div className={customClasses.content}>
                     {location &&
                       location.map((loc) => (
-                        <>
+                        <div key={loc}>
                           <Typography
                             variant='body1'
                             style={{ cursor: 'pointer' }}
@@ -203,7 +185,7 @@ const HomePage = () => {
                             {loc}
                           </Typography>
                           <Divider />
-                        </>
+                        </div>
                       ))}
                   </div>
                 </AccordionDetails>
@@ -225,7 +207,7 @@ const HomePage = () => {
                   <div className={customClasses.content}>
                     {categories &&
                       categories.map((cat) => (
-                        <>
+                        <div key={cat}>
                           <FormControlLabel
                             value={cat.replace(/\s/g, '')}
                             control={<Checkbox color='primary' />}
@@ -233,7 +215,7 @@ const HomePage = () => {
                             labelPlacement='end'
                           />
                           <Divider />
-                        </>
+                        </div>
                       ))}
                   </div>
                 </AccordionDetails>
@@ -282,6 +264,7 @@ const HomePage = () => {
                 .map((auc, ind) => {
                   return (
                     <div
+                      key={auc.id}
                       className={`${globalClasses.flexDisp} ${globalClasses.cardContainer}`}
                     >
                       <div
@@ -333,9 +316,6 @@ const HomePage = () => {
         </Grid>
       </section>
       {/* </Container> */}
-      <section>
-        <Footer />
-      </section>
     </>
   );
 };

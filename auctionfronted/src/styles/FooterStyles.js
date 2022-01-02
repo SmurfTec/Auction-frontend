@@ -5,7 +5,7 @@ export const styles = makeStyles((theme) => ({
     color: '#fff',
     backgroundColor: '#000',
     // marginTop: theme.spacing(5),
-    padding: theme.spacing(6, 5),
+    padding: theme.spacing(5, 5),
     userSelect: 'none',
     //  borderTopRightRadius: 15,
   },
@@ -22,7 +22,7 @@ export const styles = makeStyles((theme) => ({
   footerItem: {
     display: 'flex',
     flexDirection: 'column',
-    rowGap: 10,
+    rowGap: '2em',
     flexBasis: '35%',
   },
   logoTitle: {

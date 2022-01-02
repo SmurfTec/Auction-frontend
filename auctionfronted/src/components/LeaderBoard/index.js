@@ -18,13 +18,12 @@ import {
   Chip,
   Avatar,
   Divider,
+  TextField,
 } from '@material-ui/core';
 import styles from 'styles/commonStyles';
-import Navbar from 'components/common/NavBar';
-import Footer from 'components/common/Footer';
 import useManyInputs from 'hooks/useManyInputs';
 import { auctions, allcategories, location } from 'data';
-import { Pagination } from '@material-ui/lab';
+import { Autocomplete, Pagination } from '@material-ui/lab';
 import useStyles from 'styles/TableStyles';
 
 const LeaderBoard = () => {
@@ -58,13 +57,12 @@ const LeaderBoard = () => {
   };
 
   const handleCat = (e) => {
-    console.log(`e.target.value`, e.target.value);
+    // console.log(`e.target.value`, e.target.value);
     changeInput('categories', e.target.value);
   };
 
   return (
     <>
-      <Navbar user='user' />
       {/* <section
         className={`${globalClasses.containerMargin} ${globalClasses.paddingRoot}`}
       >
@@ -95,12 +93,15 @@ const LeaderBoard = () => {
               label='TimeLine'
               fullWidth
             >
-              <MenuItem value={7}>Last 7 days</MenuItem>
-              <Divider />
-              <MenuItem value={14}>Last 14 days</MenuItem>
-              <Divider />
-              <MenuItem value={21}>Last 21 days</MenuItem>
-              <Divider />
+              <MenuItem id='cat' value={7}>
+                Last 7 days
+              </MenuItem>
+              <MenuItem id='cat' value={14}>
+                Last 14 days
+              </MenuItem>
+              <MenuItem id='cat' value={21}>
+                Last 21 days
+              </MenuItem>
               <MenuItem value={0}>All Time</MenuItem>
             </Select>
           </FormControl>
@@ -117,12 +118,13 @@ const LeaderBoard = () => {
               onChange={handleCat}
               label='Categories'
               fullWidth
-              // name='categories'
             >
               {allcategories &&
-                allcategories.map((cat, ind) => {
+                allcategories.map((cat) => {
                   return (
-                    <MenuItem value={inputState.categories}>{cat}</MenuItem>
+                    <MenuItem id='cat' value={inputState.categories}>
+                      {cat}
+                    </MenuItem>
                   );
                 })}
             </Select>
@@ -142,8 +144,10 @@ const LeaderBoard = () => {
               label='Price'
               fullWidth
             >
-              <MenuItem value={true}>Price (Low - High)</MenuItem>
-              <Divider />
+              <MenuItem id='cat' value={true}>
+                Price (Low - High)
+              </MenuItem>
+
               <MenuItem value={false}>Price (High - Low)</MenuItem>
             </Select>
           </FormControl>
@@ -157,10 +161,10 @@ const LeaderBoard = () => {
                 <TableRow>
                   <TableCell style={{ minWidth: 300 }}>Auction Item</TableCell>
                   <TableCell style={{ minWidth: 180 }}>Category</TableCell>
-                  <TableCell align='right'>Starting Price</TableCell>
-                  <TableCell align='right'>Final Price</TableCell>
-                  <TableCell align='right'>Total Bids</TableCell>
-                  <TableCell>Created At</TableCell>
+                  <TableCell align='center'>Starting Price</TableCell>
+                  <TableCell align='center'>Final Price</TableCell>
+                  <TableCell align='center'>Total Bids</TableCell>
+                  <TableCell align='center'>Created At</TableCell>
                   {/* no item cat starting_price final_price total bids created at */}
                 </TableRow>
               </TableHead>
@@ -215,7 +219,7 @@ const LeaderBoard = () => {
                             />
                           ))}
                         </TableCell>
-                        <TableCell align='right'>
+                        <TableCell align='center'>
                           <Typography
                             variant='body2'
                             className={globalClasses.downColor}
@@ -223,7 +227,7 @@ const LeaderBoard = () => {
                             {auc.price}
                           </Typography>
                         </TableCell>
-                        <TableCell align='right'>
+                        <TableCell align='center'>
                           <Typography
                             variant='body2'
                             className={globalClasses.upColor}
@@ -231,12 +235,12 @@ const LeaderBoard = () => {
                             {auc.finalPrice}
                           </Typography>
                         </TableCell>
-                        <TableCell align='right'>
+                        <TableCell align='center'>
                           <Typography variant='body2'>
                             {auc.totalBids}
                           </Typography>
                         </TableCell>
-                        <TableCell>
+                        <TableCell align='center'>
                           <Typography variant='body2'>
                             {auc.createdAt}
                           </Typography>
@@ -258,7 +262,6 @@ const LeaderBoard = () => {
           </Box>
         </div>
       </Container>
-      <Footer />
     </>
   );
 };

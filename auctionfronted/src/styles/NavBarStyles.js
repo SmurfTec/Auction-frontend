@@ -1,5 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 
+const drawerWidth = 230;
+
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiPaper-root': {
@@ -17,7 +19,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#fff',
     // color: '#B033fa',
     '& .MuiToolbar-regular': {
+      alignItems: 'center',
       justifyContent: 'space-between',
+      columnGap: '1em',
     },
     '& a': {
       color: theme.palette.text.primary,
@@ -74,6 +78,7 @@ const useStyles = makeStyles((theme) => ({
 
   sectionDesktop: {
     display: 'none',
+    alignItems: 'center',
     [theme.breakpoints.up('sm')]: {
       display: 'flex',
     },
@@ -81,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
 
   sectionMobile: {
     display: 'flex',
+    alignItems: 'center',
     marginLeft: 'auto',
     [theme.breakpoints.up('sm')]: {
       display: 'none',
@@ -109,6 +115,14 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('md')]: {
       width: '80%',
     },
+  },
+
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
   },
 }));
 

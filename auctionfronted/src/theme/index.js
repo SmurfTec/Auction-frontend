@@ -67,11 +67,29 @@ const Theme = ({ children }) => {
         },
         MuiPopover: {
           paper: {
+            maxHeight: 300,
             borderRadius: 12,
+          },
+        },
+        MuiList: {
+          root: {
+            maxHeight: 300,
+          },
+        },
+        MuiMenuItem: {
+          root: {
+            paddingTop: 12,
+            paddingBottom: 12,
           },
         },
         MuiListItem: {
           root: {
+            '&#cat': {
+              borderBottom: '1px solid #0000001f',
+            },
+            '&#logout': {
+              columnGap: 10,
+            },
             '&.Mui-selected': {
               backgroundColor: 'unset',
               '&:hover': {

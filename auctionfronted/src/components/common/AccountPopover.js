@@ -1,21 +1,21 @@
 import { useContext, useRef, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { alpha } from '@material-ui/core/styles';
 import {
-  Button,
   Box,
   Divider,
   Typography,
   Avatar,
   IconButton,
   makeStyles,
+  MenuItem,
+  ListItemIcon,
 } from '@material-ui/core';
 import MenuPopover from './MenuPopover';
-// import { useAuth } from 'Context/AuthContext';
 import { toast } from 'react-toastify';
-// import { AuthContext } from 'contexts/AuthContext';
+import { AuthContext } from 'contexts/AuthContext';
 import userImg from 'assets/user.jpg';
-import MHidden from 'components/layouts/DrawerLayout/MHidden';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const styles = makeStyles((theme) => ({
   iconButton: {
@@ -25,17 +25,10 @@ const styles = makeStyles((theme) => ({
   },
 }));
 
-const user = {
-  fullName: 'Ali Hamza',
-  email: 'ali12@gmail.com',
-  photo: userImg,
-};
-
 export default function AccountPopover() {
   const classes = styles();
-  // const { user, logoutUser } = useContext(AuthContext);
+  const { user, logoutUser } = useContext(AuthContext);
   const anchorRef = useRef(null);
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(null);
 
@@ -47,7 +40,7 @@ export default function AccountPopover() {
   };
 
   const handleLogout = () => {
-    // logoutUser();
+    logoutUser();
   };
   return (
     <>
@@ -71,7 +64,7 @@ export default function AccountPopover() {
             }),
           }}
         >
-          <Avatar src={user.photo} alt='User' />
+          <Avatar src={user.photo || userImg} alt='User' />
         </IconButton>
       </div>
 
@@ -83,35 +76,28 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant='subtitle2' noWrap>
-            {user.email.toUpperCase()}
+            {`${user.firstName.toUpperCase()} ${user.lastName.toUpperCase()}`}
           </Typography>
         </Box>
 
         <Divider sx={{ my: 1 }} />
 
-        <MHidden width='mdUp'>
-          <Box sx={{ my: 1.5, px: 2.5 }}>
-            <NavLink to='/myauctions/watchlist'>
-              <Typography variant='body1' color='textPrimary' noWrap>
-                My Auctions
-              </Typography>
-            </NavLink>
-          </Box>
-        </MHidden>
-
-        <Box sx={{ my: 1.5, px: 2.5 }}>
+        <MenuItem>
           <NavLink to='/account'>
             <Typography variant='body1' color='textPrimary' noWrap>
               Account
             </Typography>
           </NavLink>
-        </Box>
+        </MenuItem>
 
-        <Box>
-          <Button fullWidth color='primary' onClick={handleLogout}>
+        <MenuItem id='logout'>
+          <Typography variant='body1' color='textPrimary' noWrap>
             Logout
-          </Button>
-        </Box>
+          </Typography>
+          <ListItemIcon>
+            <ExitToAppIcon fontSize='small' />
+          </ListItemIcon>
+        </MenuItem>
         {error !== null &&
           toast.error(error, {
             position: toast.POSITION.TOP_CENTER,

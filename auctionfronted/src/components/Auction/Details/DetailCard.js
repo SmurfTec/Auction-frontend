@@ -81,12 +81,31 @@ export default function FeaturedPost(props) {
                   flexBasis: '35%',
                 }}
               >
-                <Typography component='h2' variant='h5'>
+                <Typography component='h2' variant='h4'>
                   {title}
                 </Typography>
                 <Typography variant='h3' color='textSecondary'>
                   {price}
                 </Typography>
+
+                <Box
+                  mt={4}
+                  display='flex'
+                  flexDirection='column'
+                  sx={{ rowGap: 5 }}
+                >
+                  <Chip
+                    size='small'
+                    variant='outlined'
+                    label={`At : ${location}`}
+                    color='primary'
+                  />
+                  <Chip
+                    size='small'
+                    label={`Time Left : ${timeLeft}`}
+                    color='primary'
+                  />
+                </Box>
               </Box>
               <Box
                 sx={{
@@ -96,9 +115,30 @@ export default function FeaturedPost(props) {
                 <Typography variant='body1' paragraph>
                   {description}
                 </Typography>
+
+                <Box
+                  mt={1}
+                  mb={2}
+                  sx={{
+                    textAlign: 'right',
+                  }}
+                >
+                  <IconButton
+                    aria-label='bookmark'
+                    aria-haspopup='true'
+                    data-item={id}
+                    onClick={handleBookMark}
+                    style={{
+                      marginLeft: 'auto',
+                      color: '#000',
+                    }}
+                  >
+                    <VisibilityIcon color='primary' />
+                  </IconButton>
+                </Box>
               </Box>
             </Box>
-            <Box
+            {/* <Box
               mb={3}
               sx={{
                 display: 'flex',
@@ -107,19 +147,6 @@ export default function FeaturedPost(props) {
                 marginTop: 20,
               }}
             >
-              <Box display='flex' flexDirection='column' sx={{ rowGap: 5 }}>
-                <Chip
-                  size='small'
-                  variant='outlined'
-                  label={`At : ${location}`}
-                  color='primary'
-                />
-                <Chip
-                  size='small'
-                  label={`Time Left : ${timeLeft}`}
-                  color='primary'
-                />
-              </Box>
               <IconButton
                 aria-label='bookmark'
                 aria-haspopup='true'
@@ -132,7 +159,7 @@ export default function FeaturedPost(props) {
               >
                 <VisibilityIcon color='primary' />
               </IconButton>
-            </Box>
+            </Box> */}
             <Divider />
             <div className={classes.createdInfo}>
               <Typography variant='body1' color='textSecondary'>

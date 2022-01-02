@@ -18,9 +18,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import { Link, NavLink, Outlet } from 'react-router-dom';
-import Navbar from 'components/common/NavBar';
 import { Box, Hidden } from '@material-ui/core';
-import Footer from 'components/common/Footer';
 import SideMenu from './SideMenu';
 import MHidden from './MHidden';
 import ViewListIcon from '@material-ui/icons/ViewList';
@@ -28,8 +26,6 @@ import SpeakerNotesOffIcon from '@material-ui/icons/SpeakerNotesOff';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import CancelIcon from '@material-ui/icons/Cancel';
 import useStyles from 'styles/DrawerStyles';
-
-const drawerWidth = 200;
 
 const drawerList = [
   {
@@ -100,7 +96,6 @@ const DrawerLayout = () => {
 
   return (
     <>
-      <Navbar user='user' />
       <div className={classes.root}>
         <MHidden width='xsDown'>
           <Drawer
@@ -141,7 +136,6 @@ const DrawerLayout = () => {
           <Outlet />
         </main>
       </div>
-      <Footer />
     </>
   );
 };

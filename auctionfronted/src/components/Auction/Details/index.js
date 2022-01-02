@@ -16,14 +16,12 @@ import {
   Chip,
   Pagination,
 } from '@material-ui/core';
-import Navbar from 'components/common/NavBar';
 import React, { useEffect, useState } from 'react';
 import styles from 'styles/commonStyles';
 import AuctionStepper from './DetailsAucStepper';
 // import AuctionStepper from '../AuctionStepperM';
 import Card from './DetailCard';
 import { auctions } from 'data';
-import Footer from 'components/common/Footer';
 import { useParams } from 'react-router';
 import ScrollToTop from 'utils/ScrollToTop';
 import { bidddingInfo } from 'data';
@@ -67,8 +65,6 @@ const AuctionDetails = () => {
 
   return (
     <>
-      <Navbar user='user' />
-
       <ScrollToTop />
       <Container>
         <section className={globalClasses.containerMargin}>
@@ -234,9 +230,6 @@ const AuctionDetails = () => {
           <Typography variant='subtitle1'>Auction Not Found</Typography>
         )}
       </Container>
-      <section>
-        <Footer />
-      </section>
     </>
   );
 };

@@ -3,9 +3,7 @@ import {
   Box,
   Button,
   Chip,
-  Container,
   Divider,
-  Paper,
   TextField,
   Typography,
   CardContent,
@@ -13,149 +11,27 @@ import {
   Card,
   Grid,
 } from '@material-ui/core';
-import Navbar from 'components/common/NavBar';
-import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import React, { useEffect, useContext } from 'react';
+
 import userImg from 'assets/user.jpg';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import useManyInputs from 'hooks/useManyInputs';
-import { user } from 'data';
 import { getMuiDateFormat } from 'utils/common';
-import Footer from 'components/common/Footer';
-import { Link } from 'react-router-dom';
-
-const styles = makeStyles((theme) => ({
-  root: {
-    width: '85%',
-    maxWidth: 1024,
-    padding: '30px 0',
-    margin: '0 auto',
-    marginTop: '3rem',
-  },
-
-  userImg: {
-    marginBottom: '-50',
-    zIndex: 2,
-    position: 'relative',
-  },
-
-  profileImg: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '-4rem',
-    position: 'absolute',
-    right: '50%',
-    left: '50%',
-    marginBottom: '2rem',
-  },
-
-  large: {
-    width: theme.spacing(12),
-    height: theme.spacing(12),
-  },
-  content: {
-    // borderRadius: 12,
-    WebkitBackdropFilter: 'blur(10px)',
-    // backdropFilter: 'blur(10px)',
-    // backgroundColor: 'var(--theme-inner-content-bg)',
-    overflow: 'hidden',
-    textAlign: 'center',
-    marginTop: 30,
-    marginBottom: 20,
-
-    // // marginTop: '2rem',
-    // // textAlign: 'center',
-    '& .MuiChip-root': {
-      // paddingBlock: 5,
-      paddingInline: 3,
-      color: '#fff',
-
-      '& svg': {
-        color: '#fff',
-      },
-    },
-  },
-  displayFlex: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  twtIcon: {
-    backgroundColor: '#5da9dd',
-    color: '#fff',
-  },
-  verfIcon: {
-    marginLeft: 10,
-    color: '#FFF',
-    backgroundColor: theme.custom.success,
-  },
-  twitterHover: {
-    '&:hover': {
-      border: `1px solid #5da9dd`,
-      color: '#5da9dd',
-      backgroundColor: 'white',
-    },
-  },
-  insIcon: {
-    backgroundColor: '#ee653d',
-    color: '#fff',
-  },
-  instaHover: {
-    '&:hover': {
-      border: `1px solid #ee653d`,
-      color: '#ee653d',
-      backgroundColor: 'white',
-    },
-  },
-
-  accountsCard: {
-    '&  .MuiCardContent-root:last-child': {
-      paddingBlock: 40,
-    },
-  },
-
-  defaultCard: {
-    '&  .MuiCardContent-root:last-child': {
-      padding: 20,
-    },
-  },
-
-  card: {
-    padding: 0,
-    marginTop: '1.5rem',
-    margin: '0 auto',
-    position: 'relative',
-    borderRadius: 14,
-
-    '& .MuiCardHeader-root': {
-      padding: '10px 20px',
-      backgroundColor: theme.palette.primary.main,
-      color: '#fff',
-      flexDirection: 'row-reverse',
-      '& .MuiTypography-displayBlock': {
-        fontWeight: 600,
-      },
-      '& .MuiCardHeader-avatar': {
-        marginRight: 0,
-        marginLeft: 10,
-      },
-    },
-  },
-
-  showOverflow: {
-    overflow: 'visible',
-  },
-}));
+import { Link, useNavigate } from 'react-router-dom';
+import styles from 'styles/AccountStyles';
+import { AuthContext } from 'contexts/AuthContext';
 
 const Profile = () => {
   const classes = styles();
+  const { user } = useContext(AuthContext);
   const initialState = {
-    fname: user.fname,
-    lname: user.lname,
-    email: user.email,
+    firstName: '',
+    lastName: '',
+    email: '',
     bio: '',
     dateOfBirth: getMuiDateFormat('12/20/1990'),
-    phone: user.phone,
+    phone: '',
     cardNumber: '',
     cvc: '',
   };
@@ -168,9 +44,18 @@ const Profile = () => {
     resetState,
     setInputstate,
   ] = useManyInputs(initialState);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/');
+    } else {
+      setInputstate((st) => ({ ...st, ...user }));
+    }
+  }, [user, navigate]);
   return (
     <>
-      <Navbar user='user' />
       <div className={classes.root}>
         {/* <Paper className={classes.paper}>
           <div className={classes.profileImg}>
@@ -227,7 +112,7 @@ const Profile = () => {
             </div>
 
             <div className={classes.content}>
-              <Typography variant='h5'>{`${user.fname} ${user.lname}`}</Typography>
+              <Typography variant='h5'>{`${inputState.firstName} ${inputState.lastName}`}</Typography>
               <Typography variant='subtitle1' color='textSecondary'>
                 {user.email}
                 <Chip label='verified' className={classes.verfIcon} />
@@ -348,8 +233,8 @@ const Profile = () => {
             <Grid container spacing={4}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  name='fname'
-                  value={inputState.fname}
+                  name='firstName'
+                  value={inputState.firstName}
                   label='First Name'
                   onChange={handleTxtChange}
                   fullWidth
@@ -357,8 +242,8 @@ const Profile = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  name='lname'
-                  value={inputState.lname}
+                  name='lastName'
+                  value={inputState.lastName}
                   label='Last Name'
                   onChange={handleTxtChange}
                   fullWidth
@@ -454,9 +339,6 @@ const Profile = () => {
           </Box>
         </Link>
       </div>
-      <section>
-        <Footer />
-      </section>
     </>
   );
 };

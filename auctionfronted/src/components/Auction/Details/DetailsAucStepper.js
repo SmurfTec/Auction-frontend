@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('md')]: {
       display: 'flex',
       flexDirection: 'column',
-      flex: 2,
+      // flex: 2,
+      flexBasis: '35%',
       // maxWidth: 350,
     },
   },

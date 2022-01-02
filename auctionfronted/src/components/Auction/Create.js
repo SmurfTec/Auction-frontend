@@ -23,7 +23,6 @@ import { categories } from 'data';
 import AuctionStepper from './AuctionStepper';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import ImageIcon from '@material-ui/icons/Image';
-import Footer from 'components/common/Footer';
 
 const styles = makeStyles((theme) => ({
   root: {
@@ -33,7 +32,6 @@ const styles = makeStyles((theme) => ({
   },
   paper: {
     width: '90%',
-    marginTop: '3rem',
     padding: theme.spacing(3),
     borderRadius: 10,
 
@@ -128,16 +126,14 @@ const Create = () => {
     else setDisable(false);
   };
   return (
-    <>
-      <Navbar user='user' />
-
-      <Container className={classes.root}>
+    <Box my={6}>
+      <Box mb={3}>
+        <Typography variant='h4' fullWidth align='center'>
+          Create Auction
+        </Typography>
+      </Box>
+      <div className={classes.root}>
         <Paper className={classes.paper}>
-          <Box mb={3}>
-            <Typography variant='h4' fullWidth align='center'>
-              Create Auction
-            </Typography>
-          </Box>
           <form id='createForm' onSubmit={handleSubmit}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
@@ -198,19 +194,6 @@ const Create = () => {
               </Grid>
 
               <Grid item xs={12} sm={12}>
-                <TextField
-                  name='description'
-                  required
-                  multiline
-                  rows={4}
-                  value={inputState.description}
-                  label='Description'
-                  onChange={handleTxtChange}
-                  variant='outlined'
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={12}>
                 <Autocomplete
                   multiple
                   disabled={disabled || disable}
@@ -238,6 +221,19 @@ const Create = () => {
                       //   placeholder='Favorites'
                     />
                   )}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  name='description'
+                  required
+                  multiline
+                  rows={4}
+                  value={inputState.description}
+                  label='Description'
+                  onChange={handleTxtChange}
+                  variant='outlined'
+                  fullWidth
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -290,10 +286,8 @@ const Create = () => {
             </Button>
           </Box>
         </Paper>
-      </Container>
-
-      <Footer />
-    </>
+      </div>
+    </Box>
   );
 };
 

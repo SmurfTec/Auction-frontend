@@ -58,7 +58,8 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     // maxWidth: 620,
     display: 'flex',
-    flex: 3,
+    // flex: 3,
+    flexBasis: '65%',
     flexDirection: 'column',
     rowGap: 10,
     '& hr:last-child': {

@@ -6,29 +6,18 @@ import WatchList from 'components/Auction/MyAuctions/WatchList';
 import Login from 'components/common/Login';
 import Home from 'components/Home';
 import DrawerLayout from 'components/layouts/DrawerLayout/DrawerLayout';
-import FormLayout from 'components/layouts/FormLayout';
 import LeaderBoard from 'components/LeaderBoard';
 import CreateAuction from 'components/Auction/Create';
 import Profile from 'components/Profile';
 import ContactUs from 'components/ContactUs';
 import Register from 'components/common/Register';
+import Loading from 'components/common/Loading';
+import { Navigate } from 'react-router-dom';
 // import { Navigate } from 'react-router-dom';
 
 export const protectedRoutes = [
   {
-    path: '/',
-    element: <Home />,
-  },
-  {
-    path: '/leaderboard',
-    element: <LeaderBoard />,
-  },
-  {
-    path: 'auctionDetails/:id',
-    element: <AuctionDetails />,
-  },
-  {
-    path: '/myauctions',
+    path: 'myauctions',
     element: <DrawerLayout />,
     children: [
       {
@@ -50,59 +39,49 @@ export const protectedRoutes = [
     ],
   },
   {
-    path: 'login',
-    element: <FormLayout />,
-    children: [
-      {
-        path: '',
-        element: <Login />,
-      },
-    ],
-  },
-  {
-    path: 'register',
-    element: <FormLayout />,
-    children: [
-      {
-        path: '',
-        element: <Register />,
-      },
-    ],
-  },
-  {
-    path: 'createAuction',
+    path: '/createAuction',
     element: <CreateAuction />,
   },
   {
-    path: 'account',
+    path: '/account',
     element: <Profile />,
+  },
+];
+
+export const commonRoutes = [
+  {
+    path: '/',
+    element: <Home />,
+  },
+  {
+    path: 'leaderboard',
+    element: <LeaderBoard />,
+  },
+  {
+    path: 'auctionDetails/:id',
+    element: <AuctionDetails />,
   },
   {
     path: 'contact-us',
     element: <ContactUs />,
   },
+  {
+    path: '*',
+    element: <Navigate to='/' />,
+  },
 ];
 
-// export const publicRoutes = [
-//   {
-//     path: 'login',
-//     element: <FormLayout />,
-//     children: [
-//       {
-//         path: '',
-//         element: <Login />,
-//       },
-//     ],
-//   },
-//   // {
-//   //   path: 'register',
-//   //   element: <FormLayout />,
-//   //   children: [
-//   //     {
-//   //       path: '',
-//   //       element: <Register />,
-//   //     },
-//   //   ],
-//   // },
-//   { path: '*', element: <Navigate to='/login' /> },
-// ];
+export const publicRoutes = [
+  {
+    path: '/register',
+    element: <Register />,
+  },
+  {
+    path: '/login',
+    element: <Login />,
+  },
+];
+
+export const loading = [{ path: '*', element: <Loading /> }];
+
+export const defaultRoute = [{ path: '*', element: <Loading /> }];

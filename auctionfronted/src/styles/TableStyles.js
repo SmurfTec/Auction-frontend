@@ -7,6 +7,14 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiSelect-select:focus': {
       backgroundColor: 'transparent',
     },
+    '&.MuiMenuItem-root': {
+      paddingBlock: 10,
+    },
+    '& .MuiListItem-root:not(:last-child)': {
+      borderBottom: '1px solid #0000001f',
+      // '& :not(:last-child)': {
+      // },
+    },
   },
   large: {
     width: theme.spacing(6),

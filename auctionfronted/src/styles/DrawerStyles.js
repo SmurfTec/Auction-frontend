@@ -13,7 +13,8 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
-    // height: '100vh',
+    height: '100vh',
+    borderBottom: '1px solid #0000001f',
     [theme.breakpoints.up('md')]: {
       width: drawerWidth + 50,
     },
@@ -27,10 +28,10 @@ const useStyles = makeStyles((theme) => ({
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing(0, 1),
+    padding: '8px 16px',
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
   },
   content: {
     flexGrow: 1,
