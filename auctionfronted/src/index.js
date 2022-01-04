@@ -7,11 +7,17 @@ import { AuthProvider } from 'contexts/AuthContext';
 import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+import { AuctionsProvider } from 'contexts/AuctionsContext';
+import { CategoriesProvider } from 'contexts/CategoriesContext';
 
 ReactDOM.render(
   <BrowserRouter>
     <AuthProvider>
-      <App />
+      <CategoriesProvider>
+        <AuctionsProvider>
+          <App />
+        </AuctionsProvider>
+      </CategoriesProvider>
     </AuthProvider>
     <ToastContainer position='top-right' />
   </BrowserRouter>,

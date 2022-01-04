@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { MobileStepper, Paper, Button } from '@material-ui/core';
+import { MobileStepper, Paper, Button, IconButton } from '@material-ui/core';
+import EmbedVideo from './EmbedVideo';
 
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
-import EmbedVideo from '../common/EmbedVideo';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     objectFit: 'contain',
 
     [theme.breakpoints.down('sm')]: {
-      height: 300,
+      height: 225,
     },
 
     // [theme.breakpoints.up('md')]: {
@@ -43,24 +43,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AuctionStepper = ({ auction }) => {
-  const classes = useStyles();
-
+const Simpleimages = ({ type, images, video }) => {
+  const [activeStep, setActiveStep] = useState(0);
   const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [carousel, setCarousel] = React.useState(null);
-  //   const maxSteps = carousel.length;
 
-  React.useEffect(() => {
-    const arr = [];
-
-    if (auction) {
-      arr.push({ type: 'video', url: auction?.['video'] });
-      auction?.img.map((i) => arr.push({ type: 'img', images: i }));
-      setCarousel(arr);
-    } else return;
-  }, []);
-
+  const classes = useStyles();
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -69,25 +56,22 @@ const AuctionStepper = ({ auction }) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleStepChange = (step) => {
-    setActiveStep(step);
-  };
-
   return (
-    <>
-      {carousel && (
-        <Paper className={classes.root}>
-          {carousel?.[activeStep].type === 'video' ? (
-            <EmbedVideo embedUrl='rokGy0huYEA' />
-          ) : (
-            <img
-              className={classes.img}
-              src={carousel[activeStep].images}
-              alt={carousel[activeStep].label}
-            />
-          )}
+    <Paper className={classes.root}>
+      {type === 'video' ? (
+        <video width='100%' height='100%' controls>
+          <source src={video} type='video/mp4' />
+          Your browser does not support HTML video.
+        </video>
+      ) : (
+        <>
+          <img
+            className={classes.img}
+            src={images[activeStep]}
+            alt={images[activeStep]?.slice(0, 5)}
+          />
           <MobileStepper
-            steps={carousel.length}
+            steps={images.length}
             position='static'
             variant='dots'
             activeStep={activeStep}
@@ -96,7 +80,7 @@ const AuctionStepper = ({ auction }) => {
               <Button
                 size='small'
                 onClick={handleNext}
-                disabled={activeStep === carousel.length - 1}
+                disabled={activeStep === images.length - 1}
               >
                 {theme.direction === 'rtl' ? (
                   <KeyboardArrowLeft />
@@ -119,10 +103,10 @@ const AuctionStepper = ({ auction }) => {
               </Button>
             }
           />
-        </Paper>
+        </>
       )}
-    </>
+    </Paper>
   );
 };
 
-export default AuctionStepper;
+export default Simpleimages;

@@ -5,7 +5,7 @@ import { MobileStepper, Paper, Button, Box } from '@material-ui/core';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
 import styles from 'styles/commonStyles';
 // import EmbedVideo from './EmbedVideo';
-import EmbedVideo from '../EmbedVideo';
+import EmbedVideo from '../../common/EmbedVideo';
 
 const useStyles = makeStyles((theme) => ({
   root: {

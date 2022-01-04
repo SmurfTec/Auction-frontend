@@ -24,16 +24,18 @@ import { AuthContext } from 'contexts/AuthContext';
 
 const Profile = () => {
   const classes = styles();
-  const { user } = useContext(AuthContext);
+  const { user, updateMe } = useContext(AuthContext);
   const initialState = {
     firstName: '',
     lastName: '',
     email: '',
-    bio: '',
-    dateOfBirth: getMuiDateFormat('12/20/1990'),
-    phone: '',
-    cardNumber: '',
-    cvc: '',
+    about: '',
+    dateofBirth: getMuiDateFormat('12/20/1990'),
+    phoneNumber: '',
+    paymentDetails: {
+      cardNumber: '',
+      cvc: '',
+    },
   };
 
   const [
@@ -51,9 +53,46 @@ const Profile = () => {
     if (!user) {
       navigate('/');
     } else {
-      setInputstate((st) => ({ ...st, ...user }));
+      setInputstate((st) => ({
+        ...st,
+        ...user,
+        dateofBirth: getMuiDateFormat(user.dateofBirth),
+      }));
     }
   }, [user, navigate]);
+
+  const handleChangeCardDetails = (e) => {
+    changeInput('paymentDetails', {
+      ...inputState.paymentDetails,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleAddForm = (e) => {
+    e.preventDefault();
+    updateMe({ phoneNumber: inputState.phoneNumber });
+    console.log(`inputState`, inputState);
+  };
+
+  const handleProfileSave = (e) => {
+    e.preventDefault();
+    updateMe({
+      firstName: inputState.firstName,
+      lastName: inputState.lastName,
+      email: inputState.email,
+      dateofBirth: new Date(inputState.dateofBirth),
+    });
+    console.log(`inputState`, inputState);
+  };
+
+  const handleSaveCard = (e) => {
+    e.preventDefault();
+    updateMe({
+      paymentDetails: inputState.paymentDetails,
+    });
+    console.log(`inputState`, inputState);
+  };
+
   return (
     <>
       <div className={classes.root}>
@@ -90,9 +129,9 @@ const Profile = () => {
           </Box>
 
           <TextField
-            name='bio'
-            value={inputState.bio}
-            label='Tap to add your bio'
+            name='about'
+            value={inputState.about}
+            label='Tap to add your about'
             onChange={handleTxtChange}
             fullWidth
           />
@@ -139,8 +178,8 @@ const Profile = () => {
             </Box>
 
             <TextField
-              name='bio'
-              value={inputState.bio}
+              name='about'
+              value={inputState.about}
               label='Tap to add your bio'
               onChange={handleTxtChange}
               fullWidth
@@ -200,13 +239,17 @@ const Profile = () => {
             <Box mt={2}>
               <Grid container>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    name='phone'
-                    value={inputState.phone}
-                    label='Phone'
-                    onChange={handleTxtChange}
-                    fullWidth
-                  />
+                  <form onSubmit={handleAddForm} id='phoneform'>
+                    <TextField
+                      name='phoneNumber'
+                      value={inputState.phoneNumber}
+                      label='Phone'
+                      onChange={handleTxtChange}
+                      fullWidth
+                      required
+                      type='number'
+                    />
+                  </form>{' '}
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Box
@@ -217,7 +260,12 @@ const Profile = () => {
                       alignItems: 'end',
                     }}
                   >
-                    <Button variant='contained' color='secondary'>
+                    <Button
+                      type='submit'
+                      form='phoneform'
+                      variant='contained'
+                      color='secondary'
+                    >
                       Add Phone
                     </Button>
                   </Box>
@@ -230,57 +278,63 @@ const Profile = () => {
         <Card className={`${classes.card} ${classes.defaultCard}`}>
           <CardHeader title='My Personal Information' avatar />
           <CardContent className={`${classes.defaultCard}`}>
-            <Grid container spacing={4}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name='firstName'
-                  value={inputState.firstName}
-                  label='First Name'
-                  onChange={handleTxtChange}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name='lastName'
-                  value={inputState.lastName}
-                  label='Last Name'
-                  onChange={handleTxtChange}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name='dateOfBirth'
-                  label='Date of birth'
-                  type='date'
-                  format='mm/dd/yyyy'
-                  value={inputState.dateOfBirth}
-                  className={classes.textField}
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name='email'
-                  value={inputState.email}
-                  label='Email'
-                  onChange={handleTxtChange}
-                  fullWidth
-                />
-              </Grid>
+            <form id='profileform' onSubmit={handleProfileSave}>
+              <Grid container spacing={4}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    name='firstName'
+                    value={inputState.firstName}
+                    label='First Name'
+                    onChange={handleTxtChange}
+                    fullWidth
+                    required
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    name='lastName'
+                    value={inputState.lastName}
+                    label='Last Name'
+                    onChange={handleTxtChange}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    name='dateofBirth'
+                    label='Date of birth'
+                    type='date'
+                    format='mm/dd/yyyy'
+                    value={inputState.dateofBirth}
+                    onChange={handleTxtChange}
+                    className={classes.textField}
+                    fullWidth
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    name='email'
+                    value={inputState.email}
+                    label='Email'
+                    onChange={handleTxtChange}
+                    required
+                    fullWidth
+                    type='email'
+                  />
+                </Grid>
 
-              <Grid item xs={12} sm={12}>
-                <Box mt={2} sx={{ textAlign: 'right' }}>
-                  <Button variant='contained' color='secondary'>
-                    Save
-                  </Button>
-                </Box>
+                <Grid item xs={12} sm={12}>
+                  <Box mt={2} sx={{ textAlign: 'right' }}>
+                    <Button type='submit' variant='contained' color='secondary'>
+                      Save
+                    </Button>
+                  </Box>
+                </Grid>
               </Grid>
-            </Grid>
+            </form>
           </CardContent>
         </Card>
         <Card className={`${classes.card} ${classes.defaultCard}`}>
@@ -289,46 +343,54 @@ const Profile = () => {
             {/* <Box sx={{ textAlign: 'center', maxWidth: 300, margin: '0 auto' }}> */}
             <Typography variant='subtitle2'>Credit or Debit Card</Typography>
             <Box mt={2}>
-              <Grid container spacing={2}>
-                <Grid item xs={10} sm={5}>
-                  <TextField
-                    name='cardNumber'
-                    value={inputState.cardNumber}
-                    label='Card Number'
-                    onChange={handleTxtChange}
-                    fullWidth
-                    size='small'
-                    type='number'
-                    variant='outlined'
-                  />
+              <form onSubmit={handleSaveCard} id='cardform'>
+                <Grid container spacing={2}>
+                  <Grid item xs={10} sm={5}>
+                    <TextField
+                      name='cardNumber'
+                      value={inputState.paymentDetails.cardNumber}
+                      label='Card Number'
+                      onChange={handleChangeCardDetails}
+                      fullWidth
+                      size='small'
+                      type='number'
+                      variant='outlined'
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={2} sm={2}>
+                    <TextField
+                      name='cvc'
+                      value={inputState.paymentDetails.cvc}
+                      label='CVC'
+                      onChange={handleChangeCardDetails}
+                      fullWidth
+                      variant='outlined'
+                      type='number'
+                      size='small'
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={5}>
+                    <Box
+                      display='flex'
+                      style={{
+                        height: '100%',
+                        justifyContent: 'end',
+                        alignItems: 'end',
+                      }}
+                    >
+                      <Button
+                        type='submit'
+                        variant='contained'
+                        color='secondary'
+                      >
+                        Save Card
+                      </Button>
+                    </Box>
+                  </Grid>
                 </Grid>
-                <Grid item xs={2} sm={2}>
-                  <TextField
-                    name='cvc'
-                    value={inputState.cvc}
-                    label='CVC'
-                    onChange={handleTxtChange}
-                    fullWidth
-                    variant='outlined'
-                    type='number'
-                    size='small'
-                  />
-                </Grid>
-                <Grid item xs={12} sm={5}>
-                  <Box
-                    display='flex'
-                    style={{
-                      height: '100%',
-                      justifyContent: 'end',
-                      alignItems: 'end',
-                    }}
-                  >
-                    <Button variant='contained' color='secondary'>
-                      Save Card
-                    </Button>
-                  </Box>
-                </Grid>
-              </Grid>
+              </form>
             </Box>
             {/* </Box> */}
           </CardContent>

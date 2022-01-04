@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Chip,
+  CircularProgress,
   Container,
   Divider,
   FormControl,
@@ -16,73 +17,28 @@ import {
 } from '@material-ui/core';
 import Navbar from 'components/common/NavBar';
 import useManyInputs from 'hooks/useManyInputs';
-import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import React, { useContext } from 'react';
 import { Autocomplete } from '@material-ui/lab';
-import { categories } from 'data';
+// import { categories } from 'data';
 import AuctionStepper from './AuctionStepper';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import ImageIcon from '@material-ui/icons/Image';
+import { CategoriesContext } from 'contexts/CategoriesContext';
+import { AuctionsContext } from 'contexts/AuctionsContext';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useToggleInput } from 'hooks';
 
-const styles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  paper: {
-    width: '90%',
-    padding: theme.spacing(3),
-    borderRadius: 10,
-
-    [theme.breakpoints.up('sm')]: {
-      width: '70%',
-    },
-  },
-  uploadFile: {
-    '& input': {
-      display: 'none',
-    },
-  },
-  uploadFileBox: {
-    display: 'flex',
-    alignItems: 'center',
-    '& img': {
-      height: 100,
-      width: 100,
-      objectFit: 'cover',
-    },
-  },
-  selectControl: {
-    width: '100%',
-    '& .MuiSelect-select:focus': {
-      backgroundColor: 'transparent',
-    },
-  },
-  uploadDiv: {
-    border: `1px solid ${theme.palette.text.secondary}`,
-    borderRadius: 10,
-    minHeight: 250,
-    position: 'relative',
-    display: 'flex',
-    justifyContent: 'center',
-
-    '& span': {
-      '& svg': {
-        color: theme.palette.primary.main,
-      },
-      position: 'absolute',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      top: '50%',
-      transform: 'translateY(-50%)',
-    },
-  },
-}));
+import styles from './createAuctionStyles';
+import SimpleCarousel from 'components/common/SimpleCarousel';
+import { useNavigate } from 'react-router-dom';
 
 const Create = () => {
   const classes = styles();
+  const navigate = useNavigate();
+  const { categories } = useContext(CategoriesContext);
+  const { createNewAuction } = useContext(AuctionsContext);
+  const [isSubmitting, toggleSubmitting] = useToggleInput(false);
   const disabled = false;
   const initialState = {
     title: '',
@@ -92,6 +48,7 @@ const Create = () => {
     images: [],
     video: '',
     categories: [],
+    type: '',
     timeLine: 7,
   };
   const [
@@ -104,15 +61,18 @@ const Create = () => {
   ] = useManyInputs(initialState);
   const [disable, setDisable] = React.useState(false);
   //   const [open, setOpen] = React.useState(false);
-
-  const uploadFile = () => {};
-
-  //   const handleClose = () => {
-  //     setOpen(false);
-  //   };
+  const [isImageUploading, toggleImageUploading] = useToggleInput(false);
+  const [isVideoUploading, toggleVideoUploading] = useToggleInput(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(`inputState`, inputState);
+    toggleSubmitting();
+    createNewAuction(inputState, () => {
+      toast.success('Auction Created Successfully!');
+      navigate('/');
+      toggleSubmitting();
+    });
     // setOpen(true);
   };
 
@@ -120,11 +80,64 @@ const Create = () => {
     changeInput('timeLine', e.target.value);
   };
 
+  const handleType = (e) => {
+    changeInput('type', e.target.value);
+  };
+
   const handleCatOnChange = (e, newValue) => {
     changeInput('categories', newValue);
     if (newValue.length === 3) setDisable(true);
     else setDisable(false);
   };
+
+  const handleImageUpload = async (e, options, toggleFunc, cb) => {
+    toggleFunc();
+    const selectedFile = e.target.files[0];
+
+    // * whoever calls the func, give us options in 2nd param,
+    // *
+    const { fileType } = options;
+    try {
+      console.log(`selectedFile.type`, selectedFile.type);
+      if (selectedFile && selectedFile.type.includes(fileType)) {
+        let reader = new FileReader();
+        reader.readAsDataURL(selectedFile);
+        reader.onloadend = async (e) => {
+          //console.log(`result onLoadEnd`, e.target.result);
+          const file = e.target.result;
+
+          // TODO  Delete Image from cloudinary if it exists on this user
+
+          // // * 1 Upload Image on Cloudinary
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('folder', 'auction-app');
+          formData.append(
+            'upload_preset',
+            process.env.REACT_APP_CLOUDINARY_PRESET
+          );
+
+          const res = await axios.post(
+            `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/auto/upload`,
+            formData
+          );
+          const uploadedImage = res.data.url;
+
+          cb(uploadedImage);
+        };
+      } else {
+        toast.error('Only Image files are acceptable !');
+      }
+    } catch (err) {
+      toast(
+        err?.response?.data?.message || err.message || 'Something Went Wrong'
+      );
+      console.log(`err`, err);
+    } finally {
+      toggleFunc();
+    }
+  };
+
   return (
     <Box my={6}>
       <Box mb={3}>
@@ -134,7 +147,7 @@ const Create = () => {
       </Box>
       <div className={classes.root}>
         <Paper className={classes.paper}>
-          <form id='createForm' onSubmit={handleSubmit}>
+          <form id='createform' onSubmit={handleSubmit}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -193,8 +206,9 @@ const Create = () => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={12} sm={12}>
+              <Grid item xs={12} sm={8}>
                 <Autocomplete
+                  className={classes.categories}
                   multiple
                   disabled={disabled || disable}
                   id='categories'
@@ -202,11 +216,11 @@ const Create = () => {
                   onChange={handleCatOnChange}
                   options={categories}
                   required
-                  getOptionLabel={(option) => option}
+                  getOptionLabel={(option) => option.name}
                   renderTags={(tagValue, getTagProps) =>
                     tagValue.map((option, index) => (
                       <Chip
-                        label={option}
+                        label={option.name}
                         {...getTagProps({ index })}
                         color='default'
                         disabled={false}
@@ -223,6 +237,26 @@ const Create = () => {
                   )}
                 />
               </Grid>
+              <Grid item xs={12} sm={4}>
+                <FormControl
+                  variant='outlined'
+                  className={classes.selectControl}
+                  fulWidth
+                >
+                  <InputLabel htmlFor='outlined-age-native-simple' fullWidth>
+                    Auction Type
+                  </InputLabel>
+                  <Select
+                    value={inputState.type}
+                    onChange={handleType}
+                    label='Type'
+                    fullWidth
+                  >
+                    <MenuItem value={'specific'}>Specific</MenuItem>
+                    <MenuItem value={'openEnded'}>Open Ended</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
               <Grid item xs={12} sm={12}>
                 <TextField
                   name='description'
@@ -237,37 +271,102 @@ const Create = () => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <div className={classes.uploadFile}>
-                  <input id='fileuploadBtn' type='file' onChange={uploadFile} />
-                </div>
                 <Box mt={2} className={classes.uploadDiv}>
-                  <label htmlFor='fileuploadBtn'></label>
-                  <span>
-                    <ImageIcon fontSize='large' />
-                    Add upto 5 images
-                  </span>
+                  {inputState.images.length > 0 ? (
+                    <SimpleCarousel type='image' images={inputState.images} />
+                  ) : (
+                    <span>
+                      <ImageIcon fontSize='large' />
+                      Add upto 5 images
+                    </span>
+                  )}
                 </Box>
                 <Box mt={2}>
-                  <Button variant='contained' color='primary' component='span'>
-                    Upload Image
-                  </Button>
+                  <input
+                    accept='image/*'
+                    style={{ display: 'none' }}
+                    id='image'
+                    disabled={isImageUploading}
+                    multiple
+                    type='file'
+                    onChange={(e) =>
+                      handleImageUpload(
+                        e,
+                        {
+                          fileType: ['image/'],
+                        },
+                        toggleImageUploading,
+                        (img) => {
+                          setInputstate((st) => ({
+                            ...st,
+                            images: [...st.images, img],
+                          }));
+                        }
+                      )
+                    }
+                  />
+                  <label htmlFor='image' style={{ width: 'fit-content' }}>
+                    {' '}
+                    <Button
+                      className={classes.uploadBtn}
+                      variant='contained'
+                      color='primary'
+                      component='span'
+                      disabled={isImageUploading}
+                    >
+                      Upload Image
+                      {isImageUploading && <CircularProgress size={25} />}
+                    </Button>
+                  </label>
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <div className={classes.uploadFile}>
-                  <input id='fileuploadBtn' type='file' onChange={uploadFile} />
-                </div>
                 <Box mt={2} className={classes.uploadDiv}>
-                  <label htmlFor='fileuploadBtn'></label>
-                  <span>
-                    <ImageIcon fontSize='large' />
-                    Add video
-                  </span>
+                  {inputState.video ? (
+                    <SimpleCarousel video={inputState.video} type='video' />
+                  ) : (
+                    <span>
+                      <ImageIcon fontSize='large' />
+                      Add a cideo
+                    </span>
+                  )}
                 </Box>
                 <Box mt={2}>
-                  <Button variant='contained' color='primary' component='span'>
-                    Upload Video
-                  </Button>
+                  <input
+                    accept='video/*'
+                    style={{ display: 'none' }}
+                    id='video'
+                    disabled={isVideoUploading}
+                    multiple
+                    type='file'
+                    onChange={(e) =>
+                      handleImageUpload(
+                        e,
+                        {
+                          fileType: ['video/'],
+                        },
+                        toggleVideoUploading,
+                        (vid) => {
+                          setInputstate((st) => ({
+                            ...st,
+                            video: vid,
+                          }));
+                        }
+                      )
+                    }
+                  />
+                  <label htmlFor='video' style={{ width: 'fit-content' }}>
+                    <Button
+                      className={classes.uploadBtn}
+                      variant='contained'
+                      color='primary'
+                      component='span'
+                      disabled={isVideoUploading}
+                    >
+                      {isVideoUploading && <CircularProgress size={25} />}
+                      Upload Video
+                    </Button>
+                  </label>
                 </Box>
               </Grid>
             </Grid>
@@ -279,10 +378,13 @@ const Create = () => {
             <Button
               color='primary'
               variant='contained'
-              form='createForm'
+              form='createform'
               type='submit'
+              disabled={isSubmitting}
+              className={classes.uploadBtn}
             >
               Create Auction
+              {isSubmitting && <CircularProgress size={25} />}
             </Button>
           </Box>
         </Paper>

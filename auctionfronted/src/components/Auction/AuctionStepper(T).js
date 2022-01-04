@@ -5,7 +5,7 @@ import { MobileStepper, Paper, Typography, Button } from '@material-ui/core';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
-import EmbedVideo from './EmbedVideo';
+import EmbedVideo from '../common/EmbedVideo';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
