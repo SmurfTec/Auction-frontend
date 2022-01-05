@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -10,7 +10,7 @@ import {
   ListItemIcon,
 } from '@material-ui/core';
 import { Box, Button, Typography } from '@material-ui/core';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AccountPopover from './AccountPopover';
 import Logo from './Logo';
 import { AuthContext } from 'contexts/AuthContext';
@@ -37,6 +37,8 @@ const Navbar = (props) => {
   const { user } = useContext(AuthContext);
   console.log(`user`, user);
 
+  const location = useLocation();
+
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -61,7 +63,13 @@ const Navbar = (props) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const handleSwitchUser = () => {};
+  const showSearchBar = useMemo(() => {
+    // * Either location is home, leaderboard or in myAuctions , then show searchBar
+    return (
+      ['/', '/leaderboard'].includes(location.pathname.toLowerCase()) ||
+      location.pathname.toLowerCase().includes('myauctions')
+    );
+  }, [location.pathname]);
 
   return (
     <div className={`${classes.root}`}>
@@ -85,7 +93,7 @@ const Navbar = (props) => {
               </div>
               <Logo w={35} h={35} />
             </Box>
-            <Search />
+            {showSearchBar && <Search />}
           </div>
 
           <div className={classes.sectionDesktop}>

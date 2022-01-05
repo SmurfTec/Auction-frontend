@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import {
   Box,
   Grid,
@@ -18,23 +18,43 @@ import Card from 'components/Auction/Card';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AuctionStepper from 'components/Auction/AuctionStepper';
 import ShareIcon from '@material-ui/icons/Share';
-import { categories, location } from 'data';
+import { categories, location as locations } from 'data';
 import styles from 'styles/commonStyles';
 import useStyles from './styles';
 import { AuctionsContext } from 'contexts/AuctionsContext';
+import { useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 
 const HomePage = () => {
   const globalClasses = styles();
   const customClasses = useStyles();
   const { auctions, loading } = useContext(AuctionsContext);
+  const location = useLocation();
 
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(50);
+  const [filteredAuctions, setFilteredAuctions] = useState([]);
 
   const initialState = {
     price: '',
     categories: [],
   };
+
+  // * Filter by search
+  const parsedQuery = useMemo(() => {
+    return queryString.parse(location.search);
+  }, [location.search]);
+
+  useEffect(() => {
+    console.log(`parsedQuery`, parsedQuery);
+    if (!parsedQuery.search) return setFilteredAuctions(auctions || []);
+
+    setFilteredAuctions(
+      auctions?.filter((el) =>
+        el.title.toLowerCase().includes(parsedQuery.search.toLowerCase())
+      )
+    );
+  }, [parsedQuery]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -135,8 +155,8 @@ const HomePage = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                   <div className={customClasses.content}>
-                    {location &&
-                      location.map((loc) => (
+                    {locations &&
+                      locations.map((loc) => (
                         <div key={loc}>
                           <Typography
                             variant='body1'
@@ -203,7 +223,7 @@ const HomePage = () => {
                   />
                 ))}
             <div className={customClasses.pagination}>
-              {auctions
+              {filteredAuctions
                 ?.slice(
                   (page - 1) * rowsPerPage,
                   (page - 1) * rowsPerPage + rowsPerPage

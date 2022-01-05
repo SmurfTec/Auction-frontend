@@ -7,6 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import { Box } from '@material-ui/core';
 import Search from '@material-ui/icons/Search';
+import { useTextInput } from 'hooks';
+import { useLocation, useNavigate } from 'react-router-dom';
 // import { useThemeContext } from 'Components/theme';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,31 +40,40 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CustomizedInputBase() {
   const classes = useStyles();
-  const [search, setSearch] = React.useState('');
+  const [search, handleChange] = useTextInput('');
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleChange = (e) => {
-    setSearch(e.target.value);
+  const searchResults = (e) => {
+    e.preventDefault();
+
+    // * if search is empty , navigate to '/' from '/search='blabla'
+    if (!search) navigate(location.pathname);
+    else navigate(`?search=${search}`);
+    // * navigate to '/' from '/search='blabla'
   };
 
   return (
     <Box display='flex' width='100%'>
-      <Box height='45px' width='100%'>
-        <div className={classes.container}>
-          <div className={classes.searchIcon}>
-            <Search fontSize='small' />
+      <form onSubmit={searchResults}>
+        <Box height='45px' width='100%'>
+          <div className={classes.container}>
+            <div className={classes.searchIcon}>
+              <Search fontSize='small' />
+            </div>
+            <input
+              aria-invalid='false'
+              aria-autocomplete='list'
+              aria-controls='NavSearch--results'
+              placeholder='Search items & collections'
+              type='search'
+              value={search}
+              onChange={handleChange}
+              style={{ cursor: 'text' }}
+            />
           </div>
-          <input
-            aria-invalid='false'
-            aria-autocomplete='list'
-            aria-controls='NavSearch--results'
-            placeholder='Search items & collections'
-            type='search'
-            value={search}
-            onChange={handleChange}
-            style={{ cursor: 'text' }}
-          />
-        </div>
-      </Box>
+        </Box>
+      </form>
     </Box>
   );
 }
