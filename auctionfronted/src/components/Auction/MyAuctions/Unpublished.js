@@ -1,15 +1,20 @@
-import React from 'react';
-import watchImg from 'assets/watchImg.png';
+import React, { useContext, useEffect, useState } from 'react';
 import AuctionList from './AuctionList';
+import { AuctionsContext } from 'contexts/AuctionsContext';
+import { AuthContext } from 'contexts/AuthContext';
 
 const Unpulished = () => {
-  // const {myAuctions} = React.useContext(AuctionsContext)
-  //   const [data, setdata] = React.useState([]);
+  const { user } = useContext(AuthContext);
+  const { myAuctions, loadingMyAuctions } = useContext(AuctionsContext);
+  const [data, setdata] = useState([]);
 
-  // useEffect(() => {
-  // }, [myAuctions])
+  useEffect(() => {
+    if (loadingMyAuctions || !myAuctions) return;
 
-  return <AuctionList />;
+    setdata(myAuctions.filter((el) => el.user?._id === user._id));
+  }, [myAuctions]);
+
+  return <AuctionList auctions={data} loading={loadingMyAuctions} />;
 };
 
 export default Unpulished;

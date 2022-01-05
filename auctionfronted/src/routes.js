@@ -24,18 +24,18 @@ export const protectedRoutes = [
         path: 'watchlist',
         element: <WatchList />,
       },
-      {
-        path: 'unclaimed',
-        element: <Unclaimed />,
-      },
+      // {
+      //   path: 'unclaimed',
+      //   element: <Unclaimed />,
+      // },
       {
         path: 'unpublished',
         element: <Unpulished />,
       },
-      {
-        path: 'completed',
-        element: <Previous />,
-      },
+      // {
+      //   path: 'completed',
+      //   element: <Previous />,
+      // },
     ],
   },
   {

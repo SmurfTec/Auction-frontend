@@ -1,16 +1,20 @@
-import React from 'react';
-import watchImg from 'assets/watchImg.png';
+import React, { useContext, useEffect, useState } from 'react';
 import AuctionList from './AuctionList';
-import { auctions } from 'data';
+import { AuctionsContext } from 'contexts/AuctionsContext';
 
 const WatchList = () => {
-  // const {myAuctions} = React.useContext(AuctionsContext)
-  //   const [data, setdata] = React.useState([]);
+  // * I gave my custom name "loading" here,
+  const { watchlist, loadingWatchlist: loading } = useContext(AuctionsContext);
 
-  // useEffect(() => {
-  // }, [myAuctions])
+  const [auctions, setAuctions] = useState([]);
 
-  return <AuctionList data={auctions} />;
+  useEffect(() => {
+    if (loading || !watchlist) return;
+
+    setAuctions(watchlist.map((el) => el.auction));
+  }, [watchlist]);
+
+  return <AuctionList auctions={auctions} loading={loading} />;
 };
 
 export default WatchList;

@@ -10,6 +10,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import { useNavigate } from 'react-router-dom';
 import styles from 'styles/commonStyles';
 import { calculateCountdown } from 'utils/dateFunctions';
+import { VisibilityOff } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   card: {

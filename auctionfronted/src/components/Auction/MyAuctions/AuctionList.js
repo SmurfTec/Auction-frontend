@@ -5,6 +5,7 @@ import AuctionStepper from '../AuctionStepper';
 // import AuctionStepper from '../Details/AuctionStepper';
 import ShareIcon from '@material-ui/icons/Share';
 import styles from 'styles/commonStyles';
+import { Skeleton } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   auctDetailCont: {
@@ -30,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AuctionList = ({ data }) => {
-  console.log(`data`, data);
+const AuctionList = ({ auctions, loading }) => {
+  console.log(`auctions`, auctions);
   const globalClasses = styles();
   const customClasses = useStyles();
 
@@ -40,11 +41,29 @@ const AuctionList = ({ data }) => {
     // console.log(`item`, item);
   };
 
+  if (loading || !auctions)
+    return Array(10)
+      .fill()
+      .map((_, idx) => (
+        <Skeleton
+          style={{
+            marginBlock: '1rem',
+            marginInline: 'auto',
+          }}
+          variant='rect'
+          height={200}
+          width='90%'
+          key={idx}
+        />
+      ));
+  // * making index as key is high discouraged, but in this case skeletons are
+  // * only showing and are NOT getting updated, so we can use index as key here
+
   return (
     <>
       <Box display='flex' flexDirection='column' sx={{ flexWrap: 'nowrap' }}>
-        {data ? (
-          data.map((auc) => (
+        {auctions.length > 0 ? (
+          auctions.map((auc) => (
             // <div
             //   className={`${globalClasses.cardContainer} ${globalClasses.flexDisp} ${globalClasses.customStyledWidth}`}
             //   key={auc.id}
@@ -95,7 +114,7 @@ const AuctionList = ({ data }) => {
                 >
                   <AuctionStepper auction={auc} />
                   <div className={globalClasses.content}>
-                    <Card {...auc} />
+                    <Card auction={auc} />
                   </div>
                 </div>
               </div>
@@ -103,7 +122,7 @@ const AuctionList = ({ data }) => {
                           <AuctionStepper auction={auc} />
 
                           <div className={globalClasses.content}>
-                            <Card {...auc} />
+                            <Card auction={auction} />
                           </div>
                         </div> */}
               <Box>
