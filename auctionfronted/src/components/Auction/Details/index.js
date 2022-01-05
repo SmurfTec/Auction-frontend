@@ -9,7 +9,7 @@ import ScrollToTop from 'utils/ScrollToTop';
 import tableStyles from 'styles/TableStyles';
 import { useFetch, useToggleInput } from 'hooks';
 import { toast } from 'react-toastify';
-import Loading from 'components/common/Loading';
+import Loading from './LoadingDetails';
 import { API_BASE_URL, handleCatch, makeReq } from 'utils/makeReq';
 import { AuthContext } from 'contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
@@ -110,7 +110,7 @@ const AuctionDetails = () => {
 
   // * Sometimes loading becomes false , but auction is still undefined
   // * for small amount of time , so in that case !auction is put here
-  if (loading || !auction) return <Loading noTitle />;
+  if (loading || !auction) return <Loading />;
 
   if (error) return <Navigate to='/' />;
 
