@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 // import auctionmg from 'assets/auctionBanner.jpg';
 import auctionHero from 'assets/auctionHero.jpg';
 import { Box, Button, Typography } from '@material-ui/core';
-import { auctions } from 'data';
+// import { auctions } from 'data';
 import styles from 'styles/heroCarouselStyles';
+import { AuctionsContext } from 'contexts/AuctionsContext';
 const HeroCarousel = () => {
+  const { auctions } = useContext(AuctionsContext);
   const classes = styles();
   return (
     <Carousel
@@ -33,14 +35,14 @@ const HeroCarousel = () => {
 
       {auctions &&
         auctions.map((auc) => (
-          <div className={classes.wrapper}>
+          <div className={classes.wrapper} key={auc._id}>
             <span />
             <img src={auctionHero} alt={`${auc.title}`} />
             <div className={classes.aucItemContainer}>
               <div
                 className={classes.aucImg}
                 style={{
-                  background: `white url(${auc.img}) center top no-repeat`,
+                  background: `white url(${auc.images?.[0]}) center top no-repeat`,
                   backgroundSize: 'contain',
                 }}
               />

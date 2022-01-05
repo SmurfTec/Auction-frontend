@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Box,
   Grid,
-  makeStyles,
   Typography,
   Accordion,
   AccordionSummary,
@@ -12,59 +11,22 @@ import {
   Checkbox,
   IconButton,
 } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
+import { Pagination, Skeleton } from '@material-ui/lab';
 
 import HeroCarousel from 'components/common/HeroCarousel';
 import Card from 'components/Auction/Card';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AuctionStepper from 'components/Auction/AuctionStepper';
 import ShareIcon from '@material-ui/icons/Share';
-import { auctions, categories, location } from 'data';
+import { categories, location } from 'data';
 import styles from 'styles/commonStyles';
-
-const useStyles = makeStyles((theme) => ({
-  filter: {
-    marginTop: theme.spacing(3),
-    display: 'flex',
-    flexDirection: 'column',
-    flexWrap: 'nowrap',
-  },
-  content: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    rowGap: 10,
-    '& hr:last-child': {
-      display: 'none',
-    },
-    '& p': {
-      paddingLeft: theme.spacing(2),
-    },
-
-    '& .MuiFormControlLabel-root': {
-      marginLeft: 0,
-    },
-  },
-  pagination: {
-    justifyContent: 'center',
-    '& .MuiTablePagination-spacer': {
-      flex: 0,
-      display: 'none',
-    },
-
-    '& .MuiTablePagination-toolbar': {
-      justifyContent: 'left',
-    },
-
-    '& .MuiTablePagination-input': {
-      display: 'none',
-    },
-  },
-}));
+import useStyles from './styles';
+import { AuctionsContext } from 'contexts/AuctionsContext';
 
 const HomePage = () => {
   const globalClasses = styles();
   const customClasses = useStyles();
+  const { auctions, loading } = useContext(AuctionsContext);
 
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(50);
@@ -227,44 +189,29 @@ const HomePage = () => {
               <Box mb={3}>Featured Auctions</Box>
             </Typography>
 
-            {/* <TableContainer className={globalClasses.container}>
-                <Table>
-                  <TableBody>
-                    {auctions
-                      .slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
-                      .map((auc) => {
-                        return (
-                          <TableRow
-                            // hover
-                            // role='checkbox'
-                            tabIndex={-1}
-                            key={auc.id}
-                          >
-                            <Card {...auc} />
-                            {/* <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === 'number'
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell> */}
-            {/* </TableRow>
-                        );
-                      })}
-                  </TableBody>
-                </Table>
-              </TableContainer> */}
+            {loading &&
+              Array(10)
+                .fill()
+                .map(() => (
+                  <Skeleton
+                    variant='rect'
+                    height={250}
+                    width={'95%'}
+                    style={{
+                      marginBottom: '1rem',
+                    }}
+                  />
+                ))}
             <div className={customClasses.pagination}>
               {auctions
-                .slice(
+                ?.slice(
                   (page - 1) * rowsPerPage,
                   (page - 1) * rowsPerPage + rowsPerPage
                 )
                 .map((auc, ind) => {
                   return (
                     <div
-                      key={auc.id}
+                      key={auc._id}
                       className={`${globalClasses.flexDisp} ${globalClasses.cardContainer}`}
                     >
                       <div
@@ -274,8 +221,9 @@ const HomePage = () => {
                           className={`${globalClasses.customStyledBox} ${globalClasses.flexJustDisp} ${globalClasses.customStyledWidth}`}
                         >
                           <AuctionStepper auction={auc} />
+                          {/* <SimpleCarousel */}
                           <div className={globalClasses.content}>
-                            <Card {...auc} />
+                            <Card auction={auc} />
                           </div>
                         </div>
                       </div>
@@ -290,7 +238,7 @@ const HomePage = () => {
                         <IconButton
                           aria-label='Share'
                           aria-haspopup='true'
-                          data-item={auc.id}
+                          data-item={auc._id}
                           onClick={handleShare}
                           style={{
                             marginLeft: 'auto',

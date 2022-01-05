@@ -41,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
   },
   containerMargin: {
     marginBlock: theme.spacing(6),
+    [theme.breakpoints.down('sm')]: {
+      marginBlock: theme.spacing(2),
+    },
   },
   gridAlign: {
     justifyContent: 'center',

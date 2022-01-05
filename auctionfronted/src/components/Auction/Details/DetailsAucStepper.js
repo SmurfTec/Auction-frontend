@@ -9,15 +9,14 @@ import EmbedVideo from '../../common/EmbedVideo';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // maxWidth: 350,
+    flex: 2,
+    display: 'flex',
+    flexDirection: 'column',
+    height: 200,
     backgroundColor: '#fff',
     borderRight: '1px solid rgb(229, 232, 235)',
     [theme.breakpoints.up('md')]: {
-      display: 'flex',
-      flexDirection: 'column',
-      // flex: 2,
-      flexBasis: '35%',
-      // maxWidth: 350,
+      maxWidth: 350,
     },
   },
   header: {
@@ -27,27 +26,31 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(4),
     backgroundColor: theme.palette.background.default,
   },
-  imgDiv: {
-    width: '100%',
-    height: '100%',
-    overflow: 'hidden',
-    position: 'relative',
+  VideoBox: {
+    height: 170,
+    flexGrow: 1,
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      height: 200,
+    },
   },
   img: {
-    // /height: 285,
-    // display: 'block',
-    overflow: 'hidden',
     width: '100%',
-    height: 300,
+    height: 170,
+    flexGrow: 1,
+    display: 'block',
+    overflow: 'hidden',
     objectFit: 'contain',
-
-    // [theme.breakpoints.up('md')]: {
-    //   height: '100%',
-    // },
+    [theme.breakpoints.down('sm')]: {
+      height: 200,
+    },
   },
   mobileStepper: {
     background: '#fff',
     minHeight: 70,
+    [theme.breakpoints.down('sm')]: {
+      minHeight: 50,
+    },
   },
   imgCont: {
     backgroundSize: 'contain',
@@ -71,14 +74,15 @@ const DetailsAucStepper = ({ auction }) => {
   //   const maxSteps = carousel.length;
 
   React.useEffect(() => {
+    if (!auction) return;
     const arr = [];
 
     if (auction) {
-      arr.push({ type: 'video', url: auction?.['video'] });
-      auction?.img.map((i) => arr.push({ type: 'img', images: i }));
+      arr.push({ type: 'video', url: auction['video'] });
+      auction?.images.map((i) => arr.push({ type: 'img', url: i }));
       setCarousel(arr);
     } else return;
-  }, []);
+  }, [auction]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -97,18 +101,22 @@ const DetailsAucStepper = ({ auction }) => {
       {carousel && (
         <Paper className={`${classes.root}`}>
           {carousel?.[activeStep].type === 'video' ? (
-            <EmbedVideo embedUrl='rokGy0huYEA' />
+            <Box className={classes.VideoBox}>
+              <video width='100%' height='100%' controls>
+                <source src={auction.video} type='video/mp4' />
+                Your browser does not support HTML video.
+              </video>
+            </Box>
           ) : (
             // <div className={classes.imgDiv}>
-            <Box
-              className={classes.imgCont}
-              sx={{
-                backgroundImage: `url(${carousel[activeStep].images})`,
-              }}
+            <img
+              className={classes.img}
+              src={carousel[activeStep].url}
+              alt={carousel[activeStep].label}
             />
             //   <img
             //   className={classes.img}
-            //   src={carousel[activeStep].images}
+            //   src={carousel[activeStep].url}
             //   alt={carousel[activeStep].label}
             // />
             // </Box>

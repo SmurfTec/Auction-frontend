@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     // maxWidth: 350,
     flex: 2,
+    display: 'flex',
+    flexDirection: 'column',
+    height: 200,
     backgroundColor: '#fff',
     borderRight: '1px solid rgb(229, 232, 235)',
     [theme.breakpoints.up('md')]: {
@@ -23,16 +26,15 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
   },
   img: {
+    width: '100%',
     height: 200,
     display: 'block',
     overflow: 'hidden',
-    width: '100%',
-    // margin: '0 auto',
     objectFit: 'contain',
-
-    [theme.breakpoints.down('sm')]: {
-      height: 300,
-    },
+    paddingTop: 20,
+    // [theme.breakpoints.down('sm')]: {
+    //   height: 300,
+    // },
 
     // [theme.breakpoints.up('md')]: {
     //   height: '84.2%',
@@ -52,14 +54,15 @@ const AuctionStepper = ({ auction }) => {
   //   const maxSteps = carousel.length;
 
   React.useEffect(() => {
+    if (!auction) return;
     const arr = [];
 
     if (auction) {
-      arr.push({ type: 'video', url: auction?.['video'] });
-      auction?.img.map((i) => arr.push({ type: 'img', images: i }));
+      arr.push({ type: 'video', url: auction['video'] });
+      auction.images.map((i) => arr.push({ type: 'img', url: i }));
       setCarousel(arr);
     } else return;
-  }, []);
+  }, [auction]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -78,11 +81,15 @@ const AuctionStepper = ({ auction }) => {
       {carousel && (
         <Paper className={classes.root}>
           {carousel?.[activeStep].type === 'video' ? (
-            <EmbedVideo embedUrl='rokGy0huYEA' />
+            // <EmbedVideo embedUrl={auction.video} />
+            <video width='100%' height='100%' controls>
+              <source src={auction.video} type='video/mp4' />
+              Your browser does not support HTML video.
+            </video>
           ) : (
             <img
               className={classes.img}
-              src={carousel[activeStep].images}
+              src={carousel[activeStep].url}
               alt={carousel[activeStep].label}
             />
           )}

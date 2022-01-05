@@ -22,7 +22,11 @@ const GlobalStyles = withStyles((theme) => ({
       height: '100%',
       overflowY: 'auto',
     },
-
+    button: {
+      '& .MuiCircularProgress-root': {
+        marginLeft: 10,
+      },
+    },
     input: {
       '&[type=number]': {
         MozAppearance: 'textfield',

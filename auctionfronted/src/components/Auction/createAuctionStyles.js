@@ -58,9 +58,6 @@ const styles = makeStyles((theme) => ({
   uploadBtn: {
     minWidth: 130,
     maxHeight: 40,
-    '& .MuiCircularProgress-root': {
-      marginLeft: 10,
-    },
   },
   categories: {
     '& .MuiInputBase-root': {

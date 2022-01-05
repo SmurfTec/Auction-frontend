@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Hidden from '@material-ui/core/Hidden';
 import { Box, Chip, IconButton } from '@material-ui/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import ShareIcon from '@material-ui/icons/Share';
+import { calculateCountdown } from 'utils/dateFunctions';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -20,6 +18,11 @@ const useStyles = makeStyles((theme) => ({
   cardDetails: {
     flex: 1,
     position: 'relative',
+    '& .MuiCardContent-root': {
+      [theme.breakpoints.down('sm')]: {
+        paddingTop: 0,
+      },
+    },
   },
   cardMedia: {
     width: 160,
@@ -39,24 +42,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FeaturedPost(props) {
+export default function FeaturedPost({ auction, handleBookmark, bookmaking }) {
   const classes = useStyles();
-  const {
-    id,
-    title,
-    location,
-    img,
-    price,
-    startedby,
-    timeLeft,
-    description,
-    createdAt,
-  } = props;
 
-  const handleBookMark = (e) => {
-    const { item } = e.currentTarget.dataset;
-    // console.log(`item`, item);
-  };
+  const timeLeft = useMemo(() => {
+    if (!auction) return;
+    let countdown = calculateCountdown(auction.timeLine);
+
+    if (countdown.days === 0)
+      return `${countdown.days} days ${countdown.hours} hours`;
+    else return `${countdown.hours} hours ${countdown.min} mins`;
+  }, [auction]);
+  if (!auction) return <div></div>;
+  const { _id, title, location, startingPrice, user, createdAt, description } =
+    auction;
+
   const handleShare = (e) => {
     const { item } = e.currentTarget.dataset;
     // console.log(`item`, item);
@@ -74,6 +74,7 @@ export default function FeaturedPost(props) {
               //   flexBasis='40%'
               sx={{
                 columnGap: 20,
+                pb: 2,
               }}
             >
               <Box
@@ -85,7 +86,7 @@ export default function FeaturedPost(props) {
                   {title}
                 </Typography>
                 <Typography variant='h3' color='textSecondary'>
-                  {price}
+                  $ {startingPrice}
                 </Typography>
 
                 <Box
@@ -110,6 +111,9 @@ export default function FeaturedPost(props) {
               <Box
                 sx={{
                   flexBasis: '60%',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  flexDirection: 'column',
                 }}
               >
                 <Typography variant='body1' paragraph>
@@ -118,7 +122,6 @@ export default function FeaturedPost(props) {
 
                 <Box
                   mt={1}
-                  mb={2}
                   sx={{
                     textAlign: 'right',
                   }}
@@ -126,12 +129,13 @@ export default function FeaturedPost(props) {
                   <IconButton
                     aria-label='bookmark'
                     aria-haspopup='true'
-                    data-item={id}
-                    onClick={handleBookMark}
+                    data-item={_id}
+                    onClick={handleBookmark}
                     style={{
                       marginLeft: 'auto',
                       color: '#000',
                     }}
+                    // disabled
                   >
                     <VisibilityIcon color='primary' />
                   </IconButton>
@@ -150,8 +154,8 @@ export default function FeaturedPost(props) {
               <IconButton
                 aria-label='bookmark'
                 aria-haspopup='true'
-                data-item={id}
-                onClick={handleBookMark}
+                data-item={_id}
+                onClick={handleBookmark}
                 style={{
                   marginLeft: 'auto',
                   color: '#000',
@@ -163,10 +167,10 @@ export default function FeaturedPost(props) {
             <Divider />
             <div className={classes.createdInfo}>
               <Typography variant='body1' color='textSecondary'>
-                Created By : {startedby}
+                Created By : {user?.name}
               </Typography>
               <Typography variant='body1' color='textSecondary'>
-                Created At : {createdAt}
+                Created At : {new Date(createdAt).toLocaleDateString()}
               </Typography>
             </div>
           </CardContent>

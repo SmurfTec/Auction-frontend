@@ -1,19 +1,15 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Hidden from '@material-ui/core/Hidden';
 import { Box, Chip, Divider, IconButton } from '@material-ui/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import ShareIcon from '@material-ui/icons/Share';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from 'styles/commonStyles';
+import { calculateCountdown } from 'utils/dateFunctions';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -42,22 +38,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FeaturedPost(props) {
+export default function FeaturedPost({ auction }) {
   const customClasses = useStyles();
   const globalClasses = styles();
-  const {
-    id,
-    title,
-    location,
-    img,
-    price,
-    startedby,
-    timeLeft,
-    description,
-    createdAt,
-  } = props;
-
   const navigate = useNavigate();
+
+  const timeLeft = useMemo(() => {
+    if (!auction) return;
+    let countdown = calculateCountdown(auction.timeLine);
+
+    if (countdown.days === 0)
+      return `${countdown.days} days ${countdown.hours} hours`;
+    else return `${countdown.hours} hours ${countdown.min} mins`;
+  }, [auction]);
+  if (!auction) return <div></div>;
+
+  const { _id, title, location, price, user, createdAt } = auction;
 
   const handleBookMark = (e) => {
     e.stopPropagation();
@@ -75,7 +71,7 @@ export default function FeaturedPost(props) {
       <Card className={customClasses.card}>
         <CardActionArea
           onClick={() => {
-            navigate(`/auctionDetails/${id}`);
+            navigate(`/auctionDetails/${_id}`);
           }}
         >
           <div className={customClasses.cardDetails}>
@@ -107,7 +103,7 @@ export default function FeaturedPost(props) {
                   <IconButton
                     aria-label='bookmark'
                     aria-haspopup='true'
-                    data-item={id}
+                    data-item={_id}
                     onClick={handleBookMark}
                   >
                     <VisibilityIcon fontSize='small' color='primary' />
@@ -117,10 +113,10 @@ export default function FeaturedPost(props) {
               <Divider />
               <div className={customClasses.createdInfo}>
                 <Typography variant='body2' color='textSecondary'>
-                  Created By : {startedby}
+                  Created By : {user?.name}
                 </Typography>
                 <Typography variant='body2' color='textSecondary'>
-                  Created At : {createdAt}
+                  Created At : {new Date(createdAt).toLocaleDateString()}
                 </Typography>
               </div>
             </CardContent>
@@ -131,7 +127,7 @@ export default function FeaturedPost(props) {
         <IconButton
           aria-label='Share'
           aria-haspopup='true'
-          data-item={id}
+          data-item={_id}
           onClick={handleShare}
           style={{
             marginLeft: 'auto',

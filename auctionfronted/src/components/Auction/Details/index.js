@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Container,
-  Grid,
   makeStyles,
   TextField,
   Typography,
@@ -13,19 +12,22 @@ import {
   TableHead,
   TableBody,
   Avatar,
-  Chip,
-  Pagination,
+  CircularProgress,
 } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import styles from 'styles/commonStyles';
 import AuctionStepper from './DetailsAucStepper';
 // import AuctionStepper from '../AuctionStepperM';
 import Card from './DetailCard';
-import { auctions } from 'data';
 import { useParams } from 'react-router';
 import ScrollToTop from 'utils/ScrollToTop';
-import { bidddingInfo } from 'data';
 import tableStyles from 'styles/TableStyles';
+import { useFetch, useTextInput, useToggleInput } from 'hooks';
+import { toast } from 'react-toastify';
+import Loading from 'components/common/Loading';
+import { API_BASE_URL, handleCatch, makeReq } from 'utils/makeReq';
+import { AuthContext } from 'contexts/AuthContext';
+import { Navigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   contentCont: {
@@ -48,20 +50,78 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AuctionDetails = () => {
+  const { token } = useContext(AuthContext);
   const globalClasses = styles();
+
   const customClasses = useStyles();
   const tableClasses = tableStyles();
   const { id } = useParams();
-  const [auction, setAuction] = useState(null);
 
-  useEffect(() => {
-    const a = auctions.filter((e) => e.id === id * 1);
+  let {
+    value: auction,
+    loading,
+    error,
+    setValue: setAuction,
+  } = useFetch(
+    `${API_BASE_URL}/auctions/${id}`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    },
+    [id],
+    'auction'
+  );
 
-    // ^ Validate if a is empty or not ,, currently not sure..
-    if (a) setAuction(...a);
-  }, [id]);
+  // * Fetch Bid from api
+  const [biddingAmount, handleAmountChange, resetAmount] = useTextInput(0);
+  const [isMakingBid, toggleMakingBid] = useToggleInput(false);
 
-  const handleSubmit = () => {};
+  // * Bid
+  const createBid = async (amount, auctionId) => {
+    toggleMakingBid();
+
+    try {
+      const resData = await makeReq(
+        `/auctions/${auctionId}/bid`,
+        {
+          body: { biddingPrice: amount },
+        },
+        'PATCH'
+      );
+      console.log(`resData`, resData);
+
+      setAuction(resData.auction);
+      toast.success('Success');
+      resetAmount();
+    } catch (err) {
+      handleCatch(err);
+    } finally {
+      toggleMakingBid();
+    }
+  };
+
+  const handleAddBid = (e) => {
+    e.preventDefault();
+    createBid(biddingAmount, auction._id);
+  };
+
+  const handleBookmark = async (e) => {
+    try {
+      const resData = await makeReq(`/auctions/${id}/watchlist`, {}, 'POST');
+      toast.success('Added to watchlist successfully!');
+    } catch (err) {
+      handleCatch(err);
+    } finally {
+    }
+  };
+
+  // * Sometimes loading becomes false , but auction is still undefined
+  // * for small amount of time , so in that case !auction is put here
+  if (loading || !auction) return <Loading noTitle />;
+
+  if (error) return <Navigate to='/' />;
 
   return (
     <>
@@ -80,14 +140,14 @@ const AuctionDetails = () => {
               >
                 <AuctionStepper auction={auction} />
                 <div className={globalClasses.content}>
-                  <Card {...auction} />
+                  <Card auction={auction} handleBookmark={handleBookmark} />
                 </div>
               </div>
             </div>
             {/* <div className={`${custom.auctDetailCont}`}>
               <AuctionStepper auction={auction} />
               <div className={globalClasses.content}>
-                <Card {...auction} />
+                <Card auction={auction} />
               </div>
             </div> */}
 
@@ -97,61 +157,70 @@ const AuctionDetails = () => {
                 className={`${customClasses.contentCont}`}
               >
                 <Typography variant='h5'>Bidding Info</Typography>
-                <Box mt={2} sx={{ maxHeight: 550, overflowY: 'auto' }}>
-                  <TableContainer className={`${tableClasses.tableContainer}`}>
-                    <Table stickyHeader>
-                      <TableHead className={tableClasses.tableCont}>
-                        <TableRow>
-                          <TableCell style={{ minWidth: 300 }}>User</TableCell>
-                          <TableCell align='right'>Bid</TableCell>
-                          <TableCell>Date</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {bidddingInfo.map((auc, ind) => (
-                          <TableRow
-                            hover
-                            key={auc.id}
-                            className={tableClasses.hoverRow}
-                          >
-                            <TableCell
-                              component='th'
-                              scope='row'
-                              style={{ minWidth: 300 }}
-                            >
-                              <div
-                                className={`${globalClasses.flexAlignDisp} ${tableClasses.aucItem}`}
-                              >
-                                <Typography variant='subtitle2'>
-                                  {ind + 1}
-                                </Typography>
-                                <Avatar
-                                  src={auc.user.avatarUrl}
-                                  alt={auc.user.name}
-                                  // className={tableClasses.large}
-                                />
-                                <Typography variant='subtitle2'>
-                                  {auc.user.name}
-                                </Typography>
-                              </div>
+                {auction.bids?.length === 0 ? (
+                  <Typography variant='body1' align='center'>
+                    Be the first one to make bid
+                  </Typography>
+                ) : (
+                  <Box mt={2} sx={{ maxHeight: 550, overflowY: 'auto' }}>
+                    <TableContainer
+                      className={`${tableClasses.tableContainer}`}
+                    >
+                      <Table stickyHeader>
+                        <TableHead className={tableClasses.tableCont}>
+                          <TableRow>
+                            <TableCell style={{ minWidth: 300 }}>
+                              User
                             </TableCell>
-
-                            <TableCell align='right'>
-                              <Typography variant='body2'>
-                                {auc.price}
-                              </Typography>
-                            </TableCell>
-                            <TableCell>
-                              <Typography variant='body2'>
-                                {auc.createdAt}
-                              </Typography>
-                            </TableCell>
+                            <TableCell align='right'>Bid</TableCell>
+                            <TableCell>Date</TableCell>
                           </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                  {/* <Box mt={2}>
+                        </TableHead>
+                        <TableBody>
+                          {auction.bids?.map((bid, ind) => (
+                            <TableRow
+                              hover
+                              key={bid._id}
+                              className={tableClasses.hoverRow}
+                            >
+                              <TableCell
+                                component='th'
+                                scope='row'
+                                style={{ minWidth: 300 }}
+                              >
+                                <div
+                                  className={`${globalClasses.flexAlignDisp} ${tableClasses.aucItem}`}
+                                >
+                                  <Typography variant='subtitle2'>
+                                    {ind + 1}
+                                  </Typography>
+                                  <Avatar
+                                    src={bid.user.avatarUrl}
+                                    alt={bid.user.name}
+                                    // className={tableClasses.large}
+                                  />
+                                  <Typography variant='subtitle2'>
+                                    {bid.user.name}
+                                  </Typography>
+                                </div>
+                              </TableCell>
+
+                              <TableCell align='right'>
+                                <Typography variant='body2'>
+                                  {bid.biddingPrice}
+                                </Typography>
+                              </TableCell>
+                              <TableCell>
+                                <Typography variant='body2'>
+                                  {new Date(bid.createdAt).toLocaleDateString()}
+                                </Typography>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                    {/* <Box mt={2}>
                     <Pagination
                       color='secondary'
                       count={Math.ceil(auctions.length / rowsPerPage)}
@@ -160,7 +229,8 @@ const AuctionDetails = () => {
                       className={tableClasses.pagination}
                     />
                   </Box> */}
-                </Box>
+                  </Box>
+                )}
               </Box>
               <Box
                 sx={{ flexBasis: '40%' }}
@@ -173,27 +243,37 @@ const AuctionDetails = () => {
                     Bid Amount : Minimum Bid {auction.price}
                   </Typography>
                 </Box>
-                <Box
-                  mt={2}
-                  className={`${globalClasses.flexAlignDisp}`}
-                  justifyContent='space-between'
-                  sx={{ columnGap: 15 }}
-                >
-                  <TextField
-                    name='biddingAmount'
-                    placeholder='Amount'
-                    color='primary'
-                    type='number'
-                    // size='small'
-                  />
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={handleSubmit}
+                <form onSubmit={handleAddBid}>
+                  <Box
+                    mt={2}
+                    className={`${globalClasses.flexAlignDisp}`}
+                    justifyContent='space-between'
+                    sx={{ columnGap: 15 }}
                   >
-                    Place BID
-                  </Button>
-                </Box>
+                    <TextField
+                      name='biddingPrice'
+                      placeholder='Amount'
+                      color='primary'
+                      type='number'
+                      required
+                      value={biddingAmount}
+                      onChange={handleAmountChange}
+                      inputProps={{
+                        min: auction.startingPrice,
+                      }}
+                      // size='small'
+                    />
+                    <Button
+                      disabled={isMakingBid}
+                      variant='contained'
+                      color='primary'
+                      type='submit'
+                    >
+                      Place BID
+                      {isMakingBid && <CircularProgress size={25} />}
+                    </Button>
+                  </Box>
+                </form>
               </Box>
             </Box>
             {/* <Box

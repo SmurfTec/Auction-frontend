@@ -1,7 +1,5 @@
 import { useArray, useToggleInput } from 'hooks';
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import React, { useEffect } from 'react';
 import { makeReq, handleCatch } from 'utils/makeReq';
 
 export const AuctionsContext = React.createContext();
@@ -48,7 +46,8 @@ export const AuctionsProvider = ({ children }) => {
         'POST'
       );
 
-      pushAuction(resData.auction);
+      // ! Auction will go into userAuctions
+      // pushAuction(resData.auction);
       // * if successCallback is defined , then call it
       successCallback?.();
     } catch (err) {
