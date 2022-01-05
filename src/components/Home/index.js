@@ -48,13 +48,14 @@ const HomePage = () => {
   useEffect(() => {
     console.log(`parsedQuery`, parsedQuery);
     if (!parsedQuery.search) return setFilteredAuctions(auctions || []);
+    console.log(`parsedQuery2`, parsedQuery);
 
     setFilteredAuctions(
       auctions?.filter((el) =>
         el.title.toLowerCase().includes(parsedQuery.search.toLowerCase())
       )
     );
-  }, [parsedQuery]);
+  }, [parsedQuery, auctions]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
