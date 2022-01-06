@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -22,17 +22,31 @@ import {
 } from '@material-ui/core';
 import styles from 'styles/commonStyles';
 import useManyInputs from 'hooks/useManyInputs';
-import { auctions, allcategories, location } from 'data';
 import { Autocomplete, Pagination } from '@material-ui/lab';
 import useStyles from 'styles/TableStyles';
+import { AuctionsContext } from 'contexts/AuctionsContext';
+import { daysBetween } from 'utils/dateFunctions';
+import { CategoriesContext } from 'contexts/CategoriesContext';
 
 const LeaderBoard = () => {
   const globalClasses = styles();
   const customClasses = useStyles();
+  const { categories, loading: loadingCategories } =
+    useContext(CategoriesContext);
+  const { auctions, loading } = useContext(AuctionsContext);
+
+  const [filteredAuctions, setFilteredAuctions] = useState([]);
+
+  // * Sync auctions with filtered auctions
+  useEffect(() => {
+    if (loading || !auctions) return;
+
+    setFilteredAuctions(auctions);
+  }, [auctions, loading]);
 
   const initialState = {
-    timeline: 7,
-    categories: allcategories[1].replace(/\s/g, ''),
+    timeLine: 7,
+    category: categories?.[0]?.name,
     price: false,
   };
 
@@ -52,13 +66,82 @@ const LeaderBoard = () => {
     setInputstate,
   ] = useManyInputs(initialState);
 
+  // * Filter items when Category changes
+  useEffect(() => {
+    if (!inputState.category || !auctions) return;
+
+    if (inputState.category === 'all') return setFilteredAuctions(auctions);
+
+    setFilteredAuctions(
+      auctions.filter((el) => {
+        let er = false;
+        let matched = false;
+        el.categories.every((cat) => {
+          if (inputState.category === cat._id) {
+            matched = true;
+
+            // * return false is like break, it'll break and not continue next iterations
+            return false;
+          }
+
+          // * in .every func , if we return true, it'll continue iterations
+          return true;
+        });
+
+        return matched;
+      })
+    );
+  }, [inputState.category]);
+
+  // * Filter items when timeLine changes
+  useEffect(() => {
+    let newAuctions = [];
+    switch (inputState.timeLine) {
+      case 7:
+        newAuctions = auctions.filter(
+          (el) => daysBetween(new Date(), new Date(el.timeLine)) <= 7
+        );
+        break;
+      case 14:
+        newAuctions = auctions.filter(
+          (el) => daysBetween(new Date(), new Date(el.timeLine)) <= 14
+        );
+        break;
+      case 21:
+        newAuctions = auctions.filter(
+          (el) => daysBetween(new Date(), new Date(el.timeLine)) <= 21
+        );
+        break;
+
+      default:
+        newAuctions = auctions;
+        break;
+    }
+
+    setFilteredAuctions(newAuctions);
+  }, [inputState.timeLine]);
+
+  // * Filter items when Price Filter changes
+  useEffect(() => {
+    if (!auctions) return;
+
+    let newAuctions = [];
+    // * Price true means (low-high)
+    if (inputState.price)
+      newAuctions = auctions.sort((a, b) => a.startingPrice - b.startingPrice);
+    else
+      newAuctions = auctions.sort((a, b) => b.startingPrice - a.startingPrice);
+
+    setFilteredAuctions(newAuctions);
+  }, [inputState.price]);
+
   const handleTimeline = (e) => {
-    changeInput('timeline', e.target.value);
+    changeInput('timeLine', e.target.value);
   };
 
   const handleCat = (e) => {
     // console.log(`e.target.value`, e.target.value);
-    changeInput('categories', e.target.value);
+    changeInput('category', e.target.value);
   };
 
   return (
@@ -88,7 +171,7 @@ const LeaderBoard = () => {
               TimeLine
             </InputLabel>
             <Select
-              value={inputState.timeline}
+              value={inputState.timeLine}
               onChange={handleTimeline}
               label='TimeLine'
               fullWidth
@@ -116,17 +199,19 @@ const LeaderBoard = () => {
             <Select
               value={inputState.categories}
               onChange={handleCat}
-              label='Categories'
+              label='Category'
               fullWidth
             >
-              {allcategories &&
-                allcategories.map((cat) => {
-                  return (
-                    <MenuItem id='cat' value={inputState.categories}>
-                      {cat}
-                    </MenuItem>
-                  );
-                })}
+              <MenuItem id='cat' value='all'>
+                All
+              </MenuItem>
+              {categories?.map((cat) => {
+                return (
+                  <MenuItem id='cat' value={cat._id}>
+                    {cat.name}
+                  </MenuItem>
+                );
+              })}
             </Select>
           </FormControl>
           <FormControl
@@ -169,7 +254,7 @@ const LeaderBoard = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {auctions
+                {filteredAuctions
                   .slice(
                     (page - 1) * rowsPerPage,
                     (page - 1) * rowsPerPage + rowsPerPage
@@ -178,7 +263,7 @@ const LeaderBoard = () => {
                     return (
                       <TableRow
                         hover
-                        key={auc.id}
+                        key={auc._id}
                         className={customClasses.hoverRow}
                       >
                         <TableCell
@@ -193,7 +278,7 @@ const LeaderBoard = () => {
                               {ind + 1}
                             </Typography>
                             <Avatar
-                              src={auc.img[0]}
+                              src={auc.images?.[0]}
                               alt={auc.title}
                               className={customClasses.large}
                             />
@@ -207,7 +292,7 @@ const LeaderBoard = () => {
                           {auc.categories.map((a, ind) => (
                             <Chip
                               size='small'
-                              label={a}
+                              label={a.name}
                               color={
                                 ind === 0
                                   ? 'default'
@@ -224,7 +309,7 @@ const LeaderBoard = () => {
                             variant='body2'
                             className={globalClasses.downColor}
                           >
-                            {auc.price}
+                            {auc.startingPrice}
                           </Typography>
                         </TableCell>
                         <TableCell align='center'>
@@ -232,17 +317,17 @@ const LeaderBoard = () => {
                             variant='body2'
                             className={globalClasses.upColor}
                           >
-                            {auc.finalPrice}
+                            {auc.winnerBid?.biddingPrice}
                           </Typography>
                         </TableCell>
                         <TableCell align='center'>
                           <Typography variant='body2'>
-                            {auc.totalBids}
+                            {auc.bids.length}
                           </Typography>
                         </TableCell>
                         <TableCell align='center'>
                           <Typography variant='body2'>
-                            {auc.createdAt}
+                            {new Date(auc.createdAt).toLocaleDateString()}
                           </Typography>
                         </TableCell>
                       </TableRow>

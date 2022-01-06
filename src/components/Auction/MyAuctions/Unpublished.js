@@ -5,7 +5,7 @@ import { AuthContext } from 'contexts/AuthContext';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 
-const Unpulished = () => {
+const Unpulished = ({ status }) => {
   const { user } = useContext(AuthContext);
   const { myAuctions, loadingMyAuctions } = useContext(AuctionsContext);
   const [data, setdata] = useState([]);
@@ -15,8 +15,8 @@ const Unpulished = () => {
   useEffect(() => {
     if (loadingMyAuctions || !myAuctions) return;
 
-    setdata(myAuctions.filter((el) => el.user?._id === user._id));
-  }, [myAuctions]);
+    setdata(myAuctions.filter((el) => el.status === status));
+  }, [myAuctions, loadingMyAuctions, status]);
 
   // * Filter by search
   const parsedQuery = useMemo(() => {
@@ -26,18 +26,16 @@ const Unpulished = () => {
   useEffect(() => {
     console.log(`parsedQuery`, parsedQuery);
     if (!parsedQuery.search)
-      return setdata(
-        myAuctions.filter((el) => el.user?._id === user._id) || []
-      );
+      return setdata(myAuctions.filter((el) => el.status === status) || []);
 
     setdata(
       myAuctions?.filter(
         (el) =>
-          el.user?._id === user._id &&
+          el.status === status &&
           el.title.toLowerCase().includes(parsedQuery.search.toLowerCase())
       )
     );
-  }, [parsedQuery]);
+  }, [parsedQuery, status]);
 
   return <AuctionList auctions={data} loading={loadingMyAuctions} />;
 };

@@ -3,14 +3,14 @@ import watchImg from 'assets/watchImg.png';
 import AuctionList from './AuctionList';
 import { auctions } from 'data';
 
-const Previous = () => {
+const Completed = () => {
   // const {myAuctions} = React.useContext(AuctionsContext)
   //   const [data, setdata] = React.useState([]);
 
   // useEffect(() => {
   // }, [myAuctions])
 
-  return <AuctionList data={auctions} />;
+  return <AuctionList data={[]} loading={false} />;
 };
 
-export default Previous;
+export default Completed;

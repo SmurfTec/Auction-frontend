@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FeaturedPost({ auction }) {
+export default function FeaturedPost({ auction, addToWatchlist }) {
   const customClasses = useStyles();
   const globalClasses = styles();
   const navigate = useNavigate();
@@ -48,18 +48,19 @@ export default function FeaturedPost({ auction }) {
     if (!auction) return;
     let countdown = calculateCountdown(auction.timeLine);
 
-    if (countdown.days === 0)
+    if (countdown.days > 0)
       return `${countdown.days} days ${countdown.hours} hours`;
     else return `${countdown.hours} hours ${countdown.min} mins`;
   }, [auction]);
   if (!auction) return <div></div>;
 
-  const { _id, title, location, price, user, createdAt } = auction;
+  const { _id, title, location, startingPrice, user, createdAt } = auction;
 
   const handleBookMark = (e) => {
     e.stopPropagation();
     const { item } = e.currentTarget.dataset;
     // console.log(`item`, item);
+    addToWatchlist(item);
   };
 
   const handleShare = (e) => {
@@ -81,7 +82,7 @@ export default function FeaturedPost({ auction }) {
                 {title}
               </Typography>
               <Typography variant='h3' color='textSecondary'>
-                {price}
+                {startingPrice}$
               </Typography>
 
               <Typography variant='subtitle1' paragraph>

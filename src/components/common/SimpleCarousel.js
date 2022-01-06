@@ -4,6 +4,7 @@ import { MobileStepper, Paper, Button, IconButton } from '@material-ui/core';
 import EmbedVideo from './EmbedVideo';
 
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,9 +42,17 @@ const useStyles = makeStyles((theme) => ({
   mobileStepper: {
     background: '#fff',
   },
+  DeleteBtn: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    '& svg': {
+      color: `${theme.palette.error.main} !important`,
+    },
+  },
 }));
 
-const Simpleimages = ({ type, images, video }) => {
+const Simpleimages = ({ type, images, video, deleteImg }) => {
   const [activeStep, setActiveStep] = useState(0);
   const theme = useTheme();
 
@@ -54,6 +63,10 @@ const Simpleimages = ({ type, images, video }) => {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleDeleteImg = () => {
+    deleteImg(activeStep);
   };
 
   return (
@@ -70,6 +83,9 @@ const Simpleimages = ({ type, images, video }) => {
             src={images[activeStep]}
             alt={images[activeStep]?.slice(0, 5)}
           />
+          <IconButton className={classes.DeleteBtn} onClick={handleDeleteImg}>
+            <CancelIcon />
+          </IconButton>
           <MobileStepper
             steps={images.length}
             position='static'

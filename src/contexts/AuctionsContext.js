@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useArray, useFetch, useToggleInput } from 'hooks';
 import { makeReq, handleCatch, API_BASE_URL } from 'utils/makeReq';
 import { AuthContext } from './AuthContext';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 export const AuctionsContext = React.createContext();
 
 export const AuctionsProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
-  // let history = useHistory();
+  const navigate = useNavigate();
   const [
     auctions,
     setAuctions,
@@ -18,7 +20,6 @@ export const AuctionsProvider = ({ children }) => {
     clearAuctions,
   ] = useArray([], '_id');
   const [loading, toggleLoading] = useToggleInput(true);
-
   // * My Auctions
   const [
     myAuctions,
@@ -80,7 +81,8 @@ export const AuctionsProvider = ({ children }) => {
   // * CRUD Operations
   const getAuctionById = (id) => auctions.find((el) => el._id === id);
 
-  const createNewAuction = async (auction, successCallback, errorCallback) => {
+  // * Auctions Related
+  const createNewAuction = async (auction, toggleFunction) => {
     try {
       const resData = await makeReq(
         `/auctions`,
@@ -90,12 +92,31 @@ export const AuctionsProvider = ({ children }) => {
         'POST'
       );
 
+      toast.success('Auction Created Successfully!');
+
       // ! Auction will go into userAuctions
       pushMyAuction(resData.auction);
-      // * if successCallback is defined , then call it
-      successCallback?.();
+      // ! Auction will go into auctions if its status is published
+      if (resData.auction.stataus === 'published') pushAuction(resData.auction);
+      navigate(
+        resData.auction.status === 'unPublished'
+          ? '/myauctions/unpublished'
+          : '/'
+      );
     } catch (err) {
-      errorCallback?.();
+    } finally {
+      toggleFunction?.();
+    }
+  };
+
+  // * Watchlist related
+  const addToWatchlist = async (id) => {
+    try {
+      const resData = await makeReq(`/auctions/${id}/watchlist`, {}, 'POST');
+      toast.success('Added to watchlist successfully!');
+      setWatchlist((st) => [...st, resData.watchlist]);
+    } catch (err) {
+      handleCatch(err);
     } finally {
     }
   };
@@ -112,6 +133,7 @@ export const AuctionsProvider = ({ children }) => {
         myAuctions,
         watchlist,
         loadingWatchlist,
+        addToWatchlist,
       }}
     >
       {children}

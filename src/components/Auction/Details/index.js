@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import Loading from './LoadingDetails';
 import { API_BASE_URL, handleCatch, makeReq } from 'utils/makeReq';
 import { AuthContext } from 'contexts/AuthContext';
+import { AuctionsContext } from 'contexts/AuctionsContext';
 import { Navigate } from 'react-router-dom';
 import CreateBidForm from './CreateBidForm';
 import BidTable from './BidTable';
@@ -38,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AuctionDetails = () => {
   const { token } = useContext(AuthContext);
+  const { addToWatchlist } = useContext(AuctionsContext);
   const globalClasses = styles();
 
   const customClasses = useStyles();
@@ -89,13 +91,7 @@ const AuctionDetails = () => {
   };
 
   const handleBookmark = async (e) => {
-    try {
-      const resData = await makeReq(`/auctions/${id}/watchlist`, {}, 'POST');
-      toast.success('Added to watchlist successfully!');
-    } catch (err) {
-      handleCatch(err);
-    } finally {
-    }
+    addToWatchlist(id);
   };
 
   const minBidAmount = useMemo(() => {

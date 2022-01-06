@@ -1,68 +1,55 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import { Link, NavLink, Outlet } from 'react-router-dom';
-import { Box, Hidden } from '@material-ui/core';
+import { NavLink, Outlet } from 'react-router-dom';
+import { Box } from '@material-ui/core';
 import SideMenu from './SideMenu';
 import MHidden from './MHidden';
-import ViewListIcon from '@material-ui/icons/ViewList';
 import SpeakerNotesOffIcon from '@material-ui/icons/SpeakerNotesOff';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import CancelIcon from '@material-ui/icons/Cancel';
 import useStyles from 'styles/DrawerStyles';
+import { HourglassEmpty, Pause, Public } from '@material-ui/icons';
 
 const drawerList = [
   {
-    id: 122,
+    id: 12,
     title: 'Watch List',
     link: 'watchlist',
-    icon: '',
+    icon: <SpeakerNotesOffIcon />,
   },
   {
-    id: 123,
-    title: 'Unclaimed Bid',
-    link: 'unclaimed',
+    id: 13125,
+    title: 'Published ',
+    link: 'published',
+    icon: <Public />,
   },
   {
-    id: 124,
-    title: 'Completed auctions ',
-    link: 'completed',
-  },
-  {
-    id: 125,
+    id: 123125,
     title: 'Unpublished ',
     link: 'unpublished',
+    icon: <Pause />,
+  },
+  {
+    id: 1123,
+    title: 'Unclaimed Bid',
+    link: 'unclaimed',
+    icon: <HourglassEmpty />,
+  },
+  {
+    id: 12314,
+    title: 'Completed auctions ',
+    link: 'completed',
+    icon: <AssignmentTurnedInIcon />,
   },
 ];
-
-const getIcon = (name) => {
-  switch (name) {
-    case 'unclaimed':
-      return <SpeakerNotesOffIcon />;
-    case 'unpublished':
-      return <CancelIcon />;
-    case 'completed':
-      return <AssignmentTurnedInIcon />;
-    default:
-      return <ViewListIcon />;
-  }
-};
 
 const DrawerLayout = () => {
   const classes = useStyles();
@@ -78,17 +65,17 @@ const DrawerLayout = () => {
     <>
       <List className={classes.list}>
         {drawerList.map((item) => (
-          <>
+          <React.Fragment key={item.id}>
             <NavLink to={`/myauctions/${item.link}`}>
               <ListItem button key={item.id}>
                 <ListItemIcon style={{ minWidth: 40 }}>
-                  {getIcon(item.link)}
+                  {item.icon}
                 </ListItemIcon>
                 <ListItemText primary={item.title} />
               </ListItem>
             </NavLink>
             <Divider />
-          </>
+          </React.Fragment>
         ))}
       </List>
     </>

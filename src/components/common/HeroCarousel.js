@@ -6,6 +6,7 @@ import { Box, Button, Typography } from '@material-ui/core';
 // import { auctions } from 'data';
 import styles from 'styles/heroCarouselStyles';
 import { AuctionsContext } from 'contexts/AuctionsContext';
+import { Link } from 'react-router-dom';
 const HeroCarousel = () => {
   const { auctions } = useContext(AuctionsContext);
   const classes = styles();
@@ -39,13 +40,13 @@ const HeroCarousel = () => {
             <span />
             <img src={auctionHero} alt={`${auc.title}`} />
             <div className={classes.aucItemContainer}>
-              <div
+              {/* <div
                 className={classes.aucImg}
                 style={{
                   background: `white url(${auc.images?.[0]}) center top no-repeat`,
                   backgroundSize: 'contain',
                 }}
-              />
+              /> */}
               <div className={classes.heroDesc}>
                 <Typography variant='h2' fullWidth align='left'>
                   {auc.title}

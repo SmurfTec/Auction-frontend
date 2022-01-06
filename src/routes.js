@@ -1,5 +1,5 @@
 import AuctionDetails from 'components/Auction/Details';
-import Previous from 'components/Auction/MyAuctions/Previous';
+import Completed from 'components/Auction/MyAuctions/Completed';
 import Unclaimed from 'components/Auction/MyAuctions/Unclaimed';
 import Unpulished from 'components/Auction/MyAuctions/Unpublished';
 import WatchList from 'components/Auction/MyAuctions/WatchList';
@@ -24,18 +24,22 @@ export const protectedRoutes = [
         path: 'watchlist',
         element: <WatchList />,
       },
-      // {
-      //   path: 'unclaimed',
-      //   element: <Unclaimed />,
-      // },
+      {
+        path: 'published',
+        element: <Unpulished status='published' />,
+      },
       {
         path: 'unpublished',
-        element: <Unpulished />,
+        element: <Unpulished status='inProgress' />,
       },
-      // {
-      //   path: 'completed',
-      //   element: <Previous />,
-      // },
+      {
+        path: 'unclaimed',
+        element: <Unclaimed />,
+      },
+      {
+        path: 'completed',
+        element: <Completed />,
+      },
     ],
   },
   {

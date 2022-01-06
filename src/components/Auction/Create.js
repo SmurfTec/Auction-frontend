@@ -32,6 +32,7 @@ import { useToggleInput } from 'hooks';
 import styles from './createAuctionStyles';
 import SimpleCarousel from 'components/common/SimpleCarousel';
 import { useNavigate } from 'react-router-dom';
+import PublishAuction from './PublishAuctionDialog';
 
 const Create = () => {
   const classes = styles();
@@ -64,16 +65,26 @@ const Create = () => {
   const [isImageUploading, toggleImageUploading] = useToggleInput(false);
   const [isVideoUploading, toggleVideoUploading] = useToggleInput(false);
 
+  const [isPublishOpen, togglePublishOpen] = useToggleInput(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(`inputState`, inputState);
-    toggleSubmitting();
-    createNewAuction(inputState, () => {
-      toast.success('Auction Created Successfully!');
-      navigate('/');
-      toggleSubmitting();
-    });
+    if (!inputState.images.length)
+      return toast.error('Select atleast 1 image for auction');
+
+    if (!inputState.images.length)
+      return toast.error('Select atleast 1 image for auction');
+
+    togglePublishOpen();
+
     // setOpen(true);
+  };
+
+  const handleCreate = (status) => {
+    togglePublishOpen();
+    toggleSubmitting();
+    createNewAuction({ ...inputState, status }, toggleSubmitting);
   };
 
   const handleTimeline = (e) => {
@@ -126,7 +137,9 @@ const Create = () => {
           cb(uploadedImage);
         };
       } else {
-        toast.error('Only Image files are acceptable !');
+        toast.error(
+          `Only ${fileType?.[0].split('/')[0]} files are acceptable !`
+        );
       }
     } catch (err) {
       toast(
@@ -136,6 +149,13 @@ const Create = () => {
     } finally {
       toggleFunc();
     }
+  };
+
+  const deleteImg = (idx) => {
+    changeInput(
+      'images',
+      inputState.images.filter((_, index) => index !== idx)
+    );
   };
 
   return (
@@ -251,6 +271,7 @@ const Create = () => {
                     onChange={handleType}
                     label='Type'
                     fullWidth
+                    required
                   >
                     <MenuItem value={'specific'}>Specific</MenuItem>
                     <MenuItem value={'openEnded'}>Open Ended</MenuItem>
@@ -273,7 +294,11 @@ const Create = () => {
               <Grid item xs={12} sm={6}>
                 <Box mt={2} className={classes.uploadDiv}>
                   {inputState.images.length > 0 ? (
-                    <SimpleCarousel type='image' images={inputState.images} />
+                    <SimpleCarousel
+                      deleteImg={deleteImg}
+                      type='image'
+                      images={inputState.images}
+                    />
                   ) : (
                     <span>
                       <ImageIcon fontSize='large' />
@@ -327,7 +352,7 @@ const Create = () => {
                   ) : (
                     <span>
                       <ImageIcon fontSize='large' />
-                      Add a cideo
+                      Add a Video
                     </span>
                   )}
                 </Box>
@@ -389,6 +414,11 @@ const Create = () => {
           </Box>
         </Paper>
       </div>
+      <PublishAuction
+        open={isPublishOpen}
+        toggleDialog={togglePublishOpen}
+        success={handleCreate}
+      />
     </Box>
   );
 };

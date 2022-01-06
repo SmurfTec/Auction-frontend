@@ -15,7 +15,7 @@ const WatchList = () => {
     if (loading || !watchlist) return;
 
     setAuctions(watchlist.map((el) => el.auction));
-  }, [watchlist]);
+  }, [watchlist, loading]);
 
   // * Filter by search
   const parsedQuery = useMemo(() => {

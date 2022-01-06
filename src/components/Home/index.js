@@ -10,6 +10,7 @@ import {
   FormControlLabel,
   Checkbox,
   IconButton,
+  FormGroup,
 } from '@material-ui/core';
 import { Pagination, Skeleton } from '@material-ui/lab';
 
@@ -18,32 +19,80 @@ import Card from 'components/Auction/Card';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AuctionStepper from 'components/Auction/AuctionStepper';
 import ShareIcon from '@material-ui/icons/Share';
-import { categories, location as locations } from 'data';
+import { location as locations } from 'data';
 import styles from 'styles/commonStyles';
 import useStyles from './styles';
 import { AuctionsContext } from 'contexts/AuctionsContext';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
+import { v4 } from 'uuid';
+import { CategoriesContext } from 'contexts/CategoriesContext';
+import { filterFalseValues } from 'utils/objectMethods';
 
 const HomePage = () => {
   const globalClasses = styles();
   const customClasses = useStyles();
-  const { auctions, loading } = useContext(AuctionsContext);
+  const { auctions, loading, addToWatchlist } = useContext(AuctionsContext);
+  const { categories, loading: loadingCategories } =
+    useContext(CategoriesContext);
   const location = useLocation();
 
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(50);
   const [filteredAuctions, setFilteredAuctions] = useState([]);
 
-  const initialState = {
-    price: '',
-    categories: [],
-  };
+  const [categoriesFilters, setCategoriesFilters] = useState();
 
   // * Filter by search
   const parsedQuery = useMemo(() => {
     return queryString.parse(location.search);
   }, [location.search]);
+
+  const handleCategoryChange = (e) => {
+    setCategoriesFilters((st) => ({
+      ...st,
+      [e.target.name]: e.target.checked,
+    }));
+  };
+
+  useEffect(() => {
+    if (!categoriesFilters || !auctions) return;
+    let newAuctions = auctions;
+
+    // * obj ={ 1 : true , 2 :true, 3:Fasle , 4 :false}
+    // * We have to filter false values
+    let filterCats = filterFalseValues(categoriesFilters);
+    console.log(`filterCats`, filterCats);
+    // * We have to create array of ids
+    filterCats = Object.keys(filterCats);
+
+    if (!filterCats.length) return setFilteredAuctions(auctions);
+
+    console.log(
+      `newAuctions cats`,
+      newAuctions?.map((el) => el.categories)
+    );
+
+    newAuctions = newAuctions.filter((auc) => {
+      // * Check is auc's categories has any category of filter
+      let matched = false;
+      auc.categories.every((cat) => {
+        if (filterCats.includes(cat._id)) {
+          matched = true;
+
+          // * return false is like break, it'll break and not continue next iterations
+          return false;
+        }
+
+        // * in .every func , if we return true, it'll continue iterations
+        return true;
+      });
+
+      console.log(`matched`, matched);
+      return matched;
+    });
+    setFilteredAuctions(newAuctions);
+  }, [categoriesFilters]);
 
   useEffect(() => {
     console.log(`parsedQuery`, parsedQuery);
@@ -61,19 +110,32 @@ const HomePage = () => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
   const handleFilter = (e) => {
     const { filter } = e.currentTarget.dataset;
-    // console.log(`e.`, filter);
+    console.log(`e.`, filter);
+
+    let sortedAuctions = [];
+    if (filter === 'priceAsc') {
+      // * Sort by Price ascending
+      sortedAuctions = auctions.sort(
+        (a, b) => a.startingPrice - b.startingPrice
+      );
+    } else {
+      // * Sort by Price descending
+      sortedAuctions = auctions.sort(
+        (a, b) => b.startingPrice - a.startingPrice
+      );
+    }
+    console.log(
+      `sortedAuction`,
+      sortedAuctions.map((el) => el.startingPrice)
+    );
+    setFilteredAuctions(sortedAuctions);
   };
 
   const handleShare = (e) => {
     const { item } = e.currentTarget.dataset;
-    // console.log(`item`, item);
+    console.log(`item`, item);
   };
 
   return (
@@ -96,7 +158,6 @@ const HomePage = () => {
                     variant='subtitle2'
                     className={globalClasses.heading}
                     style={{ cursor: 'pointer', marginTop: 5 }}
-                    onClick={handleFilter}
                     data-filter='mostViewed'
                   >
                     Most Viewed
@@ -162,7 +223,7 @@ const HomePage = () => {
                           <Typography
                             variant='body1'
                             style={{ cursor: 'pointer' }}
-                            onClick={handleFilter}
+                            // onClick={handleFilter}
                             data-filter='priceDesc'
                           >
                             {loc}
@@ -187,20 +248,26 @@ const HomePage = () => {
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <div className={customClasses.content}>
-                    {categories &&
-                      categories.map((cat) => (
-                        <div key={cat}>
-                          <FormControlLabel
-                            value={cat.replace(/\s/g, '')}
-                            control={<Checkbox color='primary' />}
-                            label={cat}
-                            labelPlacement='end'
-                          />
-                          <Divider />
-                        </div>
-                      ))}
-                  </div>
+                  <FormGroup className={customClasses.content}>
+                    {categories.map((cat) => (
+                      <div key={cat._id}>
+                        <FormControlLabel
+                          value={cat.name}
+                          control={
+                            <Checkbox
+                              color='primary'
+                              name={cat._id}
+                              checked={categoriesFilters?.[cat._id]}
+                              onChange={handleCategoryChange}
+                            />
+                          }
+                          label={cat.name}
+                          labelPlacement='end'
+                        />
+                        <Divider />
+                      </div>
+                    ))}
+                  </FormGroup>
                 </AccordionDetails>
               </Accordion>
             </div>
@@ -225,14 +292,14 @@ const HomePage = () => {
                 ))}
             <div className={customClasses.pagination}>
               {filteredAuctions
-                ?.slice(
-                  (page - 1) * rowsPerPage,
-                  (page - 1) * rowsPerPage + rowsPerPage
-                )
+                // ?.slice(
+                //   (page - 1) * rowsPerPage,
+                //   (page - 1) * rowsPerPage + rowsPerPage
+                // )
                 .map((auc, ind) => {
                   return (
                     <div
-                      key={auc._id}
+                      key={v4()}
                       className={`${globalClasses.flexDisp} ${globalClasses.cardContainer}`}
                     >
                       <div
@@ -244,7 +311,10 @@ const HomePage = () => {
                           <AuctionStepper auction={auc} />
                           {/* <SimpleCarousel */}
                           <div className={globalClasses.content}>
-                            <Card auction={auc} />
+                            <Card
+                              auction={auc}
+                              addToWatchlist={addToWatchlist}
+                            />
                           </div>
                         </div>
                       </div>
