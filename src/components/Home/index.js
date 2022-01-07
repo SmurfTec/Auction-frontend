@@ -13,13 +13,13 @@ import {
   FormGroup,
 } from '@material-ui/core';
 import { Pagination, Skeleton } from '@material-ui/lab';
-
+import clsx from 'clsx';
 import HeroCarousel from 'components/common/HeroCarousel';
 import Card from 'components/Auction/Card';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AuctionStepper from 'components/Auction/AuctionStepper';
 import ShareIcon from '@material-ui/icons/Share';
-import { location as locations } from 'data';
+import { locations } from 'data';
 import styles from 'styles/commonStyles';
 import useStyles from './styles';
 import { AuctionsContext } from 'contexts/AuctionsContext';
@@ -32,7 +32,8 @@ import { filterFalseValues } from 'utils/objectMethods';
 const HomePage = () => {
   const globalClasses = styles();
   const customClasses = useStyles();
-  const { auctions, loading, addToWatchlist } = useContext(AuctionsContext);
+  const { publishedAuctions, loading, addToWatchlist } =
+    useContext(AuctionsContext);
   const { categories, loading: loadingCategories } =
     useContext(CategoriesContext);
   const location = useLocation();
@@ -42,6 +43,8 @@ const HomePage = () => {
   const [filteredAuctions, setFilteredAuctions] = useState([]);
 
   const [categoriesFilters, setCategoriesFilters] = useState();
+  const [locationFilter, setLocationFilter] = useState();
+  const [priceFilter, setPriceFilter] = useState();
 
   // * Filter by search
   const parsedQuery = useMemo(() => {
@@ -56,8 +59,34 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    if (!categoriesFilters || !auctions) return;
-    let newAuctions = auctions;
+    if (priceFilter === 'priceAsc') {
+      // * Sort by Price ascending
+      setFilteredAuctions((st) =>
+        st.sort((a, b) => a.startingPrice - b.startingPrice)
+      );
+    } else {
+      // * Sort by Price descending
+      setFilteredAuctions((st) =>
+        st.sort((a, b) => b.startingPrice - a.startingPrice)
+      );
+    }
+  }, [priceFilter]);
+
+  useEffect(() => {
+    if (!locationFilter) return;
+
+    if (locationFilter === 'all') return setFilteredAuctions(publishedAuctions);
+
+    setFilteredAuctions(
+      publishedAuctions?.filter(
+        (el) => el.location === locationFilter.toLowerCase()
+      )
+    );
+  }, [locationFilter]);
+
+  useEffect(() => {
+    if (!categoriesFilters || !publishedAuctions) return;
+    let newAuctions = publishedAuctions;
 
     // * obj ={ 1 : true , 2 :true, 3:Fasle , 4 :false}
     // * We have to filter false values
@@ -66,7 +95,7 @@ const HomePage = () => {
     // * We have to create array of ids
     filterCats = Object.keys(filterCats);
 
-    if (!filterCats.length) return setFilteredAuctions(auctions);
+    if (!filterCats.length) return setFilteredAuctions(publishedAuctions);
 
     console.log(
       `newAuctions cats`,
@@ -96,15 +125,16 @@ const HomePage = () => {
 
   useEffect(() => {
     console.log(`parsedQuery`, parsedQuery);
-    if (!parsedQuery.search) return setFilteredAuctions(auctions || []);
+    if (!parsedQuery.search)
+      return setFilteredAuctions(publishedAuctions || []);
     console.log(`parsedQuery2`, parsedQuery);
 
     setFilteredAuctions(
-      auctions?.filter((el) =>
+      publishedAuctions?.filter((el) =>
         el.title.toLowerCase().includes(parsedQuery.search.toLowerCase())
       )
     );
-  }, [parsedQuery, auctions]);
+  }, [parsedQuery, publishedAuctions]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -114,23 +144,13 @@ const HomePage = () => {
     const { filter } = e.currentTarget.dataset;
     console.log(`e.`, filter);
 
-    let sortedAuctions = [];
-    if (filter === 'priceAsc') {
-      // * Sort by Price ascending
-      sortedAuctions = auctions.sort(
-        (a, b) => a.startingPrice - b.startingPrice
-      );
-    } else {
-      // * Sort by Price descending
-      sortedAuctions = auctions.sort(
-        (a, b) => b.startingPrice - a.startingPrice
-      );
-    }
-    console.log(
-      `sortedAuction`,
-      sortedAuctions.map((el) => el.startingPrice)
-    );
-    setFilteredAuctions(sortedAuctions);
+    setPriceFilter(filter);
+  };
+
+  const handleLocationFilter = (e) => {
+    const { filter } = e.currentTarget.dataset;
+    console.log(`filter`, filter);
+    setLocationFilter(filter);
   };
 
   const handleShare = (e) => {
@@ -185,6 +205,9 @@ const HomePage = () => {
                       onClick={handleFilter}
                       data-filter='priceAsc'
                       fullWidth
+                      className={clsx({
+                        [customClasses.activePrice]: priceFilter === 'priceAsc',
+                      })}
                     >
                       Price (low-high)
                     </Typography>
@@ -195,6 +218,9 @@ const HomePage = () => {
                       style={{ cursor: 'pointer' }}
                       onClick={handleFilter}
                       data-filter='priceDesc'
+                      className={clsx({
+                        [customClasses.activePrice]: priceFilter !== 'priceAsc',
+                      })}
                     >
                       Price (high-low)
                     </Typography>
@@ -217,14 +243,36 @@ const HomePage = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                   <div className={customClasses.content}>
+                    <div
+                      key={'all'}
+                      className={clsx({
+                        [customClasses.activeLocation]:
+                          locationFilter === 'all',
+                      })}
+                    >
+                      <Typography
+                        variant='body1'
+                        style={{ cursor: 'pointer' }}
+                        onClick={handleLocationFilter}
+                        data-filter={'all'}
+                      >
+                        All
+                      </Typography>
+                    </div>{' '}
                     {locations &&
                       locations.map((loc) => (
-                        <div key={loc}>
+                        <div
+                          key={loc}
+                          className={clsx({
+                            [customClasses.activeLocation]:
+                              locationFilter === loc,
+                          })}
+                        >
                           <Typography
                             variant='body1'
                             style={{ cursor: 'pointer' }}
-                            // onClick={handleFilter}
-                            data-filter='priceDesc'
+                            onClick={handleLocationFilter}
+                            data-filter={loc}
                           >
                             {loc}
                           </Typography>
@@ -292,11 +340,12 @@ const HomePage = () => {
                 ))}
             <div className={customClasses.pagination}>
               {filteredAuctions
-                // ?.slice(
-                //   (page - 1) * rowsPerPage,
-                //   (page - 1) * rowsPerPage + rowsPerPage
-                // )
+                ?.slice(
+                  (page - 1) * rowsPerPage,
+                  (page - 1) * rowsPerPage + rowsPerPage
+                )
                 .map((auc, ind) => {
+                  console.log(`auc`, auc);
                   return (
                     <div
                       key={v4()}
@@ -346,9 +395,12 @@ const HomePage = () => {
 
               <Pagination
                 color='secondary'
-                count={Math.ceil(auctions.length / rowsPerPage)}
+                count={Math.ceil(publishedAuctions.length / rowsPerPage)}
                 page={page}
                 onChange={handleChangePage}
+                style={{
+                  margin: 'auto',
+                }}
               />
             </div>
           </Grid>

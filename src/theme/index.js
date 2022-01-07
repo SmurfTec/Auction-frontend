@@ -52,7 +52,11 @@ const Theme = ({ children }) => {
             padding: '8px 16px',
           },
         },
-
+        MuiPagination: {
+          ul: {
+            justifyContent: 'center',
+          },
+        },
         MuiAccordion: {
           rounded: {
             '&:first-child': {

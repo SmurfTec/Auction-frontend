@@ -3,11 +3,9 @@ import {
   Button,
   Chip,
   CircularProgress,
-  Container,
   Divider,
   FormControl,
   Grid,
-  IconButton,
   InputLabel,
   MenuItem,
   Paper,
@@ -15,13 +13,10 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import Navbar from 'components/common/NavBar';
 import useManyInputs from 'hooks/useManyInputs';
 import React, { useContext } from 'react';
 import { Autocomplete } from '@material-ui/lab';
-// import { categories } from 'data';
-import AuctionStepper from './AuctionStepper';
-import VideocamIcon from '@material-ui/icons/Videocam';
+import { locations } from 'data';
 import ImageIcon from '@material-ui/icons/Image';
 import { CategoriesContext } from 'contexts/CategoriesContext';
 import { AuctionsContext } from 'contexts/AuctionsContext';
@@ -93,6 +88,9 @@ const Create = () => {
 
   const handleType = (e) => {
     changeInput('type', e.target.value);
+  };
+  const handleLocation = (e) => {
+    changeInput('location', e.target.value);
   };
 
   const handleCatOnChange = (e, newValue) => {
@@ -181,7 +179,7 @@ const Create = () => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
+                {/* <TextField
                   name='location'
                   value={inputState.location}
                   label='Location'
@@ -189,7 +187,29 @@ const Create = () => {
                   variant='outlined'
                   required
                   fullWidth
-                />
+                /> */}
+                <FormControl
+                  variant='outlined'
+                  className={classes.selectControl}
+                  fulWidth
+                >
+                  <InputLabel htmlFor='outlined-age-native-simple' fullWidth>
+                    Location
+                  </InputLabel>
+                  <Select
+                    value={inputState.location}
+                    onChange={handleLocation}
+                    label='Location'
+                    fullWidth
+                    required
+                  >
+                    {locations.map((loc) => (
+                      <MenuItem key={loc} value={loc.toLowerCase()}>
+                        {loc}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField

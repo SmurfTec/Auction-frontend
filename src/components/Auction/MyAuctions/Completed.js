@@ -1,16 +1,18 @@
-import React from 'react';
-import watchImg from 'assets/watchImg.png';
+import React, { useEffect } from 'react';
 import AuctionList from './AuctionList';
-import { auctions } from 'data';
+import { AuctionsContext } from 'contexts/AuctionsContext';
 
 const Completed = () => {
-  // const {myAuctions} = React.useContext(AuctionsContext)
-  //   const [data, setdata] = React.useState([]);
+  const { topAuctions, loading, user } = React.useContext(AuctionsContext);
+  const [data, setdata] = React.useState([]);
 
-  // useEffect(() => {
-  // }, [myAuctions])
+  useEffect(() => {
+    if (loading || !topAuctions) return;
 
-  return <AuctionList data={[]} loading={false} />;
+    setdata(topAuctions.filter((el) => el.winningBig?.user?._id === user._id));
+  }, [topAuctions, loading]);
+
+  return <AuctionList auctions={data} loading={loading} />;
 };
 
 export default Completed;

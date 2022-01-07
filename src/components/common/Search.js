@@ -32,6 +32,13 @@ const useStyles = makeStyles((theme) => ({
       color: '#707a83',
     },
   },
+  searchBox: {
+    height: 45,
+    width: '150%',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+  },
   searchIcon: {
     display: 'flex',
     marginRight: 8,
@@ -56,7 +63,7 @@ export default function CustomizedInputBase() {
   return (
     <Box display='flex' width='100%'>
       <form onSubmit={searchResults}>
-        <Box height='45px' width='100%'>
+        <Box className={classes.searchBox}>
           <div className={classes.container}>
             <div className={classes.searchIcon}>
               <Search fontSize='small' />

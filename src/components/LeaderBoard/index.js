@@ -33,16 +33,16 @@ const LeaderBoard = () => {
   const customClasses = useStyles();
   const { categories, loading: loadingCategories } =
     useContext(CategoriesContext);
-  const { auctions, loading } = useContext(AuctionsContext);
+  const { topAuctions, loading } = useContext(AuctionsContext);
 
   const [filteredAuctions, setFilteredAuctions] = useState([]);
 
-  // * Sync auctions with filtered auctions
+  // * Sync topAuctions with filtered topAuctions
   useEffect(() => {
-    if (loading || !auctions) return;
+    if (loading || !topAuctions) return;
 
-    setFilteredAuctions(auctions);
-  }, [auctions, loading]);
+    setFilteredAuctions(topAuctions.filter((el) => el.status === 'claimed'));
+  }, [topAuctions, loading]);
 
   const initialState = {
     timeLine: 7,
@@ -68,12 +68,12 @@ const LeaderBoard = () => {
 
   // * Filter items when Category changes
   useEffect(() => {
-    if (!inputState.category || !auctions) return;
+    if (!inputState.category || !topAuctions) return;
 
-    if (inputState.category === 'all') return setFilteredAuctions(auctions);
+    if (inputState.category === 'all') return setFilteredAuctions(topAuctions);
 
     setFilteredAuctions(
-      auctions.filter((el) => {
+      topAuctions.filter((el) => {
         let er = false;
         let matched = false;
         el.categories.every((cat) => {
@@ -98,23 +98,23 @@ const LeaderBoard = () => {
     let newAuctions = [];
     switch (inputState.timeLine) {
       case 7:
-        newAuctions = auctions.filter(
+        newAuctions = topAuctions.filter(
           (el) => daysBetween(new Date(), new Date(el.timeLine)) <= 7
         );
         break;
       case 14:
-        newAuctions = auctions.filter(
+        newAuctions = topAuctions.filter(
           (el) => daysBetween(new Date(), new Date(el.timeLine)) <= 14
         );
         break;
       case 21:
-        newAuctions = auctions.filter(
+        newAuctions = topAuctions.filter(
           (el) => daysBetween(new Date(), new Date(el.timeLine)) <= 21
         );
         break;
 
       default:
-        newAuctions = auctions;
+        newAuctions = topAuctions;
         break;
     }
 
@@ -123,14 +123,18 @@ const LeaderBoard = () => {
 
   // * Filter items when Price Filter changes
   useEffect(() => {
-    if (!auctions) return;
+    if (!topAuctions) return;
 
     let newAuctions = [];
     // * Price true means (low-high)
     if (inputState.price)
-      newAuctions = auctions.sort((a, b) => a.startingPrice - b.startingPrice);
+      newAuctions = topAuctions.sort(
+        (a, b) => a.startingPrice - b.startingPrice
+      );
     else
-      newAuctions = auctions.sort((a, b) => b.startingPrice - a.startingPrice);
+      newAuctions = topAuctions.sort(
+        (a, b) => b.startingPrice - a.startingPrice
+      );
 
     setFilteredAuctions(newAuctions);
   }, [inputState.price]);
@@ -157,7 +161,7 @@ const LeaderBoard = () => {
           LeaderBoard
         </Typography>
         <Typography variant='subtitle2' align='center' color='textSecondary'>
-          Top auctions ranked by starting price and other statistics
+          Top topAuctions ranked by starting price and other statistics
         </Typography>
         <div
           className={`${customClasses.tabFilters} ${globalClasses.containerMargin}`}
@@ -339,7 +343,7 @@ const LeaderBoard = () => {
           <Box mt={2}>
             <Pagination
               color='secondary'
-              count={Math.ceil(auctions.length / rowsPerPage)}
+              count={Math.ceil(topAuctions.length / rowsPerPage)}
               page={page}
               onChange={handleChangePage}
               className={customClasses.pagination}

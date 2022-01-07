@@ -11,7 +11,9 @@ import { makeStyles } from '@material-ui/core';
 import bgImg from 'assets/contact_bg.jpg';
 import useManyInputs from 'hooks/useManyInputs';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
-import { footerInfo } from 'data';
+import axios from 'axios';
+import { API_BASE_URL, handleCatch } from 'utils/makeReq';
+import { toast } from 'react-toastify';
 
 const styles = makeStyles((theme) => ({
   container: {
@@ -48,6 +50,7 @@ const styles = makeStyles((theme) => ({
     },
   },
 }));
+
 const ContactUs = () => {
   const classes = styles();
 
@@ -65,6 +68,21 @@ const ContactUs = () => {
     resetState,
     setInputstate,
   ] = useManyInputs(initialState);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post(
+        `${API_BASE_URL}/users/contact`,
+        { ...inputState },
+        'POST'
+      );
+      toast.success('Your Response has been recorded!');
+      resetState();
+    } catch (err) {
+      handleCatch(err);
+    }
+  };
 
   return (
     <>
@@ -87,49 +105,56 @@ const ContactUs = () => {
                 </Typography>
               </Box>
 
-              <Grid container spacing={4}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    name='name'
-                    value={inputState.name}
-                    label='Your Name'
-                    onChange={handleTxtChange}
-                    fullWidth
-                    variant='outlined'
-                  />
+              <form onSubmit={handleSubmit}>
+                <Grid container spacing={4}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name='name'
+                      value={inputState.name}
+                      label='Your Name'
+                      onChange={handleTxtChange}
+                      fullWidth
+                      variant='outlined'
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name='email'
+                      value={inputState.email}
+                      label='Email Address'
+                      onChange={handleTxtChange}
+                      fullWidth
+                      variant='outlined'
+                      required
+                      type='email'
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <TextField
+                      name='message'
+                      multiline
+                      rows={5}
+                      variant='outlined'
+                      value={inputState.message}
+                      label='Your Message'
+                      onChange={handleTxtChange}
+                      fullWidth
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      type='submit'
+                      endIcon={<ArrowRightAltIcon />}
+                    >
+                      Send Message
+                    </Button>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    name='email'
-                    value={inputState.email}
-                    label='Email Address'
-                    onChange={handleTxtChange}
-                    fullWidth
-                    variant='outlined'
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12}>
-                  <TextField
-                    name='message'
-                    multiline
-                    rows={5}
-                    variant='outlined'
-                    value={inputState.message}
-                    label='Your Message'
-                    onChange={handleTxtChange}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12}>
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    endIcon={<ArrowRightAltIcon />}
-                  >
-                    Send Message
-                  </Button>
-                </Grid>
-              </Grid>
+              </form>
             </div>
             {/* <Box width='100%'>
             <div className={classes.contactInfo}></div>

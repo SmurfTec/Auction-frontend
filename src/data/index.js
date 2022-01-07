@@ -165,7 +165,7 @@ export const allcategories = [
   'luxury',
 ];
 
-export const location = [
+export const locations = [
   'Asia',
   'Africa',
   'Europe',

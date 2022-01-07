@@ -38,6 +38,12 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  activePrice: {
+    backgroundColor: '#f2f2f2',
+  },
+  activeLocation: {
+    backgroundColor: '#f2f2f2',
+  },
 }));
 
 export default useStyles;

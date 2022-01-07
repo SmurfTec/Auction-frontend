@@ -20,6 +20,15 @@ export const AuctionsProvider = ({ children }) => {
     clearAuctions,
   ] = useArray([], '_id');
   const [loading, toggleLoading] = useToggleInput(true);
+
+  // * Auctions are getting filtered based on their status to show
+  // * On different pages , e.g leaderboard has "claimed" status auctions ,
+  // * homepage has "published" and so on.
+  // * Instead of fitlering auctions in all pages, I have making states here and applying filtering here
+  const [publishedAuctions, setPublishedAuctions] = useState([]);
+  const [topAuctions, setTopAuctions] = useState([]); // $ for leaderboard
+  const [unClaimedAuctions, setUnClaimedAuctions] = useState([]);
+
   // * My Auctions
   const [
     myAuctions,
@@ -78,6 +87,15 @@ export const AuctionsProvider = ({ children }) => {
     if (user) fetchWatchlist();
   }, [user]);
 
+  // * whenever auctions changed , We have to update published and leaderboard auctions
+  useEffect(() => {
+    if (loading || !auctions) return;
+
+    setPublishedAuctions(auctions.filter((el) => el.status === 'published'));
+    setTopAuctions(auctions.filter((el) => el.status === 'claimed'));
+    setUnClaimedAuctions(auctions.filter((el) => el.status === 'archieved'));
+  }, [auctions, loading]);
+
   // * CRUD Operations
   const getAuctionById = (id) => auctions.find((el) => el._id === id);
 
@@ -97,7 +115,7 @@ export const AuctionsProvider = ({ children }) => {
       // ! Auction will go into userAuctions
       pushMyAuction(resData.auction);
       // ! Auction will go into auctions if its status is published
-      if (resData.auction.stataus === 'published') pushAuction(resData.auction);
+      if (resData.auction.status === 'published') pushAuction(resData.auction);
       navigate(
         resData.auction.status === 'unPublished'
           ? '/myauctions/unpublished'
@@ -134,6 +152,9 @@ export const AuctionsProvider = ({ children }) => {
         watchlist,
         loadingWatchlist,
         addToWatchlist,
+        user,
+        publishedAuctions,
+        topAuctions,
       }}
     >
       {children}

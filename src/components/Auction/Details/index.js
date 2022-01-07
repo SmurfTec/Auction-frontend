@@ -82,10 +82,10 @@ const AuctionDetails = () => {
 
       setAuction(resData.auction);
       toast.success('Success');
+      callBack?.();
     } catch (err) {
       handleCatch(err);
     } finally {
-      callBack?.();
       toggleMakingBid();
     }
   };
