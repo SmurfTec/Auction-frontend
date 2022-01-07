@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import {
   Box,
@@ -23,10 +23,6 @@ const CreateBidForm = ({
     e.preventDefault();
     createBid(biddingAmount, auctionId, resetAmount);
   };
-
-  useEffect(() => {
-    console.log('form rerendered');
-  });
 
   return (
     <Box sx={{ flexBasis: '40%' }} className={`${customClasses.contentCont}`}>

@@ -78,7 +78,7 @@ const AuctionDetails = () => {
         },
         'PATCH'
       );
-      console.log(`resData`, resData);
+      // console.log(`resData`, resData);
 
       setAuction(resData.auction);
       toast.success('Success');

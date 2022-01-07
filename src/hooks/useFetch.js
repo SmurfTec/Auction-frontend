@@ -12,7 +12,7 @@ export default function useFetch(url, options = {}, dependencies = [], key) {
           // * json is { status : 'success' , user : { id :sadas , name "" , ...}}
           // * if key is user, we have to return json.user
           if (key) {
-            console.log(`{ ...json[key] }`, json[key]);
+            // console.log(`{ ...json[key] }`, json[key]);
             return Promise.resolve(json[key]);
           } else return Promise.resolve(json);
         });

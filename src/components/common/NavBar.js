@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -35,32 +35,16 @@ const Navbar = (props) => {
   const classes_g = globalStyles();
   const classes_dr = drawerStyles();
   const { user } = useContext(AuthContext);
-  console.log(`user`, user);
+  // console.log(`user`, user);
 
   const location = useLocation();
 
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const isMenuOpen = Boolean(anchorEl);
 
   const [open, setOpen] = React.useState(false);
 
   const toggleSideBar = () => {
     setOpen((prev) => !prev);
-  };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
   };
 
   const showSearchBar = useMemo(() => {

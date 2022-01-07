@@ -1,8 +1,6 @@
 import { useArray, useToggleInput } from 'hooks';
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { makeReq, handleCatch } from 'utils/makeReq';
+import React, { useEffect } from 'react';
+import { makeReq } from 'utils/makeReq';
 
 export const CategoriesContext = React.createContext();
 
@@ -12,17 +10,17 @@ export const CategoriesProvider = ({ children }) => {
     categories,
     setCategories,
     pushCategory,
-    filterCategories,
-    updateCategory,
-    removeCategory,
-    clearCategories,
+    // filterCategories,
+    // updateCategory,
+    // removeCategory,
+    // clearCategories,
   ] = useArray([], '_id');
   const [loading, toggleLoading] = useToggleInput(true);
 
   const fetchCategories = async () => {
     try {
       const resData = await makeReq('/categories');
-      console.log(`resData`, resData);
+      // console.log(`resData`, resData);
       setCategories(resData.categories);
     } catch (err) {
       // console.log(`err`, err)

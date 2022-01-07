@@ -26,12 +26,10 @@ import { useToggleInput } from 'hooks';
 
 import styles from './createAuctionStyles';
 import SimpleCarousel from 'components/common/SimpleCarousel';
-import { useNavigate } from 'react-router-dom';
 import PublishAuction from './PublishAuctionDialog';
 
 const Create = () => {
   const classes = styles();
-  const navigate = useNavigate();
   const { categories } = useContext(CategoriesContext);
   const { createNewAuction } = useContext(AuctionsContext);
   const [isSubmitting, toggleSubmitting] = useToggleInput(false);
@@ -47,14 +45,8 @@ const Create = () => {
     type: '',
     timeLine: 7,
   };
-  const [
-    inputState,
-    handleTxtChange,
-    handleToggleChange,
-    changeInput,
-    resetState,
-    setInputstate,
-  ] = useManyInputs(initialState);
+  const [inputState, handleTxtChange, , changeInput, , setInputstate] =
+    useManyInputs(initialState);
   const [disable, setDisable] = React.useState(false);
   //   const [open, setOpen] = React.useState(false);
   const [isImageUploading, toggleImageUploading] = useToggleInput(false);
@@ -64,7 +56,6 @@ const Create = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`inputState`, inputState);
     if (!inputState.images.length)
       return toast.error('Select atleast 1 image for auction');
 
@@ -107,7 +98,6 @@ const Create = () => {
     // *
     const { fileType } = options;
     try {
-      console.log(`selectedFile.type`, selectedFile.type);
       if (selectedFile && selectedFile.type.includes(fileType)) {
         let reader = new FileReader();
         reader.readAsDataURL(selectedFile);
@@ -143,7 +133,7 @@ const Create = () => {
       toast(
         err?.response?.data?.message || err.message || 'Something Went Wrong'
       );
-      console.log(`err`, err);
+      // console.log(`err`, err);
     } finally {
       toggleFunc();
     }

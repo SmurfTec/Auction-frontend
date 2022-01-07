@@ -1,12 +1,10 @@
 import React, { useContext, useEffect, useState, useMemo } from 'react';
 import AuctionList from './AuctionList';
 import { AuctionsContext } from 'contexts/AuctionsContext';
-import { AuthContext } from 'contexts/AuthContext';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 
 const Unpulished = ({ status }) => {
-  const { user } = useContext(AuthContext);
   const { myAuctions, loadingMyAuctions } = useContext(AuctionsContext);
   const [data, setdata] = useState([]);
 
@@ -24,7 +22,7 @@ const Unpulished = ({ status }) => {
   }, [location.search]);
 
   useEffect(() => {
-    console.log(`parsedQuery`, parsedQuery);
+    // console.log(`parsedQuery`, parsedQuery);
     if (!parsedQuery.search)
       return setdata(myAuctions.filter((el) => el.status === status) || []);
 

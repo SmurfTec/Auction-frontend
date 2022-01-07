@@ -150,7 +150,6 @@ export const AuthProvider = ({ children }) => {
         // deleteGig,
       }}
     >
-      {console.log(`user`, user)}
       {children}
     </AuthContext.Provider>
   );

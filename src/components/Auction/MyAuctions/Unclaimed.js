@@ -8,8 +8,8 @@ const Unclaimed = () => {
   const [data, setdata] = React.useState([]);
 
   useEffect(() => {
-    console.log(`unClaimedAuctions`, unClaimedAuctions);
-    console.log(`loading`, loading);
+    // console.log(`unClaimedAuctions`, unClaimedAuctions);
+    // console.log(`loading`, loading);
     if (loading || !unClaimedAuctions) return;
 
     setdata(
@@ -19,10 +19,10 @@ const Unclaimed = () => {
       )
     );
 
-    console.log(
-      `new data`,
-      unClaimedAuctions.filter((el) => el.winningBig?.user?._id === user._id)
-    );
+    // console.log(
+    //   `new data`,
+    //   unClaimedAuctions.filter((el) => el.winningBig?.user?._id === user._id)
+    // );
   }, [unClaimedAuctions, loading]);
 
   return <AuctionList auctions={data} loading={loading} />;

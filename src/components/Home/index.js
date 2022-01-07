@@ -39,7 +39,7 @@ const HomePage = () => {
   const location = useLocation();
 
   const [page, setPage] = React.useState(1);
-  const [rowsPerPage, setRowsPerPage] = React.useState(50);
+  const [rowsPerPage] = React.useState(50);
   const [filteredAuctions, setFilteredAuctions] = useState([]);
 
   const [categoriesFilters, setCategoriesFilters] = useState();
@@ -82,7 +82,7 @@ const HomePage = () => {
         (el) => el.location === locationFilter.toLowerCase()
       )
     );
-  }, [locationFilter]);
+  }, [locationFilter, publishedAuctions]);
 
   useEffect(() => {
     if (!categoriesFilters || !publishedAuctions) return;
@@ -91,16 +91,16 @@ const HomePage = () => {
     // * obj ={ 1 : true , 2 :true, 3:Fasle , 4 :false}
     // * We have to filter false values
     let filterCats = filterFalseValues(categoriesFilters);
-    console.log(`filterCats`, filterCats);
+    // console.log(`filterCats`, filterCats);
     // * We have to create array of ids
     filterCats = Object.keys(filterCats);
 
     if (!filterCats.length) return setFilteredAuctions(publishedAuctions);
 
-    console.log(
-      `newAuctions cats`,
-      newAuctions?.map((el) => el.categories)
-    );
+    // console.log(
+    //   `newAuctions cats`,
+    //   newAuctions?.map((el) => el.categories)
+    // );
 
     newAuctions = newAuctions.filter((auc) => {
       // * Check is auc's categories has any category of filter
@@ -117,17 +117,17 @@ const HomePage = () => {
         return true;
       });
 
-      console.log(`matched`, matched);
+      // console.log(`matched`, matched);
       return matched;
     });
     setFilteredAuctions(newAuctions);
-  }, [categoriesFilters]);
+  }, [categoriesFilters, publishedAuctions]);
 
   useEffect(() => {
-    console.log(`parsedQuery`, parsedQuery);
+    // console.log(`parsedQuery`, parsedQuery);
     if (!parsedQuery.search)
       return setFilteredAuctions(publishedAuctions || []);
-    console.log(`parsedQuery2`, parsedQuery);
+    // console.log(`parsedQuery2`, parsedQuery);
 
     setFilteredAuctions(
       publishedAuctions?.filter((el) =>
@@ -142,20 +142,20 @@ const HomePage = () => {
 
   const handleFilter = (e) => {
     const { filter } = e.currentTarget.dataset;
-    console.log(`e.`, filter);
+    // console.log(`e.`, filter);
 
     setPriceFilter(filter);
   };
 
   const handleLocationFilter = (e) => {
     const { filter } = e.currentTarget.dataset;
-    console.log(`filter`, filter);
+    // console.log(`filter`, filter);
     setLocationFilter(filter);
   };
 
   const handleShare = (e) => {
-    const { item } = e.currentTarget.dataset;
-    console.log(`item`, item);
+    // const { item } = e.currentTarget.dataset;
+    // console.log(`item`, item);
   };
 
   return (
@@ -297,24 +297,30 @@ const HomePage = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                   <FormGroup className={customClasses.content}>
-                    {categories.map((cat) => (
-                      <div key={cat._id}>
-                        <FormControlLabel
-                          value={cat.name}
-                          control={
-                            <Checkbox
-                              color='primary'
-                              name={cat._id}
-                              checked={categoriesFilters?.[cat._id]}
-                              onChange={handleCategoryChange}
+                    {loadingCategories
+                      ? Array(8)
+                          .fill()
+                          .map((_, idx) => (
+                            <Skeleton key={idx} variant='text' />
+                          ))
+                      : categories.map((cat) => (
+                          <div key={cat._id}>
+                            <FormControlLabel
+                              value={cat.name}
+                              control={
+                                <Checkbox
+                                  color='primary'
+                                  name={cat._id}
+                                  checked={categoriesFilters?.[cat._id]}
+                                  onChange={handleCategoryChange}
+                                />
+                              }
+                              label={cat.name}
+                              labelPlacement='end'
                             />
-                          }
-                          label={cat.name}
-                          labelPlacement='end'
-                        />
-                        <Divider />
-                      </div>
-                    ))}
+                            <Divider />
+                          </div>
+                        ))}
                   </FormGroup>
                 </AccordionDetails>
               </Accordion>
@@ -345,7 +351,7 @@ const HomePage = () => {
                   (page - 1) * rowsPerPage + rowsPerPage
                 )
                 .map((auc, ind) => {
-                  console.log(`auc`, auc);
+                  // console.log(`auc`, auc);
                   return (
                     <div
                       key={v4()}

@@ -38,14 +38,8 @@ const Profile = () => {
     },
   };
 
-  const [
-    inputState,
-    handleTxtChange,
-    handleToggleChange,
-    changeInput,
-    resetState,
-    setInputstate,
-  ] = useManyInputs(initialState);
+  const [inputState, handleTxtChange, , changeInput, , setInputstate] =
+    useManyInputs(initialState);
 
   const navigate = useNavigate();
 
@@ -71,7 +65,7 @@ const Profile = () => {
   const handleAddForm = (e) => {
     e.preventDefault();
     updateMe({ phoneNumber: inputState.phoneNumber });
-    console.log(`inputState`, inputState);
+    // console.log(`inputState`, inputState);
   };
 
   const handleProfileSave = (e) => {
@@ -82,7 +76,7 @@ const Profile = () => {
       email: inputState.email,
       dateofBirth: new Date(inputState.dateofBirth),
     });
-    console.log(`inputState`, inputState);
+    // console.log(`inputState`, inputState);
   };
 
   const handleSaveCard = (e) => {
@@ -90,7 +84,7 @@ const Profile = () => {
     updateMe({
       paymentDetails: inputState.paymentDetails,
     });
-    console.log(`inputState`, inputState);
+    // console.log(`inputState`, inputState);
   };
 
   return (

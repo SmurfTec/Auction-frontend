@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  TextField,
-  Typography,
-} from '@material-ui/core';
+import { Box, Button, Grid, TextField, Typography } from '@material-ui/core';
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import bgImg from 'assets/contact_bg.jpg';
@@ -60,14 +53,8 @@ const ContactUs = () => {
     message: '',
   };
 
-  const [
-    inputState,
-    handleTxtChange,
-    handleToggleChange,
-    changeInput,
-    resetState,
-    setInputstate,
-  ] = useManyInputs(initialState);
+  const [inputState, handleTxtChange, , , resetState, ,] =
+    useManyInputs(initialState);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

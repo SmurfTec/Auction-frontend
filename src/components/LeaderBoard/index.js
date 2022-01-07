@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useMemo, useContext, useEffect, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -6,43 +6,33 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   Typography,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
-  makeStyles,
   Box,
   Container,
   Chip,
   Avatar,
-  Divider,
-  TextField,
 } from '@material-ui/core';
 import styles from 'styles/commonStyles';
 import useManyInputs from 'hooks/useManyInputs';
-import { Autocomplete, Pagination } from '@material-ui/lab';
+import { Pagination } from '@material-ui/lab';
 import useStyles from 'styles/TableStyles';
 import { AuctionsContext } from 'contexts/AuctionsContext';
 import { daysBetween } from 'utils/dateFunctions';
 import { CategoriesContext } from 'contexts/CategoriesContext';
+import queryString from 'query-string';
+import { useLocation } from 'react-router-dom';
 
 const LeaderBoard = () => {
   const globalClasses = styles();
   const customClasses = useStyles();
-  const { categories, loading: loadingCategories } =
-    useContext(CategoriesContext);
+  const { categories } = useContext(CategoriesContext);
   const { topAuctions, loading } = useContext(AuctionsContext);
 
   const [filteredAuctions, setFilteredAuctions] = useState([]);
-
-  // * Sync topAuctions with filtered topAuctions
-  useEffect(() => {
-    if (loading || !topAuctions) return;
-
-    setFilteredAuctions(topAuctions.filter((el) => el.status === 'claimed'));
-  }, [topAuctions, loading]);
 
   const initialState = {
     timeLine: 7,
@@ -50,21 +40,22 @@ const LeaderBoard = () => {
     price: false,
   };
 
+  const [inputState, , handleToggleChange, changeInput, , ,] =
+    useManyInputs(initialState);
+
   const [page, setPage] = React.useState(1);
-  const [rowsPerPage, setRowsPerPage] = React.useState(50);
+  const [rowsPerPage] = React.useState(50);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
-  const [
-    inputState,
-    handleTxtChange,
-    handleToggleChange,
-    changeInput,
-    resetState,
-    setInputstate,
-  ] = useManyInputs(initialState);
+  // * Sync topAuctions with filtered topAuctions
+  useEffect(() => {
+    if (loading || !topAuctions) return;
+
+    setFilteredAuctions(topAuctions.filter((el) => el.status === 'claimed'));
+  }, [topAuctions, loading]);
 
   // * Filter items when Category changes
   useEffect(() => {
@@ -74,7 +65,6 @@ const LeaderBoard = () => {
 
     setFilteredAuctions(
       topAuctions.filter((el) => {
-        let er = false;
         let matched = false;
         el.categories.every((cat) => {
           if (inputState.category === cat._id) {
@@ -91,7 +81,7 @@ const LeaderBoard = () => {
         return matched;
       })
     );
-  }, [inputState.category]);
+  }, [inputState.category, topAuctions]);
 
   // * Filter items when timeLine changes
   useEffect(() => {
@@ -119,7 +109,7 @@ const LeaderBoard = () => {
     }
 
     setFilteredAuctions(newAuctions);
-  }, [inputState.timeLine]);
+  }, [inputState.timeLine, topAuctions]);
 
   // * Filter items when Price Filter changes
   useEffect(() => {
@@ -137,7 +127,25 @@ const LeaderBoard = () => {
       );
 
     setFilteredAuctions(newAuctions);
-  }, [inputState.price]);
+  }, [inputState.price, topAuctions]);
+
+  // * Filter by search
+
+  const location = useLocation();
+
+  const parsedQuery = useMemo(() => {
+    return queryString.parse(location.search);
+  }, [location.search]);
+
+  useEffect(() => {
+    if (!parsedQuery.search) return setFilteredAuctions(topAuctions || []);
+
+    setFilteredAuctions(
+      topAuctions?.filter((el) =>
+        el.title.toLowerCase().includes(parsedQuery.search.toLowerCase())
+      )
+    );
+  }, [parsedQuery, topAuctions]);
 
   const handleTimeline = (e) => {
     changeInput('timeLine', e.target.value);

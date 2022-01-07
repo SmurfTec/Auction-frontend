@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useArray, useFetch, useToggleInput } from 'hooks';
-import { makeReq, handleCatch, API_BASE_URL } from 'utils/makeReq';
+import { useArray, useToggleInput } from 'hooks';
+import { makeReq, handleCatch } from 'utils/makeReq';
 import { AuthContext } from './AuthContext';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -14,10 +14,10 @@ export const AuctionsProvider = ({ children }) => {
     auctions,
     setAuctions,
     pushAuction,
-    filterAuctions,
-    updateAuction,
-    removeAuction,
-    clearAuctions,
+    // filterAuctions,
+    // updateAuction,
+    // removeAuction,
+    // clearAuctions,
   ] = useArray([], '_id');
   const [loading, toggleLoading] = useToggleInput(true);
 
@@ -34,10 +34,10 @@ export const AuctionsProvider = ({ children }) => {
     myAuctions,
     setMyAuctions,
     pushMyAuction,
-    filterMyAuctions,
-    updateMyAuction,
-    removeMyAuction,
-    clearMyAuctions,
+    // filterMyAuctions,
+    // updateMyAuction,
+    // removeMyAuction,
+    // clearMyAuctions,
   ] = useArray([], '_id');
   const [loadingMyAuctions, toggleLoadingMyAuctions] = useToggleInput(true);
 
@@ -58,7 +58,7 @@ export const AuctionsProvider = ({ children }) => {
   const fetchAuctions = async () => {
     try {
       const resData = await makeReq('/auctions');
-      console.log(`resData`, resData);
+      // console.log(`resData`, resData);
       setAuctions(resData.auctions);
     } catch (err) {
       // console.log(`err`, err)
@@ -69,7 +69,7 @@ export const AuctionsProvider = ({ children }) => {
   const fetchWatchlist = async () => {
     try {
       const resData = await makeReq('/auctions/watchlist');
-      console.log(`resData`, resData);
+      // console.log(`resData`, resData);
       setWatchlist(resData.watchlist);
     } catch (err) {
       // console.log(`err`, err)
@@ -155,6 +155,7 @@ export const AuctionsProvider = ({ children }) => {
         user,
         publishedAuctions,
         topAuctions,
+        unClaimedAuctions,
       }}
     >
       {children}

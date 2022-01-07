@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
-import { Alert } from 'components/common/Alert';
 import useManyInputs from 'hooks/useManyInputs';
 import globalStyles from 'styles/commonStyles';
 import { useStyles as formStyles } from 'styles/FormLayoutStyles';
@@ -32,20 +31,19 @@ const Login = () => {
   const [
     inputState,
     handleTxtChange,
-    handleToggleChange,
-    changeInput,
+    ,
+    ,
     resetState,
-    setInputstate,
+    // setInputstate,
   ] = useManyInputs(initialState);
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   let redirect = location.search ? location.search.split('=')[1] : '/';
 
   useEffect(() => {
     if (user) {
-      console.log(`userr`, user);
+      // console.log(`userr`, user);
       navigate(redirect || '/');
     }
   }, [user, navigate, redirect]);
@@ -90,12 +88,6 @@ const Login = () => {
         <section className={classes.wrapper}>
           <form onSubmit={onFormSubmit}>
             <Grid container spacing={3}>
-              {error !== null && (
-                <Grid item xs={12}>
-                  <Alert severity='error'>{error}</Alert>
-                </Grid>
-              )}
-
               <Grid item xs={12}>
                 <TextField
                   name='email'
