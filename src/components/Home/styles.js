@@ -11,12 +11,12 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    rowGap: 10,
     '& hr:last-child': {
       display: 'none',
     },
     '& p': {
       paddingLeft: theme.spacing(2),
+      paddingBlock: 5,
     },
 
     '& .MuiFormControlLabel-root': {

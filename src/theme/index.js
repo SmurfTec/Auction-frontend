@@ -13,6 +13,28 @@ const hoverStyles = {
   backgroundColor: 'rgb(251, 253, 255)',
 };
 
+const SUCCESS = {
+  lighter: '#E9FCD4',
+  light: '#AAF27F',
+  main: '#54D62C',
+  dark: '#229A16',
+  darker: '#08660D',
+};
+const WARNING = {
+  lighter: '#FFF7CD',
+  light: '#FFE16A',
+  main: '#FFC107',
+  dark: '#B78103',
+  darker: '#7A4F01',
+};
+const ERROR = {
+  lighter: '#FFE7D9',
+  light: '#FFA48D',
+  main: '#FF4842',
+  dark: '#B72136',
+  darker: '#7A0C2E',
+};
+
 const Theme = ({ children }) => {
   const themeOptions = useMemo(() => {
     return {
@@ -20,6 +42,11 @@ const Theme = ({ children }) => {
         primary: {
           main: '#2081E2',
         },
+
+        secondary: { main: '#f50057' },
+        success: { ...SUCCESS },
+        warning: { ...WARNING },
+        error: { ...ERROR },
 
         // info: {
         //   main: '#0C53B7',

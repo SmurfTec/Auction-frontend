@@ -307,7 +307,7 @@ const LeaderBoard = () => {
                               label={a.name}
                               color={
                                 ind === 0
-                                  ? 'default'
+                                  ? 'secondary'
                                   : ind === 1
                                   ? 'primary'
                                   : 'secondary'

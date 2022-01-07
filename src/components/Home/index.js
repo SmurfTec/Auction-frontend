@@ -261,23 +261,25 @@ const HomePage = () => {
                     </div>{' '}
                     {locations &&
                       locations.map((loc) => (
-                        <div
-                          key={loc}
-                          className={clsx({
-                            [customClasses.activeLocation]:
-                              locationFilter === loc,
-                          })}
-                        >
-                          <Typography
-                            variant='body1'
-                            style={{ cursor: 'pointer' }}
-                            onClick={handleLocationFilter}
-                            data-filter={loc}
+                        <React.Fragment key={loc}>
+                          <div
+                            className={clsx({
+                              [customClasses.activeLocation]:
+                                locationFilter === loc,
+                            })}
                           >
-                            {loc}
-                          </Typography>
+                            <Typography
+                              variant='body1'
+                              style={{ cursor: 'pointer' }}
+                              onClick={handleLocationFilter}
+                              data-filter={loc}
+                            >
+                              {loc}
+                            </Typography>
+                            <Divider />
+                          </div>
                           <Divider />
-                        </div>
+                        </React.Fragment>
                       ))}
                   </div>
                 </AccordionDetails>
@@ -334,8 +336,9 @@ const HomePage = () => {
             {loading &&
               Array(10)
                 .fill()
-                .map(() => (
+                .map((_, idx) => (
                   <Skeleton
+                    key={idx}
                     variant='rect'
                     height={250}
                     width={'95%'}

@@ -10,7 +10,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import { useNavigate } from 'react-router-dom';
 import styles from 'styles/commonStyles';
 import { calculateCountdown } from 'utils/dateFunctions';
-import { VisibilityOff } from '@material-ui/icons';
+import { formatDistanceToNow } from 'date-fns';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -37,6 +37,28 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     columnGap: 10,
   },
+  cardIntroBox: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+  cardIntro: {
+    flexBasis: '50%',
+  },
+  cardCategories: {
+    flexBasis: '40%',
+    flexGrow: 1,
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-end',
+    '& .MuiChip-root:first-child': {
+      backgroundColor: theme.palette.warning.main,
+    },
+    '& .MuiChip-root': {
+      marginRight: 10,
+      marginBottom: 10,
+    },
+  },
 }));
 
 export default function FeaturedPost({ auction, addToWatchlist }) {
@@ -54,7 +76,16 @@ export default function FeaturedPost({ auction, addToWatchlist }) {
   }, [auction]);
   if (!auction) return <div></div>;
 
-  const { _id, title, location, startingPrice, user, createdAt } = auction;
+  const {
+    _id,
+    title,
+    location,
+    startingPrice,
+    user,
+    createdAt,
+    publishDate,
+    categories,
+  } = auction;
 
   const handleBookMark = (e) => {
     e.stopPropagation();
@@ -78,16 +109,35 @@ export default function FeaturedPost({ auction, addToWatchlist }) {
         >
           <div className={customClasses.cardDetails}>
             <CardContent>
-              <Typography component='h2' variant='h5'>
-                {title}
-              </Typography>
-              <Typography variant='h3' color='textSecondary'>
-                {startingPrice}$
-              </Typography>
+              <Box className={customClasses.cardIntroBox}>
+                <Box className={customClasses.cardIntro}>
+                  <Typography component='h2' variant='h5'>
+                    {title}
+                  </Typography>
+                  <Typography variant='h3' color='textSecondary'>
+                    {startingPrice}$
+                  </Typography>
 
-              <Typography variant='subtitle1' paragraph>
-                {location}
-              </Typography>
+                  <Typography variant='subtitle1' paragraph>
+                    {location}
+                  </Typography>
+                </Box>
+                <Box className={customClasses.cardCategories}>
+                  {categories.map((a, ind) => (
+                    <Chip
+                      size='small'
+                      label={a.name}
+                      color={
+                        ind === 0
+                          ? 'secondary'
+                          : ind === 1
+                          ? 'primary'
+                          : 'secondary'
+                      }
+                    />
+                  ))}
+                </Box>
+              </Box>{' '}
               <Box
                 className={globalClasses.flexAlignDisp}
                 sx={{
@@ -118,7 +168,9 @@ export default function FeaturedPost({ auction, addToWatchlist }) {
                   Created By : {user?.name}
                 </Typography>
                 <Typography variant='body2' color='textSecondary'>
-                  Created At : {new Date(createdAt).toLocaleDateString()}
+                  Published{' '}
+                  {formatDistanceToNow(new Date(publishDate || createdAt))} ago
+                  {/* Created At : {new Date(createdAt).toLocaleDateString()} */}
                 </Typography>
               </div>
             </CardContent>
