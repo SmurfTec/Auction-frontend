@@ -29,6 +29,7 @@ import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import HomeIcon from '@material-ui/icons/Home';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import LockIcon from '@material-ui/icons/Lock';
+import NotificationsPopover from './notify/NotificationsPopover';
 
 const Navbar = (props) => {
   const classes = useStyles();
@@ -115,10 +116,10 @@ const Navbar = (props) => {
                       </Typography>
                     </MHidden>
 
-                    {/* <NotificationsPopover /> */}
-                    <IconButton aria-label='delete'>
+                    <NotificationsPopover />
+                    {/* <IconButton aria-label='delete'>
                       <NotificationsIcon fontSize='small' color='primary' />
-                    </IconButton>
+                    </IconButton> */}
                   </Box>
                   <AccountPopover />
                 </>
