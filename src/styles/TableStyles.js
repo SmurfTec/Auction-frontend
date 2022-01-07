@@ -67,6 +67,11 @@ const useStyles = makeStyles((theme) => ({
   // wrapper: {
   //   overflowX: 'auto',
   // },
+  AuctionsCategories: {
+    '& .MuiChip-root:first-child': {
+      backgroundColor: theme.palette.warning.main,
+    },
+  },
 }));
 
 export default useStyles;

@@ -18,7 +18,7 @@ import {
 } from '@material-ui/core';
 import styles from 'styles/commonStyles';
 import useManyInputs from 'hooks/useManyInputs';
-import { Pagination } from '@material-ui/lab';
+import { Pagination, Skeleton } from '@material-ui/lab';
 import useStyles from 'styles/TableStyles';
 import { AuctionsContext } from 'contexts/AuctionsContext';
 import { daysBetween } from 'utils/dateFunctions';
@@ -266,85 +266,102 @@ const LeaderBoard = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filteredAuctions
-                  .slice(
-                    (page - 1) * rowsPerPage,
-                    (page - 1) * rowsPerPage + rowsPerPage
-                  )
-                  .map((auc, ind) => {
-                    return (
-                      <TableRow
-                        hover
-                        key={auc._id}
-                        className={customClasses.hoverRow}
-                      >
-                        <TableCell
-                          component='th'
-                          scope='row'
-                          style={{ minWidth: 300 }}
-                        >
-                          <div
-                            className={`${globalClasses.flexAlignDisp} ${customClasses.aucItem}`}
+                {loading
+                  ? Array(10)
+                      .fill()
+                      .map((_, idx) => (
+                        <TableRow>
+                          {Array(6)
+                            .fill()
+                            .map(() => (
+                              <TableCell>
+                                <Skeleton />
+                              </TableCell>
+                            ))}
+                        </TableRow>
+                      ))
+                  : filteredAuctions
+                      .slice(
+                        (page - 1) * rowsPerPage,
+                        (page - 1) * rowsPerPage + rowsPerPage
+                      )
+                      .map((auc, ind) => {
+                        return (
+                          <TableRow
+                            hover
+                            key={auc._id}
+                            className={customClasses.hoverRow}
                           >
-                            <Typography variant='subtitle2'>
-                              {ind + 1}
-                            </Typography>
-                            <Avatar
-                              src={auc.images?.[0]}
-                              alt={auc.title}
-                              className={customClasses.large}
-                            />
-                            <Typography variant='subtitle2'>
-                              {auc.title}
-                            </Typography>
-                          </div>
-                        </TableCell>
+                            <TableCell
+                              component='th'
+                              scope='row'
+                              style={{ minWidth: 300 }}
+                            >
+                              <div
+                                className={`${globalClasses.flexAlignDisp} ${customClasses.aucItem}`}
+                              >
+                                <Typography variant='subtitle2'>
+                                  {ind + 1}
+                                </Typography>
+                                <Avatar
+                                  src={auc.images?.[0]}
+                                  alt={auc.title}
+                                  className={customClasses.large}
+                                />
+                                <Typography variant='subtitle2'>
+                                  {auc.title}
+                                </Typography>
+                              </div>
+                            </TableCell>
 
-                        <TableCell style={{ minWidth: 180 }}>
-                          {auc.categories.map((a, ind) => (
-                            <Chip
-                              size='small'
-                              label={a.name}
-                              color={
-                                ind === 0
-                                  ? 'secondary'
-                                  : ind === 1
-                                  ? 'primary'
-                                  : 'secondary'
-                              }
-                              style={{ marginRight: 10, marginBottom: 10 }}
-                            />
-                          ))}
-                        </TableCell>
-                        <TableCell align='center'>
-                          <Typography
-                            variant='body2'
-                            className={globalClasses.downColor}
-                          >
-                            {auc.startingPrice}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align='center'>
-                          <Typography
-                            variant='body2'
-                            className={globalClasses.upColor}
-                          >
-                            {auc.winnerBid?.biddingPrice}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align='center'>
-                          <Typography variant='body2'>
-                            {auc.bids.length}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align='center'>
-                          <Typography variant='body2'>
-                            {new Date(auc.createdAt).toLocaleDateString()}
-                          </Typography>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                            <TableCell
+                              style={{ minWidth: 180 }}
+                              className={customClasses.AuctionsCategories}
+                            >
+                              {auc.categories.map((a, ind) => (
+                                <Chip
+                                  size='small'
+                                  label={a.name}
+                                  color={
+                                    ind === 0
+                                      ? 'secondary'
+                                      : ind === 1
+                                      ? 'primary'
+                                      : 'secondary'
+                                  }
+                                  style={{ marginRight: 10, marginBottom: 10 }}
+                                />
+                              ))}
+                            </TableCell>
+                            <TableCell align='center'>
+                              <Typography
+                                variant='body2'
+                                className={globalClasses.downColor}
+                              >
+                                {auc.startingPrice}
+                              </Typography>
+                            </TableCell>
+                            <TableCell align='center'>
+                              <Typography
+                                variant='body2'
+                                className={globalClasses.upColor}
+                              >
+                                {auc.winnerBid?.biddingPrice}
+                              </Typography>
+                            </TableCell>
+                            <TableCell align='center'>
+                              <Typography variant='body2'>
+                                {auc.bids.length}
+                              </Typography>
+                            </TableCell>
+                            <TableCell align='center'>
+                              <Typography variant='body2'>
+                                {new Date(auc.createdAt).toLocaleDateString()}
+                              </Typography>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
               </TableBody>
             </Table>
           </TableContainer>
