@@ -259,6 +259,7 @@ const HomePage = () => {
                         All
                       </Typography>
                     </div>{' '}
+                    <Divider />
                     {locations &&
                       locations.map((loc) => (
                         <React.Fragment key={loc}>
@@ -278,7 +279,7 @@ const HomePage = () => {
                             </Typography>
                             <Divider />
                           </div>
-                          <Divider />
+                          {/* <Divider /> */}
                         </React.Fragment>
                       ))}
                   </div>

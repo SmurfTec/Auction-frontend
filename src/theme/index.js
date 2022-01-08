@@ -144,6 +144,15 @@ const Theme = ({ children }) => {
 
   const theme = createTheme(themeOptions);
 
+  theme.overrides.MuiAccordion.root = {
+    '&.MuiAccordion-root': {
+      boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 5px 0px',
+      '&:hover': {
+        boxShadow: `${theme.palette.primary.main}73 0px 0px 10px 0px`,
+      },
+    },
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

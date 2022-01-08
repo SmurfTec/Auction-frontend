@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AuctionList = ({ auctions, loading }) => {
+const AuctionList = ({ auctions, loading, isEdit }) => {
   const globalClasses = styles();
   const customClasses = useStyles();
 
@@ -93,9 +93,9 @@ const AuctionList = ({ auctions, loading }) => {
                     <div
                       className={`${globalClasses.customStyledBox} ${globalClasses.flexJustDisp} ${globalClasses.customStyledWidth}`}
                     >
-                      <AuctionStepper auction={auc} />
+                      <AuctionStepper auction={auc} isEdit={isEdit} />
                       <div className={globalClasses.content}>
-                        <Card auction={auc} />
+                        <Card auction={auc} isEdit={isEdit} />
                       </div>
                     </div>
                   </div>

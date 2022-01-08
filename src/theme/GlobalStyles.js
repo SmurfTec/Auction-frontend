@@ -77,6 +77,9 @@ const GlobalStyles = withStyles((theme) => ({
       },
     },
     img: { display: 'inline-block', maxWidth: '100%' },
+    video: {
+      objectFit: 'cover',
+    },
   },
 }))(() => null);
 

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#fff',
     borderRight: '1px solid rgb(229, 232, 235)',
     [theme.breakpoints.up('md')]: {
-      maxWidth: 350,
+      // maxWidth: 350,
     },
   },
   header: {

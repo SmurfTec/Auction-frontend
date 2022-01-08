@@ -11,9 +11,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    '& hr:last-child': {
-      display: 'none',
-    },
+    // '& hr:last-child': {
+    //   display: 'none',
+    // },
     '& p': {
       paddingLeft: theme.spacing(2),
       paddingBlock: 5,

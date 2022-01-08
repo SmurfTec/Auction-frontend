@@ -64,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
     // flex: 3,
     flexBasis: '65%',
     flexDirection: 'column',
+    flexGrow: 1,
     rowGap: 10,
     '& hr:last-child': {
       display: 'none',
@@ -128,9 +129,9 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: 0,
     },
 
-    '& .MuiPaper-elevation1': {
-      boxShadow: 'none',
-    },
+    // '& .MuiPaper-elevation1': {
+    //   boxShadow: 'none',
+    // },
     '&:hover': {
       boxShadow: `${theme.palette.primary.main}73 0px 0px 10px 0px`,
     },

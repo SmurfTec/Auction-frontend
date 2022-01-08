@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from 'styles/commonStyles';
 import { calculateCountdown } from 'utils/dateFunctions';
 import { formatDistanceToNow } from 'date-fns';
+import { Edit } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -50,18 +51,28 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     display: 'flex',
     flexWrap: 'wrap',
+    rowGap: 5,
     justifyContent: 'flex-end',
     '& .MuiChip-root:first-child': {
       backgroundColor: theme.palette.warning.main,
     },
+    '& .MuiChip-root:last-child': {
+      backgroundColor: theme.palette.success.main,
+    },
     '& .MuiChip-root': {
       marginRight: 10,
-      marginBottom: 10,
+      color: '#fff',
+      // marginBottom: 10,
     },
+  },
+  EditButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
   },
 }));
 
-export default function FeaturedPost({ auction, addToWatchlist }) {
+export default function FeaturedPost({ auction, addToWatchlist, isEdit }) {
   const customClasses = useStyles();
   const globalClasses = styles();
   const navigate = useNavigate();
@@ -70,8 +81,7 @@ export default function FeaturedPost({ auction, addToWatchlist }) {
     if (!auction) return;
     let countdown = calculateCountdown(auction.timeLine);
 
-    if (countdown.days > 0)
-      return `${countdown.days} days ${countdown.hours} hours`;
+    if (countdown.days > 0) return `${countdown.days} days`;
     else return `${countdown.hours} hours ${countdown.min} mins`;
   }, [auction]);
   if (!auction) return <div></div>;
@@ -94,9 +104,9 @@ export default function FeaturedPost({ auction, addToWatchlist }) {
     addToWatchlist(item);
   };
 
-  const handleShare = (e) => {
-    const { item } = e.currentTarget.dataset;
-    // console.log(`item`, item);
+  const handleEdit = (e) => {
+    e.stopPropagation();
+    navigate(`/auctions/${auction._id}/edit`);
   };
 
   return (
@@ -109,6 +119,17 @@ export default function FeaturedPost({ auction, addToWatchlist }) {
         >
           <div className={customClasses.cardDetails}>
             <CardContent>
+              {isEdit && (
+                <IconButton
+                  aria-label='bookmark'
+                  aria-haspopup='true'
+                  data-item={_id}
+                  onClick={handleEdit}
+                  className={customClasses.EditButton}
+                >
+                  <Edit fontSize='small' color='primary' />
+                </IconButton>
+              )}
               <Box className={customClasses.cardIntroBox}>
                 <Box className={customClasses.cardIntro}>
                   <Typography component='h2' variant='h5'>
@@ -122,24 +143,10 @@ export default function FeaturedPost({ auction, addToWatchlist }) {
                     {location}
                   </Typography>
                 </Box>
-                <Box className={customClasses.cardCategories}>
-                  {categories.map((a, ind) => (
-                    <Chip
-                      size='small'
-                      label={a.name}
-                      color={
-                        ind === 0
-                          ? 'secondary'
-                          : ind === 1
-                          ? 'primary'
-                          : 'secondary'
-                      }
-                    />
-                  ))}
-                </Box>
               </Box>{' '}
               <Box
                 className={globalClasses.flexAlignDisp}
+                mb={'10px'}
                 sx={{
                   justifyContent: 'space-between',
                 }}
@@ -147,16 +154,28 @@ export default function FeaturedPost({ auction, addToWatchlist }) {
                 <Box display='flex' flexDirection='column' sx={{ rowGap: 10 }}>
                   <Chip
                     size='small'
-                    label={`Time Left : ${timeLeft}`}
+                    label={`${timeLeft} Left`}
+                    // label={`Time Left : ${timeLeft}`}
                     color='primary'
                   />
                 </Box>
-                <Box mb={2}>
+                <Box display='flex' alignItems='center'>
+                  <Box className={customClasses.cardCategories}>
+                    {categories.map((a, ind) => (
+                      <Chip
+                        size='small'
+                        label={a.name}
+                        color={ind === 1 ? 'secondary' : 'default'}
+                      />
+                    ))}
+                  </Box>
+
                   <IconButton
                     aria-label='bookmark'
                     aria-haspopup='true'
                     data-item={_id}
                     onClick={handleBookMark}
+                    style={{ paddingInline: 0 }}
                   >
                     <VisibilityIcon fontSize='small' color='primary' />
                   </IconButton>

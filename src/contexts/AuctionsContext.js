@@ -117,7 +117,7 @@ export const AuctionsProvider = ({ children }) => {
       // ! Auction will go into auctions if its status is published
       if (resData.auction.status === 'published') pushAuction(resData.auction);
       navigate(
-        resData.auction.status === 'unPublished'
+        resData.auction.status === 'inProgress'
           ? '/myauctions/unpublished'
           : '/'
       );

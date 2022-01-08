@@ -49,7 +49,7 @@ const CreateBidForm = ({
             value={biddingAmount}
             onChange={handleAmountChange}
             inputProps={{
-              min: startingPrice,
+              min: startingPrice || 0,
             }}
             // size='small'
           />

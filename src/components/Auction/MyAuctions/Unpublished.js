@@ -35,7 +35,7 @@ const Unpulished = ({ status }) => {
     );
   }, [parsedQuery, status]);
 
-  return <AuctionList auctions={data} loading={loadingMyAuctions} />;
+  return <AuctionList isEdit auctions={data} loading={loadingMyAuctions} />;
 };
 
 export default Unpulished;

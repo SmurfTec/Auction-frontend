@@ -40,6 +40,25 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     flexWrap: 'wrap',
   },
+  cardCategories: {
+    flexBasis: '40%',
+    flexGrow: 1,
+    display: 'flex',
+    flexWrap: 'wrap',
+    rowGap: 5,
+    justifyContent: 'flex-end',
+    '& .MuiChip-root:first-child': {
+      backgroundColor: theme.palette.warning.main,
+    },
+    '& .MuiChip-root:last-child': {
+      backgroundColor: theme.palette.success.main,
+    },
+    '& .MuiChip-root': {
+      marginRight: 10,
+      color: '#fff',
+      // marginBottom: 10,
+    },
+  },
 }));
 
 export default function FeaturedPost({ auction, handleBookmark, bookmaking }) {
@@ -54,8 +73,16 @@ export default function FeaturedPost({ auction, handleBookmark, bookmaking }) {
     else return `${countdown.hours} hours ${countdown.min} mins`;
   }, [auction]);
   if (!auction) return <div></div>;
-  const { _id, title, location, startingPrice, user, createdAt, description } =
-    auction;
+  const {
+    _id,
+    title,
+    location,
+    startingPrice,
+    user,
+    createdAt,
+    description,
+    categories,
+  } = auction;
 
   const handleShare = (e) => {
     const { item } = e.currentTarget.dataset;
@@ -120,12 +147,16 @@ export default function FeaturedPost({ auction, handleBookmark, bookmaking }) {
                   {description}
                 </Typography>
 
-                <Box
-                  mt={1}
-                  sx={{
-                    textAlign: 'right',
-                  }}
-                >
+                <Box mt={1} display='flex' alignItems='center'>
+                  <Box className={classes.cardCategories}>
+                    {categories.map((a, ind) => (
+                      <Chip
+                        size='small'
+                        label={a.name}
+                        color={ind === 1 ? 'secondary' : 'default'}
+                      />
+                    ))}
+                  </Box>
                   <IconButton
                     aria-label='bookmark'
                     aria-haspopup='true'
