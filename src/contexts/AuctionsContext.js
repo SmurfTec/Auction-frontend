@@ -34,8 +34,8 @@ export const AuctionsProvider = ({ children }) => {
     myAuctions,
     setMyAuctions,
     pushMyAuction,
-    // filterMyAuctions,
-    // updateMyAuction,
+    ,
+    updateMyAuctionById,
     // removeMyAuction,
     // clearMyAuctions,
   ] = useArray([], '_id');
@@ -126,6 +126,32 @@ export const AuctionsProvider = ({ children }) => {
       toggleFunction?.();
     }
   };
+  // * Auctions Related
+  const updateAuction = async (auction, id, toggleFunction) => {
+    try {
+      const resData = await makeReq(
+        `/auctions/${id}`,
+        {
+          body: { ...auction },
+        },
+        'PATCH'
+      );
+
+      toast.success('Auction Updated Successfully!');
+
+      // ! Auction will go into auctions if its status is published
+      if (resData.auction.status === 'published') pushAuction(resData.auction);
+      navigate(
+        resData.auction.status === 'inProgress'
+          ? '/myauctions/unpublished'
+          : '/'
+      );
+      updateMyAuctionById(id, resData.auction);
+    } catch (err) {
+    } finally {
+      toggleFunction?.();
+    }
+  };
 
   // * Watchlist related
   const addToWatchlist = async (id) => {
@@ -156,6 +182,7 @@ export const AuctionsProvider = ({ children }) => {
         publishedAuctions,
         topAuctions,
         unClaimedAuctions,
+        updateAuction,
       }}
     >
       {children}

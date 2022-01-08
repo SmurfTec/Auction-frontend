@@ -106,7 +106,7 @@ export default function FeaturedPost({ auction, addToWatchlist, isEdit }) {
 
   const handleEdit = (e) => {
     e.stopPropagation();
-    navigate(`/auctions/${auction._id}/edit`);
+    navigate(`/auctionDetails/${auction._id}/edit`);
   };
 
   return (

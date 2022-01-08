@@ -66,6 +66,10 @@ export const commonRoutes = [
     element: <AuctionDetails />,
   },
   {
+    path: 'auctionDetails/:id/edit',
+    element: <CreateAuction isUpdate />,
+  },
+  {
     path: 'contact-us',
     element: <ContactUs />,
   },
