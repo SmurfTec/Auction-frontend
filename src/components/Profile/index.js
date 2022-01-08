@@ -24,7 +24,7 @@ import { AuthContext } from 'contexts/AuthContext';
 
 const Profile = () => {
   const classes = styles();
-  const { user, updateMe } = useContext(AuthContext);
+  const { user, updateMe, logoutUser } = useContext(AuthContext);
   const initialState = {
     firstName: '',
     lastName: '',
@@ -389,7 +389,7 @@ const Profile = () => {
             {/* </Box> */}
           </CardContent>
         </Card>
-        <Link to='/logout'>
+        <Link onClick={logoutUser}>
           <Box mt={3}>
             <Typography variant='subtitle2'>Log out</Typography>
           </Box>

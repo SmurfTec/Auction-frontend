@@ -90,7 +90,7 @@ export default function AccountPopover() {
           </NavLink>
         </MenuItem>
 
-        <MenuItem id='logout'>
+        <MenuItem id='logout' onClick={logoutUser}>
           <Typography variant='body1' color='textPrimary' noWrap>
             Logout
           </Typography>
