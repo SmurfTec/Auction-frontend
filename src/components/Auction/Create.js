@@ -66,7 +66,8 @@ const Create = ({ isUpdate }) => {
 
   useEffect(() => {
     // * If user wants to update auction , validate if auction is of user
-    if (!isUpdate || !user || !myAuctions || loadingMyAuctions) return;
+    if (!isUpdate) return toggleValidating();
+    if (!user || !myAuctions || loadingMyAuctions) return;
 
     // * Find Auction
     let editAuc = myAuctions.find((el) => el._id === id);
