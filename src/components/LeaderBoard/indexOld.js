@@ -62,7 +62,7 @@ const LeaderBoard = () => {
       <Container>
         <section className={classes.containerMargin}>
           <Box my={2}>
-            <Typography variant='h5' fullWidth align='center'>
+            <Typography variant='h5' align='center'>
               Leaderboard
             </Typography>
           </Box>

@@ -163,6 +163,7 @@ export default function FeaturedPost({ auction, addToWatchlist, isEdit }) {
                   <Box className={customClasses.cardCategories}>
                     {categories.map((a, ind) => (
                       <Chip
+                        key={ind}
                         size='small'
                         label={a.name}
                         color={ind === 1 ? 'secondary' : 'default'}

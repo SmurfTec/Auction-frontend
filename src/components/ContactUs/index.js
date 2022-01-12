@@ -83,11 +83,9 @@ const ContactUs = () => {
 
           <div className={classes.contactMain}>
             <div className={classes.formDiv}>
-              <Typography variant='h5' fullWidth>
-                Get in Touch
-              </Typography>
+              <Typography variant='h5'>Get in Touch</Typography>
               <Box mb={3}>
-                <Typography variant='body1' color='textSecondary' fullWidth>
+                <Typography variant='body1' color='textSecondary'>
                   Feel free to drop us a line below!
                 </Typography>
               </Box>

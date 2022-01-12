@@ -90,47 +90,6 @@ const Profile = () => {
   return (
     <>
       <div className={classes.root}>
-        {/* <Paper className={classes.paper}>
-          <div className={classes.profileImg}>
-            <Avatar
-              src={userImg}
-              alt='User'
-              size='large'
-              className={classes.large}
-            />
-          </div>
-          <div className={classes.content}>
-            <Typography variant='h5'>{`${user.fname} ${user.lname}`}</Typography>
-            <Typography variant='subtitle1' color='textSecondary'>
-              {user.email}
-            </Typography>
-            <Box mt={1} className={classes.displayFlex} sx={{ columnGap: 10 }}>
-              <Chip
-                label={0}
-                icon={<TwitterIcon />}
-                className={classes.twtIcon}
-              />
-              <Chip
-                label={0}
-                icon={<InstagramIcon />}
-                className={classes.insIcon}
-              />
-            </Box>
-          </div>
-
-          <Box my={3}>
-            <Divider />
-          </Box>
-
-          <TextField
-            name='about'
-            value={inputState.about}
-            label='Tap to add your about'
-            onChange={handleTxtChange}
-            fullWidth
-          />
-        </Paper> */}
-
         <Card
           className={`${classes.card} ${classes.showOverflow} ${classes.defaultCard}`}
         >
@@ -147,7 +106,7 @@ const Profile = () => {
             <div className={classes.content}>
               <Typography variant='h5'>{`${inputState.firstName} ${inputState.lastName}`}</Typography>
               <Typography variant='subtitle1' color='textSecondary'>
-                {user.email}
+                {user?.email}
                 <Chip label='verified' className={classes.verfIcon} />
               </Typography>
               <Box
@@ -389,10 +348,10 @@ const Profile = () => {
             {/* </Box> */}
           </CardContent>
         </Card>
-        <Link onClick={logoutUser}>
-          <Box mt={3}>
-            <Typography variant='subtitle2'>Log out</Typography>
-          </Box>
+        <Link to='#' mt={3} onClick={logoutUser}>
+          <Typography style={{ marginTop: '1rem' }} variant='subtitle2'>
+            Log out
+          </Typography>
         </Link>
       </div>
     </>

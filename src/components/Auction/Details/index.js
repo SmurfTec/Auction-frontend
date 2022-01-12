@@ -115,7 +115,7 @@ const AuctionDetails = () => {
       <ScrollToTop />
       <Container>
         <section className={globalClasses.containerMargin}>
-          <Typography variant='h4' align='center' fullWidth>
+          <Typography variant='h4' align='center'>
             Auction Details
           </Typography>
         </section>

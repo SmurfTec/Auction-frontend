@@ -90,48 +90,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const createGig = async (gig) => {
+  const makeNotficationsAsRead = async () => {
     try {
-      const resData = await makeReq(`/gigs`, { body: gig }, 'POST');
-      // console.log(`resData`, resData);
-
-      setUser((st) => ({ ...st, gigs: [...st.gigs, resData.gig] }));
-      toast.success('Service created Successfully!');
-      navigate('/profile');
+      await makeReq('/users/read-my-notifications', {}, 'PATCH');
     } catch (err) {
       handleCatch(err);
     }
+    console.log('makenotificationRead');
   };
-
-  //   const updateGig = async (id, gig) => {
-  //     try {
-  //       const resData = await makeReq(`/gigs/${id}`, { body: gig }, 'PATCH');
-  //       // console.log(`resData`, resData);
-
-  //       setUser((st) => ({
-  //         ...st,
-  //         gigs: st.gigs.map((el) => (el._id === id ? resData.gig : el)),
-  //       }));
-  //       toast.success('Service Updated Successfully!');
-  //     } catch (err) {
-  //       handleCatch(err);
-  //     }
-  //   };
-
-  //   const deleteGig = async (id) => {
-  //     try {
-  //       await makeReq(`/gigs/${id}`, {}, 'DELETE');
-  //       // console.log(`resData`, resData);
-
-  //       setUser((st) => ({
-  //         ...st,
-  //         gigs: st.gigs.filter((el) => el._id !== id),
-  //       }));
-  //       toast.success('Service Deleted Successfully!');
-  //     } catch (err) {
-  //       handleCatch(err);
-  //     }
-  //   };
 
   return (
     <AuthContext.Provider
@@ -145,9 +111,7 @@ export const AuthProvider = ({ children }) => {
         signInUser,
         updateMe,
         changeMyPassword,
-        createGig,
-        // updateGig,
-        // deleteGig,
+        makeNotficationsAsRead,
       }}
     >
       {children}

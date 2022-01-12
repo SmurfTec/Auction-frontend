@@ -14,11 +14,17 @@ import {
   Typography,
   ListItemText,
   ListItemAvatar,
+  Button,
+  Icon,
+  ListItem,
 } from '@material-ui/core';
+import { AccessTime, FlightTakeoff } from '@material-ui/icons';
 // utils
 // components
 // import { SocketContext } from 'Contexts/SocketContext';
-
+function ListItemLink(props) {
+  return <ListItem button component='a' {...props} />;
+}
 const renderContent = (notification) => {
   const title = (
     <Typography variant='subtitle2'>
@@ -54,10 +60,9 @@ const NotificationItem = ({ notification }) => {
   const theme = useTheme();
 
   return (
-    <Box
-      to={notification.link}
+    <ListItemLink
+      href={notification.link}
       disableGutters
-      component={RouterLink}
       sx={{
         py: 1.5,
         px: 2.5,
@@ -67,18 +72,12 @@ const NotificationItem = ({ notification }) => {
         }),
       }}
     >
-      <ListItemAvatar>
+      <ListItemAvatar style={{ marginLeft: '1rem' }}>
         <Avatar
           // className={classes.}
-          sx={{ bgcolor: 'aliceblue' }}
+          style={{ bgcolor: 'aliceblue' }}
         >
-          {/* {notification.type === 'trip' ? (
-            <FlightTakeoffIcon style={{ color: theme.palette.primary.main }} />
-          ) : (
-            <ShoppingBagOutlined
-              style={{ color: theme.palette.primary.main }}
-            />
-          )} */}
+          <FlightTakeoff style={{ color: theme.palette.primary.main }} />
         </Avatar>
       </ListItemAvatar>
       <ListItemText
@@ -94,15 +93,15 @@ const NotificationItem = ({ notification }) => {
             }}
           >
             <Box
-              // component={Icon}
-              // icon={clockFill}
+              component={Icon}
+              icon={AccessTime}
               sx={{ mr: 0.5, width: 16, height: 16 }}
             />
             {formatDistanceToNow(new Date(notification.createdAt))}
           </Typography>
         }
       />
-    </Box>
+    </ListItemLink>
   );
 };
 

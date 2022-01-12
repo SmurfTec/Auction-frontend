@@ -223,7 +223,6 @@ const Create = ({ isUpdate }) => {
                     label='Title'
                     onChange={handleTxtChange}
                     variant='outlined'
-                    fullWidth
                     required
                   />
                 </Grid>
@@ -235,7 +234,6 @@ const Create = ({ isUpdate }) => {
                   onChange={handleTxtChange}
                   variant='outlined'
                   required
-                  fullWidth
                 /> */}
                   <FormControl
                     variant='outlined'

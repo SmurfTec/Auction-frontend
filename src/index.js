@@ -9,15 +9,18 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuctionsProvider } from 'contexts/AuctionsContext';
 import { CategoriesProvider } from 'contexts/CategoriesContext';
+import { SocketProvider } from 'contexts/SocketContext';
 
 ReactDOM.render(
   <BrowserRouter>
     <AuthProvider>
-      <CategoriesProvider>
-        <AuctionsProvider>
-          <App />
-        </AuctionsProvider>
-      </CategoriesProvider>
+      <SocketProvider>
+        <CategoriesProvider>
+          <AuctionsProvider>
+            <App />
+          </AuctionsProvider>
+        </CategoriesProvider>
+      </SocketProvider>
     </AuthProvider>
     <ToastContainer position='top-right' />
   </BrowserRouter>,

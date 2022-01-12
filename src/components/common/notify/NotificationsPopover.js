@@ -14,6 +14,7 @@ import {
   IconButton,
   Typography,
   ListSubheader,
+  Icon,
 } from '@material-ui/core';
 // utils
 // components
@@ -27,6 +28,7 @@ import { makeStyles } from '@material-ui/styles';
 import { AuthContext } from 'contexts/AuthContext';
 
 import NotificationItem from './NotificationItem';
+import { DoneAll } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   badge: {
@@ -88,7 +90,7 @@ const NotificationsPopover = () => {
     <>
       <IconButton
         ref={anchorRef}
-        size='large'
+        size='medium'
         color={open ? 'primary' : 'default'}
         onClick={handleOpen}
         sx={{
@@ -104,7 +106,7 @@ const NotificationsPopover = () => {
         <Badge
           badgeContent={totalUnRead}
           className={classes.badge}
-          color='primary'
+          color='error'
         >
           {/* <Icon icon={bellFill} /> */}
           {/* <NotificationsIcon width={20} height={20} /> */}
@@ -137,7 +139,7 @@ const NotificationsPopover = () => {
           {totalUnRead > 0 && (
             <Tooltip title=' Mark all as read'>
               <IconButton color='primary' onClick={handleMarkAllAsRead}>
-                {/* <Icon icon={doneAllFill} width={20} height={20} /> */}
+                <DoneAll />
               </IconButton>
             </Tooltip>
           )}

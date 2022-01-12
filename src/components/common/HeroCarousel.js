@@ -48,10 +48,10 @@ const HeroCarousel = () => {
                 }}
               /> */}
               <div className={classes.heroDesc}>
-                <Typography variant='h2' fullWidth align='left'>
+                <Typography variant='h2' align='left'>
                   {auc.title}
                 </Typography>
-                <Typography variant='h4' fullWidth align='left'>
+                <Typography variant='h4' align='left'>
                   {auc.price}
                 </Typography>
                 <Box
@@ -63,7 +63,7 @@ const HeroCarousel = () => {
                     WebkitBoxOrient: 'vertical',
                   }}
                 >
-                  <Typography variant='subtitle1' fullWidth align='left'>
+                  <Typography variant='subtitle1' align='left'>
                     {auc.description}
                   </Typography>
                 </Box>

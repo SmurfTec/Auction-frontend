@@ -204,7 +204,6 @@ const HomePage = () => {
                       style={{ cursor: 'pointer' }}
                       onClick={handleFilter}
                       data-filter='priceAsc'
-                      fullWidth
                       className={clsx({
                         [customClasses.activePrice]: priceFilter === 'priceAsc',
                       })}

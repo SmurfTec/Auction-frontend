@@ -4,15 +4,7 @@ import ThemeConfig from 'theme';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import ScrollToTop from 'utils/ScrollToTop';
 import { AuthContext } from 'contexts/AuthContext';
-import {
-  commonRoutes,
-  protectedRoutes,
-  publicRoutes,
-  defaultRoute,
-  loading,
-} from 'routes';
-import { OutdoorGrill } from '@material-ui/icons';
-import { common } from '@material-ui/core/colors';
+import { commonRoutes, protectedRoutes, publicRoutes, loading } from 'routes';
 import CommonLayout from 'components/layouts/CommonLayout';
 
 function App() {
@@ -21,7 +13,7 @@ function App() {
 
   useEffect(() => {
     if (token && user)
-      setRoutes((st) => [
+      setRoutes([
         {
           path: '/',
           element: <CommonLayout />,
@@ -30,7 +22,7 @@ function App() {
       ]);
     else if (token) setRoutes(loading);
     else
-      setRoutes((st) => [
+      setRoutes([
         {
           path: '/',
           element: <CommonLayout />,
