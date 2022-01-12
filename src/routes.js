@@ -13,6 +13,9 @@ import ContactUs from 'components/ContactUs';
 import Register from 'components/common/Register';
 import Loading from 'components/common/Loading';
 import { Navigate } from 'react-router-dom';
+import PrivacyPolicy from 'components/Rules_Regulations/PrivacyPolicy';
+import TermsOfService from 'components/Rules_Regulations/TermsOfService';
+import Faq from 'components/Rules_Regulations/Faq';
 // import { Navigate } from 'react-router-dom';
 
 export const protectedRoutes = [
@@ -72,6 +75,18 @@ export const commonRoutes = [
   {
     path: 'contact-us',
     element: <ContactUs />,
+  },
+  {
+    path: 'privacy',
+    element: <PrivacyPolicy />,
+  },
+  {
+    path: 'tos',
+    element: <TermsOfService />,
+  },
+  {
+    path: 'faq',
+    element: <Faq />,
   },
   {
     path: '*',
