@@ -85,61 +85,65 @@ const Login = () => {
         >
           Welcome Back
         </Typography>
-        <section className={classes.wrapper}>
-          <form onSubmit={onFormSubmit}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <TextField
-                  name='email'
-                  value={inputState.email}
-                  label='Email'
-                  type='email'
-                  onChange={handleTxtChange}
-                  variant='outlined'
-                  fullWidth
-                  size='small'
-                  InputProps={{ required: true }}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  name='password'
-                  value={inputState.password}
-                  label='Password'
-                  type='password'
-                  onChange={handleTxtChange}
-                  variant='outlined'
-                  fullWidth
-                  size='small'
-                  InputProps={{ required: true }}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <Button
-                  type='submit'
-                  fullWidth
-                  variant='contained'
-                  color='primary'
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <CircularProgress size={20} color='inherit' />
-                  ) : (
-                    'Sign In'
-                  )}
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <Box sx={{ textAlign: 'right' }}>
-                  <Link to='/forgotpassword' variant='body2'>
-                    Forgot password?
-                  </Link>
-                </Box>
-              </Grid>
+        <form onSubmit={onFormSubmit}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <TextField
+                name='email'
+                value={inputState.email}
+                label='Email'
+                type='email'
+                onChange={handleTxtChange}
+                variant='outlined'
+                fullWidth
+                size='small'
+                InputProps={{ required: true }}
+              />
             </Grid>
-          </form>
-        </section>
+
+            <Grid item xs={12}>
+              <TextField
+                name='password'
+                value={inputState.password}
+                label='Password'
+                type='password'
+                onChange={handleTxtChange}
+                variant='outlined'
+                fullWidth
+                size='small'
+                InputProps={{ required: true }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Button
+                type='submit'
+                fullWidth
+                variant='contained'
+                color='primary'
+                disabled={loading}
+              >
+                {loading ? (
+                  <CircularProgress size={20} color='inherit' />
+                ) : (
+                  'Sign In'
+                )}
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Box
+                sx={{
+                  width: 'fit-content',
+                  marginLeft: 'auto',
+                }}
+                className={classes.embedlinks}
+              >
+                <Typography variant='body1'>
+                  <Link to='/forgotpassword'>Forgot password ?</Link>
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
+        </form>
 
         <Grid item xs={6} sm={12}>
           <Box
@@ -151,8 +155,8 @@ const Login = () => {
               justifyContent: 'center',
             }}
           >
-            <Typography variant='subtitle2'>
-              not a member?
+            <Typography variant='body1'>
+              not a member?{` `}
               <Link to='/register'>Join </Link>
             </Typography>
           </Box>

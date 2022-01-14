@@ -95,129 +95,128 @@ const Register = () => {
         >
           Become a member
         </Typography>
-        <section className={classes.wrapper}>
-          <form onSubmit={onFormSubmit}>
-            <Grid container spacing={3}>
-              {error !== null && (
-                <Grid item xs={12}>
-                  <Alert severity='error'>{error}</Alert>
-                </Grid>
-              )}
+        <form onSubmit={onFormSubmit}>
+          <Grid container spacing={3}>
+            {error !== null && (
+              <Grid item xs={12}>
+                <Alert severity='error'>{error}</Alert>
+              </Grid>
+            )}
 
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name='firstName'
-                  value={inputState.firstName}
-                  label='First Name'
-                  onChange={handleTxtChange}
-                  variant='outlined'
-                  fullWidth
-                  size='small'
-                  InputProps={{ required: true }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name='lastName'
-                  value={inputState.lastName}
-                  label='Last Name'
-                  onChange={handleTxtChange}
-                  variant='outlined'
-                  fullWidth
-                  InputProps={{ required: true }}
-                  size='small'
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  name='email'
-                  value={inputState.email}
-                  label='Email'
-                  type='email'
-                  onChange={handleTxtChange}
-                  variant='outlined'
-                  size='small'
-                  InputProps={{ required: true }}
-                  fullWidth
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  name='password'
-                  value={inputState.password}
-                  label='Password'
-                  type='password'
-                  onChange={handleTxtChange}
-                  variant='outlined'
-                  fullWidth
-                  size='small'
-                  InputProps={{ required: true }}
-                  inputProps={{ min: 8 }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  name='passwordConfirm'
-                  value={inputState.passwordConfirm}
-                  label='Confirm Password'
-                  type='password'
-                  onChange={handleTxtChange}
-                  variant='outlined'
-                  fullWidth
-                  size='small'
-                  InputProps={{ required: true }}
-                  inputProps={{ min: 8 }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <div className={classes.textWithlink}>
-                  <Checkbox
-                    color='primary'
-                    name='privacy'
-                    checked={inputState.privacy}
-                    onChange={(e) => handleToggleChange(e)}
-                    required
-                  />
-                  <Typography variant='subtitle2'>
-                    Agree to the
-                    <Link to='/'>terms of service</Link> and
-                    <Link to='/'>privacy</Link>
-                  </Typography>
-                </div>
-              </Grid>
-              <Grid item xs={6}>
-                <Button
-                  type='submit'
-                  fullWidth
-                  variant='contained'
-                  color='primary'
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <CircularProgress size={20} color='inherit' />
-                  ) : (
-                    'Sign Up'
-                  )}
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <Box
-                  className={classes.textWithlink}
-                  sx={{
-                    columnGap: 4,
-                    height: '100%',
-                  }}
-                >
-                  <Typography variant='subtitle2'>
-                    already have account?
-                    <Link to='/login'>Login </Link>
-                  </Typography>
-                </Box>
-              </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name='firstName'
+                value={inputState.firstName}
+                label='First Name'
+                onChange={handleTxtChange}
+                variant='outlined'
+                fullWidth
+                size='small'
+                InputProps={{ required: true }}
+              />
             </Grid>
-          </form>
-        </section>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name='lastName'
+                value={inputState.lastName}
+                label='Last Name'
+                onChange={handleTxtChange}
+                variant='outlined'
+                fullWidth
+                InputProps={{ required: true }}
+                size='small'
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name='email'
+                value={inputState.email}
+                label='Email'
+                type='email'
+                onChange={handleTxtChange}
+                variant='outlined'
+                size='small'
+                InputProps={{ required: true }}
+                fullWidth
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                name='password'
+                value={inputState.password}
+                label='Password'
+                type='password'
+                onChange={handleTxtChange}
+                variant='outlined'
+                fullWidth
+                size='small'
+                InputProps={{ required: true }}
+                inputProps={{ min: 8 }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name='passwordConfirm'
+                value={inputState.passwordConfirm}
+                label='Confirm Password'
+                type='password'
+                onChange={handleTxtChange}
+                variant='outlined'
+                fullWidth
+                size='small'
+                InputProps={{ required: true }}
+                inputProps={{ min: 8 }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <div className={classes.textWithlink}>
+                <Checkbox
+                  color='primary'
+                  name='privacy'
+                  checked={inputState.privacy}
+                  onChange={(e) => handleToggleChange(e)}
+                  required
+                />
+                <Typography variant='subtitle2'>
+                  Agree to the {` `}
+                  <Link to='/tos'>terms of service</Link>
+                  {` `} and {` `}
+                  <Link to='/privacy'>privacy</Link> {` `}
+                </Typography>
+              </div>
+            </Grid>
+            <Grid item xs={6}>
+              <Button
+                type='submit'
+                fullWidth
+                variant='contained'
+                color='primary'
+                disabled={loading}
+              >
+                {loading ? (
+                  <CircularProgress size={20} color='inherit' />
+                ) : (
+                  'Sign Up'
+                )}
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Box
+                className={classes.textWithlink}
+                sx={{
+                  columnGap: 4,
+                  height: '100%',
+                }}
+              >
+                <Typography variant='body2'>
+                  already have account?{` `}
+                  <Link to='/login'>Login</Link>
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
+        </form>
       </div>
     </div>
   );

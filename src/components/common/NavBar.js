@@ -101,6 +101,7 @@ const Navbar = (props) => {
                       columnGap: 15,
                       alignItems: 'center',
                     }}
+                    className={classes_g.linkLabel}
                   >
                     <Typography variant='subtitle2'>
                       <NavLink to='/leaderboard'>Leaderboard</NavLink>
@@ -132,6 +133,7 @@ const Navbar = (props) => {
                     minWidth='200px'
                     gridColumnGap='20px'
                     sx={{ columnGap: 10 }}
+                    className={classes_g.linkLabel}
                   >
                     <Typography variant='subtitle2' noWrap>
                       <NavLink to='/leaderboard'>Leaderboard</NavLink>
@@ -149,7 +151,8 @@ const Navbar = (props) => {
                     </Button>
                     <Button
                       variant='contained'
-                      className={classes.RegisterBtn}
+                      color='primary'
+                      // className={classes.RegisterBtn}
                       size='small'
                       style={{
                         minWidth: 80,

@@ -94,7 +94,7 @@ const Simpleimages = ({ type, images, video, deleteImg }) => {
             className={classes.mobileStepper}
             nextButton={
               <Button
-                size='small'
+                // size='small'
                 onClick={handleNext}
                 disabled={activeStep === images.length - 1}
               >

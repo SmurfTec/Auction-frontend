@@ -28,10 +28,10 @@ const useStyles = makeStyles((theme) => ({
       '&.active': {
         color: theme.palette.primary.main,
       },
-      '&:hover': {
-        color: theme.palette.primary.main,
-        transition: '0.3s',
-      },
+      // '&:hover': {
+      //   color: theme.palette.primary.main,
+      //   transition: '0.3s',
+      // },
     },
     columnGap: 20,
   },
@@ -108,6 +108,7 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.primary.main,
     },
   },
+
   navSearch: {
     columnGap: 30,
     maxWidth: 550,

@@ -2,6 +2,41 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   // ^ Common for all
+  embedlinks: {
+    '& a::after': {
+      content: '""',
+      display: 'block',
+      width: 0,
+      height: 1,
+      background: '#165a9e',
+      transition: 'width .5s',
+    },
+
+    '& a:hover::after': {
+      width: '100%',
+      //transition: width .3s;
+    },
+  },
+  linkLabel: {
+    // '& h6': {
+    // borderBottom: `1px solid ${theme.palette.primary.main}`,
+    // transition: 'border-bottom',
+
+    '& a::after': {
+      content: '""',
+      display: 'block',
+      width: 0,
+      height: 2,
+      background: theme.palette.primary.main,
+      transition: 'width .5s',
+    },
+
+    '& a:hover::after': {
+      width: '100%',
+      //transition: width .3s;
+    },
+    // },
+  },
   flexAlignDisp: {
     display: 'flex',
     alignItems: 'center',
@@ -22,14 +57,6 @@ const useStyles = makeStyles((theme) => ({
     paddingInline: '2rem',
   },
 
-  wrapper: {
-    // marginTop: theme.spacing(2),
-    // marginBottom: theme.spacing(2),
-
-    '& form': {
-      // marginBottom: theme.spacing(3),
-    },
-  },
   Carousel: {
     '& img': {
       height: 300,
@@ -51,9 +78,17 @@ const useStyles = makeStyles((theme) => ({
 
   textWithlink: {
     display: 'flex',
-    columnGap: 5,
     alignItems: 'center',
-    '& h6': { display: 'contents' },
+    '& a': {
+      verticalAlign: 'unset',
+      color: '#000',
+      textDecoration: 'underline',
+
+      '&:hover': {
+        color: theme.palette.primary.main,
+        transition: 'color 0.5s ease-out',
+      },
+    },
   },
 
   // ^ Image Carousel Styles

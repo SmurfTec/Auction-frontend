@@ -12,8 +12,6 @@ const useStyles = makeStyles((theme) => ({
     },
     '& .MuiListItem-root:not(:last-child)': {
       borderBottom: '1px solid #0000001f',
-      // '& :not(:last-child)': {
-      // },
     },
   },
   large: {
@@ -50,23 +48,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-  tableContainer: {
-    // maxHeight: 800,
-    // '&.MuiTableContainer-root': {
-    //   // overflowX: 'unset',
-    //   overflowX: 'auto',
-    //   // overflowY: 'hidden',
-    //   // maxHeight: 'unset',
-    // },
-  },
-  tableCont: {
-    // position: 'sticky',
-    // top: 65,
-    // zIndex: 2,
-  },
-  // wrapper: {
-  //   overflowX: 'auto',
-  // },
   AuctionsCategories: {
     '& .MuiChip-root:first-child': {
       backgroundColor: theme.palette.warning.main,

@@ -1,6 +1,6 @@
 import { Box, Typography } from '@material-ui/core';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import styles from 'styles/RulesStyles.js';
 
 const PrivacyPolicy = () => {
@@ -9,9 +9,7 @@ const PrivacyPolicy = () => {
   return (
     <>
       <section className={classes.root}>
-        <Typography variant='h1' align='center'>
-          Privacy Policy
-        </Typography>
+        <Typography variant='h2'>Privacy Policy</Typography>
         <Typography
           variant='body1'
           color='textSecondary'
@@ -36,18 +34,21 @@ const PrivacyPolicy = () => {
         <Typography variant='body1' className={classes.head}>
           <strong>Applicable Terms.</strong> Your use of our Services, and any
           dispute over privacy, is subject to this Policy, the respective terms
-          of use (the “Terms”), between you and LotPot, such as our Terms of Use
-          and any other relevant agreements, which are available. The applicable
-          Terms are incorporated by reference into this Policy, including their
-          applicable limitations on liability and the resolution of disputes. By
-          disclosing your personal information to us or using our Services, you
-          understand and agree that LotPot may collect, use, and disclose your
-          personal information in accordance with this Policy and the applicable
-          Terms.
+          of use (the “Terms”), between you and LotPot, such as our
+          <Link to='/tos'> Terms of Use </Link> and any other relevant
+          agreements, which are available. The applicable Terms are incorporated
+          by reference into this Policy, including their applicable limitations
+          on liability and the resolution of disputes. By disclosing your
+          personal information to us or using our Services, you understand and
+          agree that LotPot may collect, use, and disclose your personal
+          information in accordance with this Policy and the applicable Terms.
         </Typography>
         <Box mb={6}>
           <Typography variant='body1' className={classes.subHead}>
-            <strong>1. What information we collect</strong>
+            <span>
+              {' '}
+              <strong>1. What information we collect</strong>{' '}
+            </span>
           </Typography>
           <Typography variant='body1'>
             We generally collect information about you directly from you, from
@@ -59,9 +60,9 @@ const PrivacyPolicy = () => {
             with the Services.
           </Typography>
           <Typography variant='body1' className={classes.subHead}>
-            <strong>Information we collect directly from you.</strong> Certain
-            of our Services and features require you to register with us. To
-            create an account, you must provide your email address, and
+            <strong>Information we collect directly from you.</strong>
+            Certain of our Services and features require you to register with
+            us. To create an account, you must provide your email address, and
             password. We may also ask or allow you to submit additional account
             information, such as your third-party account handle or username,
             mobile number, profile picture. You can also sign up to receive
@@ -146,7 +147,9 @@ const PrivacyPolicy = () => {
             Cookies and other tracking information section below).
           </Typography>
           <Typography variant='body1' className={classes.subHead}>
-            <strong>2. How we use information</strong>
+            <span>
+              <strong>2. How we use information</strong>{' '}
+            </span>
           </Typography>
           <Typography variant='body1'>
             We process your information and content, including your personal
@@ -227,8 +230,10 @@ const PrivacyPolicy = () => {
             national security or law enforcement disclosure requirements.
           </Typography>
           <Typography variant='body1' className={classes.subHead}>
-            We may also use your personal information for other purposes, where
-            you have consented.
+            <Box sx={{ textDecoration: 'underline' }}>
+              We may also use your personal information for other purposes,
+              where you have consented.
+            </Box>
           </Typography>
           <Typography variant='body1' className={classes.subHead}>
             <strong>Aggregate and de-identified information.</strong> We may
@@ -239,7 +244,10 @@ const PrivacyPolicy = () => {
 
           {/* // ^ 3 Disclose Information */}
           <Typography variant='body1' className={classes.subHead}>
-            <strong>3. How we disclose information</strong>
+            <span>
+              {' '}
+              <strong>3. How we disclose information</strong>{' '}
+            </span>
           </Typography>
           <Typography variant='body1'>
             We may share or disclose the information (including personal
@@ -327,7 +335,9 @@ const PrivacyPolicy = () => {
 
           {/* //^  Cooking and Tracking Info */}
           <Typography variant='body1' className={classes.subHead}>
-            <strong>4. How we disclose information</strong>
+            <span>
+              <strong>4. Cooking and Tracking Info</strong>{' '}
+            </span>
           </Typography>
           <Typography variant='body1'>
             We and our third-party providers use cookies, clear GIFs/pixel tags,
@@ -372,13 +382,18 @@ const PrivacyPolicy = () => {
             <strong>Preference.</strong> You can block or disable cookies for
             the device and browser you are using, through your browser settings;
             however, certain features on our Sites may not be available or
-            function properly if you block or disable cookies. Our Site
-            currently does not respond to “do not track” signals.
+            function properly if you block or disable cookies.{' '}
+            <Box component='site' sx={{ textDecoration: 'underline' }}>
+              Our Site currently does not respond to “do not track” signals.
+            </Box>
           </Typography>
 
           {/* //^  Internet Based Advertising */}
           <Typography variant='body1' className={classes.subHead}>
-            <strong>5. Interest based advertising</strong>
+            <span>
+              {' '}
+              <strong>5. Interest based advertising</strong>{' '}
+            </span>
           </Typography>
           <Typography variant='body1'>
             We may work with third-party ad networks, channel partners,
@@ -398,17 +413,22 @@ const PrivacyPolicy = () => {
             <strong>Ad choices.</strong> You can learn more about the
             information collection practices and "opt-out" procedures of many
             third-party ad companies by visiting
-            www.networkadvertising.org/optout_nonppii.asp. Opting out of
-            participating ad networks does not opt you out of being served
-            advertising. You may continue to receive generic or “contextual” ads
-            on our Services. You may also continue to receive targeted ads on
-            other websites, from companies that do not participate in the above
-            programs.
+            <Link to='https://optout.networkadvertising.org/?c=1'>
+              Network Advertising Initiative.
+            </Link>{' '}
+            Opting out of participating ad networks does not opt you out of
+            being served advertising. You may continue to receive generic or
+            “contextual” ads on our Services. You may also continue to receive
+            targeted ads on other websites, from companies that do not
+            participate in the above programs.
           </Typography>
 
           {/* //^  Third party sites and services */}
           <Typography variant='body1' className={classes.subHead}>
-            <strong>6. Third party sites and services</strong>
+            <span>
+              {' '}
+              <strong>6. Third party sites and services</strong>{' '}
+            </span>
           </Typography>
           <Typography variant='body1'>
             Our Services may link to other websites or online services
@@ -423,7 +443,10 @@ const PrivacyPolicy = () => {
 
           {/* //^  Security */}
           <Typography variant='body1' className={classes.subHead}>
-            <strong>7. Security</strong>
+            <span>
+              {' '}
+              <strong>7. Security</strong>{' '}
+            </span>
           </Typography>
           <Typography variant='body1'>
             We have implemented safeguards designed to protect the information
@@ -434,7 +457,10 @@ const PrivacyPolicy = () => {
 
           {/* //^  Rights and choices */}
           <Typography variant='body1' className={classes.subHead}>
-            <strong>8. Rights and choices</strong>
+            <span>
+              {' '}
+              <strong>8. Rights and choices</strong>{' '}
+            </span>
           </Typography>
           <Typography variant='body1'>
             In this section we describe the choices you have regarding our
@@ -482,7 +508,10 @@ const PrivacyPolicy = () => {
           </Typography>
           {/* //^  Changes to this Policy */}
           <Typography variant='body1' className={classes.subHead}>
-            <strong>9. Changes to this Policy</strong>
+            <span>
+              {' '}
+              <strong>9. Changes to this Policy</strong>{' '}
+            </span>
           </Typography>
           <Typography variant='body1'>
             This Policy is current as of the Effective Date set forth above. We
@@ -496,7 +525,9 @@ const PrivacyPolicy = () => {
           </Typography>
           {/* //^  Contact us */}
           <Typography variant='body1' className={classes.subHead}>
-            <strong>10. Contact us</strong>
+            <span>
+              <strong>10. Contact us</strong>{' '}
+            </span>
           </Typography>
           <Typography variant='body1'>
             If you have questions about this Policy, you can contact us by

@@ -40,6 +40,7 @@ export default function AccountPopover() {
   };
 
   const handleLogout = () => {
+    setOpen(false);
     logoutUser();
   };
   return (
@@ -83,14 +84,14 @@ export default function AccountPopover() {
         <Divider sx={{ my: 1 }} />
 
         <MenuItem>
-          <NavLink to='/account'>
+          <NavLink to='/account' onClick={handleClose}>
             <Typography variant='body1' color='textPrimary' noWrap>
               Account
             </Typography>
           </NavLink>
         </MenuItem>
 
-        <MenuItem id='logout' onClick={logoutUser}>
+        <MenuItem id='logout' onClick={handleLogout}>
           <Typography variant='body1' color='textPrimary' noWrap>
             Logout
           </Typography>

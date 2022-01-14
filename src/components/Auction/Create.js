@@ -223,6 +223,7 @@ const Create = ({ isUpdate }) => {
                     label='Title'
                     onChange={handleTxtChange}
                     variant='outlined'
+                    fullWidth
                     required
                   />
                 </Grid>
@@ -336,7 +337,7 @@ const Create = ({ isUpdate }) => {
                     <Select
                       value={inputState.type}
                       onChange={handleType}
-                      label='Type'
+                      label='Auction Type'
                       fullWidth
                       required
                     >

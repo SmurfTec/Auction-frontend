@@ -36,7 +36,9 @@ function App() {
   return (
     <>
       <ThemeConfig>
-        <ScrollToTop>{content}</ScrollToTop>
+        <ScrollToTop />
+        {content}
+        {/* </ScrollToTop> */}
       </ThemeConfig>
     </>
   );

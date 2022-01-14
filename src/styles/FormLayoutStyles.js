@@ -70,6 +70,9 @@ export const useStyles = makeStyles((theme) => ({
       color: '#000',
       flex: 1,
       padding: 20,
+      '&:hover': {
+        backgroundColor: '#f6fbff',
+      },
       '&.active': {
         backgroundColor: theme.palette.primary.main,
         color: '#fff',

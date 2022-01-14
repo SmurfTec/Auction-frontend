@@ -252,9 +252,9 @@ const LeaderBoard = () => {
         <div
           className={`${globalClasses.containerMargin} ${customClasses.wrapper}`}
         >
-          <TableContainer className={`${customClasses.tableContainer}`}>
+          <TableContainer>
             <Table stickyHeader>
-              <TableHead className={customClasses.tableCont}>
+              <TableHead>
                 <TableRow>
                   <TableCell style={{ minWidth: 300 }}>Auction Item</TableCell>
                   <TableCell style={{ minWidth: 180 }}>Category</TableCell>

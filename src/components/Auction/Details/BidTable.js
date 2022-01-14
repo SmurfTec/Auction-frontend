@@ -14,9 +14,9 @@ import {
 const BidTable = ({ tableClasses, bids, globalClasses }) => {
   return (
     <Box mt={2} sx={{ maxHeight: 550, overflowY: 'auto' }}>
-      <TableContainer className={`${tableClasses.tableContainer}`}>
+      <TableContainer>
         <Table stickyHeader>
-          <TableHead className={tableClasses.tableCont}>
+          <TableHead>
             <TableRow>
               <TableCell style={{ minWidth: 300 }}>User</TableCell>
               <TableCell align='right'>Bid</TableCell>

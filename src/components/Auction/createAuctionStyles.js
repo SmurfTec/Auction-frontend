@@ -42,6 +42,7 @@ const styles = makeStyles((theme) => ({
     position: 'relative',
     display: 'flex',
     justifyContent: 'center',
+    overflow: 'hidden',
 
     '& span': {
       '& svg': {
