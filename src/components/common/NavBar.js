@@ -30,6 +30,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import LockIcon from '@material-ui/icons/Lock';
 import NotificationsPopover from './notify/NotificationsPopover';
+import { Telegram } from '@material-ui/icons';
 
 const Navbar = (props) => {
   const classes = useStyles();
@@ -55,6 +56,10 @@ const Navbar = (props) => {
       location.pathname.toLowerCase().includes('myauctions')
     );
   }, [location.pathname]);
+
+  const handleChatClick = () => {
+    navigate('/chat');
+  };
 
   return (
     <div className={`${classes.root}`}>
@@ -117,6 +122,12 @@ const Navbar = (props) => {
                       </Typography>
                     </MHidden>
 
+                    <IconButton
+                      onClick={handleChatClick}
+                      style={{ marginInline: -15 }}
+                    >
+                      <Telegram fontSize='small' color='primary' />
+                    </IconButton>
                     <NotificationsPopover />
                     {/* <IconButton aria-label='delete'>
                       <NotificationsIcon fontSize='small' color='primary' />

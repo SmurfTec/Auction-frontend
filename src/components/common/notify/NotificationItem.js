@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { noCase } from 'change-case';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 // import { Icon } from '@iconify/react';
 // import clockFill from '@iconify/icons-eva/clock-fill';
@@ -19,12 +19,7 @@ import {
   ListItem,
 } from '@material-ui/core';
 import { AccessTime, FlightTakeoff } from '@material-ui/icons';
-// utils
-// components
-// import { SocketContext } from 'Contexts/SocketContext';
-function ListItemLink(props) {
-  return <ListItem button component='a' {...props} />;
-}
+
 const renderContent = (notification) => {
   const title = (
     <Typography variant='subtitle2'>
@@ -58,10 +53,17 @@ const renderContent = (notification) => {
 const NotificationItem = ({ notification }) => {
   const { title } = renderContent(notification);
   const theme = useTheme();
+  const navigate = useNavigate();
+
+  const handleNotificationClick = () => {
+    navigate(notification.link);
+  };
 
   return (
-    <ListItemLink
-      href={notification.link}
+    <ListItem
+      component={Button}
+      onClick={handleNotificationClick}
+      // href={notification.link}
       disableGutters
       sx={{
         py: 1.5,
@@ -101,7 +103,7 @@ const NotificationItem = ({ notification }) => {
           </Typography>
         }
       />
-    </ListItemLink>
+    </ListItem>
   );
 };
 

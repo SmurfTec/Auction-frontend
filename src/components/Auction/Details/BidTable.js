@@ -9,9 +9,17 @@ import {
   TableHead,
   TableBody,
   Avatar,
+  Button,
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
-const BidTable = ({ tableClasses, bids, globalClasses }) => {
+const BidTable = ({
+  tableClasses,
+  bids,
+  globalClasses,
+  isAuctionOver = false,
+  isMyAuction = false,
+}) => {
   return (
     <Box mt={2} sx={{ maxHeight: 550, overflowY: 'auto' }}>
       <TableContainer>
@@ -21,6 +29,12 @@ const BidTable = ({ tableClasses, bids, globalClasses }) => {
               <TableCell style={{ minWidth: 300 }}>User</TableCell>
               <TableCell align='right'>Bid</TableCell>
               <TableCell>Date</TableCell>
+              {isAuctionOver && isMyAuction && (
+                <>
+                  <TableCell align='center'>Claim</TableCell>
+                  <TableCell align='center'>Chat</TableCell>
+                </>
+              )}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -48,6 +62,26 @@ const BidTable = ({ tableClasses, bids, globalClasses }) => {
                     {new Date(bid.createdAt).toLocaleDateString()}
                   </Typography>
                 </TableCell>
+                {isAuctionOver && isMyAuction && (
+                  <>
+                    <TableCell align='right'>
+                      <Button variant='contained' color='primary' size='small'>
+                        Claim
+                      </Button>
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant='contained'
+                        color='secondary'
+                        size='small'
+                        component={Link}
+                        to={`/chat?id=${bid.user._id}`}
+                      >
+                        Chat
+                      </Button>
+                    </TableCell>
+                  </>
+                )}
               </TableRow>
             ))}
           </TableBody>

@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AuctionDetails = () => {
-  const { token } = useContext(AuthContext);
+  const { token, user } = useContext(AuthContext);
   const { addToWatchlist } = useContext(AuctionsContext);
   const globalClasses = styles();
 
@@ -104,6 +104,15 @@ const AuctionDetails = () => {
     return auction.bids[0].biddingPrice + 1;
   }, [auction]);
 
+  const isAuctionOver = useMemo(
+    () => new Date(auction?.timeLine) < new Date(),
+    [auction]
+  );
+
+  const isMyAuction = useMemo(
+    () => user && auction?.user?._id === user?._id[auction]
+  );
+
   // * Sometimes loading becomes false , but auction is still undefined
   // * for small amount of time , so in that case !auction is put here
   if (loading || !auction) return <Loading />;
@@ -153,6 +162,10 @@ const AuctionDetails = () => {
                     globalClasses={globalClasses}
                     tableClasses={tableClasses}
                     bids={auction.bids}
+                    // isAuctionOver={isAuctionOver}
+                    // isMyAuction={isMyAuction}
+                    isAuctionOver={true}
+                    isMyAuction={true}
                   />
                 )}
               </Box>

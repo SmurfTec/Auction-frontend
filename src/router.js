@@ -20,9 +20,11 @@ import Register from 'components/common/Register';
 import Login from 'components/common/Login';
 import { AuthContext } from 'contexts/AuthContext';
 import CommonLayout from 'components/layouts/CommonLayout';
+import Chat from 'components/Chat';
 
 const Router = () => {
   const { user, token } = useContext(AuthContext);
+  if (token && !user) return <Loading />;
   return (
     <Routes>
       <Route path='/' element={<CommonLayout />}>
@@ -37,28 +39,25 @@ const Router = () => {
         <Route path='faq' element={<Faq />} />
 
         {/* Protechted Routes */}
-        {token ? (
-          user ? (
-            <>
-              <Route path='myauctions' element={<DrawerLayout />}>
-                <Route path='watchlist' element={<WatchList />} />
-                <Route
-                  path='published'
-                  element={<Unpulished status='published' />}
-                />
-                <Route
-                  path='unpublished'
-                  element={<Unpulished status='inProgress' />}
-                />
-                <Route path='unclaimed' element={<Unclaimed />} />
-                <Route path='completed' element={<Completed />} />
-              </Route>
-              <Route path='createAuction' element={<Create />} />
-              <Route path='account' element={<Profile />} />
-            </>
-          ) : (
-            <Route path='*' element={<Loading />} />
-          )
+        {user ? (
+          <>
+            <Route path='myauctions' element={<DrawerLayout />}>
+              <Route path='watchlist' element={<WatchList />} />
+              <Route
+                path='published'
+                element={<Unpulished status='published' />}
+              />
+              <Route
+                path='unpublished'
+                element={<Unpulished status='inProgress' />}
+              />
+              <Route path='unclaimed' element={<Unclaimed />} />
+              <Route path='completed' element={<Completed />} />
+            </Route>
+            <Route path='createAuction' element={<Create />} />
+            <Route path='account' element={<Profile />} />
+            <Route path='chat' element={<Chat />} />
+          </>
         ) : (
           <>
             <Route path='/register' element={<Register />} />

@@ -84,7 +84,7 @@ const AuctionList = ({ auctions, loading, isEdit }) => {
               )
               .map((auc) => (
                 <div
-                  key={auc.id}
+                  key={auc._id}
                   className={`${globalClasses.flexDisp} ${globalClasses.cardContainer}`}
                 >
                   <div
@@ -99,13 +99,7 @@ const AuctionList = ({ auctions, loading, isEdit }) => {
                       </div>
                     </div>
                   </div>
-                  {/* <div className={globalClasses.auctDetailCont}>
-                          <AuctionStepper auction={auc} />
 
-                          <div className={globalClasses.content}>
-                            <Card auction={auction} />
-                          </div>
-                        </div> */}
                   <Box>
                     <IconButton
                       aria-label='Share'
