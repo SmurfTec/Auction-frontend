@@ -14,8 +14,8 @@ export const AuctionsProvider = ({ children }) => {
     auctions,
     setAuctions,
     pushAuction,
-    // filterAuctions,
-    // updateAuction,
+    ,
+    updateAuctionById,
     // removeAuction,
     // clearAuctions,
   ] = useArray([], '_id');
@@ -80,11 +80,13 @@ export const AuctionsProvider = ({ children }) => {
 
   useEffect(() => {
     fetchAuctions();
-    fetchMyAuctions();
   }, []);
 
   useEffect(() => {
-    if (user) fetchWatchlist();
+    if (!user) return;
+
+    fetchMyAuctions();
+    fetchWatchlist();
   }, [user]);
 
   // * whenever auctions changed , We have to update published and leaderboard auctions
@@ -183,6 +185,7 @@ export const AuctionsProvider = ({ children }) => {
         topAuctions,
         unClaimedAuctions,
         updateAuction,
+        updateAuctionById,
       }}
     >
       {children}

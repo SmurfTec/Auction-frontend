@@ -1,5 +1,5 @@
 import { Box, Container, makeStyles, Typography } from '@material-ui/core';
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import styles from 'styles/commonStyles';
 import AuctionStepper from './DetailsAucStepper';
 // import AuctionStepper from '../AuctionStepperM';
@@ -16,6 +16,7 @@ import { AuctionsContext } from 'contexts/AuctionsContext';
 import { Navigate } from 'react-router-dom';
 import CreateBidForm from './CreateBidForm';
 import BidTable from './BidTable';
+import { SocketContext } from 'contexts/SocketContext';
 
 const useStyles = makeStyles((theme) => ({
   contentCont: {
@@ -39,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AuctionDetails = () => {
   const { token, user } = useContext(AuthContext);
+  const { socket } = useContext(SocketContext);
   const { addToWatchlist } = useContext(AuctionsContext);
   const globalClasses = styles();
 
@@ -93,6 +95,14 @@ const AuctionDetails = () => {
   const handleBookmark = async (e) => {
     addToWatchlist(id);
   };
+
+  useEffect(() => {
+    if (!socket || !user) return;
+    socket.on('newBid', ({ updatedAuction }) => {
+      console.log(`new bid received`, updatedAuction);
+      setAuction(updatedAuction);
+    });
+  }, [socket, user]);
 
   const minBidAmount = useMemo(() => {
     if (!auction) return 0;

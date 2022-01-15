@@ -14,13 +14,13 @@ import { SocketProvider } from 'contexts/SocketContext';
 ReactDOM.render(
   <BrowserRouter>
     <AuthProvider>
-      <SocketProvider>
-        <CategoriesProvider>
-          <AuctionsProvider>
+      <CategoriesProvider>
+        <AuctionsProvider>
+          <SocketProvider>
             <App />
-          </AuctionsProvider>
-        </CategoriesProvider>
-      </SocketProvider>
+          </SocketProvider>
+        </AuctionsProvider>
+      </CategoriesProvider>
     </AuthProvider>
     <ToastContainer position='top-right' />
   </BrowserRouter>,
