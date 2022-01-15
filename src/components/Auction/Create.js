@@ -34,7 +34,7 @@ const Create = ({ isUpdate }) => {
   const { categories } = useContext(CategoriesContext);
   const {
     createNewAuction,
-    user,
+    isLoggedIn,
     myAuctions,
     loadingMyAuctions,
     updateAuction,
@@ -67,7 +67,7 @@ const Create = ({ isUpdate }) => {
   useEffect(() => {
     // * If user wants to update auction , validate if auction is of user
     if (!isUpdate) return toggleValidating();
-    if (!user || !myAuctions || loadingMyAuctions) return;
+    if (!isLoggedIn || !myAuctions || loadingMyAuctions) return;
 
     // * Find Auction
     let editAuc = myAuctions.find((el) => el._id === id);
@@ -76,7 +76,7 @@ const Create = ({ isUpdate }) => {
     setInputstate({ ...editAuc });
 
     toggleValidating();
-  }, [isUpdate, myAuctions, loadingMyAuctions, user]);
+  }, [isUpdate, myAuctions, loadingMyAuctions, isLoggedIn]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

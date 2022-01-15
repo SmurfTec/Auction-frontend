@@ -36,8 +36,8 @@ const Navbar = (props) => {
   const classes = useStyles();
   const classes_g = globalStyles();
   const classes_dr = drawerStyles();
-  const { user } = useContext(AuthContext);
-  // console.log(`user`, user);
+  const { isLoggedIn } = useContext(AuthContext);
+  // console.log(`isLoggedIn`, isLoggedIn);
 
   const location = useLocation();
 
@@ -96,7 +96,7 @@ const Navbar = (props) => {
                 alignItems: 'center',
               }}
             >
-              {user ? (
+              {isLoggedIn ? (
                 <>
                   <Box
                     display='flex'
@@ -178,7 +178,7 @@ const Navbar = (props) => {
             </Box>
           </div>
           <div className={classes.sectionMobile}>
-            {user && (
+            {isLoggedIn && (
               <>
                 <IconButton aria-label='delete'>
                   <NotificationsIcon fontSize='small' />
@@ -236,7 +236,7 @@ const Navbar = (props) => {
               <Typography variant='subtitle2'>Create Auction</Typography>
             </ListItem>
           </NavLink>
-          {user && (
+          {isLoggedIn && (
             <NavLink to='/myauctions/watchlist'>
               <ListItem>
                 <ListItemIcon style={{ minWidth: 40 }}>
@@ -252,7 +252,7 @@ const Navbar = (props) => {
           <Divider />
         </Box>
 
-        {!user && (
+        {!isLoggedIn && (
           <List className={classes.list}>
             <NavLink to='/login'>
               <ListItem>

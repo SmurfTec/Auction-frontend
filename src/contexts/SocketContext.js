@@ -4,13 +4,12 @@ import socketIo from 'socket.io-client';
 import { AuthContext } from './AuthContext';
 import { API_BASE_ORIGIN, makeReq } from 'utils/makeReq';
 import { v4 } from 'uuid';
-import { AuctionsContext } from './AuctionsContext';
 
 export const SocketContext = createContext();
 
 export const SocketProvider = (props) => {
   const [socket, setSocket] = useState();
-  const { updateAuctionById } = useContext(AuctionsContext);
+
   const { user, setUser, token } = useContext(AuthContext);
   const [chats, setChats] = useState([]);
 

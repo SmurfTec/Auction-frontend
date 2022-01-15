@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AuctionDetails = () => {
-  const { token, user } = useContext(AuthContext);
+  const { token, isLoggedIn } = useContext(AuthContext);
   const { socket } = useContext(SocketContext);
   const { addToWatchlist } = useContext(AuctionsContext);
   const globalClasses = styles();
@@ -97,12 +97,12 @@ const AuctionDetails = () => {
   };
 
   useEffect(() => {
-    if (!socket || !user) return;
+    if (!socket || !isLoggedIn) return;
     socket.on('newBid', ({ updatedAuction }) => {
       console.log(`new bid received`, updatedAuction);
       setAuction(updatedAuction);
     });
-  }, [socket, user]);
+  }, [socket, isLoggedIn]);
 
   const minBidAmount = useMemo(() => {
     if (!auction) return 0;
@@ -120,7 +120,7 @@ const AuctionDetails = () => {
   );
 
   const isMyAuction = useMemo(
-    () => user && auction?.user?._id === user?._id[auction]
+    () => isLoggedIn && auction?.isLoggedIn?._id === isLoggedIn?._id[auction]
   );
 
   // * Sometimes loading becomes false , but auction is still undefined

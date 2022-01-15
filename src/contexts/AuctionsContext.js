@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 export const AuctionsContext = React.createContext();
 
 export const AuctionsProvider = ({ children }) => {
-  const { user } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const [
     auctions,
@@ -83,11 +83,11 @@ export const AuctionsProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (!user) return;
+    if (!isLoggedIn) return;
 
     fetchMyAuctions();
     fetchWatchlist();
-  }, [user]);
+  }, [isLoggedIn]);
 
   // * whenever auctions changed , We have to update published and leaderboard auctions
   useEffect(() => {
@@ -180,7 +180,7 @@ export const AuctionsProvider = ({ children }) => {
         watchlist,
         loadingWatchlist,
         addToWatchlist,
-        user,
+        isLoggedIn,
         publishedAuctions,
         topAuctions,
         unClaimedAuctions,

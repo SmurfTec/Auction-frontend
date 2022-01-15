@@ -18,7 +18,7 @@ import { API_BASE_URL, handleCatch } from 'utils/makeReq';
 import axios from 'axios';
 
 const Register = () => {
-  const { user, signInUser } = useContext(AuthContext);
+  const { isLoggedIn, signInUser } = useContext(AuthContext);
   const classes = globalStyles();
   const formClasses = formStyles();
 
@@ -49,10 +49,10 @@ const Register = () => {
   let redirect = location.search ? location.search.split('=')[1] : '/';
 
   useEffect(() => {
-    if (user) {
+    if (isLoggedIn) {
       navigate(redirect);
     }
-  }, [user, navigate, redirect]);
+  }, [isLoggedIn, navigate, redirect]);
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
