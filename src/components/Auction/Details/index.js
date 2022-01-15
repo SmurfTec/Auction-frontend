@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AuctionDetails = () => {
-  const { token, isLoggedIn } = useContext(AuthContext);
+  const { token, isLoggedIn, user } = useContext(AuthContext);
   const { socket } = useContext(SocketContext);
   const { addToWatchlist } = useContext(AuctionsContext);
   const globalClasses = styles();
@@ -120,7 +120,7 @@ const AuctionDetails = () => {
   );
 
   const isMyAuction = useMemo(
-    () => isLoggedIn && auction?.isLoggedIn?._id === isLoggedIn?._id[auction]
+    () => isLoggedIn && auction?.user?._id === user?._id[auction]
   );
 
   // * Sometimes loading becomes false , but auction is still undefined
@@ -172,10 +172,10 @@ const AuctionDetails = () => {
                     globalClasses={globalClasses}
                     tableClasses={tableClasses}
                     bids={auction.bids}
-                    // isAuctionOver={isAuctionOver}
-                    // isMyAuction={isMyAuction}
-                    isAuctionOver={true}
-                    isMyAuction={true}
+                    isAuctionOver={isAuctionOver}
+                    isMyAuction={isMyAuction}
+                    // isAuctionOver={true}
+                    // isMyAuction={true}
                   />
                 )}
               </Box>

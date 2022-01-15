@@ -96,15 +96,18 @@ const Navbar = (props) => {
                 alignItems: 'center',
               }}
             >
+              {/* {isLoggedIn ? ( */}
               {isLoggedIn ? (
                 <>
                   <Box
                     display='flex'
                     justifyContent='space-between'
+                    alignItems='center'
+                    style={{
+                      columnGap: 15,
+                    }}
                     sx={{
                       marginLeft: 20,
-                      columnGap: 15,
-                      alignItems: 'center',
                     }}
                     className={classes_g.linkLabel}
                   >
