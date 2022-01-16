@@ -21,6 +21,7 @@ import { getMuiDateFormat } from 'utils/common';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from 'styles/AccountStyles';
 import { AuthContext } from 'contexts/AuthContext';
+import { makeReq, handleCatch } from 'utils/makeReq';
 
 const Profile = () => {
   const classes = styles();
@@ -87,6 +88,23 @@ const Profile = () => {
     // console.log(`inputState`, inputState);
   };
 
+  const handleTwitterClick = async () => {
+    try {
+      const res = await makeReq(`/social/twitter`);
+    } catch (err) {
+      handleCatch(err);
+    } finally {
+    }
+  };
+  const handleInstagramClick = async () => {
+    try {
+      const res = await makeReq(`/social/instagram`);
+    } catch (err) {
+      handleCatch(err);
+    } finally {
+    }
+  };
+
   return (
     <>
       <div className={classes.root}>
@@ -150,6 +168,7 @@ const Profile = () => {
                 <Button
                   variant='contained'
                   className={`${classes.twtIcon} ${classes.twitterHover}`}
+                  onClick={handleTwitterClick}
                 >
                   Connect Twitter Account
                 </Button>
@@ -174,6 +193,7 @@ const Profile = () => {
                 <Button
                   variant='contained'
                   className={`${classes.insIcon} ${classes.instaHover}`}
+                  onClick={handleInstagramClick}
                 >
                   Connect Instagram Account
                 </Button>
