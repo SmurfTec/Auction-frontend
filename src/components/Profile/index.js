@@ -22,6 +22,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from 'styles/AccountStyles';
 import { AuthContext } from 'contexts/AuthContext';
 import { makeReq, handleCatch } from 'utils/makeReq';
+import InstagramLogin from 'react-instagram-oauth';
 
 const Profile = () => {
   const classes = styles();
@@ -103,6 +104,11 @@ const Profile = () => {
       handleCatch(err);
     } finally {
     }
+  };
+
+  const handleInstaCallback = (err, data) => {
+    console.log(`err`, err);
+    console.log(`data`, data);
   };
 
   return (
@@ -197,6 +203,12 @@ const Profile = () => {
                 >
                   Connect Instagram Account
                 </Button>
+                <InstagramLogin
+                  authCallback={handleInstaCallback}
+                  appId='1561091957582156'
+                  appSecret='69c5334dbef99fe12f59b66c3505798e'
+                  redirectUri='https://auction-api1.herokuapp.com/api/social/instagram/callback'
+                />
               </Box>
             </Box>
           </CardContent>
