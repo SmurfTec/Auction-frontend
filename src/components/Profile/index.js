@@ -21,7 +21,7 @@ import { getMuiDateFormat } from 'utils/common';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from 'styles/AccountStyles';
 import { AuthContext } from 'contexts/AuthContext';
-import { makeReq, handleCatch } from 'utils/makeReq';
+import { makeReq, handleCatch, API_BASE_URL } from 'utils/makeReq';
 import InstagramLogin from 'react-instagram-oauth';
 
 const Profile = () => {
@@ -90,20 +90,25 @@ const Profile = () => {
   };
 
   const handleTwitterClick = async () => {
-    try {
-      const res = await makeReq(`/social/twitter`);
-    } catch (err) {
-      handleCatch(err);
-    } finally {
-    }
+    window.open(`${API_BASE_URL}/social/twitter`, '_self');
+
+    // try {
+    //   const res = await makeReq(`/social/twitter`);
+    // } catch (err) {
+    //   handleCatch(err);
+    // } finally {
+    // }
   };
+
   const handleInstagramClick = async () => {
-    try {
-      const res = await makeReq(`/social/instagram`);
-    } catch (err) {
-      handleCatch(err);
-    } finally {
-    }
+    window.open(`${API_BASE_URL}/social/instagram`, '_self');
+
+    // try {
+    //   const res = await makeReq(`/social/instagram`);
+    // } catch (err) {
+    //   handleCatch(err);
+    // } finally {
+    // }
   };
 
   const handleInstaCallback = (err, data) => {
