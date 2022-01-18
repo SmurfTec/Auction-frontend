@@ -212,7 +212,7 @@ const Profile = () => {
                   authCallback={handleInstaCallback}
                   appId='1561091957582156'
                   appSecret='69c5334dbef99fe12f59b66c3505798e'
-                  redirectUri='https://auction-api1.herokuapp.com/api/social/instagram/callback'
+                  redirectUri='https://auction-api1.herokuapp.com/api/social/instagram/callback/'
                 />
               </Box>
             </Box>
