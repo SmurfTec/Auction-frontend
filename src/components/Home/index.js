@@ -33,14 +33,9 @@ import queryString from 'query-string';
 import { v4 } from 'uuid';
 import { CategoriesContext } from 'contexts/CategoriesContext';
 import { filterFalseValues } from 'utils/objectMethods';
-import ReactGA from 'react-ga';
 
 const HomePage = () => {
-  useEffect(() => {
-    ReactGA.pageview(
-      window.location.pathname + window.location.search
-    );
-  });
+  const location = useLocation();
 
   const globalClasses = styles();
   const customClasses = useStyles();
@@ -48,7 +43,6 @@ const HomePage = () => {
     useContext(AuctionsContext);
   const { categories, loading: loadingCategories } =
     useContext(CategoriesContext);
-  const location = useLocation();
 
   const [page, setPage] = React.useState(1);
   const [rowsPerPage] = React.useState(50);
