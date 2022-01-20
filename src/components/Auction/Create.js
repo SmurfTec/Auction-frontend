@@ -91,10 +91,7 @@ const Create = ({ isUpdate }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    ReactGA.event({
-      category: 'Button',
-      action: 'create auction form',
-    });
+
     if (!inputState.images.length)
       return toast.error('Select atleast 1 image for auction');
 
@@ -107,6 +104,10 @@ const Create = ({ isUpdate }) => {
   };
 
   const handleCreate = (status) => {
+    ReactGA.event({
+      category: 'Button',
+      action: 'Auction published',
+    });
     togglePublishOpen();
     toggleSubmitting();
 
