@@ -104,10 +104,6 @@ const Create = ({ isUpdate }) => {
   };
 
   const handleCreate = (status) => {
-    ReactGA.event({
-      category: 'Button',
-      action: 'Auction published',
-    });
     togglePublishOpen();
     toggleSubmitting();
 
