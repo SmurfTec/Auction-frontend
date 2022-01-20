@@ -7,7 +7,7 @@ const useGaTracker = () => {
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    if (!location.href.includes('localhost')) {
+    if (!window.location.href.includes('localhost')) {
       ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_CODE);
     }
     setInitialized(true);
