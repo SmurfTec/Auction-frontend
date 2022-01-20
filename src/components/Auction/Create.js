@@ -29,6 +29,7 @@ import SimpleCarousel from 'components/common/SimpleCarousel';
 import PublishAuction from './PublishAuctionDialog';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGaTracker } from 'hooks';
+import ReactGA from 'react-ga';
 
 const Create = ({ isUpdate }) => {
   useGaTracker();
@@ -90,6 +91,10 @@ const Create = ({ isUpdate }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    ReactGA.event({
+      category: 'Button',
+      action: 'create auction form',
+    });
     if (!inputState.images.length)
       return toast.error('Select atleast 1 image for auction');
 
