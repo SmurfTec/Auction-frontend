@@ -83,13 +83,21 @@ export default function AccountPopover() {
 
         <Divider sx={{ my: 1 }} />
 
-        <MenuItem>
-          <NavLink to='/account' onClick={handleClose}>
+        <NavLink to='/account' onClick={handleClose}>
+          <MenuItem>
             <Typography variant='body1' color='textPrimary' noWrap>
               Account
             </Typography>
-          </NavLink>
-        </MenuItem>
+          </MenuItem>
+        </NavLink>
+
+        <NavLink to='/faq' onClick={handleClose}>
+          <MenuItem>
+            <Typography variant='body1' color='textPrimary' noWrap>
+              FAQs
+            </Typography>
+          </MenuItem>
+        </NavLink>
 
         <MenuItem id='logout' onClick={handleLogout}>
           <Typography variant='body1' color='textPrimary' noWrap>

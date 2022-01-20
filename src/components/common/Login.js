@@ -52,7 +52,7 @@ const Login = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post(`${API_BASE_URL}/auth/login/freelancer`, {
+      const res = await axios.post(`${API_BASE_URL}/auth/login`, {
         ...inputState,
       });
       // console.log(`res`, res);

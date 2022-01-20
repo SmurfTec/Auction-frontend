@@ -8,8 +8,8 @@ import { Box } from '@material-ui/core';
 
 const RootStyle = styled('div')({
   flexGrow: 1,
-  height: '500px',
-  overflowY: 'scroll',
+  // height: '500px',
+  // overflowY: 'scroll',
 });
 
 const SimpleBarStyle = styled(SimpleBarReact)(({ theme }) => ({
@@ -30,6 +30,9 @@ const SimpleBarStyle = styled(SimpleBarReact)(({ theme }) => ({
   },
   '& .simplebar-mask': {
     zIndex: 'inherit',
+  },
+  '& .simplebar-placeholder': {
+    display: 'none',
   },
 }));
 
