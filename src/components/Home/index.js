@@ -33,12 +33,13 @@ import queryString from 'query-string';
 import { v4 } from 'uuid';
 import { CategoriesContext } from 'contexts/CategoriesContext';
 import { filterFalseValues } from 'utils/objectMethods';
-import { useLocation } from 'react-router-dom';
+import ReactGA from 'react-ga';
 
 const HomePage = () => {
-  const location = useLocation();
   useEffect(() => {
-    ReactGA.pageview(location.pathname + location.search);
+    ReactGA.pageview(
+      window.location.pathname + window.location.search
+    );
   });
 
   const globalClasses = styles();
