@@ -6,7 +6,12 @@ import {
   CircularProgress,
   TextField,
 } from '@material-ui/core';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import {
+  Link,
+  NavLink,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import useManyInputs from 'hooks/useManyInputs';
 import globalStyles from 'styles/commonStyles';
@@ -14,8 +19,10 @@ import { useStyles as formStyles } from 'styles/FormLayoutStyles';
 import { AuthContext } from 'contexts/AuthContext';
 import { API_BASE_URL, handleCatch } from 'utils/makeReq';
 import axios from 'axios';
+import { useGaTracker } from 'hooks';
 
 const Login = () => {
+  useGaTracker();
   const { isLoggedIn, signInUser } = useContext(AuthContext);
   const classes = globalStyles();
   const formClasses = formStyles();
@@ -39,7 +46,9 @@ const Login = () => {
 
   const [loading, setLoading] = useState(false);
 
-  let redirect = location.search ? location.search.split('=')[1] : '/';
+  let redirect = location.search
+    ? location.search.split('=')[1]
+    : '/';
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -52,9 +61,12 @@ const Login = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post(`${API_BASE_URL}/auth/login/freelancer`, {
-        ...inputState,
-      });
+      const res = await axios.post(
+        `${API_BASE_URL}/auth/login/freelancer`,
+        {
+          ...inputState,
+        }
+      );
       // console.log(`res`, res);
 
       signInUser(res.data.token, res.data.user);

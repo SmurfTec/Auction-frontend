@@ -17,6 +17,7 @@ import SpeakerNotesOffIcon from '@material-ui/icons/SpeakerNotesOff';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import useStyles from 'styles/DrawerStyles';
 import { HourglassEmpty, Pause, Public } from '@material-ui/icons';
+import { useGaTracker } from 'hooks';
 
 const drawerList = [
   {
@@ -52,6 +53,7 @@ const drawerList = [
 ];
 
 const DrawerLayout = () => {
+  useGaTracker();
   const classes = useStyles();
   const theme = useTheme();
 

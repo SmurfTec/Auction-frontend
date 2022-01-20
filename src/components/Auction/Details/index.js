@@ -20,9 +20,10 @@ import { AuthContext } from 'contexts/AuthContext';
 import { AuctionsContext } from 'contexts/AuctionsContext';
 import { Navigate } from 'react-router-dom';
 import CreateBidForm from './CreateBidForm';
+import { useGaTracker } from 'hooks';
 import BidTable from './BidTable';
 import { SocketContext } from 'contexts/SocketContext';
-import { useGaTracker } from 'hooks';
+
 const useStyles = makeStyles((theme) => ({
   contentCont: {
     boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 10px 0px',

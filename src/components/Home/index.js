@@ -33,8 +33,10 @@ import queryString from 'query-string';
 import { v4 } from 'uuid';
 import { CategoriesContext } from 'contexts/CategoriesContext';
 import { filterFalseValues } from 'utils/objectMethods';
+import { useGaTracker } from 'hooks';
 
 const HomePage = () => {
+  useGaTracker();
   const location = useLocation();
 
   const globalClasses = styles();

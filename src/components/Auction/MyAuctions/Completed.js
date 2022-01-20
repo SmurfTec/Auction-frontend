@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import AuctionList from './AuctionList';
 import { AuctionsContext } from 'contexts/AuctionsContext';
 import { useGaTracker } from 'hooks';
+
 const Completed = () => {
   useGaTracker();
   const { topAuctions, loading, user } =

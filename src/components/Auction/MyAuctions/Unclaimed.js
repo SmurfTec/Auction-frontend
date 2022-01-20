@@ -2,6 +2,7 @@ import { AuctionsContext } from 'contexts/AuctionsContext';
 import React, { useEffect } from 'react';
 import AuctionList from './AuctionList';
 import { useGaTracker } from 'hooks';
+
 const Unclaimed = () => {
   useGaTracker();
   const { unClaimedAuctions, loading, user } =

@@ -9,6 +9,7 @@ import { AuctionsContext } from 'contexts/AuctionsContext';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { useGaTracker } from 'hooks';
+
 const WatchList = () => {
   useGaTracker();
   // * I gave my custom name "loading" here,
