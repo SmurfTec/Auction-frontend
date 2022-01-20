@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import { useTextInput } from 'hooks';
 import { AuthContext } from 'contexts/AuthContext';
-
+import { useGaTracker } from 'hooks';
 const CreateBidForm = ({
   createBid,
   isMakingBid,
@@ -18,6 +18,7 @@ const CreateBidForm = ({
   customClasses,
   globalClasses,
 }) => {
+  useGaTracker();
   const { isLoggedIn } = useContext(AuthContext);
   const [biddingAmount, handleAmountChange, resetAmount] =
     useTextInput(0);

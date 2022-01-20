@@ -1,4 +1,9 @@
-import { Box, Container, makeStyles, Typography } from '@material-ui/core';
+import {
+  Box,
+  Container,
+  makeStyles,
+  Typography,
+} from '@material-ui/core';
 import React, { useContext, useEffect, useMemo } from 'react';
 import styles from 'styles/commonStyles';
 import AuctionStepper from './DetailsAucStepper';
@@ -17,7 +22,7 @@ import { Navigate } from 'react-router-dom';
 import CreateBidForm from './CreateBidForm';
 import BidTable from './BidTable';
 import { SocketContext } from 'contexts/SocketContext';
-
+import { useGaTracker } from 'hooks';
 const useStyles = makeStyles((theme) => ({
   contentCont: {
     boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 10px 0px',
@@ -39,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AuctionDetails = () => {
+  useGaTracker();
   const { token, isLoggedIn, user } = useContext(AuthContext);
   const { socket } = useContext(SocketContext);
   const { addToWatchlist } = useContext(AuctionsContext);
@@ -146,7 +152,10 @@ const AuctionDetails = () => {
               >
                 <AuctionStepper auction={auction} />
                 <div className={globalClasses.content}>
-                  <Card auction={auction} handleBookmark={handleBookmark} />
+                  <Card
+                    auction={auction}
+                    handleBookmark={handleBookmark}
+                  />
                 </div>
               </div>
             </div>
@@ -219,7 +228,9 @@ const AuctionDetails = () => {
             </Box> */}
           </section>
         ) : (
-          <Typography variant='subtitle1'>Auction Not Found</Typography>
+          <Typography variant='subtitle1'>
+            Auction Not Found
+          </Typography>
         )}
       </Container>
     </>

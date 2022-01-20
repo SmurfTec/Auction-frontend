@@ -28,8 +28,10 @@ import styles from './createAuctionStyles';
 import SimpleCarousel from 'components/common/SimpleCarousel';
 import PublishAuction from './PublishAuctionDialog';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useGaTracker } from 'hooks';
 
 const Create = ({ isUpdate }) => {
+  useGaTracker();
   const classes = styles();
   const { categories } = useContext(CategoriesContext);
   const {
@@ -55,12 +57,20 @@ const Create = ({ isUpdate }) => {
     type: '',
     timeLine: 7,
   };
-  const [inputState, handleTxtChange, , changeInput, , setInputstate] =
-    useManyInputs(initialState);
+  const [
+    inputState,
+    handleTxtChange,
+    ,
+    changeInput,
+    ,
+    setInputstate,
+  ] = useManyInputs(initialState);
   const [disable, setDisable] = React.useState(false);
   //   const [open, setOpen] = React.useState(false);
-  const [isImageUploading, toggleImageUploading] = useToggleInput(false);
-  const [isVideoUploading, toggleVideoUploading] = useToggleInput(false);
+  const [isImageUploading, toggleImageUploading] =
+    useToggleInput(false);
+  const [isVideoUploading, toggleVideoUploading] =
+    useToggleInput(false);
 
   const [isPublishOpen, togglePublishOpen] = useToggleInput(false);
 
@@ -97,7 +107,8 @@ const Create = ({ isUpdate }) => {
 
     if (isUpdate)
       updateAuction({ ...inputState, status }, id, toggleSubmitting);
-    else createNewAuction({ ...inputState, status }, toggleSubmitting);
+    else
+      createNewAuction({ ...inputState, status }, toggleSubmitting);
   };
 
   const handleTimeline = (e) => {
@@ -158,7 +169,9 @@ const Create = ({ isUpdate }) => {
       }
     } catch (err) {
       toast(
-        err?.response?.data?.message || err.message || 'Something Went Wrong'
+        err?.response?.data?.message ||
+          err.message ||
+          'Something Went Wrong'
       );
       // console.log(`err`, err);
     } finally {
@@ -241,7 +254,10 @@ const Create = ({ isUpdate }) => {
                     className={classes.selectControl}
                     fulWidth
                   >
-                    <InputLabel htmlFor='outlined-age-native-simple' fullWidth>
+                    <InputLabel
+                      htmlFor='outlined-age-native-simple'
+                      fullWidth
+                    >
                       Location
                     </InputLabel>
                     <Select
@@ -278,7 +294,10 @@ const Create = ({ isUpdate }) => {
                     className={classes.selectControl}
                     fulWidth
                   >
-                    <InputLabel htmlFor='outlined-age-native-simple' fullWidth>
+                    <InputLabel
+                      htmlFor='outlined-age-native-simple'
+                      fullWidth
+                    >
                       TimeLine
                     </InputLabel>
                     <Select
@@ -331,7 +350,10 @@ const Create = ({ isUpdate }) => {
                     className={classes.selectControl}
                     fulWidth
                   >
-                    <InputLabel htmlFor='outlined-age-native-simple' fullWidth>
+                    <InputLabel
+                      htmlFor='outlined-age-native-simple'
+                      fullWidth
+                    >
                       Auction Type
                     </InputLabel>
                     <Select
@@ -342,7 +364,9 @@ const Create = ({ isUpdate }) => {
                       required
                     >
                       <MenuItem value={'specific'}>Specific</MenuItem>
-                      <MenuItem value={'openEnded'}>Open Ended</MenuItem>
+                      <MenuItem value={'openEnded'}>
+                        Open Ended
+                      </MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -398,7 +422,10 @@ const Create = ({ isUpdate }) => {
                         )
                       }
                     />
-                    <label htmlFor='image' style={{ width: 'fit-content' }}>
+                    <label
+                      htmlFor='image'
+                      style={{ width: 'fit-content' }}
+                    >
                       {' '}
                       <Button
                         className={classes.uploadBtn}
@@ -408,7 +435,9 @@ const Create = ({ isUpdate }) => {
                         disabled={isImageUploading}
                       >
                         Upload Image
-                        {isImageUploading && <CircularProgress size={25} />}
+                        {isImageUploading && (
+                          <CircularProgress size={25} />
+                        )}
                       </Button>
                     </label>
                   </Box>
@@ -416,7 +445,10 @@ const Create = ({ isUpdate }) => {
                 <Grid item xs={12} sm={6}>
                   <Box mt={2} className={classes.uploadDiv}>
                     {inputState.video ? (
-                      <SimpleCarousel video={inputState.video} type='video' />
+                      <SimpleCarousel
+                        video={inputState.video}
+                        type='video'
+                      />
                     ) : (
                       <span>
                         <ImageIcon fontSize='large' />
@@ -448,7 +480,10 @@ const Create = ({ isUpdate }) => {
                         )
                       }
                     />
-                    <label htmlFor='video' style={{ width: 'fit-content' }}>
+                    <label
+                      htmlFor='video'
+                      style={{ width: 'fit-content' }}
+                    >
                       <Button
                         className={classes.uploadBtn}
                         variant='contained'
@@ -456,7 +491,9 @@ const Create = ({ isUpdate }) => {
                         component='span'
                         disabled={isVideoUploading}
                       >
-                        {isVideoUploading && <CircularProgress size={25} />}
+                        {isVideoUploading && (
+                          <CircularProgress size={25} />
+                        )}
                         Upload Video
                       </Button>
                     </label>

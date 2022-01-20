@@ -21,7 +21,7 @@ import Login from 'components/common/Login';
 import { AuthContext } from 'contexts/AuthContext';
 import CommonLayout from 'components/layouts/CommonLayout';
 import Chat from 'components/Chat';
-import useGaTracker from './hooks/useGaTracker';
+import { useGaTracker } from 'hooks';
 
 const Router = () => {
   useGaTracker();

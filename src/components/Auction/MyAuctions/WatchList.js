@@ -1,12 +1,19 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import AuctionList from './AuctionList';
 import { AuctionsContext } from 'contexts/AuctionsContext';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-
+import { useGaTracker } from 'hooks';
 const WatchList = () => {
+  useGaTracker();
   // * I gave my custom name "loading" here,
-  const { watchlist, loadingWatchlist: loading } = useContext(AuctionsContext);
+  const { watchlist, loadingWatchlist: loading } =
+    useContext(AuctionsContext);
 
   const [auctions, setAuctions] = useState([]);
   const location = useLocation();
@@ -29,7 +36,9 @@ const WatchList = () => {
 
     setAuctions(
       auctions?.filter((el) =>
-        el.title.toLowerCase().includes(parsedQuery.search.toLowerCase())
+        el.title
+          .toLowerCase()
+          .includes(parsedQuery.search.toLowerCase())
       )
     );
   }, [parsedQuery]);

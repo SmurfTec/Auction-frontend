@@ -2,11 +2,14 @@ import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { MobileStepper, Paper, Button, Box } from '@material-ui/core';
 
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
+import {
+  KeyboardArrowLeft,
+  KeyboardArrowRight,
+} from '@material-ui/icons';
 import styles from 'styles/commonStyles';
 // import EmbedVideo from './EmbedVideo';
 import EmbedVideo from '../../common/EmbedVideo';
-
+import { useGaTracker } from 'hooks';
 const useStyles = makeStyles((theme) => ({
   root: {
     flex: 2,
@@ -65,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DetailsAucStepper = ({ auction }) => {
+  useGaTracker();
   const classes = useStyles();
   const globalClasses = styles();
 

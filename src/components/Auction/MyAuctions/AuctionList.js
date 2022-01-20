@@ -1,4 +1,9 @@
-import { Box, IconButton, makeStyles, Typography } from '@material-ui/core';
+import {
+  Box,
+  IconButton,
+  makeStyles,
+  Typography,
+} from '@material-ui/core';
 import React from 'react';
 import Card from 'components/Auction/Card';
 import AuctionStepper from '../AuctionStepper';
@@ -6,7 +11,7 @@ import AuctionStepper from '../AuctionStepper';
 import ShareIcon from '@material-ui/icons/Share';
 import styles from 'styles/commonStyles';
 import { Skeleton, Pagination } from '@material-ui/lab';
-
+import { useGaTracker } from 'hooks';
 const useStyles = makeStyles((theme) => ({
   auctDetailCont: {
     display: 'flex',
@@ -32,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AuctionList = ({ auctions, loading, isEdit }) => {
+  useGaTracker();
   const globalClasses = styles();
   const customClasses = useStyles();
 
@@ -126,7 +132,9 @@ const AuctionList = ({ auctions, loading, isEdit }) => {
           </>
         ) : (
           <Box mt={4}>
-            <Typography variant='subtitle1'>No Record found</Typography>
+            <Typography variant='subtitle1'>
+              No Record found
+            </Typography>
           </Box>
         )}
       </Box>
