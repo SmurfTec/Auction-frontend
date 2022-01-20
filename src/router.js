@@ -21,18 +21,28 @@ import Login from 'components/common/Login';
 import { AuthContext } from 'contexts/AuthContext';
 import CommonLayout from 'components/layouts/CommonLayout';
 import Chat from 'components/Chat';
+import useGaTracker from './hooks/useGaTracker';
 
 const Router = () => {
+  useGaTracker();
+
   const { user, token } = useContext(AuthContext);
   if (token && !user) return <Loading />;
+
   return (
     <Routes>
       <Route path='/' element={<CommonLayout />}>
         {/* Common Routes / Public Routes */}
         <Route path='/' element={<HomePage />} />
         <Route path='leaderboard' element={<LeaderBoard />} />
-        <Route path='auctionDetails/:id' element={<AuctionDetails />} />
-        <Route path='auctionDetails/:id/edit' element={<Create isUpdate />} />
+        <Route
+          path='auctionDetails/:id'
+          element={<AuctionDetails />}
+        />
+        <Route
+          path='auctionDetails/:id/edit'
+          element={<Create isUpdate />}
+        />
         <Route path='contact-us' element={<ContactUs />} />
         <Route path='privacy' element={<PrivacyPolicy />} />
         <Route path='tos' element={<TermsOfService />} />
