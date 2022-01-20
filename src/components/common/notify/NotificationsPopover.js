@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiPopover-paper': {
       overflowY: 'hidden',
+      maxHeight: 500,
     },
   },
 }));

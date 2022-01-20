@@ -4,7 +4,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import ScrollToTop from 'utils/ScrollToTop';
 import Router from './router';
 
-// import ReactGA from 'react-ga';
+import './app.css';
 
 function App() {
   // useEffect(() => {
