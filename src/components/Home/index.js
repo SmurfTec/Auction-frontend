@@ -33,17 +33,8 @@ import queryString from 'query-string';
 import { v4 } from 'uuid';
 import { CategoriesContext } from 'contexts/CategoriesContext';
 import { filterFalseValues } from 'utils/objectMethods';
-import ReactGA from 'react-ga';
-
-ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_CODE);
 
 const HomePage = () => {
-  useEffect(() => {
-    ReactGA.pageview(
-      window.location.pathname + window.location.search
-    );
-  });
-
   const globalClasses = styles();
   const customClasses = useStyles();
   const { publishedAuctions, loading, addToWatchlist } =
