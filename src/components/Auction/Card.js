@@ -72,7 +72,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FeaturedPost({ auction, addToWatchlist, isEdit }) {
+export default function FeaturedPost({
+  auction,
+  addToWatchlist,
+  isEdit,
+}) {
+  // const GAEventsTracker = useGaEventTracker('External Links');
+
   const customClasses = useStyles();
   const globalClasses = styles();
   const navigate = useNavigate();
@@ -110,7 +116,10 @@ export default function FeaturedPost({ auction, addToWatchlist, isEdit }) {
   };
 
   return (
-    <Box className={globalClasses.flexAlignDisp} sx={{ columnGap: 10 }}>
+    <Box
+      className={globalClasses.flexAlignDisp}
+      sx={{ columnGap: 10 }}
+    >
       <Card className={customClasses.card}>
         <CardActionArea
           onClick={() => {
@@ -151,7 +160,11 @@ export default function FeaturedPost({ auction, addToWatchlist, isEdit }) {
                   justifyContent: 'space-between',
                 }}
               >
-                <Box display='flex' flexDirection='column' sx={{ rowGap: 10 }}>
+                <Box
+                  display='flex'
+                  flexDirection='column'
+                  sx={{ rowGap: 10 }}
+                >
                   <Chip
                     size='small'
                     label={`${timeLeft} Left`}
@@ -178,7 +191,10 @@ export default function FeaturedPost({ auction, addToWatchlist, isEdit }) {
                     onClick={handleBookMark}
                     style={{ paddingInline: 0 }}
                   >
-                    <VisibilityIcon fontSize='small' color='primary' />
+                    <VisibilityIcon
+                      fontSize='small'
+                      color='primary'
+                    />
                   </IconButton>
                 </Box>
               </Box>
@@ -189,7 +205,10 @@ export default function FeaturedPost({ auction, addToWatchlist, isEdit }) {
                 </Typography>
                 <Typography variant='body2' color='textSecondary'>
                   Published{' '}
-                  {formatDistanceToNow(new Date(publishDate || createdAt))} ago
+                  {formatDistanceToNow(
+                    new Date(publishDate || createdAt)
+                  )}{' '}
+                  ago
                   {/* Created At : {new Date(createdAt).toLocaleDateString()} */}
                 </Typography>
               </div>

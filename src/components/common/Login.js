@@ -14,8 +14,10 @@ import { useStyles as formStyles } from 'styles/FormLayoutStyles';
 import { AuthContext } from 'contexts/AuthContext';
 import { API_BASE_URL, handleCatch } from 'utils/makeReq';
 import axios from 'axios';
+import { useGaTracker } from 'hooks';
 
 const Login = () => {
+  useGaTracker();
   const { isLoggedIn, signInUser } = useContext(AuthContext);
   const classes = globalStyles();
   const formClasses = formStyles();

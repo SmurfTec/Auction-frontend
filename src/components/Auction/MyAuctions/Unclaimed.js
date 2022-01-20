@@ -1,8 +1,10 @@
 import { AuctionsContext } from 'contexts/AuctionsContext';
 import React, { useEffect } from 'react';
 import AuctionList from './AuctionList';
+import { useGaTracker } from 'hooks';
 
 const Unclaimed = () => {
+  useGaTracker();
   const { unClaimedAuctions, loading, user } =
     React.useContext(AuctionsContext);
   const [data, setdata] = React.useState([]);
@@ -15,7 +17,8 @@ const Unclaimed = () => {
     setdata(
       unClaimedAuctions.filter(
         (el) =>
-          el.status === 'archived' && el.winningBig?.user?._id === user._id
+          el.status === 'archived' &&
+          el.winningBig?.user?._id === user._id
       )
     );
 

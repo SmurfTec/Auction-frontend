@@ -1,4 +1,9 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import {
   Box,
   Grid,
@@ -28,15 +33,18 @@ import queryString from 'query-string';
 import { v4 } from 'uuid';
 import { CategoriesContext } from 'contexts/CategoriesContext';
 import { filterFalseValues } from 'utils/objectMethods';
+import { useGaTracker } from 'hooks';
 
 const HomePage = () => {
+  useGaTracker();
+  const location = useLocation();
+
   const globalClasses = styles();
   const customClasses = useStyles();
   const { publishedAuctions, loading, addToWatchlist } =
     useContext(AuctionsContext);
   const { categories, loading: loadingCategories } =
     useContext(CategoriesContext);
-  const location = useLocation();
 
   const [page, setPage] = React.useState(1);
   const [rowsPerPage] = React.useState(50);
@@ -75,7 +83,8 @@ const HomePage = () => {
   useEffect(() => {
     if (!locationFilter) return;
 
-    if (locationFilter === 'all') return setFilteredAuctions(publishedAuctions);
+    if (locationFilter === 'all')
+      return setFilteredAuctions(publishedAuctions);
 
     setFilteredAuctions(
       publishedAuctions?.filter(
@@ -95,7 +104,8 @@ const HomePage = () => {
     // * We have to create array of ids
     filterCats = Object.keys(filterCats);
 
-    if (!filterCats.length) return setFilteredAuctions(publishedAuctions);
+    if (!filterCats.length)
+      return setFilteredAuctions(publishedAuctions);
 
     // console.log(
     //   `newAuctions cats`,
@@ -131,7 +141,9 @@ const HomePage = () => {
 
     setFilteredAuctions(
       publishedAuctions?.filter((el) =>
-        el.title.toLowerCase().includes(parsedQuery.search.toLowerCase())
+        el.title
+          .toLowerCase()
+          .includes(parsedQuery.search.toLowerCase())
       )
     );
   }, [parsedQuery, publishedAuctions]);
@@ -205,7 +217,8 @@ const HomePage = () => {
                       onClick={handleFilter}
                       data-filter='priceAsc'
                       className={clsx({
-                        [customClasses.activePrice]: priceFilter === 'priceAsc',
+                        [customClasses.activePrice]:
+                          priceFilter === 'priceAsc',
                       })}
                     >
                       Price (low-high)
@@ -218,7 +231,8 @@ const HomePage = () => {
                       onClick={handleFilter}
                       data-filter='priceDesc'
                       className={clsx({
-                        [customClasses.activePrice]: priceFilter !== 'priceAsc',
+                        [customClasses.activePrice]:
+                          priceFilter !== 'priceAsc',
                       })}
                     >
                       Price (high-low)
@@ -313,7 +327,9 @@ const HomePage = () => {
                                 <Checkbox
                                   color='primary'
                                   name={cat._id}
-                                  checked={categoriesFilters?.[cat._id]}
+                                  checked={
+                                    categoriesFilters?.[cat._id]
+                                  }
                                   onChange={handleCategoryChange}
                                 />
                               }
@@ -404,7 +420,9 @@ const HomePage = () => {
 
               <Pagination
                 color='secondary'
-                count={Math.ceil(publishedAuctions.length / rowsPerPage)}
+                count={Math.ceil(
+                  publishedAuctions.length / rowsPerPage
+                )}
                 page={page}
                 onChange={handleChangePage}
                 style={{

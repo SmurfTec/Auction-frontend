@@ -1,4 +1,10 @@
-import { Box, Button, Grid, TextField, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Grid,
+  TextField,
+  Typography,
+} from '@material-ui/core';
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import bgImg from 'assets/contact_bg.jpg';
@@ -7,7 +13,7 @@ import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import axios from 'axios';
 import { API_BASE_URL, handleCatch } from 'utils/makeReq';
 import { toast } from 'react-toastify';
-
+import { useGaTracker } from 'hooks';
 const styles = makeStyles((theme) => ({
   container: {
     display: 'flex',
@@ -45,6 +51,7 @@ const styles = makeStyles((theme) => ({
 }));
 
 const ContactUs = () => {
+  useGaTracker();
   const classes = styles();
 
   const initialState = {

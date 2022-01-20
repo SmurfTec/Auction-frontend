@@ -12,6 +12,7 @@ import {
   Button,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { useGaTracker } from 'hooks';
 
 const BidTable = ({
   tableClasses,
@@ -20,6 +21,7 @@ const BidTable = ({
   isAuctionOver = false,
   isMyAuction = false,
 }) => {
+  useGaTracker();
   return (
     <Box mt={2} sx={{ maxHeight: 550, overflowY: 'auto' }}>
       <TableContainer>
@@ -39,23 +41,37 @@ const BidTable = ({
           </TableHead>
           <TableBody>
             {bids?.map((bid, ind) => (
-              <TableRow hover key={bid._id} className={tableClasses.hoverRow}>
-                <TableCell component='th' scope='row' style={{ minWidth: 300 }}>
+              <TableRow
+                hover
+                key={bid._id}
+                className={tableClasses.hoverRow}
+              >
+                <TableCell
+                  component='th'
+                  scope='row'
+                  style={{ minWidth: 300 }}
+                >
                   <div
                     className={`${globalClasses.flexAlignDisp} ${tableClasses.aucItem}`}
                   >
-                    <Typography variant='subtitle2'>{ind + 1}</Typography>
+                    <Typography variant='subtitle2'>
+                      {ind + 1}
+                    </Typography>
                     <Avatar
                       src={bid.user.avatarUrl}
                       alt={bid.user.name}
                       // className={tableClasses.large}
                     />
-                    <Typography variant='subtitle2'>{bid.user.name}</Typography>
+                    <Typography variant='subtitle2'>
+                      {bid.user.name}
+                    </Typography>
                   </div>
                 </TableCell>
 
                 <TableCell align='right'>
-                  <Typography variant='body2'>{bid.biddingPrice}</Typography>
+                  <Typography variant='body2'>
+                    {bid.biddingPrice}
+                  </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography variant='body2'>
@@ -65,7 +81,11 @@ const BidTable = ({
                 {isAuctionOver && isMyAuction && (
                   <>
                     <TableCell align='right'>
-                      <Button variant='contained' color='primary' size='small'>
+                      <Button
+                        variant='contained'
+                        color='primary'
+                        size='small'
+                      >
                         Claim
                       </Button>
                     </TableCell>

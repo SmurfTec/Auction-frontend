@@ -7,7 +7,12 @@ import {
   TextField,
   Checkbox,
 } from '@material-ui/core';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import {
+  Link,
+  NavLink,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import { Alert } from 'components/common/Alert';
 import useManyInputs from 'hooks/useManyInputs';
@@ -16,8 +21,10 @@ import { useStyles as formStyles } from 'styles/FormLayoutStyles';
 import { AuthContext } from 'contexts/AuthContext';
 import { API_BASE_URL, handleCatch } from 'utils/makeReq';
 import axios from 'axios';
+import { useGaTracker } from 'hooks';
 
 const Register = () => {
+  useGaTracker();
   const { isLoggedIn, signInUser } = useContext(AuthContext);
   const classes = globalStyles();
   const formClasses = formStyles();
@@ -46,7 +53,9 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  let redirect = location.search ? location.search.split('=')[1] : '/';
+  let redirect = location.search
+    ? location.search.split('=')[1]
+    : '/';
 
   useEffect(() => {
     if (isLoggedIn) {

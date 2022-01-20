@@ -8,7 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import { Box, Chip, IconButton } from '@material-ui/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { calculateCountdown } from 'utils/dateFunctions';
-
+import { useGaTracker } from 'hooks';
 const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
@@ -61,7 +61,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FeaturedPost({ auction, handleBookmark, bookmaking }) {
+export default function FeaturedPost({
+  auction,
+  handleBookmark,
+  bookmaking,
+}) {
+  useGaTracker();
   const classes = useStyles();
 
   const timeLeft = useMemo(() => {
@@ -201,7 +206,8 @@ export default function FeaturedPost({ auction, handleBookmark, bookmaking }) {
                 Created By : {user?.name}
               </Typography>
               <Typography variant='body1' color='textSecondary'>
-                Created At : {new Date(createdAt).toLocaleDateString()}
+                Created At :{' '}
+                {new Date(createdAt).toLocaleDateString()}
               </Typography>
             </div>
           </CardContent>
