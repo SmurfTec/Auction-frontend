@@ -19,7 +19,8 @@ const CreateBidForm = ({
   globalClasses,
 }) => {
   const { isLoggedIn } = useContext(AuthContext);
-  const [biddingAmount, handleAmountChange, resetAmount] = useTextInput(0);
+  const [biddingAmount, handleAmountChange, resetAmount] =
+    useTextInput(0);
 
   const handleAddBid = (e) => {
     e.preventDefault();
@@ -28,7 +29,10 @@ const CreateBidForm = ({
   if (!isLoggedIn) return <Box sx={{ flexBasis: '40%' }}></Box>;
 
   return (
-    <Box sx={{ flexBasis: '40%' }} className={`${customClasses.contentCont}`}>
+    <Box
+      sx={{ flexBasis: '40%' }}
+      className={`${customClasses.contentCont}`}
+    >
       <Typography variant='h5'>Bid Now</Typography>
 
       <Box mt={2}>
