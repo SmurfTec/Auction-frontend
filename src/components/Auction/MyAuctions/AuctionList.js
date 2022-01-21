@@ -1,9 +1,4 @@
-import {
-  Box,
-  IconButton,
-  makeStyles,
-  Typography,
-} from '@material-ui/core';
+import { Box, IconButton, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import Card from 'components/Auction/Card';
 import AuctionStepper from '../AuctionStepper';
@@ -12,6 +7,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import styles from 'styles/commonStyles';
 import { Skeleton, Pagination } from '@material-ui/lab';
 import { useGaTracker } from 'hooks';
+import ShareAuction from 'components/common/ShareAuction';
 const useStyles = makeStyles((theme) => ({
   auctDetailCont: {
     display: 'flex',
@@ -106,20 +102,7 @@ const AuctionList = ({ auctions, loading, isEdit }) => {
                     </div>
                   </div>
 
-                  <Box>
-                    <IconButton
-                      aria-label='Share'
-                      aria-haspopup='true'
-                      data-item={auc.id}
-                      onClick={handleShare}
-                      style={{
-                        marginLeft: 'auto',
-                        color: '#000',
-                      }}
-                    >
-                      <ShareIcon />
-                    </IconButton>
-                  </Box>
+                  <ShareAuction auctionId={auc._id} />
                 </div>
               ))}
 
@@ -132,9 +115,7 @@ const AuctionList = ({ auctions, loading, isEdit }) => {
           </>
         ) : (
           <Box mt={4}>
-            <Typography variant='subtitle1'>
-              No Record found
-            </Typography>
+            <Typography variant='subtitle1'>No Record found</Typography>
           </Box>
         )}
       </Box>
