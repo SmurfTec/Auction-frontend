@@ -11,7 +11,7 @@ const useToggleInput = (initialState = false) => {
     setState(initialState);
   };
 
-  return [state, toggleInput, resetState];
+  return [state, toggleInput, setState];
 };
 
 export default useToggleInput;

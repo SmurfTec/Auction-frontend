@@ -28,7 +28,7 @@ import { useGaTracker } from 'hooks';
 const Profile = () => {
   useGaTracker();
   const classes = styles();
-  const { user, updateMe, logoutUser } = useContext(AuthContext);
+  const { user, updateMe, logoutUser, token } = useContext(AuthContext);
   const initialState = {
     firstName: '',
     lastName: '',
@@ -42,14 +42,8 @@ const Profile = () => {
     },
   };
 
-  const [
-    inputState,
-    handleTxtChange,
-    ,
-    changeInput,
-    ,
-    setInputstate,
-  ] = useManyInputs(initialState);
+  const [inputState, handleTxtChange, , changeInput, , setInputstate] =
+    useManyInputs(initialState);
 
   const navigate = useNavigate();
 
@@ -98,7 +92,10 @@ const Profile = () => {
   };
 
   const handleTwitterClick = async () => {
-    window.open(`${API_BASE_URL}/social/twitter`, '_self');
+    if (user?.twitterProfile) {
+      return window.open(`https://twitter.com/${user.twitterProfile.username}`);
+    }
+    window.open(`${API_BASE_URL}/social/twitter?token=${token}`, '_self');
 
     // try {
     //   const res = await makeReq(`/social/twitter`);
@@ -177,10 +174,7 @@ const Profile = () => {
           </CardContent>
         </Card>
         <Card className={`${classes.card} ${classes.accountsCard} `}>
-          <CardHeader
-            title='My Twitter Account'
-            avatar={<TwitterIcon />}
-          />
+          <CardHeader title='My Twitter Account' avatar={<TwitterIcon />} />
           <CardContent className={`${classes.accountsCard}`}>
             <Box
               sx={{
@@ -190,8 +184,7 @@ const Profile = () => {
               }}
             >
               <Typography variant='subtitle2' align='center'>
-                Use the button below to verify and pair your twitter
-                account
+                Use the button below to verify and pair your twitter account
               </Typography>
               <Box mt={2}>
                 <Button
@@ -199,17 +192,14 @@ const Profile = () => {
                   className={`${classes.twtIcon} ${classes.twitterHover}`}
                   onClick={handleTwitterClick}
                 >
-                  Connect Twitter Account
+                  {user?.twitterProfile?.username || 'Connect Twitter Account'}
                 </Button>
               </Box>
             </Box>
           </CardContent>
         </Card>
         <Card className={`${classes.card} ${classes.accountsCard}`}>
-          <CardHeader
-            title='My Instagram Account'
-            avatar={<InstagramIcon />}
-          />
+          <CardHeader title='My Instagram Account' avatar={<InstagramIcon />} />
           <CardContent className={`${classes.accountsCard}`}>
             <Box
               sx={{
@@ -219,8 +209,7 @@ const Profile = () => {
               }}
             >
               <Typography variant='subtitle2' align='center'>
-                Use the button below to verify and pair your instagram
-                account
+                Use the button below to verify and pair your instagram account
               </Typography>
               <Box mt={2}>
                 <Button
@@ -340,11 +329,7 @@ const Profile = () => {
 
                 <Grid item xs={12} sm={12}>
                   <Box mt={2} sx={{ textAlign: 'right' }}>
-                    <Button
-                      type='submit'
-                      variant='contained'
-                      color='secondary'
-                    >
+                    <Button type='submit' variant='contained' color='secondary'>
                       Save
                     </Button>
                   </Box>
@@ -357,9 +342,7 @@ const Profile = () => {
           <CardHeader title='My Payment Settings' avatar />
           <CardContent className={`${classes.defaultCard}`}>
             {/* <Box sx={{ textAlign: 'center', maxWidth: 300, margin: '0 auto' }}> */}
-            <Typography variant='subtitle2'>
-              Credit or Debit Card
-            </Typography>
+            <Typography variant='subtitle2'>Credit or Debit Card</Typography>
             <Box mt={2}>
               <form onSubmit={handleSaveCard} id='cardform'>
                 <Grid container spacing={2}>
@@ -414,10 +397,7 @@ const Profile = () => {
           </CardContent>
         </Card>
         <Link to='#' mt={3} onClick={logoutUser}>
-          <Typography
-            style={{ marginTop: '1rem' }}
-            variant='subtitle2'
-          >
+          <Typography style={{ marginTop: '1rem' }} variant='subtitle2'>
             Log out
           </Typography>
         </Link>

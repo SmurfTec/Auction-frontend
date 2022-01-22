@@ -210,7 +210,7 @@ const HomePage = () => {
                         [customClasses.activePrice]: priceFilter === 'priceAsc',
                       })}
                     >
-                      Price (low-high)
+                      Price (high-low)
                     </Typography>
                     <Divider />
 
@@ -223,7 +223,7 @@ const HomePage = () => {
                         [customClasses.activePrice]: priceFilter !== 'priceAsc',
                       })}
                     >
-                      Price (high-low)
+                      Price (low-high)
                     </Typography>
                   </div>
                 </AccordionDetails>

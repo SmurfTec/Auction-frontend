@@ -14,7 +14,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import useManyInputs from 'hooks/useManyInputs';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { Autocomplete, Skeleton } from '@material-ui/lab';
 import { locations } from 'data';
 import ImageIcon from '@material-ui/icons/Image';
@@ -29,7 +29,6 @@ import SimpleCarousel from 'components/common/SimpleCarousel';
 import PublishAuction from './PublishAuctionDialog';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGaTracker } from 'hooks';
-import ReactGA from 'react-ga';
 
 const Create = ({ isUpdate }) => {
   useGaTracker();
@@ -43,7 +42,7 @@ const Create = ({ isUpdate }) => {
     updateAuction,
   } = useContext(AuctionsContext);
   const [isSubmitting, toggleSubmitting] = useToggleInput(false);
-  const [validating, toggleValidating] = useToggleInput(true);
+  const [validating, toggleValidating, setValidating] = useToggleInput(true);
   const disabled = false;
   const { id } = useParams();
   const navigate = useNavigate();
@@ -57,28 +56,28 @@ const Create = ({ isUpdate }) => {
     categories: [],
     type: '',
     timeLine: 7,
+    twitterTarget: undefined,
+    instagramTarget: undefined,
   };
-  const [
-    inputState,
-    handleTxtChange,
-    ,
-    changeInput,
-    ,
-    setInputstate,
-  ] = useManyInputs(initialState);
+  const [inputState, handleTxtChange, , changeInput, , setInputstate] =
+    useManyInputs(initialState);
   const [disable, setDisable] = React.useState(false);
   //   const [open, setOpen] = React.useState(false);
-  const [isImageUploading, toggleImageUploading] =
-    useToggleInput(false);
-  const [isVideoUploading, toggleVideoUploading] =
-    useToggleInput(false);
+  const [isImageUploading, toggleImageUploading] = useToggleInput(false);
+  const [isVideoUploading, toggleVideoUploading] = useToggleInput(false);
 
   const [isPublishOpen, togglePublishOpen] = useToggleInput(false);
 
   useEffect(() => {
     // * If user wants to update auction , validate if auction is of user
-    if (!isUpdate) return toggleValidating();
-    if (!isLoggedIn || !myAuctions || loadingMyAuctions) return;
+    console.log('isUpdate', isUpdate);
+
+    if (!isUpdate) {
+      console.log('here');
+      return setValidating(false);
+    }
+    if (!isLoggedIn || !myAuctions || loadingMyAuctions)
+      return toggleValidating();
 
     // * Find Auction
     let editAuc = myAuctions.find((el) => el._id === id);
@@ -109,8 +108,7 @@ const Create = ({ isUpdate }) => {
 
     if (isUpdate)
       updateAuction({ ...inputState, status }, id, toggleSubmitting);
-    else
-      createNewAuction({ ...inputState, status }, toggleSubmitting);
+    else createNewAuction({ ...inputState, status }, toggleSubmitting);
   };
 
   const handleTimeline = (e) => {
@@ -171,9 +169,7 @@ const Create = ({ isUpdate }) => {
       }
     } catch (err) {
       toast(
-        err?.response?.data?.message ||
-          err.message ||
-          'Something Went Wrong'
+        err?.response?.data?.message || err.message || 'Something Went Wrong'
       );
       // console.log(`err`, err);
     } finally {
@@ -187,6 +183,11 @@ const Create = ({ isUpdate }) => {
       inputState.images.filter((_, index) => index !== idx)
     );
   };
+
+  const isSpecificAuction = useMemo(
+    () => inputState.type === 'specific',
+    [inputState.type]
+  );
 
   return (
     <Box my={6}>
@@ -208,8 +209,8 @@ const Create = ({ isUpdate }) => {
               <Grid container spacing={3}>
                 {Array(4)
                   .fill()
-                  .map(() => (
-                    <Grid item xs={12} sm={6}>
+                  .map((_, idx) => (
+                    <Grid key={idx} item xs={12} sm={6}>
                       <Skeleton />
                     </Grid>
                   ))}
@@ -256,10 +257,7 @@ const Create = ({ isUpdate }) => {
                     className={classes.selectControl}
                     fulWidth
                   >
-                    <InputLabel
-                      htmlFor='outlined-age-native-simple'
-                      fullWidth
-                    >
+                    <InputLabel htmlFor='outlined-age-native-simple' fullWidth>
                       Location
                     </InputLabel>
                     <Select
@@ -296,10 +294,7 @@ const Create = ({ isUpdate }) => {
                     className={classes.selectControl}
                     fulWidth
                   >
-                    <InputLabel
-                      htmlFor='outlined-age-native-simple'
-                      fullWidth
-                    >
+                    <InputLabel htmlFor='outlined-age-native-simple' fullWidth>
                       TimeLine
                     </InputLabel>
                     <Select
@@ -352,10 +347,7 @@ const Create = ({ isUpdate }) => {
                     className={classes.selectControl}
                     fulWidth
                   >
-                    <InputLabel
-                      htmlFor='outlined-age-native-simple'
-                      fullWidth
-                    >
+                    <InputLabel htmlFor='outlined-age-native-simple' fullWidth>
                       Auction Type
                     </InputLabel>
                     <Select
@@ -366,12 +358,37 @@ const Create = ({ isUpdate }) => {
                       required
                     >
                       <MenuItem value={'specific'}>Specific</MenuItem>
-                      <MenuItem value={'openEnded'}>
-                        Open Ended
-                      </MenuItem>
+                      <MenuItem value={'openEnded'}>Open Ended</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
+
+                {isSpecificAuction && (
+                  <>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        name='twitterTarget'
+                        required
+                        value={inputState.twitterTarget}
+                        label='Twitter Username'
+                        onChange={handleTxtChange}
+                        variant='outlined'
+                        fullWidth
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        name='instagramTarget'
+                        required
+                        value={inputState.instagramTarget}
+                        label='Instagram Username'
+                        onChange={handleTxtChange}
+                        variant='outlined'
+                        fullWidth
+                      />
+                    </Grid>
+                  </>
+                )}
                 <Grid item xs={12} sm={12}>
                   <TextField
                     name='description'
@@ -424,10 +441,7 @@ const Create = ({ isUpdate }) => {
                         )
                       }
                     />
-                    <label
-                      htmlFor='image'
-                      style={{ width: 'fit-content' }}
-                    >
+                    <label htmlFor='image' style={{ width: 'fit-content' }}>
                       {' '}
                       <Button
                         className={classes.uploadBtn}
@@ -437,9 +451,7 @@ const Create = ({ isUpdate }) => {
                         disabled={isImageUploading}
                       >
                         Upload Image
-                        {isImageUploading && (
-                          <CircularProgress size={25} />
-                        )}
+                        {isImageUploading && <CircularProgress size={25} />}
                       </Button>
                     </label>
                   </Box>
@@ -447,10 +459,7 @@ const Create = ({ isUpdate }) => {
                 <Grid item xs={12} sm={6}>
                   <Box mt={2} className={classes.uploadDiv}>
                     {inputState.video ? (
-                      <SimpleCarousel
-                        video={inputState.video}
-                        type='video'
-                      />
+                      <SimpleCarousel video={inputState.video} type='video' />
                     ) : (
                       <span>
                         <ImageIcon fontSize='large' />
@@ -482,10 +491,7 @@ const Create = ({ isUpdate }) => {
                         )
                       }
                     />
-                    <label
-                      htmlFor='video'
-                      style={{ width: 'fit-content' }}
-                    >
+                    <label htmlFor='video' style={{ width: 'fit-content' }}>
                       <Button
                         className={classes.uploadBtn}
                         variant='contained'
@@ -493,9 +499,7 @@ const Create = ({ isUpdate }) => {
                         component='span'
                         disabled={isVideoUploading}
                       >
-                        {isVideoUploading && (
-                          <CircularProgress size={25} />
-                        )}
+                        {isVideoUploading && <CircularProgress size={25} />}
                         Upload Video
                       </Button>
                     </label>

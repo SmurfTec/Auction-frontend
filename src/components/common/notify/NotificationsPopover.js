@@ -59,7 +59,6 @@ const NotificationsPopover = () => {
       (item) => item.isRead === false
     ).length;
 
-    console.log(`unread`, unread);
     return unread;
   }, [localNotifications]);
 
@@ -72,7 +71,6 @@ const NotificationsPopover = () => {
   };
 
   useEffect(() => {
-    console.log(`user?.notifications`, user?.notifications);
     if (!user?.notifications) return;
     setLocalNotifications(user?.notifications);
   }, [user?.notifications]);
