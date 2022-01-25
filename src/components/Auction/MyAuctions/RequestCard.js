@@ -60,8 +60,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RequestCard({
   request,
-  accept,
-  reject,
+  handleAccept,
+  handleReject,
   isEdit,
   auctionId,
 }) {
@@ -144,10 +144,18 @@ export default function RequestCard({
                 size='small'
                 variant='contained'
                 color='primary'
+                data-id={request.claimBid?._id}
+                onClick={handleAccept}
               >
                 Accept
               </Button>
-              <Button size='small' variant='contained' color='secondary'>
+              <Button
+                data-id={request.claimBid?._id}
+                onClick={handleReject}
+                size='small'
+                variant='contained'
+                color='secondary'
+              >
                 Reject
               </Button>
             </Box>

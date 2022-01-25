@@ -10,6 +10,7 @@ import { useGaTracker } from 'hooks';
 import ShareAuction from 'components/common/ShareAuction';
 import ClaimRequestCreater from './ClaimRequestCard';
 import RequestCard from './RequestCard';
+import { handleCatch, makeReq } from 'utils/makeReq';
 const useStyles = makeStyles((theme) => ({
   auctDetailCont: {
     display: 'flex',
@@ -63,7 +64,23 @@ const ClaimRequestsList = ({ requests, filter, setFilter, loading }) => {
       ));
   // * making index as key is high discouraged, but in this case skeletons are
   // * only showing and are NOT getting updated, so we can use index as key here
-
+  const handleReject = async (e) => {
+    const { id } = e.currentTarget.dataset;
+    console.log('id', id);
+    const resData = await makeReq(`/claim-requests/${id}/rejected`);
+    console.log('resData', resData);
+  };
+  const handleAccept = async (e) => {
+    const { id } = e.currentTarget.dataset;
+    console.log('id', id);
+    const resData = await makeReq(
+      `/claim-requests/${id}/accepted`,
+      {},
+      'PATCH'
+    );
+    console.log('resData', resData);
+    window.open(resData.url);
+  };
   return (
     <>
       <Box
@@ -100,6 +117,8 @@ const ClaimRequestsList = ({ requests, filter, setFilter, loading }) => {
                         <RequestCard
                           request={request}
                           auctionId={request.auction?._id}
+                          handleReject={handleReject}
+                          handleAccept={handleAccept}
                         />
                       </div>
                     </div>
