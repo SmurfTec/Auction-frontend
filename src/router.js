@@ -35,14 +35,8 @@ const Router = () => {
         {/* Common Routes / Public Routes */}
         <Route path='/' element={<HomePage />} />
         <Route path='leaderboard' element={<LeaderBoard />} />
-        <Route
-          path='auctionDetails/:id'
-          element={<AuctionDetails />}
-        />
-        <Route
-          path='auctionDetails/:id/edit'
-          element={<Create isUpdate />}
-        />
+        <Route path='auctionDetails/:id' element={<AuctionDetails />} />
+        <Route path='auctionDetails/:id/edit' element={<Create isUpdate />} />
         <Route path='contact-us' element={<ContactUs />} />
         <Route path='privacy' element={<PrivacyPolicy />} />
         <Route path='tos' element={<TermsOfService />} />
@@ -69,11 +63,12 @@ const Router = () => {
             <Route path='chat' element={<Chat />} />
           </>
         ) : (
-          <>
-            <Route path='/register' element={<Register />} />
-            <Route path='/login' element={<Login />} />
-          </>
+          // * As login and other auth pages has redirect logic implemented,
+          // * thats why they are inside common routes
+          <>{/*  */}</>
         )}
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
 
         <Route path='*' element={<Navigate to='/' />} />
       </Route>

@@ -1,5 +1,7 @@
 import {
   Box,
+  Button,
+  CircularProgress,
   Container,
   makeStyles,
   Typography,
@@ -9,7 +11,7 @@ import styles from 'styles/commonStyles';
 import AuctionStepper from './DetailsAucStepper';
 // import AuctionStepper from '../AuctionStepperM';
 import Card from './DetailCard';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import ScrollToTop from 'utils/ScrollToTop';
 import tableStyles from 'styles/TableStyles';
 import { useFetch, useToggleInput } from 'hooks';
@@ -23,6 +25,7 @@ import CreateBidForm from './CreateBidForm';
 import { useGaTracker } from 'hooks';
 import BidTable from './BidTable';
 import { SocketContext } from 'contexts/SocketContext';
+import ClaimMessageDialog from './ClaimMessageDialog';
 
 const useStyles = makeStyles((theme) => ({
   contentCont: {
@@ -53,6 +56,11 @@ const AuctionDetails = () => {
 
   const customClasses = useStyles();
   const tableClasses = tableStyles();
+
+  const [isClaiming, toggleClaiming] = useToggleInput(false);
+  const [isClaimOpen, toggleClaimOpen] = useToggleInput(false);
+  const navigate = useNavigate();
+
   const { id } = useParams();
 
   let {
@@ -72,6 +80,32 @@ const AuctionDetails = () => {
     'auction'
   );
 
+  const handleClaim = () => {
+    // * if user is Not logged in, redirect him
+    if (!isLoggedIn) return navigate(`/login?redirect=/auctionDetails/${id}`);
+
+    toggleClaiming();
+    // * Check if user is verified,
+    if (!user.isVerified) {
+      toggleClaiming();
+      return toast.error(
+        'You must validate your Social Accounts before claim!'
+      );
+    }
+
+    // * Check if user is tagged on specific,
+    if (
+      auction.type === 'specific' &&
+      auction.twitterTarget !== user.twitterProfile?.username
+      // TODO: || instagramTarget === user.instagram?.username)
+    ) {
+      toggleClaiming();
+      return toast.error('Only the person tagged in the auction can claim!');
+    }
+    toggleClaiming();
+    toggleClaimOpen();
+  };
+
   // * Fetch Bid from api
   const [isMakingBid, toggleMakingBid] = useToggleInput(false);
 
@@ -83,7 +117,7 @@ const AuctionDetails = () => {
       const resData = await makeReq(
         `/auctions/${auctionId}/bid`,
         {
-          body: { biddingPrice: amount },
+          body: { biddingPrice: amount, bidBeaten: auction.bids[0]._id },
         },
         'PATCH'
       );
@@ -103,6 +137,27 @@ const AuctionDetails = () => {
     addToWatchlist(id);
   };
 
+  const createAuctionClaim = async (message) => {
+    toggleClaiming();
+    try {
+      const resData = await makeReq(
+        `/auctions/${id}/${auction.winningBid}/claim`,
+        {
+          body: {
+            message,
+          },
+        },
+        'POST'
+      );
+      console.log('resData', resData);
+      toast.success('Claim Sent Successfully!');
+    } catch (err) {
+      handleCatch(err);
+    } finally {
+      toggleClaiming();
+    }
+  };
+
   useEffect(() => {
     if (!socket || !isLoggedIn) return;
     socket.on('newBid', ({ updatedAuction }) => {
@@ -112,6 +167,7 @@ const AuctionDetails = () => {
   }, [socket, isLoggedIn]);
 
   const minBidAmount = useMemo(() => {
+    console.log('auction', auction);
     if (!auction) return 0;
 
     // * for 1st bid , min amount is auction's startingPricce
@@ -153,85 +209,69 @@ const AuctionDetails = () => {
               >
                 <AuctionStepper auction={auction} />
                 <div className={globalClasses.content}>
-                  <Card
-                    auction={auction}
-                    handleBookmark={handleBookmark}
-                  />
+                  <Card auction={auction} handleBookmark={handleBookmark} />
                 </div>
               </div>
             </div>
-            {/* <div className={`${custom.auctDetailCont}`}>
-              <AuctionStepper auction={auction} />
-              <div className={globalClasses.content}>
-                <Card auction={auction} />
-              </div>
-            </div> */}
 
-            <Box mt={5} className={`${customClasses.histCard}`}>
-              <Box
-                sx={{ flexBasis: '60%' }}
-                className={`${customClasses.contentCont}`}
-              >
-                <Typography variant='h5'>Bidding Info</Typography>
-                {auction.bids?.length === 0 ? (
-                  <Typography variant='body1' align='center'>
-                    Be the first one to make bid
-                  </Typography>
-                ) : (
-                  <BidTable
-                    globalClasses={globalClasses}
-                    tableClasses={tableClasses}
-                    bids={auction.bids}
-                    isAuctionOver={isAuctionOver}
-                    isMyAuction={isMyAuction}
-                    // isAuctionOver={true}
-                    // isMyAuction={true}
-                  />
-                )}
+            {/* If Auction is archived, dont show bids and bidForm */}
+            {auction?.status === 'published' && (
+              <Box mt={5} className={`${customClasses.histCard}`}>
+                <Box
+                  sx={{ flexBasis: '60%' }}
+                  className={`${customClasses.contentCont}`}
+                >
+                  <Typography variant='h5'>Bidding Info</Typography>
+                  {auction.bids?.length === 0 ? (
+                    <Typography variant='body1' align='center'>
+                      Be the first one to make bid
+                    </Typography>
+                  ) : (
+                    <BidTable
+                      globalClasses={globalClasses}
+                      tableClasses={tableClasses}
+                      bids={auction.bids}
+                      isAuctionOver={isAuctionOver}
+                      isMyAuction={isMyAuction}
+                      // isAuctionOver={true}
+                      // isMyAuction={true}
+                    />
+                  )}
+                </Box>
+                <CreateBidForm
+                  createBid={createBid}
+                  isMakingBid={isMakingBid}
+                  customClasses={customClasses}
+                  globalClasses={globalClasses}
+                  auctionId={auction._id}
+                  startingPrice={minBidAmount}
+                />
               </Box>
-              <CreateBidForm
-                createBid={createBid}
-                isMakingBid={isMakingBid}
-                customClasses={customClasses}
-                globalClasses={globalClasses}
-                auctionId={auction._id}
-                startingPrice={minBidAmount}
-              />
-            </Box>
-            {/* <Box
-              display='flex'
-              mt={3}
-              sx={{
-                columnGap: '2em',
-                alignItems: 'center',
-                justifyContent: 'end',
-              }}
-            >
-              <Typography variant='subtitle1'>
-                Interested ? Place a bid
-              </Typography>
-              <TextField
-                name='biddingAmount'
-                placeholder='Amount'
-                color='primary'
-                type='number'
-                size='small'
-              />
-            </Box> */}
-            {/* <Box mt={3} mb={7} sx={{ textAlign: 'right' }}>
-              <Button
-                variant='contained'
-                color='primary'
-                onClick={handleSubmit}
-              >
-                BID
-              </Button>
-            </Box> */}
+            )}
+
+            {/* If Auction is archived and is specific, then show Claim Button*/}
+            {auction.status === 'archived' && auction.type === 'specific' && (
+              <Box style={{ marginTop: '1rem', textAlign: 'right' }}>
+                <Button
+                  disabled={isClaiming}
+                  variant='contained'
+                  color='primary'
+                  type='submit'
+                  onClick={handleClaim}
+                >
+                  Claim Auction
+                  {isClaiming && <CircularProgress size={25} />}
+                </Button>{' '}
+                <ClaimMessageDialog
+                  open={isClaimOpen}
+                  toggleDialog={toggleClaimOpen}
+                  success={createAuctionClaim}
+                />
+              </Box>
+            )}
           </section>
         ) : (
-          <Typography variant='subtitle1'>
-            Auction Not Found
-          </Typography>
+          <Typography variant='subtitle1'>Auction Not Found</Typography>
         )}
       </Container>
     </>

@@ -6,7 +6,7 @@ import { Box, Button, Typography } from '@material-ui/core';
 // import { auctions } from 'data';
 import styles from 'styles/heroCarouselStyles';
 import { AuctionsContext } from 'contexts/AuctionsContext';
-import { Link } from 'react-router-dom';
+
 const HeroCarousel = () => {
   const { auctions } = useContext(AuctionsContext);
   const classes = styles();
@@ -34,42 +34,41 @@ const HeroCarousel = () => {
         </Typography>
       </div>
 
-      {auctions &&
-        auctions.map((auc) => (
-          <div className={classes.wrapper} key={auc._id}>
-            <span />
-            <img src={auctionHero} alt={`${auc.title}`} />
-            <div className={classes.aucItemContainer}>
-              {/* <div
+      {auctions?.slice(0, 10)?.map((auc) => (
+        <div className={classes.wrapper} key={auc._id}>
+          <span />
+          <img src={auctionHero} alt={`${auc.title}`} />
+          <div className={classes.aucItemContainer}>
+            {/* <div
                 className={classes.aucImg}
                 style={{
                   background: `white url(${auc.images?.[0]}) center top no-repeat`,
                   backgroundSize: 'contain',
                 }}
               /> */}
-              <div className={classes.heroDesc}>
-                <Typography variant='h2' align='left'>
-                  {auc.title}
+            <div className={classes.heroDesc}>
+              <Typography variant='h2' align='left'>
+                {auc.title}
+              </Typography>
+              <Typography variant='h4' align='left'>
+                {auc.price}
+              </Typography>
+              <Box
+                pt={1}
+                sx={{
+                  overflow: 'hidden',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: 'vertical',
+                }}
+              >
+                <Typography variant='subtitle1' align='left'>
+                  {auc.description}
                 </Typography>
-                <Typography variant='h4' align='left'>
-                  {auc.price}
-                </Typography>
-                <Box
-                  pt={1}
-                  sx={{
-                    overflow: 'hidden',
-                    display: '-webkit-box',
-                    WebkitLineClamp: 3,
-                    WebkitBoxOrient: 'vertical',
-                  }}
-                >
-                  <Typography variant='subtitle1' align='left'>
-                    {auc.description}
-                  </Typography>
-                </Box>
-              </div>
+              </Box>
             </div>
-            {/* <div className='legend'>
+          </div>
+          {/* <div className='legend'>
               <Typography variant='h2' className={classes.heroAuctContent}>
                 Enhance your auction with online bidding
               </Typography>
@@ -78,8 +77,8 @@ const HeroCarousel = () => {
               className={classes.right}
               style={{ backgroundImage: `url(${auc.img})` }}
             ></div> */}
-          </div>
-        ))}
+        </div>
+      ))}
       {/* <div>
         <img src={auctionmg} alt='Legend1' />
 

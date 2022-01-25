@@ -155,11 +155,6 @@ const HomePage = () => {
     setLocationFilter(filter);
   };
 
-  const handleShare = (e) => {
-    // const { item } = e.currentTarget.dataset;
-    // console.log(`item`, item);
-  };
-
   return (
     <>
       <section>

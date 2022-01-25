@@ -7,9 +7,10 @@ import {
   Typography,
   CircularProgress,
 } from '@material-ui/core';
-import { useTextInput } from 'hooks';
+import { useTextInput, useToggleInput } from 'hooks';
 import { AuthContext } from 'contexts/AuthContext';
 import { useGaTracker } from 'hooks';
+import { useNavigate } from 'react-router-dom';
 const CreateBidForm = ({
   createBid,
   isMakingBid,
@@ -20,8 +21,7 @@ const CreateBidForm = ({
 }) => {
   useGaTracker();
   const { isLoggedIn } = useContext(AuthContext);
-  const [biddingAmount, handleAmountChange, resetAmount] =
-    useTextInput(0);
+  const [biddingAmount, handleAmountChange, resetAmount] = useTextInput(0);
 
   const handleAddBid = (e) => {
     e.preventDefault();
@@ -30,10 +30,7 @@ const CreateBidForm = ({
   if (!isLoggedIn) return <Box sx={{ flexBasis: '40%' }}></Box>;
 
   return (
-    <Box
-      sx={{ flexBasis: '40%' }}
-      className={`${customClasses.contentCont}`}
-    >
+    <Box sx={{ flexBasis: '40%' }} className={`${customClasses.contentCont}`}>
       <Typography variant='h5'>Bid Now</Typography>
 
       <Box mt={2}>

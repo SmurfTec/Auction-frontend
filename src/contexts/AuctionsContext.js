@@ -95,7 +95,7 @@ export const AuctionsProvider = ({ children }) => {
 
     setPublishedAuctions(auctions.filter((el) => el.status === 'published'));
     setTopAuctions(auctions.filter((el) => el.status === 'claimed'));
-    setUnClaimedAuctions(auctions.filter((el) => el.status === 'archieved'));
+    setUnClaimedAuctions(auctions.filter((el) => el.status === 'archived'));
   }, [auctions, loading]);
 
   // * CRUD Operations

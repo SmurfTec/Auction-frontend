@@ -5,18 +5,13 @@ import { useGaTracker } from 'hooks';
 
 const Completed = () => {
   useGaTracker();
-  const { topAuctions, loading, user } =
-    React.useContext(AuctionsContext);
+  const { topAuctions, loading, user } = React.useContext(AuctionsContext);
   const [data, setdata] = React.useState([]);
 
   useEffect(() => {
-    if (loading || !topAuctions) return;
+    if (loading || !topAuctions || !user) return;
 
-    setdata(
-      topAuctions.filter(
-        (el) => el.winningBig?.user?._id === user._id
-      )
-    );
+    setdata(topAuctions.filter((el) => el.winningBig?.user?._id === user?._id));
   }, [topAuctions, loading]);
 
   return <AuctionList auctions={data} loading={loading} />;

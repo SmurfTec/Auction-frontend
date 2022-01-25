@@ -12,13 +12,12 @@ const Unclaimed = () => {
   useEffect(() => {
     // console.log(`unClaimedAuctions`, unClaimedAuctions);
     // console.log(`loading`, loading);
-    if (loading || !unClaimedAuctions) return;
+    if (loading || !unClaimedAuctions || !user) return;
 
     setdata(
       unClaimedAuctions.filter(
         (el) =>
-          el.status === 'archived' &&
-          el.winningBig?.user?._id === user._id
+          el.status === 'archived' && el.winningBig?.user?._id === user._id
       )
     );
 

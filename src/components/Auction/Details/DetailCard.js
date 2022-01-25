@@ -61,21 +61,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FeaturedPost({
-  auction,
-  handleBookmark,
-  bookmaking,
-}) {
+export default function FeaturedPost({ auction, handleBookmark, bookmaking }) {
   useGaTracker();
   const classes = useStyles();
 
   const timeLeft = useMemo(() => {
     if (!auction) return;
-    let countdown = calculateCountdown(auction.timeLine);
+    let countdown = calculateCountdown(
+      auction.status === 'published' ? auction.timeLine : auction.claimExpiry
+    );
 
     if (countdown.days === 0)
-      return `${countdown.days} days ${countdown.hours} hours`;
-    else return `${countdown.hours} hours ${countdown.min} mins`;
+      return `${countdown.hours} hours ${countdown.min} mins`;
+    else return `${countdown.days} days ${countdown.hours} hours`;
   }, [auction]);
   if (!auction) return <div></div>;
   const {
@@ -83,16 +81,15 @@ export default function FeaturedPost({
     title,
     location,
     startingPrice,
+    winningPrice,
     user,
     createdAt,
     description,
     categories,
+    status,
+    timeLine,
+    claimExpiry,
   } = auction;
-
-  const handleShare = (e) => {
-    const { item } = e.currentTarget.dataset;
-    // console.log(`item`, item);
-  };
 
   return (
     <>
@@ -118,7 +115,7 @@ export default function FeaturedPost({
                   {title}
                 </Typography>
                 <Typography variant='h3' color='textSecondary'>
-                  $ {startingPrice}
+                  $ {status === 'published' ? startingPrice : winningPrice}
                 </Typography>
 
                 <Box
@@ -133,11 +130,20 @@ export default function FeaturedPost({
                     label={`At : ${location}`}
                     color='primary'
                   />
-                  <Chip
-                    size='small'
-                    label={`Time Left : ${timeLeft}`}
-                    color='primary'
-                  />
+                  {status === 'published' && (
+                    <Chip
+                      size='small'
+                      label={`Time Left : ${timeLeft}`}
+                      color='primary'
+                    />
+                  )}
+                  {['archived', 'unClaimed', 'claimed'].includes(status) && (
+                    <Chip
+                      size='small'
+                      label={`Claim Before : ${timeLeft}`}
+                      color='primary'
+                    />
+                  )}
                 </Box>
               </Box>
               <Box
@@ -206,8 +212,7 @@ export default function FeaturedPost({
                 Created By : {user?.name}
               </Typography>
               <Typography variant='body1' color='textSecondary'>
-                Created At :{' '}
-                {new Date(createdAt).toLocaleDateString()}
+                Created At : {new Date(createdAt).toLocaleDateString()}
               </Typography>
             </div>
           </CardContent>
