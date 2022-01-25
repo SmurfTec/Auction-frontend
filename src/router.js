@@ -22,6 +22,7 @@ import { AuthContext } from 'contexts/AuthContext';
 import CommonLayout from 'components/layouts/CommonLayout';
 import Chat from 'components/Chat';
 import { useGaTracker } from 'hooks';
+import ClaimRequests from 'components/Auction/MyAuctions/ClaimedRequests';
 
 const Router = () => {
   useGaTracker();
@@ -57,6 +58,7 @@ const Router = () => {
               />
               <Route path='unclaimed' element={<Unclaimed />} />
               <Route path='completed' element={<Completed />} />
+              <Route path='claim-requests' element={<ClaimRequests />} />
             </Route>
             <Route path='createAuction' element={<Create />} />
             <Route path='account' element={<Profile />} />

@@ -44,6 +44,28 @@ export const AuctionsProvider = ({ children }) => {
   const [watchlist, setWatchlist] = useState([]);
   const [loadingWatchlist, toggleLoadingWatchlist] = useToggleInput(true);
 
+  const [
+    claimRequestSent,
+    setClaimRequestSent,
+    pushClaimRequestSent,
+    ,
+    updateClaimRequestSentById,
+    // removeClaimRequestSent,
+    // clearClaimRequestSent,
+  ] = useArray([], '_id');
+
+  const [
+    claimRequestReceived,
+    setClaimRequestReceived,
+    pushClaimRequestReceived,
+    ,
+    updateClaimRequestReceivedById,
+    // removeClaimRequestReceived,
+    // clearClaimRequestReceived,
+  ] = useArray([], '_id');
+  const [loadingClaimRequests, toggleLoadingClaimRequests] =
+    useToggleInput(true);
+
   const fetchMyAuctions = async () => {
     try {
       const resData = await makeReq('/auctions/myauctions');
@@ -53,6 +75,18 @@ export const AuctionsProvider = ({ children }) => {
       // console.log(`err`, err)
     } finally {
       toggleLoadingMyAuctions();
+    }
+  };
+  const fetchClaimRequests = async () => {
+    try {
+      const resData = await makeReq('/claim-requests/me');
+      console.log(`resData`, resData);
+      setClaimRequestSent(resData.claimRequestsSent.data);
+      setClaimRequestReceived(resData.claimRequestsReceived.data);
+    } catch (err) {
+      // console.log(`err`, err)
+    } finally {
+      toggleLoadingClaimRequests();
     }
   };
   const fetchAuctions = async () => {
@@ -84,7 +118,7 @@ export const AuctionsProvider = ({ children }) => {
 
   useEffect(() => {
     if (!isLoggedIn) return;
-
+    fetchClaimRequests();
     fetchMyAuctions();
     fetchWatchlist();
   }, [isLoggedIn]);
@@ -186,6 +220,9 @@ export const AuctionsProvider = ({ children }) => {
         unClaimedAuctions,
         updateAuction,
         updateAuctionById,
+        claimRequestSent,
+        claimRequestReceived,
+        loadingClaimRequests,
       }}
     >
       {children}

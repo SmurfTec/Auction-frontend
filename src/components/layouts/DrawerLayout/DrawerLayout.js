@@ -9,14 +9,14 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { Box } from '@material-ui/core';
 import SideMenu from './SideMenu';
 import MHidden from './MHidden';
 import SpeakerNotesOffIcon from '@material-ui/icons/SpeakerNotesOff';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import useStyles from 'styles/DrawerStyles';
-import { HourglassEmpty, Pause, Public } from '@material-ui/icons';
+import { EmojiPeople, HourglassEmpty, Pause, Public } from '@material-ui/icons';
 import { useGaTracker } from 'hooks';
 
 const drawerList = [
@@ -50,12 +50,19 @@ const drawerList = [
     link: 'completed',
     icon: <AssignmentTurnedInIcon />,
   },
+  {
+    id: 1231314,
+    title: 'Claim Requests',
+    link: 'claim-requests',
+    icon: <EmojiPeople />,
+  },
 ];
 
 const DrawerLayout = () => {
   useGaTracker();
   const classes = useStyles();
   const theme = useTheme();
+  const location = useLocation();
 
   const [open, setOpen] = React.useState(false);
 
@@ -120,7 +127,11 @@ const DrawerLayout = () => {
           })}
         >
           <Box mt={2} mb={3}>
-            <Typography variant='h5'>My Auctions</Typography>
+            <Typography variant='h5'>
+              {location.pathname.includes('claim-requests')
+                ? 'Claim Requests'
+                : 'My Auctions'}
+            </Typography>
           </Box>
           <Outlet />
         </main>
