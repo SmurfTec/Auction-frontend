@@ -80,15 +80,16 @@ const ShareAuction = ({ auctionId }) => {
           marginLeft: 'auto',
           color: '#000',
         }}
+        onClick={toggleDialogOpen}
       >
-        <ShareIcon onClick={toggleDialogOpen} />
+        <ShareIcon />
         {/* {ind + 1} */}
-        <ShareDialog
-          open={isDialogOpen}
-          toggleDialog={toggleDialogOpen}
-          auctionId={auctionId}
-        />
       </IconButton>
+      <ShareDialog
+        open={isDialogOpen}
+        toggleDialog={toggleDialogOpen}
+        auctionId={auctionId}
+      />
     </Box>
   );
 };

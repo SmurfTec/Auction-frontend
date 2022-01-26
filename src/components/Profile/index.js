@@ -24,6 +24,7 @@ import { AuthContext } from 'contexts/AuthContext';
 import { makeReq, handleCatch, API_BASE_URL } from 'utils/makeReq';
 import InstagramLogin from 'react-instagram-oauth';
 import { useGaTracker } from 'hooks';
+import { toast } from 'react-toastify';
 
 const Profile = () => {
   useGaTracker();
@@ -119,6 +120,14 @@ const Profile = () => {
   const handleInstaCallback = (err, data) => {
     console.log(`err`, err);
     console.log(`data`, data);
+  };
+
+  const handleConnectAccount = async () => {
+    if (!user.isVerified)
+      return toast.error('Only verified users can attach account');
+
+    const resData = await makeReq(`/users/account-onboard`);
+    window.open(resData.url.url);
   };
 
   return (
@@ -342,9 +351,16 @@ const Profile = () => {
           <CardHeader title='My Payment Settings' avatar />
           <CardContent className={`${classes.defaultCard}`}>
             {/* <Box sx={{ textAlign: 'center', maxWidth: 300, margin: '0 auto' }}> */}
-            <Typography variant='subtitle2'>Credit or Debit Card</Typography>
+            <Button
+              onClick={handleConnectAccount}
+              variant='contained'
+              color='secondary'
+            >
+              Connect Account
+            </Button>
+            {/* <Typography variant='subtitle2'>Credit or Debit Card</Typography> */}
             <Box mt={2}>
-              <form onSubmit={handleSaveCard} id='cardform'>
+              {/* <form onSubmit={handleSaveCard} id='cardform'>
                 <Grid container spacing={2}>
                   <Grid item xs={10} sm={5}>
                     <TextField
@@ -391,7 +407,7 @@ const Profile = () => {
                     </Box>
                   </Grid>
                 </Grid>
-              </form>
+              </form> */}
             </Box>
             {/* </Box> */}
           </CardContent>
