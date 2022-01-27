@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { makeReq, handleCatch } from 'utils/makeReq';
 
@@ -10,7 +9,6 @@ export const AuthContext = React.createContext();
 export const AuthProvider = ({ children }) => {
   // let history = useHistory();
   let tokenLocal;
-  const navigate = useNavigate();
 
   try {
     tokenLocal = window.localStorage.getItem(LOCALSTORAGE_TOKEN_KEY);

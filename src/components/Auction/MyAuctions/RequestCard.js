@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
     columnGap: 10,
   },
   cardIntroBox: {
+    minHeight: '5rem',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
@@ -106,21 +107,22 @@ export default function RequestCard({
       <Card className={customClasses.card}>
         <div className={customClasses.cardDetails}>
           <CardContent dividers>
+            <Button
+              onClick={handleClick}
+              size='small'
+              variant='contained'
+              color='secondary'
+              style={{ float: 'right' }}
+            >
+              View Auction
+            </Button>
             <Box className={customClasses.cardIntroBox}>
               <Box className={customClasses.cardIntro}>
                 <Typography component='h2' variant='body1'>
                   {message}
                 </Typography>
               </Box>
-            </Box>{' '}
-            <Button
-              onClick={handleClick}
-              size='small'
-              variant='contained'
-              color='secondary'
-            >
-              View Auction
-            </Button>
+            </Box>
           </CardContent>
         </div>
 
@@ -129,7 +131,7 @@ export default function RequestCard({
             justifyContent: 'space-between',
           }}
         >
-          <Box display='flex' flexDirection='column'>
+          <Box display='flex'>
             <Chip
               size='small'
               label={formatDistanceToNow(new Date(createdAt))}

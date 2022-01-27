@@ -25,6 +25,7 @@ export const AuctionsProvider = ({ children }) => {
   // * On different pages , e.g leaderboard has "claimed" status auctions ,
   // * homepage has "published" and so on.
   // * Instead of fitlering auctions in all pages, I have making states here and applying filtering here
+
   const [publishedAuctions, setPublishedAuctions] = useState([]);
   const [topAuctions, setTopAuctions] = useState([]); // $ for leaderboard
   const [unClaimedAuctions, setUnClaimedAuctions] = useState([]);
@@ -39,10 +40,12 @@ export const AuctionsProvider = ({ children }) => {
     // removeMyAuction,
     // clearMyAuctions,
   ] = useArray([], '_id');
-  const [loadingMyAuctions, toggleLoadingMyAuctions] = useToggleInput(true);
+  const [loadingMyAuctions, toggleLoadingMyAuctions] =
+    useToggleInput(true);
 
   const [watchlist, setWatchlist] = useState([]);
-  const [loadingWatchlist, toggleLoadingWatchlist] = useToggleInput(true);
+  const [loadingWatchlist, toggleLoadingWatchlist] =
+    useToggleInput(true);
 
   const [
     claimRequestSent,
@@ -80,7 +83,7 @@ export const AuctionsProvider = ({ children }) => {
   const fetchClaimRequests = async () => {
     try {
       const resData = await makeReq('/claim-requests/me');
-      console.log(`resData`, resData);
+      console.log(`resData-claimRequests`, resData);
       setClaimRequestSent(resData.claimRequestsSent.data);
       setClaimRequestReceived(resData.claimRequestsReceived.data);
     } catch (err) {
@@ -127,9 +130,13 @@ export const AuctionsProvider = ({ children }) => {
   useEffect(() => {
     if (loading || !auctions) return;
 
-    setPublishedAuctions(auctions.filter((el) => el.status === 'published'));
+    setPublishedAuctions(
+      auctions.filter((el) => el.status === 'published')
+    );
     setTopAuctions(auctions.filter((el) => el.status === 'claimed'));
-    setUnClaimedAuctions(auctions.filter((el) => el.status === 'archived'));
+    setUnClaimedAuctions(
+      auctions.filter((el) => el.status === 'archived')
+    );
   }, [auctions, loading]);
 
   // * CRUD Operations
@@ -151,7 +158,8 @@ export const AuctionsProvider = ({ children }) => {
       // ! Auction will go into userAuctions
       pushMyAuction(resData.auction);
       // ! Auction will go into auctions if its status is published
-      if (resData.auction.status === 'published') pushAuction(resData.auction);
+      if (resData.auction.status === 'published')
+        pushAuction(resData.auction);
       navigate(
         resData.auction.status === 'inProgress'
           ? '/myauctions/unpublished'
@@ -176,7 +184,8 @@ export const AuctionsProvider = ({ children }) => {
       toast.success('Auction Updated Successfully!');
 
       // ! Auction will go into auctions if its status is published
-      if (resData.auction.status === 'published') pushAuction(resData.auction);
+      if (resData.auction.status === 'published')
+        pushAuction(resData.auction);
       navigate(
         resData.auction.status === 'inProgress'
           ? '/myauctions/unpublished'
@@ -192,7 +201,11 @@ export const AuctionsProvider = ({ children }) => {
   // * Watchlist related
   const addToWatchlist = async (id) => {
     try {
-      const resData = await makeReq(`/auctions/${id}/watchlist`, {}, 'POST');
+      const resData = await makeReq(
+        `/auctions/${id}/watchlist`,
+        {},
+        'POST'
+      );
       toast.success('Added to watchlist successfully!');
       setWatchlist((st) => [...st, resData.watchlist]);
     } catch (err) {

@@ -1,4 +1,10 @@
-import { Box, IconButton, makeStyles, Typography } from '@material-ui/core';
+import {
+  Box,
+  IconButton,
+  makeStyles,
+  Button,
+  Typography,
+} from '@material-ui/core';
 import React from 'react';
 import Card from 'components/Auction/Card';
 import AuctionStepper from '../AuctionStepper';
@@ -11,6 +17,7 @@ import ShareAuction from 'components/common/ShareAuction';
 import ClaimRequestCreater from './ClaimRequestCard';
 import RequestCard from './RequestCard';
 import { handleCatch, makeReq } from 'utils/makeReq';
+
 const useStyles = makeStyles((theme) => ({
   auctDetailCont: {
     display: 'flex',
@@ -35,7 +42,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ClaimRequestsList = ({ requests, filter, setFilter, loading }) => {
+const ClaimRequestsList = ({
+  requests,
+  filter,
+  setFilter,
+  loading,
+}) => {
   useGaTracker();
   const globalClasses = styles();
 
@@ -70,6 +82,7 @@ const ClaimRequestsList = ({ requests, filter, setFilter, loading }) => {
     const resData = await makeReq(`/claim-requests/${id}/rejected`);
     console.log('resData', resData);
   };
+
   const handleAccept = async (e) => {
     const { id } = e.currentTarget.dataset;
     console.log('id', id);
@@ -81,6 +94,7 @@ const ClaimRequestsList = ({ requests, filter, setFilter, loading }) => {
     console.log('resData', resData);
     window.open(resData.url);
   };
+
   return (
     <>
       <Box
@@ -135,7 +149,9 @@ const ClaimRequestsList = ({ requests, filter, setFilter, loading }) => {
           </>
         ) : (
           <Box mt={4}>
-            <Typography variant='subtitle1'>No Record found</Typography>
+            <Typography variant='subtitle1'>
+              No Record found
+            </Typography>
           </Box>
         )}
       </Box>
