@@ -1,217 +1,169 @@
-import React, { useState, useContext, useEffect } from 'react';
-import {
-  Button,
-  Grid,
-  Typography,
-  CircularProgress,
-  TextField,
-  Checkbox,
-} from '@material-ui/core';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import Box from '@material-ui/core/Box';
-import useManyInputs from 'hooks/useManyInputs';
-import globalStyles from 'styles/commonStyles';
-import { useStyles as formStyles } from 'styles/FormLayoutStyles';
-import { API_BASE_URL, handleCatch } from 'utils/makeReq';
-import axios from 'axios';
+import React, { useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const SignUp = () => {
-  const { isLoggedIn, signInUser } = { a: '' };
-  const classes = globalStyles();
-  const formClasses = formStyles();
+import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
+import CheckButton from 'react-validation/build/button';
+import { isEmail } from 'validator';
 
-  const navigate = useNavigate();
-  const location = useLocation();
+import { register } from '../../store/actions/authActions';
 
-  const initialState = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    passwordConfirm: '',
-    privacy: false,
+const required = (value) => {
+  if (!value) {
+    return (
+      <div className='alert alert-danger' role='alert'>
+        This field is required!
+      </div>
+    );
+  }
+};
+
+const validEmail = (value) => {
+  if (!isEmail(value)) {
+    return (
+      <div className='alert alert-danger' role='alert'>
+        This is not a valid email.
+      </div>
+    );
+  }
+};
+
+const vusername = (value) => {
+  if (value.length < 3 || value.length > 20) {
+    return (
+      <div className='alert alert-danger' role='alert'>
+        The username must be between 3 and 20 characters.
+      </div>
+    );
+  }
+};
+
+const vpassword = (value) => {
+  if (value.length < 6 || value.length > 40) {
+    return (
+      <div className='alert alert-danger' role='alert'>
+        The password must be between 6 and 40 characters.
+      </div>
+    );
+  }
+};
+
+const Register = () => {
+  const form = useRef();
+  const checkBtn = useRef();
+
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [successful, setSuccessful] = useState(false);
+
+  const { message } = useSelector((state) => state.message);
+  const dispatch = useDispatch();
+
+  const onChangeUsername = (e) => {
+    const username = e.target.value;
+    setUsername(username);
   };
 
-  const [
-    inputState,
-    handleTxtChange,
-    handleToggleChange,
-    changeInput,
-    resetState,
-    setInputstate,
-  ] = useManyInputs(initialState);
+  const onChangeEmail = (e) => {
+    const email = e.target.value;
+    setEmail(email);
+  };
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  };
 
-  let redirect = location.search ? location.search.split('=')[1] : '/';
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate(redirect);
-    }
-  }, [isLoggedIn, navigate, redirect]);
-
-  const onFormSubmit = async (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      if (inputState.password !== inputState.passwordConfirm) {
-        return setError('Passwords do not match');
-      } else {
-        const res = await axios.post(`${API_BASE_URL}/auth/signup`, {
-          ...inputState,
-        });
-        // console.log(`res`, res);
 
-        signInUser(res.data.token, res.data.user);
-        resetState();
-      }
-    } catch (error) {
-      handleCatch(error);
-    } finally {
-      setLoading(false);
+    setSuccessful(false);
+
+    form.current.validateAll();
+
+    if (checkBtn.current.context._errors.length === 0) {
+      dispatch(register(username, email, password))
+        .then(() => {
+          setSuccessful(true);
+        })
+        .catch(() => {
+          setSuccessful(false);
+        });
     }
   };
 
   return (
-    <div className={formClasses.mainContainer}>
-      <div className={formClasses.formSelection}>
-        <NavLink to='/login'>
-          <Typography variant='subtitle1'>LOGIN</Typography>
-        </NavLink>
-        <NavLink to='/register'>
-          <Typography variant='subtitle1'>JOIN</Typography>
-        </NavLink>
-      </div>
-      <div className={formClasses.formContent}>
-        <Typography
-          vaiant='subtitle2'
-          sx={{ color: 'textSecondary' }}
-          gutterBottom
-          align='center'
-        >
-          Become a member
-        </Typography>
-        <form onSubmit={onFormSubmit}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name='firstName'
-                value={inputState.firstName}
-                label='First Name'
-                onChange={handleTxtChange}
-                variant='outlined'
-                fullWidth
-                size='small'
-                InputProps={{ required: true }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name='lastName'
-                value={inputState.lastName}
-                label='Last Name'
-                onChange={handleTxtChange}
-                variant='outlined'
-                fullWidth
-                InputProps={{ required: true }}
-                size='small'
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                name='email'
-                value={inputState.email}
-                label='Email'
-                type='email'
-                onChange={handleTxtChange}
-                variant='outlined'
-                size='small'
-                InputProps={{ required: true }}
-                fullWidth
-              />
-            </Grid>
+    <div className='col-md-12'>
+      <div className='card card-container'>
+        <img
+          src='//ssl.gstatic.com/accounts/ui/avatar_2x.png'
+          alt='profile-img'
+          className='profile-img-card'
+        />
 
-            <Grid item xs={12}>
-              <TextField
-                name='password'
-                value={inputState.password}
-                label='Password'
-                type='password'
-                onChange={handleTxtChange}
-                variant='outlined'
-                fullWidth
-                size='small'
-                InputProps={{ required: true }}
-                inputProps={{ min: 8 }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                name='passwordConfirm'
-                value={inputState.passwordConfirm}
-                label='Confirm Password'
-                type='password'
-                onChange={handleTxtChange}
-                variant='outlined'
-                fullWidth
-                size='small'
-                InputProps={{ required: true }}
-                inputProps={{ min: 8 }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <div className={classes.textWithlink}>
-                <Checkbox
-                  color='primary'
-                  name='privacy'
-                  checked={inputState.privacy}
-                  onChange={(e) => handleToggleChange(e)}
-                  required
+        <Form onSubmit={handleRegister} ref={form}>
+          {!successful && (
+            <div>
+              <div className='form-group'>
+                <label htmlFor='username'>Username</label>
+                <Input
+                  type='text'
+                  className='form-control'
+                  name='username'
+                  value={username}
+                  onChange={onChangeUsername}
+                  validations={[required, vusername]}
                 />
-                <Typography variant='subtitle2'>
-                  Agree to the {` `}
-                  <Link to='/tos'>terms of service</Link>
-                  {` `} and {` `}
-                  <Link to='/privacy'>privacy</Link> {` `}
-                </Typography>
               </div>
-            </Grid>
-            <Grid item xs={6}>
-              <Button
-                type='submit'
-                fullWidth
-                variant='contained'
-                color='primary'
-                disabled={loading}
+
+              <div className='form-group'>
+                <label htmlFor='email'>Email</label>
+                <Input
+                  type='text'
+                  className='form-control'
+                  name='email'
+                  value={email}
+                  onChange={onChangeEmail}
+                  validations={[required, validEmail]}
+                />
+              </div>
+
+              <div className='form-group'>
+                <label htmlFor='password'>Password</label>
+                <Input
+                  type='password'
+                  className='form-control'
+                  name='password'
+                  value={password}
+                  onChange={onChangePassword}
+                  validations={[required, vpassword]}
+                />
+              </div>
+
+              <div className='form-group'>
+                <button className='btn btn-primary btn-block'>Sign Up</button>
+              </div>
+            </div>
+          )}
+
+          {message && (
+            <div className='form-group'>
+              <div
+                className={
+                  successful ? 'alert alert-success' : 'alert alert-danger'
+                }
+                role='alert'
               >
-                {loading ? (
-                  <CircularProgress size={20} color='inherit' />
-                ) : (
-                  'Sign Up'
-                )}
-              </Button>
-            </Grid>
-            <Grid item xs={6}>
-              <Box
-                className={classes.textWithlink}
-                sx={{
-                  columnGap: 4,
-                  height: '100%',
-                }}
-              >
-                <Typography variant='body2'>
-                  already have account?{` `}
-                  <Link to='/login'>Login</Link>
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        </form>
+                {message}
+              </div>
+            </div>
+          )}
+          <CheckButton style={{ display: 'none' }} ref={checkBtn} />
+        </Form>
       </div>
     </div>
   );
 };
 
-export default SignUp;
+export default Register;

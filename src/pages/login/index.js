@@ -1,165 +1,121 @@
-import React, { useContext, useEffect, useState } from 'react';
-import {
-  Button,
-  Grid,
-  Typography,
-  CircularProgress,
-  TextField,
-} from '@material-ui/core';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import Box from '@material-ui/core/Box';
-import useManyInputs from 'hooks/useManyInputs';
-import globalStyles from 'styles/commonStyles';
-import { useStyles as formStyles } from 'styles/FormLayoutStyles';
-import { API_BASE_URL, handleCatch } from 'utils/makeReq';
-import axios from 'axios';
+import React, { useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
-const Login = () => {
-  const { isLoggedIn, signInUser } = { a: '' };
-  const classes = globalStyles();
-  const formClasses = formStyles();
+import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
+import CheckButton from 'react-validation/build/button';
 
-  const navigate = useNavigate();
-  const location = useLocation();
+const required = (value) => {
+  if (!value) {
+    return (
+      <div className='alert alert-danger' role='alert'>
+        This field is required!
+      </div>
+    );
+  }
+};
 
-  const initialState = {
-    email: '',
-    password: '',
-  };
+const Login = (props) => {
+  const form = useRef();
+  const checkBtn = useRef();
 
-  const [
-    inputState,
-    handleTxtChange,
-    ,
-    ,
-    resetState,
-    // setInputstate,
-  ] = useManyInputs(initialState);
-
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  let redirect = location.search ? location.search.split('=')[1] : '/';
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { message } = useSelector((state) => state.message);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      // console.log(`userr`, isLoggedIn);
-      navigate(redirect || '/');
-    }
-  }, [isLoggedIn, navigate, redirect]);
+  const dispatch = useDispatch();
 
-  const onFormSubmit = async (e) => {
+  const onChangeUsername = (e) => {
+    const username = e.target.value;
+    setUsername(username);
+  };
+
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  };
+
+  const handleLogin = (e) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      const res = await axios.post(`${API_BASE_URL}/auth/login`, {
-        ...inputState,
-      });
-      // console.log(`res`, res);
 
-      signInUser(res.data.token, res.data.user);
-      resetState();
-    } catch (error) {
-      handleCatch(error);
-    } finally {
+    setLoading(true);
+
+    form.current.validateAll();
+
+    if (checkBtn.current.context._errors.length === 0) {
+      dispatch((username, password))
+        .then(() => {
+          props.history.push('/profile');
+          window.location.reload();
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else {
       setLoading(false);
     }
   };
 
+  if (isLoggedIn) {
+    return <Navigate to='/profile' />;
+  }
+
   return (
-    <div className={formClasses.mainContainer}>
-      <div className={formClasses.formSelection}>
-        <NavLink to='/login'>
-          <Typography variant='subtitle1'>LOGIN</Typography>
-        </NavLink>
-        <Link to='/register'>
-          <Typography variant='subtitle1'>JOIN</Typography>
-        </Link>
-      </div>
-      <div className={formClasses.formContent}>
-        <Typography
-          vaiant='subtitle2'
-          sx={{ color: 'textSecondary' }}
-          gutterBottom
-          align='center'
-        >
-          Welcome Back
-        </Typography>
-        <form onSubmit={onFormSubmit}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <TextField
-                name='email'
-                value={inputState.email}
-                label='Email'
-                type='email'
-                onChange={handleTxtChange}
-                variant='outlined'
-                fullWidth
-                size='small'
-                InputProps={{ required: true }}
-              />
-            </Grid>
+    <div className='col-md-12'>
+      <div className='card card-container'>
+        <img
+          src='//ssl.gstatic.com/accounts/ui/avatar_2x.png'
+          alt='profile-img'
+          className='profile-img-card'
+        />
 
-            <Grid item xs={12}>
-              <TextField
-                name='password'
-                value={inputState.password}
-                label='Password'
-                type='password'
-                onChange={handleTxtChange}
-                variant='outlined'
-                fullWidth
-                size='small'
-                InputProps={{ required: true }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <Button
-                type='submit'
-                fullWidth
-                variant='contained'
-                color='primary'
-                disabled={loading}
-              >
-                {loading ? (
-                  <CircularProgress size={20} color='inherit' />
-                ) : (
-                  'Sign In'
-                )}
-              </Button>
-            </Grid>
-            <Grid item xs={6}>
-              <Box
-                sx={{
-                  width: 'fit-content',
-                  marginLeft: 'auto',
-                }}
-                className={classes.embedlinks}
-              >
-                <Typography variant='body1'>
-                  <Link to='/forgotpassword'>Forgot password ?</Link>
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        </form>
+        <Form onSubmit={handleLogin} ref={form}>
+          <div className='form-group'>
+            <label htmlFor='username'>Username</label>
+            <Input
+              type='text'
+              className='form-control'
+              name='username'
+              value={username}
+              onChange={onChangeUsername}
+              validations={[required]}
+            />
+          </div>
 
-        <Grid item xs={6} sm={12}>
-          <Box
-            mt={2}
-            className={classes.textWithlink}
-            sx={{
-              columnGap: 4,
-              height: '100%',
-              justifyContent: 'center',
-            }}
-          >
-            <Typography variant='body1'>
-              not a member?{` `}
-              <Link to='/register'>Join </Link>
-            </Typography>
-          </Box>
-        </Grid>
+          <div className='form-group'>
+            <label htmlFor='password'>Password</label>
+            <Input
+              type='password'
+              className='form-control'
+              name='password'
+              value={password}
+              onChange={onChangePassword}
+              validations={[required]}
+            />
+          </div>
+
+          <div className='form-group'>
+            <button className='btn btn-primary btn-block' disabled={loading}>
+              {loading && (
+                <span className='spinner-border spinner-border-sm'></span>
+              )}
+              <span>Login</span>
+            </button>
+          </div>
+
+          {message && (
+            <div className='form-group'>
+              <div className='alert alert-danger' role='alert'>
+                {message}
+              </div>
+            </div>
+          )}
+          <CheckButton style={{ display: 'none' }} ref={checkBtn} />
+        </Form>
       </div>
     </div>
   );
