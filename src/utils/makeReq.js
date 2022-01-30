@@ -1,6 +1,6 @@
-import { LOCALSTORAGE_TOKEN_KEY } from 'contexts/AuthContext';
 import { toast } from 'react-toastify';
 
+const LOCALSTORAGE_TOKEN_KEY = 'token-1';
 // * Development URLs
 // const API_BASE_URL = `http://localhost:5000/api`;
 // const API_BASE_ORIGIN = `http://localhost:5000`;

@@ -3,25 +3,20 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from 'contexts/AuthContext';
 import { ToastContainer } from 'react-toastify';
+import { Provider } from 'react-redux';
 
 import 'react-toastify/dist/ReactToastify.css';
-import { AuctionsProvider } from 'contexts/AuctionsContext';
+import store from './store';
 import { CategoriesProvider } from 'contexts/CategoriesContext';
-import { SocketProvider } from 'contexts/SocketContext';
 
 ReactDOM.render(
   <BrowserRouter>
-    <AuthProvider>
+    <Provider store={store}>
       <CategoriesProvider>
-        <AuctionsProvider>
-          <SocketProvider>
-            <App />
-          </SocketProvider>
-        </AuctionsProvider>
+        <App />
       </CategoriesProvider>
-    </AuthProvider>
+    </Provider>
     <ToastContainer position='top-right' />
   </BrowserRouter>,
   document.getElementById('root')
