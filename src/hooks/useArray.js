@@ -6,7 +6,7 @@ export default function useArray(defaultValue = [], idKey = 'id') {
   const push = (element) => {
     setArray((a) => [...a, element]);
   };
-  
+
   const filter = (callback) => {
     setArray((a) => a.filter(callback));
   };

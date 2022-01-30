@@ -1,22 +1,12 @@
-import {
-  Box,
-  IconButton,
-  makeStyles,
-  Button,
-  Typography,
-} from '@material-ui/core';
+import { Box, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
-import Card from 'components/Auction/Card';
-import AuctionStepper from '../AuctionStepper';
 // import AuctionStepper from '../Details/AuctionStepper';
-import ShareIcon from '@material-ui/icons/Share';
 import styles from 'styles/commonStyles';
 import { Skeleton, Pagination } from '@material-ui/lab';
 import { useGaTracker } from 'hooks';
-import ShareAuction from 'components/common/ShareAuction';
 import ClaimRequestCreater from './ClaimRequestCard';
 import RequestCard from './RequestCard';
-import { handleCatch, makeReq } from 'utils/makeReq';
+import { makeReq } from 'utils/makeReq';
 
 const useStyles = makeStyles((theme) => ({
   auctDetailCont: {
@@ -47,6 +37,7 @@ const ClaimRequestsList = ({
   filter,
   setFilter,
   loading,
+  updateClaimRequestSentById,
 }) => {
   useGaTracker();
   const globalClasses = styles();
@@ -81,6 +72,36 @@ const ClaimRequestsList = ({
     console.log('id', id);
     const resData = await makeReq(`/claim-requests/${id}/rejected`);
     console.log('resData', resData);
+  };
+
+  const handleSendPaymentReqeuest = async (e) => {
+    const { id } = e.currentTarget.dataset;
+    console.log('e.currentTarget.dataset', e.currentTarget.dataset);
+    console.log('id', id);
+    const resData = await makeReq(
+      `/claim-requests/${id}/sendPaymentRequest`,
+      {},
+      'PATCH'
+    );
+    console.log('resData', resData);
+    updateClaimRequestSentById(id, resData.claimRequest);
+  };
+
+  const handlePaymentReqeuest = async (e) => {
+    const { status, id } = e.currentTarget.dataset;
+    console.log('e.currentTarget.dataset', e.currentTarget.dataset);
+    console.log('id', id);
+    const resData = await makeReq(
+      `/claim-requests/${id}/handlePaymentRequest`,
+      {
+        body: {
+          status: status,
+        },
+      },
+      'PATCH'
+    );
+    console.log('resData', resData);
+    updateClaimRequestSentById(id, resData.claimRequest);
   };
 
   const handleAccept = async (e) => {
@@ -129,10 +150,13 @@ const ClaimRequestsList = ({
                       <ClaimRequestCreater user={request.user} />
                       <div className={globalClasses.content}>
                         <RequestCard
+                          filter={filter}
                           request={request}
                           auctionId={request.auction?._id}
                           handleReject={handleReject}
                           handleAccept={handleAccept}
+                          handleSendPaymentReqeuest={handleSendPaymentReqeuest}
+                          handlePaymentReqeuest={handlePaymentReqeuest}
                         />
                       </div>
                     </div>
@@ -149,9 +173,7 @@ const ClaimRequestsList = ({
           </>
         ) : (
           <Box mt={4}>
-            <Typography variant='subtitle1'>
-              No Record found
-            </Typography>
+            <Typography variant='subtitle1'>No Record found</Typography>
           </Box>
         )}
       </Box>

@@ -237,6 +237,7 @@ export const AuctionsProvider = ({ children }) => {
         claimRequestReceived,
         loadingClaimRequests,
         updateClaimRequestReceivedById,
+        updateClaimRequestSentById,
       }}
     >
       {children}

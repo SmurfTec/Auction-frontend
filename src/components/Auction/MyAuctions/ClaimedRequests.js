@@ -4,6 +4,7 @@ import { useGaTracker } from 'hooks';
 import ClaimRequestsList from './ClaimRequestsList';
 import { AuthContext } from 'contexts/AuthContext';
 import { Box, Button } from '@material-ui/core';
+
 const ClaimRequests = () => {
   useGaTracker();
 
@@ -11,11 +12,8 @@ const ClaimRequests = () => {
     claimRequestSent,
     claimRequestReceived,
     loadingClaimRequests,
+    updateClaimRequestSentById,
   } = useContext(AuctionsContext);
-
-  console.log('SENT', claimRequestSent);
-  console.log('RECIEVED', claimRequestReceived);
-  console.log('CLAIM', loadingClaimRequests);
 
   const { user } = useContext(AuthContext);
   const [data, setdata] = useState([]);
@@ -27,9 +25,12 @@ const ClaimRequests = () => {
 
     // console.log('filter', filter);
     // console.log('claimRequestReceived', claimRequestReceived);
-    setdata(
-      filter === 'recieved' ? claimRequestReceived : claimRequestSent
-    );
+    if (filter === 'received') {
+      setdata(claimRequestReceived);
+    } else {
+      console.log('hahah');
+      setdata(claimRequestSent);
+    }
   }, [
     loadingClaimRequests,
     claimRequestSent,
@@ -37,20 +38,16 @@ const ClaimRequests = () => {
     filter,
     user,
   ]);
+
   const handleSent = () => {
-    setdata(claimRequestSent);
+    setFilter('sent');
   };
   const handleRecieved = () => {
-    setdata(claimRequestReceived);
+    setFilter('received');
   };
   return (
     <>
-      <Box
-        display='flex'
-        justifyContent='left'
-        alignItems='center'
-        mb={1}
-      >
+      <Box display='flex' justifyContent='left' alignItems='center' mb={1}>
         <Button
           variant='contained'
           color='primary'
@@ -74,6 +71,7 @@ const ClaimRequests = () => {
         loading={loadingClaimRequests}
         setFilter={setFilter}
         filter={filter}
+        updateClaimRequestSentById={updateClaimRequestSentById}
       />
     </>
   );

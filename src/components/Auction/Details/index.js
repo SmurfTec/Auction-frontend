@@ -117,7 +117,11 @@ const AuctionDetails = () => {
       const resData = await makeReq(
         `/auctions/${auctionId}/bid`,
         {
-          body: { biddingPrice: amount, bidBeaten: auction.bids[0]._id },
+          body: {
+            biddingPrice: amount,
+            bidBeaten: auction.bids[0]?._id || null,
+          },
+          // * maybe 1st bid
         },
         'PATCH'
       );
@@ -250,7 +254,7 @@ const AuctionDetails = () => {
             )}
 
             {/* If Auction is archived and is specific, then show Claim Button*/}
-            {auction.status === 'archived' && auction.type === 'specific' && (
+            {auction.status === 'archived' && (
               <Box style={{ marginTop: '1rem', textAlign: 'right' }}>
                 <Button
                   disabled={isClaiming}

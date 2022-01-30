@@ -63,8 +63,10 @@ export default function RequestCard({
   request,
   handleAccept,
   handleReject,
-  isEdit,
+  handleSendPaymentReqeuest,
+  handlePaymentReqeuest,
   auctionId,
+  filter,
 }) {
   // const GAEventsTracker = useGaEventTracker('External Links');
 
@@ -139,6 +141,62 @@ export default function RequestCard({
               color='primary'
             />
           </Box>
+
+          {/* If filter is sent, It means I am ServiceProvider, SO I'll send him reqeust */}
+          {status === 'accepted' &&
+            filter === 'received' &&
+            request.paymentRequest?.status === 'pending' && (
+              <>
+                <Button
+                  style={{ marginRight: '10px' }}
+                  size='small'
+                  variant='contained'
+                  color='primary'
+                  data-status='accepted'
+                  data-id={request?._id}
+                  onClick={handlePaymentReqeuest}
+                >
+                  Accept Payment Request
+                </Button>
+                <Button
+                  style={{ marginRight: '10px' }}
+                  size='small'
+                  variant='contained'
+                  color='secondary'
+                  data-id={request?._id}
+                  data-status='rejected'
+                  onClick={handlePaymentReqeuest}
+                >
+                  Reject Payment Request
+                </Button>
+              </>
+            )}
+          {status === 'accepted' &&
+            filter === 'sent' &&
+            request.paymentRequest?.status === 'pending' && (
+              <Button
+                style={{ marginRight: '10px' }}
+                size='small'
+                variant='contained'
+                color='primary'
+                data-id={request.claimBid?._id}
+                onClick={handleSendPaymentReqeuest}
+              >
+                Send Payment Request
+              </Button>
+            )}
+          {/* {status === 'accepted' && filter === 'sent' && (
+            <Button
+              style={{ marginRight: '10px' }}
+              size='small'
+              variant='contained'
+              color='primary'
+              data-id={request.claimBid?._id}
+              onClick={handleSendPaymentReqeuest}
+            >
+              Send Payment Request
+            </Button>
+          )} */}
           {status === 'pending' ? (
             <Box>
               <Button

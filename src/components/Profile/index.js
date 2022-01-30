@@ -349,14 +349,20 @@ const Profile = () => {
         </Card>
         <Card className={`${classes.card} ${classes.defaultCard}`}>
           <CardHeader title='My Payment Settings' avatar />
-          <CardContent className={`${classes.defaultCard}`}>
+          <CardContent
+            className={`${classes.defaultCard}`}
+            style={{ textAlign: 'center' }}
+          >
             {/* <Box sx={{ textAlign: 'center', maxWidth: 300, margin: '0 auto' }}> */}
             <Button
               onClick={handleConnectAccount}
               variant='contained'
+              className={`${classes.twtIcon} ${classes.twitterHover}`}
               color='secondary'
             >
-              Connect Account
+              {user?.stripeAccount
+                ? 'Stripe Account Connected'
+                : 'Connect Account'}
             </Button>
             {/* <Typography variant='subtitle2'>Credit or Debit Card</Typography> */}
             <Box mt={2}>
