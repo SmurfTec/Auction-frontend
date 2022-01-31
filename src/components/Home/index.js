@@ -47,6 +47,7 @@ const HomePage = () => {
   const [categoriesFilters, setCategoriesFilters] = useState();
   const [locationFilter, setLocationFilter] = useState();
   const [priceFilter, setPriceFilter] = useState();
+  const [dateFilter, setDateFilter] = useState();
 
   // * Filter by search
   const parsedQuery = useMemo(() => {
@@ -73,6 +74,24 @@ const HomePage = () => {
       );
     }
   }, [priceFilter]);
+
+  useEffect(() => {
+    if (dateFilter === 'latest') {
+      // * Sort by Date ascending
+      setFilteredAuctions((st) =>
+        st.sort((a, b) =>
+          new Date(a.createdAt) < new Date(b.createdAt) ? -1 : 1
+        )
+      );
+    } else {
+      // * Sort by Date descending
+      setFilteredAuctions((st) =>
+        st.sort((a, b) =>
+          new Date(a.createdAt) < new Date(b.createdAt) ? 1 : -1
+        )
+      );
+    }
+  }, [dateFilter]);
 
   useEffect(() => {
     if (!locationFilter) return;
@@ -142,11 +161,18 @@ const HomePage = () => {
     setPage(newPage);
   };
 
-  const handleFilter = (e) => {
+  const handlePriceFilter = (e) => {
     const { filter } = e.currentTarget.dataset;
     // console.log(`e.`, filter);
 
     setPriceFilter(filter);
+  };
+
+  const handleDateFilter = (e) => {
+    const { filter } = e.currentTarget.dataset;
+    // console.log(`e.`, filter);
+
+    setDateFilter(filter);
   };
 
   const handleLocationFilter = (e) => {
@@ -199,7 +225,7 @@ const HomePage = () => {
                     <Typography
                       variant='body1'
                       style={{ cursor: 'pointer' }}
-                      onClick={handleFilter}
+                      onClick={handlePriceFilter}
                       data-filter='priceAsc'
                       className={clsx({
                         [customClasses.activePrice]: priceFilter === 'priceAsc',
@@ -212,13 +238,55 @@ const HomePage = () => {
                     <Typography
                       variant='body1'
                       style={{ cursor: 'pointer' }}
-                      onClick={handleFilter}
+                      onClick={handlePriceFilter}
                       data-filter='priceDesc'
                       className={clsx({
                         [customClasses.activePrice]: priceFilter !== 'priceAsc',
                       })}
                     >
                       Price (low-high)
+                    </Typography>
+                  </div>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion defaultExpanded>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls='panel1a-content'
+                  id='panel1a-header'
+                >
+                  <Typography
+                    variant='subtitle1'
+                    className={globalClasses.heading}
+                  >
+                    Publish Date
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <div className={customClasses.content}>
+                    <Typography
+                      variant='body1'
+                      style={{ cursor: 'pointer' }}
+                      onClick={handleDateFilter}
+                      data-filter='oldest'
+                      className={clsx({
+                        [customClasses.activePrice]: dateFilter === 'oldest',
+                      })}
+                    >
+                      Oldest
+                    </Typography>
+                    <Divider />
+
+                    <Typography
+                      variant='body1'
+                      style={{ cursor: 'pointer' }}
+                      onClick={handleDateFilter}
+                      data-filter='latest'
+                      className={clsx({
+                        [customClasses.activePrice]: dateFilter === 'latest',
+                      })}
+                    >
+                      Latest
                     </Typography>
                   </div>
                 </AccordionDetails>

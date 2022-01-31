@@ -3,8 +3,9 @@ import { useState } from 'react';
 export default function useArray(defaultValue = [], idKey = 'id') {
   const [array, setArray] = useState(defaultValue);
 
-  const push = (element) => {
-    setArray((a) => [...a, element]);
+  const push = (element, position = 'end') => {
+    if (position === 'start') setArray((a) => [element, ...a]);
+    else setArray((a) => [...a, element]);
   };
 
   const filter = (callback) => {

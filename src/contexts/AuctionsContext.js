@@ -40,12 +40,10 @@ export const AuctionsProvider = ({ children }) => {
     // removeMyAuction,
     // clearMyAuctions,
   ] = useArray([], '_id');
-  const [loadingMyAuctions, toggleLoadingMyAuctions] =
-    useToggleInput(true);
+  const [loadingMyAuctions, toggleLoadingMyAuctions] = useToggleInput(true);
 
   const [watchlist, setWatchlist] = useState([]);
-  const [loadingWatchlist, toggleLoadingWatchlist] =
-    useToggleInput(true);
+  const [loadingWatchlist, toggleLoadingWatchlist] = useToggleInput(true);
 
   const [
     claimRequestSent,
@@ -130,13 +128,9 @@ export const AuctionsProvider = ({ children }) => {
   useEffect(() => {
     if (loading || !auctions) return;
 
-    setPublishedAuctions(
-      auctions.filter((el) => el.status === 'published')
-    );
+    setPublishedAuctions(auctions.filter((el) => el.status === 'published'));
     setTopAuctions(auctions.filter((el) => el.status === 'claimed'));
-    setUnClaimedAuctions(
-      auctions.filter((el) => el.status === 'archived')
-    );
+    setUnClaimedAuctions(auctions.filter((el) => el.status === 'archived'));
   }, [auctions, loading]);
 
   // * CRUD Operations
@@ -159,7 +153,7 @@ export const AuctionsProvider = ({ children }) => {
       pushMyAuction(resData.auction);
       // ! Auction will go into auctions if its status is published
       if (resData.auction.status === 'published')
-        pushAuction(resData.auction);
+        pushAuction(resData.auction, 'start');
       navigate(
         resData.auction.status === 'inProgress'
           ? '/myauctions/unpublished'
@@ -184,8 +178,7 @@ export const AuctionsProvider = ({ children }) => {
       toast.success('Auction Updated Successfully!');
 
       // ! Auction will go into auctions if its status is published
-      if (resData.auction.status === 'published')
-        pushAuction(resData.auction);
+      if (resData.auction.status === 'published') pushAuction(resData.auction);
       navigate(
         resData.auction.status === 'inProgress'
           ? '/myauctions/unpublished'
@@ -201,11 +194,7 @@ export const AuctionsProvider = ({ children }) => {
   // * Watchlist related
   const addToWatchlist = async (id) => {
     try {
-      const resData = await makeReq(
-        `/auctions/${id}/watchlist`,
-        {},
-        'POST'
-      );
+      const resData = await makeReq(`/auctions/${id}/watchlist`, {}, 'POST');
       toast.success('Added to watchlist successfully!');
       setWatchlist((st) => [...st, resData.watchlist]);
     } catch (err) {

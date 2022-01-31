@@ -50,7 +50,9 @@ const AuctionStepper = ({ auction }) => {
 
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const [carousel, setCarousel] = React.useState(null);
+  const [carousel, setCarousel] = React.useState([
+    { type: 'img', url: auction?.images[0] },
+  ]);
   //   const maxSteps = carousel.length;
 
   React.useEffect(() => {
@@ -58,7 +60,7 @@ const AuctionStepper = ({ auction }) => {
     const arr = [];
 
     if (auction) {
-      arr.push({ type: 'video', url: auction['video'] });
+      if (auction.video) arr.push({ type: 'video', url: auction['video'] });
       auction.images.map((i) => arr.push({ type: 'img', url: i }));
       setCarousel(arr);
     } else return;
