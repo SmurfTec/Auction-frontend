@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import circle from 'assets/logo_circle.svg';
-import square from 'assets/logo_square.svg';
+import square from 'assets/LotPot_circle.png';
 
 function Logo({ w, h, comp }) {
   return (

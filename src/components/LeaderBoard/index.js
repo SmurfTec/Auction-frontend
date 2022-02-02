@@ -1,4 +1,9 @@
-import React, { useMemo, useContext, useEffect, useState } from 'react';
+import React, {
+  useMemo,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import {
   Table,
   TableBody,
@@ -56,14 +61,17 @@ const LeaderBoard = () => {
   useEffect(() => {
     if (loading || !topAuctions) return;
 
-    setFilteredAuctions(topAuctions.filter((el) => el.status === 'claimed'));
+    setFilteredAuctions(
+      topAuctions.filter((el) => el.status === 'claimed')
+    );
   }, [topAuctions, loading]);
 
   // * Filter items when Category changes
   useEffect(() => {
     if (!inputState.category || !topAuctions) return;
 
-    if (inputState.category === 'all') return setFilteredAuctions(topAuctions);
+    if (inputState.category === 'all')
+      return setFilteredAuctions(topAuctions);
 
     setFilteredAuctions(
       topAuctions.filter((el) => {
@@ -140,11 +148,14 @@ const LeaderBoard = () => {
   }, [location.search]);
 
   useEffect(() => {
-    if (!parsedQuery.search) return setFilteredAuctions(topAuctions || []);
+    if (!parsedQuery.search)
+      return setFilteredAuctions(topAuctions || []);
 
     setFilteredAuctions(
       topAuctions?.filter((el) =>
-        el.title.toLowerCase().includes(parsedQuery.search.toLowerCase())
+        el.title
+          .toLowerCase()
+          .includes(parsedQuery.search.toLowerCase())
       )
     );
   }, [parsedQuery, topAuctions]);
@@ -168,10 +179,15 @@ const LeaderBoard = () => {
 
       <Container className={globalClasses.topSection}>
         <Typography variant='h4' align='center' gutterBottom>
-          LeaderBoard
+          Leaderboard
         </Typography>
-        <Typography variant='subtitle2' align='center' color='textSecondary'>
-          Top topAuctions ranked by starting price and other statistics
+        <Typography
+          variant='subtitle2'
+          align='center'
+          color='textSecondary'
+        >
+          Top topAuctions ranked by starting price and other
+          statistics
         </Typography>
         <div
           className={`${customClasses.tabFilters} ${globalClasses.containerMargin}`}
@@ -181,7 +197,10 @@ const LeaderBoard = () => {
             className={customClasses.selectControl}
             fulWidth
           >
-            <InputLabel htmlFor='outlined-age-native-simple' fullWidth>
+            <InputLabel
+              htmlFor='outlined-age-native-simple'
+              fullWidth
+            >
               TimeLine
             </InputLabel>
             <Select
@@ -207,7 +226,10 @@ const LeaderBoard = () => {
             className={customClasses.selectControl}
             fulWidth
           >
-            <InputLabel htmlFor='outlined-age-native-simple' fullWidth>
+            <InputLabel
+              htmlFor='outlined-age-native-simple'
+              fullWidth
+            >
               Categories
             </InputLabel>
             <Select
@@ -233,7 +255,10 @@ const LeaderBoard = () => {
             className={customClasses.selectControl}
             fulWidth
           >
-            <InputLabel htmlFor='outlined-age-native-simple' fullWidth>
+            <InputLabel
+              htmlFor='outlined-age-native-simple'
+              fullWidth
+            >
               Price
             </InputLabel>
             <Select
@@ -258,8 +283,12 @@ const LeaderBoard = () => {
             <Table stickyHeader>
               <TableHead>
                 <TableRow className={customClasses.tableRow}>
-                  <TableCell style={{ minWidth: 300 }}>Auction Item</TableCell>
-                  <TableCell style={{ minWidth: 180 }}>Category</TableCell>
+                  <TableCell style={{ minWidth: 300 }}>
+                    Auction Item
+                  </TableCell>
+                  <TableCell style={{ minWidth: 180 }}>
+                    Category
+                  </TableCell>
                   <TableCell align='center'>Starting Price</TableCell>
                   <TableCell align='center'>Final Price</TableCell>
                   <TableCell align='center'>Total Bids</TableCell>
@@ -318,7 +347,9 @@ const LeaderBoard = () => {
 
                             <TableCell
                               style={{ minWidth: 180 }}
-                              className={customClasses.AuctionsCategories}
+                              className={
+                                customClasses.AuctionsCategories
+                              }
                             >
                               {auc.categories.map((a, ind) => (
                                 <Chip
@@ -361,7 +392,9 @@ const LeaderBoard = () => {
                             </TableCell>
                             <TableCell align='center'>
                               <Typography variant='body2'>
-                                {new Date(auc.createdAt).toLocaleDateString()}
+                                {new Date(
+                                  auc.createdAt
+                                ).toLocaleDateString()}
                               </Typography>
                             </TableCell>
                           </TableRow>

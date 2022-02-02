@@ -54,7 +54,6 @@ export const styles = makeStyles((theme) => ({
 
   share: {
     color: '#353c4a',
-    border: '0.125rem solid #f3f3f3',
     boxShadow: '0 0 8px 0 rgba(50, 50, 50, 0.15)',
     borderRadius: '50%',
     transition: '250ms',
@@ -74,6 +73,7 @@ export const styles = makeStyles((theme) => ({
   },
 
   twitter: {
+    backgroundColor: '#00ACED',
     '&:hover,:focus': {
       color: '#00ACED',
       boxShadow: '0 0 24px 0 #00ACED',
@@ -84,6 +84,7 @@ export const styles = makeStyles((theme) => ({
     // },
   },
   facebook: {
+    backgroundColor: '#3b5998',
     '&:hover': {
       color: '#3b5998',
       boxShadow: '0 0 24px 0 #3b5998',
@@ -94,6 +95,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   google: {
+    backgroundColor: '#dd4b39',
     '&:hover': {
       color: '#dd4b39',
       boxShadow: '0 0 24px 0 #dd4b39',

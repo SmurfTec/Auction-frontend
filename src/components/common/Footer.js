@@ -22,33 +22,39 @@ const Footer = () => {
             <Logo w={65} h={65} comp='footer' />
             <Box
               my={1}
-              sx={{ letterSpacing: 1, textAlign: 'justify', marginTop: 35 }}
+              sx={{
+                letterSpacing: 1,
+                textAlign: 'justify',
+                marginTop: 35,
+              }}
             >
               <Box my={1} sx={{ color: '#fff' }}>
                 <Typography variant='h5'>Disclosure</Typography>
               </Box>
-              <Typography variant='body1'>{footerInfo.decription}</Typography>
+              <Typography variant='body1'>
+                {footerInfo.decription}
+              </Typography>
             </Box>
           </div>
 
           <div className={`${classes.footerItem} lastItem`}>
             <NavLink to='/contact-us' className={classes.link}>
-              <Button variant='outlined' color='default'>
+              <Button variant='outlined' color='primary'>
                 Contact Us
               </Button>
             </NavLink>
             <NavLink to='/tos' className={classes.link}>
-              <Button variant='outlined' color='default'>
+              <Button variant='outlined' color='primary'>
                 Terms & Conditions
               </Button>
             </NavLink>
             <NavLink to='/privacy' className={classes.link}>
-              <Button variant='outlined' color='default'>
+              <Button variant='outlined' color='primary'>
                 Privacy Policy
               </Button>
             </NavLink>
             <NavLink to='/faq' className={classes.link}>
-              <Button variant='outlined' color='default'>
+              <Button variant='outlined' color='primary'>
                 FAQ's
               </Button>
             </NavLink>
@@ -88,12 +94,16 @@ const Footer = () => {
               </Link> */}
 
               <Link to='/'>
-                <div className={`${classes.share} ${classes.twitter}`}>
+                <div
+                  className={`${classes.share} ${classes.twitter}`}
+                >
                   <TwitterIcon />
                 </div>
               </Link>
               <Link to='/'>
-                <div className={`${classes.share} ${classes.facebook}`}>
+                <div
+                  className={`${classes.share} ${classes.facebook}`}
+                >
                   <FacebookIcon />
                 </div>
               </Link>
