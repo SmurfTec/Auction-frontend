@@ -23,12 +23,17 @@ const useStyles = makeStyles((theme) => ({
       marginInline: 15,
     },
   },
+  tableRow: {
+    '& .MuiTableCell-stickyHeader': {
+      backgroundColor: theme.custom.darkFore,
+    },
+  },
   hoverRow: {
     '&.MuiTableRow-root.MuiTableRow-hover:hover': {
       cursor: 'pointer',
       transition: 'all 0.2s ease 0s',
       boxShadow: 'rgba(4, 17, 29, 0.25) 0px 0px 8px 0px',
-      backgroundColor: 'rgb(251, 253, 255)',
+      backgroundColor: '#1e1a1e',
     },
   },
   pagination: {
@@ -50,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
 
   AuctionsCategories: {
     '& .MuiChip-root:first-child': {
+      boxShadow: `${theme.palette.warning.main}73 0px 0px 10px 0px`,
       backgroundColor: theme.palette.warning.main,
     },
   },

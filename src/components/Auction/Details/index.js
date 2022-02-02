@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'rgb(4 17 29 / 25%) 0px 0px 10px 0px',
     borderRadius: 12,
     padding: 15,
-    backgroundColor: '#fff',
+    backgroundColor: theme.custom.darkFore,
     height: 'fit-content',
   },
   histCard: {

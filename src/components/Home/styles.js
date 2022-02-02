@@ -11,12 +11,12 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    // '& hr:last-child': {
-    //   display: 'none',
-    // },
     '& p': {
       paddingLeft: theme.spacing(2),
       paddingBlock: 5,
+      '&:hover': {
+        backgroundColor: theme.custom.hover,
+      },
     },
 
     '& .MuiFormControlLabel-root': {
@@ -39,10 +39,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   activePrice: {
-    backgroundColor: '#f2f2f2',
+    backgroundColor: theme.custom.hover,
   },
   activeLocation: {
-    backgroundColor: '#f2f2f2',
+    backgroundColor: theme.custom.hover,
   },
 }));
 

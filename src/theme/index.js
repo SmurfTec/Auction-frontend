@@ -6,11 +6,14 @@ import GlobalStyles from 'theme/GlobalStyles';
 import breakpoints from './breakpoints';
 import typography from 'theme/typography';
 
+const bordersColor = '#3a3a3a';
+const hoverColor = '#232627';
 const hoverStyles = {
   cursor: 'pointer',
   transition: 'all 0.2s ease 0s',
   boxShadow: 'rgba(4, 17, 29, 0.25) 0px 0px 8px 0px',
-  backgroundColor: 'rgb(251, 253, 255)',
+  // backgroundColor: 'rgb(251, 253, 255)',
+  backgroundColor: hoverColor,
 };
 
 const SUCCESS = {
@@ -34,13 +37,14 @@ const ERROR = {
   dark: '#B72136',
   darker: '#7A0C2E',
 };
-
 const Theme = ({ children }) => {
   const themeOptions = useMemo(() => {
     return {
       palette: {
+        type: 'dark',
         primary: {
-          main: '#2081E2',
+          main: '#7d2ae8',
+          // main: '#4B0082',
         },
 
         secondary: { main: '#f50057' },
@@ -52,9 +56,14 @@ const Theme = ({ children }) => {
         //   main: '#0C53B7',
         //   dark: '#04297A',
         // },
+        // text: {
+        //   primary: '#161C24',
+        //   secondary: '#62646a',
+        //   disabled: '#637381',
+        // },
         text: {
-          primary: '#161C24',
-          secondary: '#62646a',
+          primary: '#fff',
+          secondary: '#dcd9d4',
           disabled: '#637381',
         },
       },
@@ -65,11 +74,25 @@ const Theme = ({ children }) => {
         success: '#49a64d',
         down: '#eb5757',
         up: '#34c77b',
+
+        // darkFore: '#1a1d1e',
+        darkFore: '#212324',
+        borders: bordersColor,
+        svg: '#dcd9d4',
+        hover: hoverColor,
       },
       overrides: {
+        MuiPaper: {
+          root: {
+            backgroundColor: '#1a1d1e',
+          },
+        },
         MuiOutlinedInput: {
           root: {
             borderRadius: 10,
+            // '& fieldset': {
+            //   border: `1px solid ${hoverColor}`,
+            // },
           },
         },
         MuiButton: {
@@ -79,11 +102,26 @@ const Theme = ({ children }) => {
             padding: '8px 16px',
           },
         },
+        MuiChip: {
+          colorPrimary: {
+            boxShadow: `#7d2ae873 0px 0px 10px 0px`,
+          },
+          colorSecondary: {
+            boxShadow: `#f5005773 0px 0px 10px 0px`,
+          },
+        },
         MuiPagination: {
           ul: {
             justifyContent: 'center',
           },
         },
+        // MuiInput: {
+        //   underline: {
+        //     '&:before': {
+        //       borderBottom: `1px solid `,
+        //     },
+        //   },
+        // },
         MuiAccordion: {
           rounded: {
             '&:first-child': {
@@ -120,11 +158,14 @@ const Theme = ({ children }) => {
             },
             '&#logout': {
               columnGap: 10,
+              '& svg': {
+                color: '#dcd9d4',
+              },
             },
             '&.Mui-selected': {
-              backgroundColor: 'unset',
+              backgroundColor: hoverColor,
               '&:hover': {
-                ...hoverStyles,
+                backgroundColor: hoverColor,
               },
             },
             '&:hover': {
@@ -133,7 +174,7 @@ const Theme = ({ children }) => {
           },
           button: {
             '&:hover': {
-              backgroundColor: 'rgb(251, 253, 255)',
+              backgroundColor: hoverColor,
             },
           },
         },

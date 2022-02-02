@@ -107,7 +107,7 @@ const AuctionList = ({ auctions, loading, isEdit }) => {
               ))}
 
             <Pagination
-              color='secondary'
+              color='primary'
               count={Math.ceil(auctions.length / rowsPerPage)}
               page={page}
               onChange={handleChangePage}

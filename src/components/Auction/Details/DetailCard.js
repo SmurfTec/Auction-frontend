@@ -49,9 +49,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
     '& .MuiChip-root:first-child': {
       backgroundColor: theme.palette.warning.main,
+      boxShadow: `${theme.palette.warning.main}73 0px 0px 10px 0px`,
     },
     '& .MuiChip-root:last-child': {
       backgroundColor: theme.palette.success.main,
+      boxShadow: `${theme.palette.success.main}73 0px 0px 10px 0px`,
     },
     '& .MuiChip-root': {
       marginRight: 10,
@@ -209,7 +211,7 @@ export default function FeaturedPost({ auction, handleBookmark, bookmaking }) {
             <Divider />
             <div className={classes.createdInfo}>
               <Typography variant='body1' color='textSecondary'>
-                Created By : {user?.name}
+                Published By : {user?.name}
               </Typography>
               <Typography variant='body1' color='textSecondary'>
                 Created At : {new Date(createdAt).toLocaleDateString()}

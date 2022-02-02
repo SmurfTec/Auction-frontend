@@ -7,6 +7,7 @@ const GlobalStyles = withStyles((theme) => ({
       padding: 0,
       boxSizing: 'border-box',
     },
+
     html: {
       width: '100%',
       height: '100%',
@@ -21,6 +22,7 @@ const GlobalStyles = withStyles((theme) => ({
       width: '100%',
       height: '100%',
       overflowY: 'auto',
+      backgroundColor: '#17191A',
     },
     button: {
       '& .MuiCircularProgress-root': {

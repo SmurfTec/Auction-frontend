@@ -7,6 +7,7 @@ import {
   IconButton,
   DialogActions,
   Button,
+  makeStyles,
 } from '@material-ui/core';
 import ShareIcon from '@material-ui/icons/Share';
 import {
@@ -28,6 +29,19 @@ import {
 
 import { API_BASE_URL } from 'utils/makeReq';
 import { useToggleInput } from 'hooks';
+
+const styles = makeStyles((theme) => ({
+  shareBtn: {
+    marginLeft: 'auto',
+    backgroundColor: theme.custom.darkFore,
+    // color: theme.custom.svg,
+    '&:hover': {
+      backgroundColor: '#2a2c2d',
+      boxShadow: `${theme.palette.primary.main}73 0px 0px 10px 0px`,
+      // backgroundColor: theme.custom.svg,
+    },
+  },
+}));
 
 const ShareDialog = ({ open, toggleDialog, auctionId }) => {
   return (
@@ -71,15 +85,14 @@ const ShareDialog = ({ open, toggleDialog, auctionId }) => {
 
 const ShareAuction = ({ auctionId }) => {
   const [isDialogOpen, toggleDialogOpen] = useToggleInput(false);
+  const classes = styles();
   return (
     <Box>
       <IconButton
+        color='primary'
         aria-label='Share'
         aria-haspopup='true'
-        style={{
-          marginLeft: 'auto',
-          color: '#000',
-        }}
+        className={classes.shareBtn}
         onClick={toggleDialogOpen}
       >
         <ShareIcon />

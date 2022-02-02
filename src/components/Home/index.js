@@ -28,7 +28,8 @@ import { CategoriesContext } from 'contexts/CategoriesContext';
 import { filterFalseValues } from 'utils/objectMethods';
 import { useGaTracker } from 'hooks';
 import ShareAuction from 'components/common/ShareAuction';
-
+import Search from 'components/common/Search';
+import bannerImg from 'assets/banner.svg';
 const HomePage = () => {
   useGaTracker();
   const location = useLocation();
@@ -177,19 +178,24 @@ const HomePage = () => {
 
   const handleLocationFilter = (e) => {
     const { filter } = e.currentTarget.dataset;
-    // console.log(`filter`, filter);
     setLocationFilter(filter);
   };
 
   return (
     <>
-      <section>
-        <HeroCarousel />
-      </section>
-      <section className={globalClasses.topSection} />
-      {/* <Container> */}
-      <section
-        className={`${globalClasses.containerMargin} ${globalClasses.topSection} ${globalClasses.paddingRoot}`}
+      <Box sx={{ position: 'relative' }}>
+        {/* <HeroCarousel /> */}
+        {/* <img src={bannerImg} alt='banner' width='100%' height='70%' /> */}
+        <Box className={globalClasses.bannerImg}>
+          <div className={globalClasses.bannerCont}>
+            <Search />
+          </div>
+        </Box>
+      </Box>
+
+      <Box
+        style={{ marginBlock: 25 }}
+        className={`${globalClasses.paddingRoot}`}
       >
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4} md={3}>
@@ -394,7 +400,7 @@ const HomePage = () => {
             </div>
           </Grid>
           <Grid item xs={12} sm={8} md={9}>
-            <Typography variant='h5'>
+            <Typography variant='h5' color='textPrimary'>
               <Box mb={3}>Featured Auctions</Box>
             </Typography>
 
@@ -454,7 +460,7 @@ const HomePage = () => {
                 })}
 
               <Pagination
-                color='secondary'
+                color='primary'
                 count={Math.ceil(publishedAuctions.length / rowsPerPage)}
                 page={page}
                 onChange={handleChangePage}
@@ -465,7 +471,7 @@ const HomePage = () => {
             </div>
           </Grid>
         </Grid>
-      </section>
+      </Box>
       {/* </Container> */}
     </>
   );

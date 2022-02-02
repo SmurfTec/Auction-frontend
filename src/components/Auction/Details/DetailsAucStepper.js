@@ -2,10 +2,7 @@ import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { MobileStepper, Paper, Button, Box } from '@material-ui/core';
 
-import {
-  KeyboardArrowLeft,
-  KeyboardArrowRight,
-} from '@material-ui/icons';
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
 import styles from 'styles/commonStyles';
 // import EmbedVideo from './EmbedVideo';
 import EmbedVideo from '../../common/EmbedVideo';
@@ -16,8 +13,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     height: 200,
-    backgroundColor: '#fff',
-    borderRight: '1px solid rgb(229, 232, 235)',
+    backgroundColor: 'transparent',
+    borderRight: `1px solid ${theme.custom.borders}`,
     [theme.breakpoints.up('md')]: {
       // maxWidth: 350,
     },
@@ -27,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     height: 50,
     paddingLeft: theme.spacing(4),
-    backgroundColor: theme.palette.background.default,
+    // backgroundColor: theme.palette.background.default,
   },
   VideoBox: {
     height: 170,
@@ -44,15 +41,19 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
     overflow: 'hidden',
     objectFit: 'contain',
+    backgroundColor: '#fff',
     [theme.breakpoints.down('sm')]: {
       height: 200,
     },
   },
   mobileStepper: {
-    background: '#fff',
+    backgroundColor: 'transparent',
     minHeight: 70,
     [theme.breakpoints.down('sm')]: {
       minHeight: 50,
+    },
+    '& svg': {
+      color: '#dcd9d4',
     },
   },
   imgCont: {

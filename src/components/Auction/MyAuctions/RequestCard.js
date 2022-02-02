@@ -108,7 +108,7 @@ export default function RequestCard({
     >
       <Card className={customClasses.card}>
         <div className={customClasses.cardDetails}>
-          <CardContent dividers>
+          <CardContent dividers='true'>
             <Button
               onClick={handleClick}
               size='small'

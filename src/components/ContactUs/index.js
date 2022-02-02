@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  TextField,
-  Typography,
-} from '@material-ui/core';
+import { Box, Button, Grid, TextField, Typography } from '@material-ui/core';
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import bgImg from 'assets/contact_bg.jpg';
@@ -33,7 +27,7 @@ const styles = makeStyles((theme) => ({
   },
 
   formDiv: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.custom.darkFore,
     padding: '2rem',
     margin: '0 auto',
     boxShadow: '0 0 25px rgb(0 0 0 / 10%)',
@@ -90,7 +84,9 @@ const ContactUs = () => {
 
           <div className={classes.contactMain}>
             <div className={classes.formDiv}>
-              <Typography variant='h5'>Get in Touch</Typography>
+              <Typography variant='h5' color='textPrimary'>
+                Get in Touch
+              </Typography>
               <Box mb={3}>
                 <Typography variant='body1' color='textSecondary'>
                   Feel free to drop us a line below!

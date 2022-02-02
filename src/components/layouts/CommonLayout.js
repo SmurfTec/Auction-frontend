@@ -6,20 +6,22 @@ import Navbar from 'components/common/NavBar';
 
 const CommonLayout = () => {
   return (
-    <Box
-      display='flex'
-      flexDirection='column'
-      justifyContent='space-between'
-      sx={{
-        minHeight: '100vh',
-      }}
-    >
-      <Navbar />
-      {/* <Box my={4}> */}
-      <Outlet />
-      {/* </Box> */}
-      <Footer />
-    </Box>
+    <>
+      <Box
+        display='flex'
+        flexDirection='column'
+        justifyContent='space-between'
+        sx={{
+          minHeight: '100vh',
+        }}
+      >
+        <Navbar />
+        {/* <Box my={4}> */}
+        <Outlet />
+        {/* </Box> */}
+        <Footer />
+      </Box>
+    </>
   );
 };
 

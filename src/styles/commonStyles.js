@@ -1,14 +1,18 @@
 import { makeStyles } from '@material-ui/core';
+import heroImg from 'assets/banner.svg';
 
 const useStyles = makeStyles((theme) => ({
   // ^ Common for all
   embedlinks: {
+    '& a': {
+      color: theme.palette.text.secondary,
+    },
     '& a::after': {
       content: '""',
       display: 'block',
       width: 0,
       height: 1,
-      background: '#165a9e',
+      background: theme.palette.text.secondary,
       transition: 'width .5s',
     },
 
@@ -51,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    columnGap: 15,
   },
 
   paddingRoot: {
@@ -81,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     '& a': {
       verticalAlign: 'unset',
-      color: '#000',
+      color: theme.palette.text.secondary,
       textDecoration: 'underline',
 
       '&:hover': {
@@ -158,7 +163,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 12,
     overflow: 'hidden',
     width: '100%',
-
+    backgroundColor: theme.custom.darkFore,
     '& .MuiPaper-rounded': {
       height: '100%',
       borderRadius: 0,
@@ -182,6 +187,56 @@ const useStyles = makeStyles((theme) => ({
   },
   upColor: {
     color: theme.custom.success,
+  },
+  bannerImg: {
+    position: 'relative',
+    height: '75vh',
+    width: '100%',
+    backgroundSize: 'cover',
+    backgroundImage: `url(${heroImg})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+
+    [theme.breakpoints.up('md')]: {
+      height: '75vh',
+    },
+
+    [theme.breakpoints.down('md')]: {
+      height: '55vh',
+    },
+    [theme.breakpoints.down('sm')]: {
+      height: '35vh',
+    },
+
+    // backgroundColor: 'white',
+    // backgroundImage: "url('http://www.canvaz.com/portrait/charcoal-1.jpg')",
+    // backgroundSize: 'auto 100%',
+    // backgroundRepeat: 'no-repeat',
+    // backgroundPosition: 'left top',
+  },
+  bannerCont: {
+    position: 'absolute',
+    bottom: '0.6em',
+    top: '55%',
+    height: 'fit-content',
+    width: '100%',
+
+    '& form': {
+      margin: '0 auto',
+      [theme.breakpoints.up('md')]: {
+        width: '43%',
+        '& .MuiBox-root': {
+          marginLeft: 35,
+        },
+      },
+
+      [theme.breakpoints.down('sm')]: {
+        width: '45%',
+        '& .MuiBox-root': {
+          marginLeft: 35,
+        },
+      },
+    },
   },
 }));
 
