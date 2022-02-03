@@ -173,7 +173,9 @@ export default function RequestCard({
             )}
           {status === 'accepted' &&
             filter === 'sent' &&
-            request.paymentRequest?.status === 'pending' && (
+            (request.paymentRequest.status
+              ? request.paymentRequest?.status === 'pending'
+              : true) && (
               <Button
                 style={{ marginRight: '10px' }}
                 size='small'
@@ -185,18 +187,7 @@ export default function RequestCard({
                 Send Payment Request
               </Button>
             )}
-          {/* {status === 'accepted' && filter === 'sent' && (
-            <Button
-              style={{ marginRight: '10px' }}
-              size='small'
-              variant='contained'
-              color='primary'
-              data-id={request.claimBid?._id}
-              onClick={handleSendPaymentReqeuest}
-            >
-              Send Payment Request
-            </Button>
-          )} */}
+
           {status === 'pending' ? (
             <Box>
               <Button

@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   topSection: {
-    marginTop: theme.spacing(8),
+    // marginTop: theme.spacing(2),
   },
   containerMargin: {
     marginBlock: theme.spacing(6),

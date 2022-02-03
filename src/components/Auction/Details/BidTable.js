@@ -18,8 +18,8 @@ const BidTable = ({
   tableClasses,
   bids,
   globalClasses,
-  isAuctionOver = false,
-  isMyAuction = false,
+  showClaim = false,
+  handleSendClaim,
 }) => {
   useGaTracker();
   return (
@@ -31,65 +31,53 @@ const BidTable = ({
               <TableCell style={{ minWidth: 300 }}>User</TableCell>
               <TableCell align='right'>Bid</TableCell>
               <TableCell>Date</TableCell>
-              {isAuctionOver && isMyAuction && (
+              {showClaim && (
                 <>
                   <TableCell align='center'>Claim</TableCell>
-                  <TableCell align='center'>Chat</TableCell>
+                  {/* <TableCell align='center'>Chat</TableCell> */}
                 </>
               )}
             </TableRow>
           </TableHead>
           <TableBody>
             {bids?.map((bid, ind) => (
-              <TableRow
-                hover
-                key={bid._id}
-                className={tableClasses.hoverRow}
-              >
-                <TableCell
-                  component='th'
-                  scope='row'
-                  style={{ minWidth: 300 }}
-                >
+              <TableRow hover key={bid._id} className={tableClasses.hoverRow}>
+                <TableCell component='th' scope='row' style={{ minWidth: 300 }}>
                   <div
                     className={`${globalClasses.flexAlignDisp} ${tableClasses.aucItem}`}
                   >
-                    <Typography variant='subtitle2'>
-                      {ind + 1}
-                    </Typography>
+                    <Typography variant='subtitle2'>{ind + 1}</Typography>
                     <Avatar
                       src={bid.user.avatarUrl}
                       alt={bid.user.name}
                       // className={tableClasses.large}
                     />
-                    <Typography variant='subtitle2'>
-                      {bid.user.name}
-                    </Typography>
+                    <Typography variant='subtitle2'>{bid.user.name}</Typography>
                   </div>
                 </TableCell>
 
                 <TableCell align='right'>
-                  <Typography variant='body2'>
-                    {bid.biddingPrice}
-                  </Typography>
+                  <Typography variant='body2'>{bid.biddingPrice}</Typography>
                 </TableCell>
                 <TableCell>
                   <Typography variant='body2'>
                     {new Date(bid.createdAt).toLocaleDateString()}
                   </Typography>
                 </TableCell>
-                {isAuctionOver && isMyAuction && (
+                {showClaim && (
                   <>
                     <TableCell align='right'>
                       <Button
+                        data-bidid={bid._id}
+                        onClick={handleSendClaim}
                         variant='contained'
                         color='primary'
                         size='small'
                       >
-                        Claim
+                        Send Claim
                       </Button>
                     </TableCell>
-                    <TableCell>
+                    {/* <TableCell>
                       <Button
                         variant='contained'
                         color='secondary'
@@ -99,7 +87,7 @@ const BidTable = ({
                       >
                         Chat
                       </Button>
-                    </TableCell>
+                    </TableCell> */}
                   </>
                 )}
               </TableRow>

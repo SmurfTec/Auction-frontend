@@ -6,7 +6,7 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import styles from 'styles/commonStyles';
 import AuctionStepper from './DetailsAucStepper';
 // import AuctionStepper from '../AuctionStepperM';
@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
   },
   histCard: {
     display: 'flex',
-    justifyContent: 'end',
     columnGap: '2em',
 
     [theme.breakpoints.down('sm')]: {
@@ -59,6 +58,7 @@ const AuctionDetails = () => {
 
   const [isClaiming, toggleClaiming] = useToggleInput(false);
   const [isClaimOpen, toggleClaimOpen] = useToggleInput(false);
+  const [claimBidId, setClaimBidId] = useState(null);
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -141,6 +141,12 @@ const AuctionDetails = () => {
     addToWatchlist(id);
   };
 
+  const handleSendClaim = (e) => {
+    const { bidid } = e.currrentTarget.dataset;
+    setClaimBidId(bidid);
+    toggleClaimOpen();
+  };
+
   const createAuctionClaim = async (message) => {
     toggleClaiming();
     try {
@@ -181,14 +187,11 @@ const AuctionDetails = () => {
     return auction.bids[0].biddingPrice + 1;
   }, [auction]);
 
-  const isAuctionOver = useMemo(
-    () => new Date(auction?.timeLine) < new Date(),
-    [auction]
-  );
+  const isMyAuction = useMemo(() => {
+    if (!isLoggedIn) return false;
 
-  const isMyAuction = useMemo(
-    () => isLoggedIn && auction?.user?._id === user?._id[auction]
-  );
+    return auction?.user?._id === user._id;
+  }, [auction, user, isLoggedIn]);
 
   // * Sometimes loading becomes false , but auction is still undefined
   // * for small amount of time , so in that case !auction is put here
@@ -219,7 +222,7 @@ const AuctionDetails = () => {
             </div>
 
             {/* If Auction is archived, dont show bids and bidForm */}
-            {auction?.status === 'published' && (
+            {['published', 'archived'].includes(auction?.status) && (
               <Box mt={5} className={`${customClasses.histCard}`}>
                 <Box
                   sx={{ flexBasis: '60%' }}
@@ -235,26 +238,34 @@ const AuctionDetails = () => {
                       globalClasses={globalClasses}
                       tableClasses={tableClasses}
                       bids={auction.bids}
-                      isAuctionOver={isAuctionOver}
                       isMyAuction={isMyAuction}
+                      showClaim={
+                        auction.status === 'archived' &&
+                        auction.type === 'openEnded'
+                      }
+                      isMyAuction={isMyAuction}
+                      handleSendClaim={handleSendClaim}
                       // isAuctionOver={true}
                       // isMyAuction={true}
                     />
                   )}
                 </Box>
-                <CreateBidForm
-                  createBid={createBid}
-                  isMakingBid={isMakingBid}
-                  customClasses={customClasses}
-                  globalClasses={globalClasses}
-                  auctionId={auction._id}
-                  startingPrice={minBidAmount}
-                />
+                {/* {true && ( */}
+                {auction?.status === 'published' && (
+                  <CreateBidForm
+                    createBid={createBid}
+                    isMakingBid={isMakingBid}
+                    customClasses={customClasses}
+                    globalClasses={globalClasses}
+                    auctionId={auction._id}
+                    startingPrice={minBidAmount}
+                  />
+                )}
               </Box>
             )}
 
             {/* If Auction is archived and is specific, then show Claim Button*/}
-            {auction.status === 'archived' && (
+            {auction.status === 'archived' && auction.type === 'specific' && (
               <Box style={{ marginTop: '1rem', textAlign: 'right' }}>
                 <Button
                   disabled={isClaiming}

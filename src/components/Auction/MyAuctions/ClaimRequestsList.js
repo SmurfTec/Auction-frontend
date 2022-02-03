@@ -84,7 +84,7 @@ const ClaimRequestsList = ({
       'PATCH'
     );
     console.log('resData', resData);
-    updateClaimRequestSentById(id, resData.claimRequest);
+    updateClaimRequestSentById(resData.claimRequest?._id, resData.claimRequest);
   };
 
   const handlePaymentReqeuest = async (e) => {
@@ -101,7 +101,7 @@ const ClaimRequestsList = ({
       'PATCH'
     );
     console.log('resData', resData);
-    updateClaimRequestSentById(id, resData.claimRequest);
+    updateClaimRequestSentById(resData.claimRequest?._id, resData.claimRequest);
   };
 
   const handleAccept = async (e) => {
@@ -148,7 +148,12 @@ const ClaimRequestsList = ({
                       className={`${globalClasses.customStyledBox} ${globalClasses.flexJustDisp} ${globalClasses.customStyledWidth}`}
                     >
                       <ClaimRequestCreater user={request.user} />
-                      <div className={globalClasses.content}>
+                      <div
+                        className={globalClasses.content}
+                        style={{
+                          maxWidth: 600,
+                        }}
+                      >
                         <RequestCard
                           filter={filter}
                           request={request}
