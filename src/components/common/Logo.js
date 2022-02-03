@@ -1,22 +1,17 @@
 import React from 'react';
-import { ButtonBase, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import LogoImg from 'assets/logo1.svg';
+import circle from 'assets/logo_circle.svg';
+import square from 'assets/LotPot_circle.png';
 
-function Logo({ w, h, fontSize = '1.2rem', textColor = '#000' }) {
+function Logo({ w, h, comp }) {
   return (
     <div id='logo'>
       <Link component={Link} to='/'>
-        <img src={LogoImg} width={w} height={h} alt='Logo' />
-        <span
-          style={{
-            fontSize: fontSize,
-            color: textColor,
-            // fontFamily: "'Lobster', cursive",
-          }}
-        >
-          Auction
-        </span>
+        {/* {comp === 'nav' ? (
+          <img src={circle} width={w} height={h} alt='LotPot Auction' />
+        ) : ( */}
+        <img src={square} width={w} height={h} alt='LotPot Auction' />
+        {/* )} */}
       </Link>
     </div>
   );

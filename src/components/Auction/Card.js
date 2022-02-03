@@ -21,6 +21,8 @@ const useStyles = makeStyles((theme) => ({
     borderBottomRightRadius: 8,
     '& .MuiCardActionArea-root': {
       display: 'flex',
+      // backgroundColor: '#1a1d1e',
+      backgroundColor: theme.custom.darkFore,
     },
   },
   cardDetails: {
@@ -45,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
   },
   cardIntro: {
     flexBasis: '50%',
+    '& h5': {
+      textAlign: 'left',
+    },
   },
   cardCategories: {
     flexBasis: '40%',
@@ -55,9 +60,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
     '& .MuiChip-root:first-child': {
       backgroundColor: theme.palette.warning.main,
+      boxShadow: `${theme.palette.warning.main}73 0px 0px 10px 0px`,
     },
     '& .MuiChip-root:last-child': {
       backgroundColor: theme.palette.success.main,
+      boxShadow: `${theme.palette.success.main}73 0px 0px 10px 0px`,
     },
     '& .MuiChip-root': {
       marginRight: 10,
@@ -72,11 +79,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FeaturedPost({
-  auction,
-  addToWatchlist,
-  isEdit,
-}) {
+export default function FeaturedPost({ auction, addToWatchlist, isEdit }) {
   // const GAEventsTracker = useGaEventTracker('External Links');
 
   const customClasses = useStyles();
@@ -116,10 +119,7 @@ export default function FeaturedPost({
   };
 
   return (
-    <Box
-      className={globalClasses.flexAlignDisp}
-      sx={{ columnGap: 10 }}
-    >
+    <Box className={globalClasses.flexAlignDisp} sx={{ columnGap: 10 }}>
       <Card className={customClasses.card}>
         <CardActionArea
           onClick={() => {
@@ -141,11 +141,11 @@ export default function FeaturedPost({
               )}
               <Box className={customClasses.cardIntroBox}>
                 <Box className={customClasses.cardIntro}>
-                  <Typography component='h2' variant='h5'>
+                  <Typography component='h2' variant='h4'>
                     {title}
                   </Typography>
-                  <Typography variant='h3' color='textSecondary'>
-                    {startingPrice}$
+                  <Typography variant='h5' color='textSecondary' align='left'>
+                    ${startingPrice}
                   </Typography>
 
                   <Typography variant='subtitle1' paragraph>
@@ -160,11 +160,7 @@ export default function FeaturedPost({
                   justifyContent: 'space-between',
                 }}
               >
-                <Box
-                  display='flex'
-                  flexDirection='column'
-                  sx={{ rowGap: 10 }}
-                >
+                <Box display='flex' flexDirection='column' sx={{ rowGap: 10 }}>
                   <Chip
                     size='small'
                     label={`${timeLeft} Left`}
@@ -189,26 +185,20 @@ export default function FeaturedPost({
                     aria-haspopup='true'
                     data-item={_id}
                     onClick={handleBookMark}
-                    style={{ paddingInline: 0 }}
+                    // style={{ paddingInline: 0 }}
                   >
-                    <VisibilityIcon
-                      fontSize='small'
-                      color='primary'
-                    />
+                    <VisibilityIcon fontSize='small' color='primary' />
                   </IconButton>
                 </Box>
               </Box>
               <Divider />
               <div className={customClasses.createdInfo}>
                 <Typography variant='body2' color='textSecondary'>
-                  Created By : {user?.name}
+                  Published By : {user?.name}
                 </Typography>
                 <Typography variant='body2' color='textSecondary'>
                   Published{' '}
-                  {formatDistanceToNow(
-                    new Date(publishDate || createdAt)
-                  )}{' '}
-                  ago
+                  {formatDistanceToNow(new Date(publishDate || createdAt))} ago
                   {/* Created At : {new Date(createdAt).toLocaleDateString()} */}
                 </Typography>
               </div>

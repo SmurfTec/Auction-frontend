@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     height: 200,
-    backgroundColor: '#fff',
-    borderRight: '1px solid rgb(229, 232, 235)',
+    backgroundColor: 'transparent',
+    borderRight: '1px solid #3a3a3a',
     [theme.breakpoints.up('md')]: {
       maxWidth: 350,
     },
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     height: 50,
     paddingLeft: theme.spacing(4),
-    backgroundColor: theme.palette.background.default,
+    // backgroundColor: theme.palette.background.default,
   },
   img: {
     width: '100%',
@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
     overflow: 'hidden',
     objectFit: 'contain',
+    backgroundColor: '#fff',
     paddingTop: 20,
     // [theme.breakpoints.down('sm')]: {
     //   height: 300,
@@ -41,7 +42,10 @@ const useStyles = makeStyles((theme) => ({
     // },
   },
   mobileStepper: {
-    background: '#fff',
+    backgroundColor: 'transparent',
+    '& svg': {
+      color: '#dcd9d4',
+    },
   },
 }));
 

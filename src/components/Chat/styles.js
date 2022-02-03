@@ -5,17 +5,11 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 650,
   },
   chatSection: {
-    // borderRadius: 14,
     overflow: 'hidden',
     width: '100%',
-    // height: '80vh',
     boxShadow: 'unset',
-    // padding: 20,
-    // background: '#edf0f5',
-    // color: '#fff',
-    border: '1px solid #ccc',
+    border: `1px solid ${theme.custom.darkFore}`,
     '& .MuiTypography-colorTextSecondary': {
-      // color: '#fff',
       overflow: 'hidden',
       display: '-webkit-box',
       WebkitLineClamp: 1,
@@ -32,38 +26,30 @@ const useStyles = makeStyles((theme) => ({
     '& img': {
       width: 30,
       height: 30,
-      color: '#fff',
     },
     marginBottom: '1.5em',
   },
   chatList: {
     '&.MuiList-padding': {
-      // paddingTop: 0,
-      // paddingBottom: 0,
       paddingInline: 0,
       paddingBlock: 0,
     },
     maxHeight: '70vh',
     overflowY: 'auto',
   },
-  headBG: {
-    backgroundColor: '#e0e0e0',
-  },
   borderRight500: {
-    borderRight: '1px solid #e0e0e0',
-    // background: 'dodgerblue',
-    // padding: '1em',
+    borderRight: `1px solid ${theme.custom.borders}`,
   },
-  searchField: {
-    '& .MuiInputBase-root': {
-      backgroundColor: '#fff',
-      borderRadius: 10,
-    },
-  },
+
   messageArea: {
     height: '70vh',
     overflowY: 'auto',
     paddingInline: 20,
+
+    '& .MuiListItem-root:hover': {
+      background: 'none',
+      boxShadow: 'none',
+    },
   },
   messageBox: {
     display: 'flex',
@@ -81,13 +67,12 @@ const useStyles = makeStyles((theme) => ({
     width: 'fit-content',
     display: 'inline-block',
     padding: '0.3rem 0.9rem',
-    // padding: '0.5rem 1rem',
     lineHeight: '1rem',
     minHeight: '2rem',
     fontSize: '0.875rem',
     borderRadius: '1rem',
     wordBreak: 'break-all',
-    backgroundColor: '#f0f7f4',
+    backgroundColor: '#212324',
     marginBottom: 15,
   },
 
@@ -101,18 +86,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   otherTime: {
-    // right: 0,
     left: 0,
   },
   myTime: {
-    // left: 0,
     right: 0,
   },
 
   agreementMessage: {
     width: '75%',
-    // marginLeft: 'auto',
-    color: '#4d4d4d',
+    // color: '#4d4d4d',
+    color: theme.palette.text.secondary,
     borderRadius: 20,
     marginBottom: '1rem',
     position: 'relative',
@@ -142,14 +125,14 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 'auto',
     // float: 'left',
     backgroundColor: theme.palette.primary.main,
-    color: '#fff',
+    // color: '#fff',
     borderTopLeftRadius: '0.125rem',
     '& p': {
       fontStyle: 'italic',
     },
   },
   Agreement: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.custom.hover,
     border: `1px solid #e7e7e7`,
     // padding: 10,
     // minWidth: 450,
@@ -157,7 +140,8 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
   },
   AgreementHeader: {
-    backgroundColor: '#f2f2f2',
+    // backgroundColor: '#f2f2f2',
+    backgroundColor: theme.custom.hover,
     display: 'flex',
     padding: 10,
     alignItems: 'center',
@@ -169,7 +153,7 @@ const useStyles = makeStyles((theme) => ({
   AgreementExpansion: {},
 
   typeMessage: {
-    border: '1px solid #0000003b',
+    border: `1px solid ${theme.custom.borders}`,
     borderRadius: 10,
     padding: '5px 10px',
   },

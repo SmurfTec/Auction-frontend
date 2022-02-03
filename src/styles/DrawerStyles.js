@@ -55,12 +55,25 @@ const useStyles = makeStyles((theme) => ({
   },
   list: {
     '& a': {
-      color: '#000',
+      color: theme.palette.text.secondary,
+
+      '& svg': {
+        color: theme.custom.svg,
+      },
 
       '&.active': {
         color: theme.palette.primary.main,
         '& .MuiListItem-button': {
           backgroundColor: `${theme.palette.primary.main}1a`,
+          boxShadow: 'rgb(4 17 29 / 5%) 0px 0px 8px 0px',
+        },
+        '& svg': {
+          color: theme.palette.primary.main,
+        },
+      },
+      '&.hover': {
+        '& .MuiListItem-button': {
+          backgroundColor: theme.custom.borders,
           boxShadow: 'rgb(4 17 29 / 5%) 0px 0px 8px 0px',
         },
         '& svg': {

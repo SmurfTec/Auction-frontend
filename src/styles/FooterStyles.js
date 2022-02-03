@@ -3,12 +3,9 @@ import { makeStyles } from '@material-ui/styles';
 export const styles = makeStyles((theme) => ({
   root: {
     color: '#fff',
-    // backgroundColor: '#000',
-    backgroundColor: theme.palette.primary.main,
-    // marginTop: theme.spacing(5),
-    padding: theme.spacing(5, 5),
+    backgroundColor: theme.custom.darkFore,
+    padding: 25,
     userSelect: 'none',
-    //  borderTopRightRadius: 15,
   },
   footer: {
     display: 'flex',
@@ -21,75 +18,16 @@ export const styles = makeStyles((theme) => ({
     },
 
     '& .firstItem': {
-      flexBasis: '50%',
+      flexBasis: '55%',
     },
 
     '& .lastItem': {
-      flexBasis: '40%',
+      flexBasis: '35%',
     },
-    // '& a': {
-    //   // color: '#fff',
-    //   '&:hover': {
-    //     fontWeight: 600,
-    //     transform: 'translateX(5px)',
-    //   },
-    // },
   },
   footerItem: {
     display: 'flex',
     flexDirection: 'column',
-  },
-  logoTitle: {
-    cursor: 'pointer',
-    userSelect: 'none',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    //   width: 150,
-    width: 130,
-    fontWeight: 900,
-
-    '& img': {
-      width: 50,
-      height: 50,
-    },
-  },
-  gridContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexWrap: 'nowrap',
-    color: theme.palette.grey[300],
-  },
-
-  contentTitle: {
-    marginBottom: theme.spacing(2),
-    color: theme.palette.grey[400],
-    textTransform: 'uppercase',
-  },
-  subContent: {
-    padding: '3px 0',
-    '& a': {
-      color: theme.palette.common.white,
-      '&:hover': {
-        color: '#fa0f0c',
-      },
-    },
-
-    '& svg': {
-      color: theme.palette.common.white,
-      marginRight: theme.spacing(1.5),
-      fontSize: '1rem',
-    },
-  },
-  icons: {
-    marginTop: theme.spacing(2),
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-  },
-  rightsReservedFooter: {
-    padding: theme.spacing(3),
-    backgroundColor: theme.palette.grey[100],
   },
 
   link: {
@@ -116,7 +54,6 @@ export const styles = makeStyles((theme) => ({
 
   share: {
     color: '#353c4a',
-    border: '0.125rem solid #f3f3f3',
     boxShadow: '0 0 8px 0 rgba(50, 50, 50, 0.15)',
     borderRadius: '50%',
     transition: '250ms',
@@ -136,6 +73,7 @@ export const styles = makeStyles((theme) => ({
   },
 
   twitter: {
+    backgroundColor: '#00ACED',
     '&:hover,:focus': {
       color: '#00ACED',
       boxShadow: '0 0 24px 0 #00ACED',
@@ -146,6 +84,7 @@ export const styles = makeStyles((theme) => ({
     // },
   },
   facebook: {
+    backgroundColor: '#3b5998',
     '&:hover': {
       color: '#3b5998',
       boxShadow: '0 0 24px 0 #3b5998',
@@ -156,6 +95,7 @@ export const styles = makeStyles((theme) => ({
     },
   },
   google: {
+    backgroundColor: '#dd4b39',
     '&:hover': {
       color: '#dd4b39',
       boxShadow: '0 0 24px 0 #dd4b39',

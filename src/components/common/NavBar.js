@@ -31,6 +31,9 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import LockIcon from '@material-ui/icons/Lock';
 import NotificationsPopover from './notify/NotificationsPopover';
 import { Telegram } from '@material-ui/icons';
+import ContactSupportIcon from '@material-ui/icons/ContactSupport';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import PermPhoneMsgIcon from '@material-ui/icons/PermPhoneMsg';
 
 const Navbar = (props) => {
   const classes = useStyles();
@@ -75,15 +78,15 @@ const Navbar = (props) => {
                   onClick={toggleSideBar}
                   style={{
                     marginLeft: 'auto',
-                    color: '#000',
+                    color: '#dcd9d4',
                   }}
                 >
                   <MenuOpenIcon fontSize='small' />
                 </IconButton>
               </div>
-              <Logo w={35} h={35} />
+              <Logo w={45} h={45} comp='nav' />
             </Box>
-            {showSearchBar && <Search />}
+            {/* {showSearchBar && <Search />} */}
           </div>
 
           <div className={classes.sectionDesktop}>
@@ -117,13 +120,11 @@ const Navbar = (props) => {
                     <Typography variant='subtitle2' noWrap>
                       <NavLink to='/createAuction'>Create Auction</NavLink>
                     </Typography>
-                    <MHidden width='smDown'>
-                      <Typography variant='subtitle2'>
-                        <NavLink to='/myauctions/watchlist'>
-                          My Auctions
-                        </NavLink>
-                      </Typography>
-                    </MHidden>
+                    {/* <MHidden width='smDown'> */}
+                    <Typography variant='subtitle2'>
+                      <NavLink to='/myauctions/watchlist'>My Auctions</NavLink>
+                    </Typography>
+                    {/* </MHidden> */}
 
                     <IconButton
                       onClick={handleChatClick}
@@ -143,12 +144,18 @@ const Navbar = (props) => {
                   <Box
                     display='flex'
                     // justifyContent='space-between'
-                    maxWidth='400px'
+                    // maxWidth='400px'
                     minWidth='200px'
                     gridColumnGap='20px'
                     sx={{ columnGap: 10 }}
                     className={classes_g.linkLabel}
                   >
+                    <Typography variant='subtitle2' noWrap>
+                      <NavLink to='/contact-us'>Contact Us</NavLink>
+                    </Typography>
+                    <Typography variant='subtitle2' noWrap>
+                      <NavLink to='/faq'>FAQ</NavLink>
+                    </Typography>
                     <Typography variant='subtitle2' noWrap>
                       <NavLink to='/leaderboard'>Leaderboard</NavLink>
                     </Typography>
@@ -183,7 +190,7 @@ const Navbar = (props) => {
           <div className={classes.sectionMobile}>
             {isLoggedIn && (
               <>
-                <IconButton aria-label='delete'>
+                <IconButton aria-label='delete' style={{ color: '#dcd9d4' }}>
                   <NotificationsIcon fontSize='small' />
                 </IconButton>
                 <AccountPopover />
@@ -205,7 +212,7 @@ const Navbar = (props) => {
         }}
       >
         <div className={classes_dr.drawerHeader}>
-          <Logo w={35} h={35} />
+          <Logo w={45} h={45} comp='nav' />
 
           <IconButton onClick={toggleSideBar}>
             <NavigateBeforeIcon />
@@ -224,24 +231,41 @@ const Navbar = (props) => {
             </ListItem>
           </NavLink>
           <NavLink to='/leaderboard'>
-            <ListItem>
+            <ListItem button>
               <ListItemIcon style={{ minWidth: 40 }}>
                 <ListAltIcon />
               </ListItemIcon>
               <Typography variant='subtitle2'>Leaderboard</Typography>
             </ListItem>
           </NavLink>
-          <NavLink to='/createauction'>
-            <ListItem>
+          <NavLink to='/contact-us'>
+            <ListItem button>
+              <ListItemIcon style={{ minWidth: 40 }}>
+                <PermPhoneMsgIcon />
+              </ListItemIcon>
+              <Typography variant='subtitle2'>Contact Us</Typography>
+            </ListItem>
+          </NavLink>
+          <NavLink to='/faq'>
+            <ListItem button>
+              <ListItemIcon style={{ minWidth: 40 }}>
+                <HelpOutlineIcon />
+              </ListItemIcon>
+              <Typography variant='subtitle2'>FAQ</Typography>
+            </ListItem>
+          </NavLink>
+          {/* <NavLink to='/createauction'>
+                        <ListItem button>
+
               <ListItemIcon style={{ minWidth: 40 }}>
                 <NoteAddIcon />
               </ListItemIcon>
               <Typography variant='subtitle2'>Create Auction</Typography>
             </ListItem>
-          </NavLink>
+          </NavLink> */}
           {isLoggedIn && (
             <NavLink to='/myauctions/watchlist'>
-              <ListItem>
+              <ListItem button>
                 <ListItemIcon style={{ minWidth: 40 }}>
                   <ViewListIcon />
                 </ListItemIcon>
@@ -256,9 +280,9 @@ const Navbar = (props) => {
         </Box>
 
         {!isLoggedIn && (
-          <List className={classes.list}>
+          <List className={classes_dr.list}>
             <NavLink to='/login'>
-              <ListItem>
+              <ListItem button>
                 <ListItemIcon style={{ minWidth: 40 }}>
                   <ExitToAppIcon />
                 </ListItemIcon>
@@ -266,7 +290,7 @@ const Navbar = (props) => {
               </ListItem>
             </NavLink>
             <NavLink to='/register'>
-              <ListItem>
+              <ListItem button>
                 <ListItemIcon style={{ minWidth: 40 }}>
                   <LockIcon />
                 </ListItemIcon>

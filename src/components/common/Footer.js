@@ -1,30 +1,17 @@
 import React from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Typography, Box, Container, Button, Icon } from '@material-ui/core';
+import { Link, NavLink } from 'react-router-dom';
+import { Typography, Box, Button } from '@material-ui/core';
 import { footerInfo } from 'data';
 // import { animateScroll as scroll } from 'react-scroll';
 import Logo from './Logo';
-import facebookIcon from 'assets/facebook.png';
-import twitterIcon from 'assets/twitter.png';
 import { styles } from 'styles/FooterStyles';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 import TwitterIcon from '@material-ui/icons/Twitter';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import YouTubeIcon from '@material-ui/icons/YouTube';
-import googleIcon from 'assets/google.svg';
-import SvgIcon from '@material-ui/core/SvgIcon';
 
 const Footer = () => {
-  const history = useNavigate();
   const classes = styles();
-
-  //   const handleClick = () => {
-  //     scroll.scrollToTop({
-  //       duration: 1500,
-  //       delay: 100,
-  //     });
-  //   };
 
   return (
     <>
@@ -32,34 +19,44 @@ const Footer = () => {
         {/* <Container> */}
         <div className={classes.footer}>
           <div className={`${classes.footerItem} firstItem`}>
-            <Logo w={35} h={35} textColor='#fff' />
+            <Logo w={65} h={65} comp='footer' />
             <Box
               my={1}
-              sx={{ letterSpacing: 1, textAlign: 'justify', marginTop: 35 }}
+              sx={{
+                letterSpacing: 1,
+                textAlign: 'justify',
+                marginTop: 35,
+              }}
             >
               <Box my={1} sx={{ color: '#fff' }}>
                 <Typography variant='h5'>Disclosure</Typography>
               </Box>
-              <Typography variant='body1'>{footerInfo.decription}</Typography>
+              <Typography variant='body1'>
+                {footerInfo.decription}
+              </Typography>
             </Box>
           </div>
 
           <div className={`${classes.footerItem} lastItem`}>
             <NavLink to='/contact-us' className={classes.link}>
-              <Typography variant='subtitle1'>Contact Us</Typography>
-              <ArrowForwardIcon size='small' />
+              <Button variant='outlined' color='primary'>
+                Contact Us
+              </Button>
             </NavLink>
             <NavLink to='/tos' className={classes.link}>
-              <Typography variant='subtitle1'>Terms & Conditions</Typography>
-              <ArrowForwardIcon size='small' />
+              <Button variant='outlined' color='primary'>
+                Terms & Conditions
+              </Button>
             </NavLink>
             <NavLink to='/privacy' className={classes.link}>
-              <Typography variant='subtitle1'>Privacy Policy</Typography>
-              <ArrowForwardIcon size='small' />
+              <Button variant='outlined' color='primary'>
+                Privacy Policy
+              </Button>
             </NavLink>
             <NavLink to='/faq' className={classes.link}>
-              <Typography variant='subtitle1'>FAQ's</Typography>
-              <ArrowForwardIcon size='small' />
+              <Button variant='outlined' color='primary'>
+                FAQ's
+              </Button>
             </NavLink>
 
             <Box mt={2}>
@@ -97,12 +94,16 @@ const Footer = () => {
               </Link> */}
 
               <Link to='/'>
-                <div className={`${classes.share} ${classes.twitter}`}>
+                <div
+                  className={`${classes.share} ${classes.twitter}`}
+                >
                   <TwitterIcon />
                 </div>
               </Link>
               <Link to='/'>
-                <div className={`${classes.share} ${classes.facebook}`}>
+                <div
+                  className={`${classes.share} ${classes.facebook}`}
+                >
                   <FacebookIcon />
                 </div>
               </Link>

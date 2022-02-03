@@ -72,11 +72,15 @@ const Login = () => {
     <div className={formClasses.mainContainer}>
       <div className={formClasses.formSelection}>
         <NavLink to='/login'>
-          <Typography variant='subtitle1'>LOGIN</Typography>
+          <Typography variant='subtitle1' color='textPrimary'>
+            LOGIN
+          </Typography>
         </NavLink>
-        <Link to='/register'>
-          <Typography variant='subtitle1'>JOIN</Typography>
-        </Link>
+        <NavLink to='/register'>
+          <Typography variant='subtitle1' color='textPrimary'>
+            JOIN
+          </Typography>
+        </NavLink>
       </div>
       <div className={formClasses.formContent}>
         <Typography
@@ -139,7 +143,7 @@ const Login = () => {
                 }}
                 className={classes.embedlinks}
               >
-                <Typography variant='body1'>
+                <Typography variant='body1' color='textSecondary'>
                   <Link to='/forgotpassword'>Forgot password ?</Link>
                 </Typography>
               </Box>

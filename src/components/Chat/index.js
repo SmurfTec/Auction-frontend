@@ -7,12 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
 import SendIcon from '@material-ui/icons/Send';
 import Add from '@material-ui/icons/Add';
-import {
-  Box,
-  Container,
-  InputBase,
-  Typography,
-} from '@material-ui/core';
+import { Box, Container, InputBase, Typography } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import { SocketContext } from 'contexts/SocketContext';
 import { useTextInput } from 'hooks';
@@ -35,8 +30,7 @@ const Chat = () => {
   const { user } = useContext(AuthContext);
   const { chats, sendNewMessage, loadingChatId, addNewChat } =
     useContext(SocketContext);
-  const [messageTxt, handleTxtChange, resetMessageTxt] =
-    useTextInput('');
+  const [messageTxt, handleTxtChange, resetMessageTxt] = useTextInput('');
 
   const [activeChat, setActiveChat] = useState();
 
@@ -48,16 +42,14 @@ const Chat = () => {
 
   useEffect(() => {
     (async () => {
-      let newMessageUser =
-        location.search && location.search.split('=')[1];
+      let newMessageUser = location.search && location.search.split('=')[1];
       console.log(`newMessageUser`, newMessageUser);
 
       if (!newMessageUser) return;
 
       // * Find Chat in the chats
       let chat = chats.find(
-        (el) =>
-          !!el.participants.find((p) => p._id === newMessageUser)
+        (el) => !!el.participants.find((p) => p._id === newMessageUser)
       );
 
       console.log(`chat`, chat);
@@ -130,11 +122,7 @@ const Chat = () => {
 
   return (
     <Container sx={{ paddingTop: 2, maxWidth: 'unset' }}>
-      <Grid
-        container
-        component={Paper}
-        className={classes.chatSection}
-      >
+      <Grid container component={Paper} className={classes.chatSection}>
         <Grid item xs={4} className={classes.borderRight500}>
           {/* <Divider /> */}
           <div className={classes.padding}>
@@ -177,11 +165,7 @@ const Chat = () => {
                   ))}
           </List>
         </Grid>
-        <Grid
-          item
-          xs={8}
-          style={{ backgroundColor: '#fff', minHeight: '70vh' }}
-        >
+        <Grid item xs={8} style={{ minHeight: '70vh' }}>
           <List id='messageArea' className={classes.messageArea}>
             {activeChat?.messages &&
               activeChat.messages.map((message) => (
@@ -197,10 +181,7 @@ const Chat = () => {
           </List>
           <Divider />
           {activeChat && (
-            <Grid
-              container
-              style={{ padding: '13px', alignItems: 'center' }}
-            >
+            <Grid container style={{ padding: '13px', alignItems: 'center' }}>
               <Grid item xs={10}>
                 <form id='messageForm' onSubmit={handleCreateMessage}>
                   <div className={classes.typeMessage}>

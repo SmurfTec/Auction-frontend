@@ -15,11 +15,11 @@ const styles = makeStyles((theme) => ({
   chatItemRoot: {
     // paddingRight: 0,
     // paddingLeft: 0,
-    color: '#000',
     // marginBottom: '0.5em',
     '&.MuiListItem-root.Mui-selected': {
       // backgroundColor: '#f0f7f4',
-      backgroundColor: '#edf9ee',
+      // backgroundColor: '#edf9ee',
+      backgroundColor: theme.custom.hover,
       borderLeft: `3px solid ${theme.palette.primary.main}`,
     },
   },

@@ -179,7 +179,7 @@ const LeaderBoard = () => {
 
       <Container className={globalClasses.topSection}>
         <Typography variant='h4' align='center' gutterBottom>
-          LeaderBoard
+          Leaderboard
         </Typography>
         <Typography
           variant='subtitle2'
@@ -282,7 +282,7 @@ const LeaderBoard = () => {
           <TableContainer>
             <Table stickyHeader>
               <TableHead>
-                <TableRow>
+                <TableRow className={customClasses.tableRow}>
                   <TableCell style={{ minWidth: 300 }}>
                     Auction Item
                   </TableCell>
@@ -405,7 +405,7 @@ const LeaderBoard = () => {
           </TableContainer>
           <Box mt={2}>
             <Pagination
-              color='secondary'
+              color='primary'
               count={Math.ceil(topAuctions.length / rowsPerPage)}
               page={page}
               onChange={handleChangePage}

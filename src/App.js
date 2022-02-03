@@ -12,7 +12,7 @@ function App() {
       <ThemeConfig>
         <ScrollToTop />
         <Router />
-      </ThemeConfig>
+      </ThemeConfig>{' '}
     </>
   );
 }

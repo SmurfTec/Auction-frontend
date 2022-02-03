@@ -170,7 +170,7 @@ const ClaimRequestsList = ({
               ))}
 
             <Pagination
-              color='secondary'
+              color='primary'
               count={Math.ceil(requests.length / rowsPerPage)}
               page={page}
               onChange={handleChangePage}

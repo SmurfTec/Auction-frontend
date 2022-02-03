@@ -42,7 +42,8 @@ const Create = ({ isUpdate }) => {
     updateAuction,
   } = useContext(AuctionsContext);
   const [isSubmitting, toggleSubmitting] = useToggleInput(false);
-  const [validating, toggleValidating, setValidating] = useToggleInput(true);
+  const [validating, toggleValidating, setValidating] =
+    useToggleInput(true);
   const disabled = false;
   const { id } = useParams();
   const navigate = useNavigate();
@@ -59,12 +60,20 @@ const Create = ({ isUpdate }) => {
     twitterTarget: undefined,
     instagramTarget: undefined,
   };
-  const [inputState, handleTxtChange, , changeInput, , setInputstate] =
-    useManyInputs(initialState);
+  const [
+    inputState,
+    handleTxtChange,
+    ,
+    changeInput,
+    ,
+    setInputstate,
+  ] = useManyInputs(initialState);
   const [disable, setDisable] = React.useState(false);
   //   const [open, setOpen] = React.useState(false);
-  const [isImageUploading, toggleImageUploading] = useToggleInput(false);
-  const [isVideoUploading, toggleVideoUploading] = useToggleInput(false);
+  const [isImageUploading, toggleImageUploading] =
+    useToggleInput(false);
+  const [isVideoUploading, toggleVideoUploading] =
+    useToggleInput(false);
 
   const [isPublishOpen, togglePublishOpen] = useToggleInput(false);
 
@@ -108,7 +117,8 @@ const Create = ({ isUpdate }) => {
 
     if (isUpdate)
       updateAuction({ ...inputState, status }, id, toggleSubmitting);
-    else createNewAuction({ ...inputState, status }, toggleSubmitting);
+    else
+      createNewAuction({ ...inputState, status }, toggleSubmitting);
   };
 
   const handleTimeline = (e) => {
@@ -169,7 +179,9 @@ const Create = ({ isUpdate }) => {
       }
     } catch (err) {
       toast(
-        err?.response?.data?.message || err.message || 'Something Went Wrong'
+        err?.response?.data?.message ||
+          err.message ||
+          'Something Went Wrong'
       );
       // console.log(`err`, err);
     } finally {
@@ -257,7 +269,10 @@ const Create = ({ isUpdate }) => {
                     className={classes.selectControl}
                     fulWidth
                   >
-                    <InputLabel htmlFor='outlined-age-native-simple' fullWidth>
+                    <InputLabel
+                      htmlFor='outlined-age-native-simple'
+                      fullWidth
+                    >
                       Location
                     </InputLabel>
                     <Select
@@ -294,7 +309,10 @@ const Create = ({ isUpdate }) => {
                     className={classes.selectControl}
                     fulWidth
                   >
-                    <InputLabel htmlFor='outlined-age-native-simple' fullWidth>
+                    <InputLabel
+                      htmlFor='outlined-age-native-simple'
+                      fullWidth
+                    >
                       TimeLine
                     </InputLabel>
                     <Select
@@ -334,7 +352,7 @@ const Create = ({ isUpdate }) => {
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        label='Fixed tag'
+                        label='Categories'
                         variant='outlined'
                         //   placeholder='Favorites'
                       />
@@ -347,7 +365,10 @@ const Create = ({ isUpdate }) => {
                     className={classes.selectControl}
                     fulWidth
                   >
-                    <InputLabel htmlFor='outlined-age-native-simple' fullWidth>
+                    <InputLabel
+                      htmlFor='outlined-age-native-simple'
+                      fullWidth
+                    >
                       Auction Type
                     </InputLabel>
                     <Select
@@ -358,13 +379,24 @@ const Create = ({ isUpdate }) => {
                       required
                     >
                       <MenuItem value={'specific'}>Specific</MenuItem>
-                      <MenuItem value={'openEnded'}>Open Ended</MenuItem>
+                      <MenuItem value={'openEnded'}>
+                        Open Ended
+                      </MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
 
                 {isSpecificAuction && (
                   <>
+                    <Grid item xs={12}>
+                      <Typography
+                        variant='body2'
+                        style={{ color: '#7d2ae8' }}
+                      >
+                        &nbsp; NOTE : Only a specific person can claim
+                        this type of auction
+                      </Typography>
+                    </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextField
                         name='twitterTarget'
@@ -388,6 +420,17 @@ const Create = ({ isUpdate }) => {
                       />
                     </Grid>
                   </>
+                )}
+                {!isSpecificAuction && (
+                  <Grid item xs={12}>
+                    <Typography
+                      variant='body2'
+                      style={{ color: '#7d2ae8' }}
+                    >
+                      &nbsp; NOTE : Anyone can claim this type of
+                      auction
+                    </Typography>
+                  </Grid>
                 )}
                 <Grid item xs={12} sm={12}>
                   <TextField
@@ -441,7 +484,10 @@ const Create = ({ isUpdate }) => {
                         )
                       }
                     />
-                    <label htmlFor='image' style={{ width: 'fit-content' }}>
+                    <label
+                      htmlFor='image'
+                      style={{ width: 'fit-content' }}
+                    >
                       {' '}
                       <Button
                         className={classes.uploadBtn}
@@ -451,7 +497,9 @@ const Create = ({ isUpdate }) => {
                         disabled={isImageUploading}
                       >
                         Upload Image
-                        {isImageUploading && <CircularProgress size={25} />}
+                        {isImageUploading && (
+                          <CircularProgress size={25} />
+                        )}
                       </Button>
                     </label>
                   </Box>
@@ -459,7 +507,10 @@ const Create = ({ isUpdate }) => {
                 <Grid item xs={12} sm={6}>
                   <Box mt={2} className={classes.uploadDiv}>
                     {inputState.video ? (
-                      <SimpleCarousel video={inputState.video} type='video' />
+                      <SimpleCarousel
+                        video={inputState.video}
+                        type='video'
+                      />
                     ) : (
                       <span>
                         <ImageIcon fontSize='large' />
@@ -491,7 +542,10 @@ const Create = ({ isUpdate }) => {
                         )
                       }
                     />
-                    <label htmlFor='video' style={{ width: 'fit-content' }}>
+                    <label
+                      htmlFor='video'
+                      style={{ width: 'fit-content' }}
+                    >
                       <Button
                         className={classes.uploadBtn}
                         variant='contained'
@@ -499,7 +553,9 @@ const Create = ({ isUpdate }) => {
                         component='span'
                         disabled={isVideoUploading}
                       >
-                        {isVideoUploading && <CircularProgress size={25} />}
+                        {isVideoUploading && (
+                          <CircularProgress size={25} />
+                        )}
                         Upload Video
                       </Button>
                     </label>

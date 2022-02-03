@@ -15,9 +15,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   Appbar: {
-    // backgroundColor: '#1462aa',
-    backgroundColor: '#fff',
-    // color: '#B033fa',
+    // // backgroundColor: '#212325',
+    backgroundColor: theme.custom.darkFore,
     '& .MuiToolbar-regular': {
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -124,6 +123,11 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
+  },
+  list: {
+    '& a': {
+      color: theme.palette.text.primary,
+    },
   },
 }));
 

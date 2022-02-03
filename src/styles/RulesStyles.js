@@ -106,7 +106,7 @@ const styles = makeStyles((theme) => ({
       position: 'relative',
 
       '&:hover': {
-        backgroundColor: '#fbfdff',
+        backgroundColor: theme.custom.hover,
       },
 
       '& h6': {
@@ -121,8 +121,8 @@ const styles = makeStyles((theme) => ({
       margin: '10px 0',
     },
     '& .MuiAccordionSummary-root.Mui-expanded': {
-      backgroundColor: '#f6fbff',
-      borderBottom: '1px solid #e2e2e2',
+      backgroundColor: theme.custom.hover,
+      borderBottom: `1px solid ${theme.custom.borders}`,
     },
   },
 

@@ -41,7 +41,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   formContent: {
     // maxWidth: 350,
-    backgroundColor: '#fff',
+    backgroundColor: theme.custom.darkFore,
     margin: 'auto',
     display: 'flex',
     flexDirection: 'column',
@@ -50,9 +50,9 @@ export const useStyles = makeStyles((theme) => ({
     padding: 30,
     zIndex: 2,
 
-    '& h4': {
-      color: theme.palette.primary.main,
-    },
+    // '& h4': {
+    //   color: theme.palette.primary.main,
+    // },
 
     [theme.breakpoints.down('sm')]: {
       width: '100%',
@@ -67,11 +67,11 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: 20,
     border: `1px solid ${theme.palette.primary.main}`,
     '& a': {
-      color: '#000',
+      color: theme.palette.text.secondary,
       flex: 1,
       padding: 20,
       '&:hover': {
-        backgroundColor: '#f6fbff',
+        backgroundColor: theme.custom.darkFore,
       },
       '&.active': {
         backgroundColor: theme.palette.primary.main,
