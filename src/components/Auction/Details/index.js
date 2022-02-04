@@ -142,7 +142,8 @@ const AuctionDetails = () => {
   };
 
   const handleSendClaim = (e) => {
-    const { bidid } = e.currrentTarget.dataset;
+    const { bidid } = e.currentTarget.dataset;
+    console.log('bidid', bidid);
     setClaimBidId(bidid);
     toggleClaimOpen();
   };
@@ -150,21 +151,36 @@ const AuctionDetails = () => {
   const createAuctionClaim = async (message) => {
     toggleClaiming();
     try {
-      const resData = await makeReq(
-        `/auctions/${id}/${auction.winningBid}/claim`,
-        {
-          body: {
-            message,
+      if (claimBidId) {
+        const resData = await makeReq(
+          `/auctions/${id}/${claimBidId}/claim`,
+          {
+            body: {
+              message,
+            },
           },
-        },
-        'POST'
-      );
-      console.log('resData', resData);
-      toast.success('Claim Sent Successfully!');
+          'POST'
+        );
+        console.log('resData', resData);
+        toast.success('Claim Sent Successfully!');
+      } else {
+        const resData = await makeReq(
+          `/auctions/${id}/${auction.winningBid}/claim`,
+          {
+            body: {
+              message,
+            },
+          },
+          'POST'
+        );
+        console.log('resData', resData);
+        toast.success('Claim Sent Successfully!');
+      }
     } catch (err) {
       handleCatch(err);
     } finally {
       toggleClaiming();
+      setClaimBidId(null);
     }
   };
 
@@ -277,13 +293,13 @@ const AuctionDetails = () => {
                   Claim Auction
                   {isClaiming && <CircularProgress size={25} />}
                 </Button>{' '}
-                <ClaimMessageDialog
-                  open={isClaimOpen}
-                  toggleDialog={toggleClaimOpen}
-                  success={createAuctionClaim}
-                />
               </Box>
             )}
+            <ClaimMessageDialog
+              open={isClaimOpen}
+              toggleDialog={toggleClaimOpen}
+              success={createAuctionClaim}
+            />
           </section>
         ) : (
           <Typography variant='subtitle1'>Auction Not Found</Typography>

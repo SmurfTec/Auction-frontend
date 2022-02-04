@@ -173,9 +173,7 @@ export default function RequestCard({
             )}
           {status === 'accepted' &&
             filter === 'sent' &&
-            (request.paymentRequest.status
-              ? request.paymentRequest?.status === 'pending'
-              : true) && (
+            request.paymentRequest?.status !== 'pending' && (
               <Button
                 style={{ marginRight: '10px' }}
                 size='small'

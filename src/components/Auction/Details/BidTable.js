@@ -77,17 +77,6 @@ const BidTable = ({
                         Send Claim
                       </Button>
                     </TableCell>
-                    {/* <TableCell>
-                      <Button
-                        variant='contained'
-                        color='secondary'
-                        size='small'
-                        component={Link}
-                        to={`/chat?id=${bid.user._id}`}
-                      >
-                        Chat
-                      </Button>
-                    </TableCell> */}
                   </>
                 )}
               </TableRow>
