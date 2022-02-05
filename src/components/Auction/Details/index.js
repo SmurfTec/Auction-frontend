@@ -165,7 +165,7 @@ const AuctionDetails = () => {
         toast.success('Claim Sent Successfully!');
       } else {
         const resData = await makeReq(
-          `/auctions/${id}/${auction.winningBid}/claim`,
+          `/auctions/${id}/${auction.bids?.[0]?._id}/claim`,
           {
             body: {
               message,
@@ -266,6 +266,27 @@ const AuctionDetails = () => {
                     />
                   )}
                 </Box>
+                {/* If Auction is archived and is specific, then show Claim Button*/}
+                {auction.status === 'archived' && auction.type === 'specific' && (
+                  <Box
+                    style={{
+                      marginTop: '1rem',
+                      textAlign: 'right',
+                      marginLeft: 'auto',
+                    }}
+                  >
+                    <Button
+                      disabled={isClaiming}
+                      variant='contained'
+                      color='primary'
+                      type='submit'
+                      onClick={handleClaim}
+                    >
+                      Claim Auction
+                      {isClaiming && <CircularProgress size={25} />}
+                    </Button>{' '}
+                  </Box>
+                )}
                 {/* {true && ( */}
                 {auction?.status === 'published' && (
                   <CreateBidForm
@@ -280,21 +301,6 @@ const AuctionDetails = () => {
               </Box>
             )}
 
-            {/* If Auction is archived and is specific, then show Claim Button*/}
-            {auction.status === 'archived' && auction.type === 'specific' && (
-              <Box style={{ marginTop: '1rem', textAlign: 'right' }}>
-                <Button
-                  disabled={isClaiming}
-                  variant='contained'
-                  color='primary'
-                  type='submit'
-                  onClick={handleClaim}
-                >
-                  Claim Auction
-                  {isClaiming && <CircularProgress size={25} />}
-                </Button>{' '}
-              </Box>
-            )}
             <ClaimMessageDialog
               open={isClaimOpen}
               toggleDialog={toggleClaimOpen}

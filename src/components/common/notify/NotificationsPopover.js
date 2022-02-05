@@ -14,7 +14,6 @@ import {
   IconButton,
   Typography,
   ListSubheader,
-  Icon,
 } from '@material-ui/core';
 // utils
 // components
@@ -92,6 +91,7 @@ const NotificationsPopover = () => {
         size='medium'
         color={open ? 'primary' : 'default'}
         onClick={handleOpen}
+        style={{ marginRight: '1rem' }}
         sx={{
           ...(open && {
             bgcolor: (theme) =>
