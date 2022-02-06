@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import Search from '@material-ui/icons/Search';
 import { useTextInput, useToggleInput } from 'hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -75,7 +75,7 @@ export default function CustomizedInputBase() {
               aria-invalid='false'
               aria-autocomplete='list'
               aria-controls='NavSearch--results'
-              placeholder='Search for auctions'
+              placeholder='Buy Anything…Hypothetically'
               type='search'
               value={search}
               onFocus={() => handleHover((st) => !st)}
@@ -84,6 +84,13 @@ export default function CustomizedInputBase() {
               style={{ cursor: 'text' }}
             />
           </div>
+          <Typography
+            variant='body2'
+            style={{ marginTop: '1rem', textAlign: 'center' }}
+          >
+            The world’s biggest hypothetical marketplace – Propose, Bid or buy
+            any item or experience you’ve ever wanted.
+          </Typography>
         </Box>
       </form>
     </>

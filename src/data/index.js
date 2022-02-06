@@ -129,7 +129,7 @@ export const auctions = [
 
 export const footerInfo = {
   decription:
-    'All auctions are hypothetical until claimed & in no way represent intent or knowledge of role. Taboo Auctions is in no way responsible for the content, pricing or any complaints or financial disputes that arise.',
+    'All LotPot auctions are purely hypothetical until they are claimed by an individual and auctions in no way represents intent or knowledge on the part of the third party in question and LotPot. Therefore,  LotPot is in no way responsible for the content, pricing or financial disputes that may arise after the point of sale on agreed upon terms on the platform.',
   contactUs: {
     pressEmail: 'tauctions_Media@gmail.com',
     helpEmail: 'tauctions_help@gmail.com',
