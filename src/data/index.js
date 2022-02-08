@@ -167,7 +167,7 @@ export const allcategories = [
 
 export const locations = [
   'Asia',
-  'Africa',
+  'UK',
   'Europe',
   'North America',
   'South America',
