@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import Search from '@material-ui/icons/Search';
 import { useTextInput, useToggleInput } from 'hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -42,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     marginRight: 8,
   },
+  caption: {
+    fontWeight: 'bold',
+  },
 }));
 
 export default function CustomizedInputBase() {
@@ -66,7 +69,9 @@ export default function CustomizedInputBase() {
       <form onSubmit={searchResults}>
         <Box className={classes.searchBox}>
           <div
-            className={`${classes.container} ${hover && classes.hoverStyles}`}
+            className={`${classes.container} ${
+              hover && classes.hoverStyles
+            }`}
           >
             <div className={classes.searchIcon}>
               <Search fontSize='small' />
@@ -75,7 +80,7 @@ export default function CustomizedInputBase() {
               aria-invalid='false'
               aria-autocomplete='list'
               aria-controls='NavSearch--results'
-              placeholder='Search for auctions'
+              placeholder='buy anything '
               type='search'
               value={search}
               onFocus={() => handleHover((st) => !st)}
@@ -84,6 +89,10 @@ export default function CustomizedInputBase() {
               style={{ cursor: 'text' }}
             />
           </div>
+          <Typography variant='caption' className={classes.caption}>
+            world’s biggest hypothetical marketplace propose, bid, buy
+            any item or experience you’ve ever wanted
+          </Typography>
         </Box>
       </form>
     </>

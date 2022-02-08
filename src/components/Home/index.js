@@ -1,4 +1,9 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import {
   Box,
   Grid,
@@ -97,7 +102,8 @@ const HomePage = () => {
   useEffect(() => {
     if (!locationFilter) return;
 
-    if (locationFilter === 'all') return setFilteredAuctions(publishedAuctions);
+    if (locationFilter === 'all')
+      return setFilteredAuctions(publishedAuctions);
 
     setFilteredAuctions(
       publishedAuctions?.filter(
@@ -117,7 +123,8 @@ const HomePage = () => {
     // * We have to create array of ids
     filterCats = Object.keys(filterCats);
 
-    if (!filterCats.length) return setFilteredAuctions(publishedAuctions);
+    if (!filterCats.length)
+      return setFilteredAuctions(publishedAuctions);
 
     // console.log(
     //   `newAuctions cats`,
@@ -153,7 +160,9 @@ const HomePage = () => {
 
     setFilteredAuctions(
       publishedAuctions?.filter((el) =>
-        el.title.toLowerCase().includes(parsedQuery.search.toLowerCase())
+        el.title
+          .toLowerCase()
+          .includes(parsedQuery.search.toLowerCase())
       )
     );
   }, [parsedQuery, publishedAuctions]);
@@ -234,7 +243,8 @@ const HomePage = () => {
                       onClick={handlePriceFilter}
                       data-filter='priceAsc'
                       className={clsx({
-                        [customClasses.activePrice]: priceFilter === 'priceAsc',
+                        [customClasses.activePrice]:
+                          priceFilter === 'priceAsc',
                       })}
                     >
                       Price (high-low)
@@ -247,7 +257,8 @@ const HomePage = () => {
                       onClick={handlePriceFilter}
                       data-filter='priceDesc'
                       className={clsx({
-                        [customClasses.activePrice]: priceFilter !== 'priceAsc',
+                        [customClasses.activePrice]:
+                          priceFilter !== 'priceAsc',
                       })}
                     >
                       Price (low-high)
@@ -276,7 +287,8 @@ const HomePage = () => {
                       onClick={handleDateFilter}
                       data-filter='oldest'
                       className={clsx({
-                        [customClasses.activePrice]: dateFilter === 'oldest',
+                        [customClasses.activePrice]:
+                          dateFilter === 'oldest',
                       })}
                     >
                       Oldest
@@ -289,7 +301,8 @@ const HomePage = () => {
                       onClick={handleDateFilter}
                       data-filter='latest'
                       className={clsx({
-                        [customClasses.activePrice]: dateFilter === 'latest',
+                        [customClasses.activePrice]:
+                          dateFilter === 'latest',
                       })}
                     >
                       Latest
@@ -384,7 +397,9 @@ const HomePage = () => {
                                 <Checkbox
                                   color='primary'
                                   name={cat._id}
-                                  checked={categoriesFilters?.[cat._id]}
+                                  checked={
+                                    categoriesFilters?.[cat._id]
+                                  }
                                   onChange={handleCategoryChange}
                                 />
                               }
@@ -461,7 +476,9 @@ const HomePage = () => {
 
               <Pagination
                 color='primary'
-                count={Math.ceil(publishedAuctions.length / rowsPerPage)}
+                count={Math.ceil(
+                  publishedAuctions.length / rowsPerPage
+                )}
                 page={page}
                 onChange={handleChangePage}
                 style={{

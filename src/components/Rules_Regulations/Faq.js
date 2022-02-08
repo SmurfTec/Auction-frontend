@@ -196,9 +196,9 @@ const Faq = () => {
                 <p>
                   *Remember, you don’t even have to make an auction
                   for yourself to win. Create an interesting auction
-                  and let someone else bid and win! You’ll get 0.5%
-                  just for your creativity…for the right auctions
-                  those can really add up 👀
+                  and let someone else bid and win! You’ll get 1% just
+                  for your creativity…for the right auctions those can
+                  really add up 👀
                 </p>
                 <p>
                   Okay…if you really don’t know what you want, we can
@@ -258,6 +258,7 @@ const Faq = () => {
                   going after the people that have a cult-following
                   like interest in your auction.
                 </p>
+                <br></br>
                 <p>
                   The images you pick are critical, and if in doubt
                   make your own thumbnail or explainer video as the

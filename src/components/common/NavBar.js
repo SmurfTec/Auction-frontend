@@ -51,8 +51,9 @@ const Navbar = (props) => {
   const showSearchBar = useMemo(() => {
     // * Either location is home, leaderboard or in myAuctions , then show searchBar
     return (
-      ['/', '/leaderboard'].includes(location.pathname.toLowerCase()) ||
-      location.pathname.toLowerCase().includes('myauctions')
+      ['/', '/leaderboard'].includes(
+        location.pathname.toLowerCase()
+      ) || location.pathname.toLowerCase().includes('myauctions')
     );
   }, [location.pathname]);
 
@@ -64,8 +65,13 @@ const Navbar = (props) => {
     <div className={`${classes.root}`}>
       <AppBar position='fixed' className={classes.Appbar}>
         <Toolbar>
-          <div className={`${classes_g.flexAlignDisp} ${classes.navSearch}`}>
-            <Box className={classes_g.flexAlignDisp} sx={{ columnGap: 5 }}>
+          <div
+            className={`${classes_g.flexAlignDisp} ${classes.navSearch}`}
+          >
+            <Box
+              className={classes_g.flexAlignDisp}
+              sx={{ columnGap: 5 }}
+            >
               <div className={classes.sectionMobile}>
                 <IconButton
                   aria-label='show more'
@@ -114,11 +120,15 @@ const Navbar = (props) => {
                       <NavLink to='/leaderboard'>Leaderboard</NavLink>
                     </Typography>
                     <Typography variant='subtitle2' noWrap>
-                      <NavLink to='/createAuction'>Create Auction</NavLink>
+                      <NavLink to='/createAuction'>
+                        Create Auction
+                      </NavLink>
                     </Typography>
                     {/* <MHidden width='smDown'> */}
                     <Typography variant='subtitle2'>
-                      <NavLink to='/myauctions/watchlist'>My Auctions</NavLink>
+                      <NavLink to='/myauctions/watchlist'>
+                        My Auctions
+                      </NavLink>
                     </Typography>
                     {/* </MHidden> */}
 
@@ -161,6 +171,7 @@ const Navbar = (props) => {
                       size='small'
                       style={{
                         minWidth: 80,
+                        color: 'white',
                       }}
                       onClick={() => navigate('/login')}
                     >
@@ -186,7 +197,10 @@ const Navbar = (props) => {
           <div className={classes.sectionMobile}>
             {isLoggedIn && (
               <>
-                <IconButton aria-label='delete' style={{ color: '#dcd9d4' }}>
+                <IconButton
+                  aria-label='delete'
+                  style={{ color: '#dcd9d4' }}
+                >
                   <NotificationsIcon fontSize='small' />
                 </IconButton>
                 <AccountPopover />
@@ -265,7 +279,9 @@ const Navbar = (props) => {
                 <ListItemIcon style={{ minWidth: 40 }}>
                   <ViewListIcon />
                 </ListItemIcon>
-                <Typography variant='subtitle2'>My Auctions</Typography>
+                <Typography variant='subtitle2'>
+                  My Auctions
+                </Typography>
               </ListItem>
             </NavLink>
           )}

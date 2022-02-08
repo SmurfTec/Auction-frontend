@@ -25,13 +25,13 @@ const Footer = () => {
               sx={{
                 letterSpacing: 1,
                 textAlign: 'justify',
-                marginTop: 35,
+                marginTop: 10,
               }}
             >
-              <Box my={1} sx={{ color: '#fff' }}>
+              <Box sx={{ color: '#fff' }}>
                 <Typography variant='h5'>Disclosure</Typography>
               </Box>
-              <Typography variant='body1'>
+              <Typography variant='caption'>
                 {footerInfo.decription}
               </Typography>
             </Box>
@@ -74,9 +74,9 @@ const Footer = () => {
 
             <Box
               display='flex'
-              mt={3}
+              mt={5}
               sx={{
-                columnGap: 10,
+                columnGap: 15,
                 '& img': {
                   width: 30,
                   height: 30,
