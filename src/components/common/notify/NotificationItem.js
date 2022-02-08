@@ -2,12 +2,13 @@ import PropTypes from 'prop-types';
 import { noCase } from 'change-case';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
+
 // import { Icon } from '@iconify/react';
 // import clockFill from '@iconify/icons-eva/clock-fill';
 // import doneAllFill from '@iconify/icons-eva/done-all-fill';
 
-// material
 import { useTheme } from '@material-ui/core/styles';
+
 import {
   Box,
   Avatar,
@@ -18,7 +19,10 @@ import {
   Icon,
   ListItem,
 } from '@material-ui/core';
-import { AccessTime, FlightTakeoff } from '@material-ui/icons';
+
+import { AccessTime } from '@material-ui/icons';
+import circle from 'assets/LotPot_circle.png';
+import Logo from '../Logo';
 
 const renderContent = (notification) => {
   const title = (
@@ -79,7 +83,10 @@ const NotificationItem = ({ notification }) => {
           // className={classes.}
           style={{ bgcolor: 'aliceblue' }}
         >
-          <FlightTakeoff style={{ color: theme.palette.primary.main }} />
+          {/* <FlightTakeoff
+            style={{ color: theme.palette.primary.main }}
+          /> */}
+          <Logo w={47} h={45} comp='nav' />
         </Avatar>
       </ListItemAvatar>
       <ListItemText

@@ -1,10 +1,19 @@
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+
 // import { Icon } from '@iconify/react';
 // import clockFill from '@iconify/icons-eva/clock-fill';
 // import doneAllFill from '@iconify/icons-eva/done-all-fill';
 
 // material
+
 import { alpha } from '@material-ui/core/styles';
+
 import {
   Box,
   List,
@@ -15,10 +24,12 @@ import {
   Typography,
   ListSubheader,
 } from '@material-ui/core';
+
 // utils
 // components
 import Scrollbar from './Scrollbar';
 import MenuPopover from './MenuPopover';
+
 // import { SocketContext } from 'Contexts/SocketContext';
 // import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -130,14 +141,20 @@ const NotificationsPopover = () => {
         >
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant='subtitle1'>Notifications</Typography>
-            <Typography variant='body2' sx={{ color: 'text.secondary' }}>
+            <Typography
+              variant='body2'
+              sx={{ color: 'text.secondary' }}
+            >
               You have {totalUnRead} unread messages
             </Typography>
           </Box>
 
           {totalUnRead > 0 && (
             <Tooltip title=' Mark all as read'>
-              <IconButton color='primary' onClick={handleMarkAllAsRead}>
+              <IconButton
+                color='primary'
+                onClick={handleMarkAllAsRead}
+              >
                 <DoneAll />
               </IconButton>
             </Tooltip>
