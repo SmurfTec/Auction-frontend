@@ -42,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     marginRight: 8,
   },
+  caption: {
+    fontWeight: 'bold',
+  },
 }));
 
 export default function CustomizedInputBase() {
@@ -91,6 +94,10 @@ export default function CustomizedInputBase() {
             The world’s biggest hypothetical marketplace – Propose, Bid or buy
             any item or experience you’ve ever wanted.
           </Typography>
+          {/* <Typography variant='caption' className={classes.caption}>
+            world’s biggest hypothetical marketplace propose, bid, buy
+            any item or experience you’ve ever wanted
+          </Typography> */}
         </Box>
       </form>
     </>

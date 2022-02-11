@@ -236,6 +236,7 @@ const Faq = () => {
                   long way with the claimants and engagement to get noticed and
                   reshared.
                 </p>
+                <br></br>
                 <p>
                   Each auction is almost a piece of content and art, take care
                   in the details – sloppy work seems like it’s barely wanted

@@ -1,4 +1,10 @@
-import { Box, Button, Grid, TextField, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Grid,
+  TextField,
+  Typography,
+} from '@material-ui/core';
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import bgImg from 'assets/contact_bg.jpg';
@@ -8,6 +14,8 @@ import axios from 'axios';
 import { API_BASE_URL, handleCatch } from 'utils/makeReq';
 import { toast } from 'react-toastify';
 import { useGaTracker } from 'hooks';
+import { useNavigate } from 'react-router-dom';
+
 const styles = makeStyles((theme) => ({
   container: {
     display: 'flex',
@@ -46,6 +54,7 @@ const styles = makeStyles((theme) => ({
 
 const ContactUs = () => {
   useGaTracker();
+  const navigate = useNavigate();
   const classes = styles();
 
   const initialState = {
@@ -67,6 +76,7 @@ const ContactUs = () => {
       );
       toast.success('Your Response has been recorded!');
       resetState();
+      navigate('/');
     } catch (err) {
       handleCatch(err);
     }
