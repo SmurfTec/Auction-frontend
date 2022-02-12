@@ -1,19 +1,16 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import socketIo from 'socket.io-client';
 import { v4 } from 'uuid';
 import { AuthContext } from './AuthContext';
 import { API_BASE_ORIGIN, makeReq } from 'utils/makeReq';
+import { AuctionsContext } from './AuctionsContext';
 
 export const SocketContext = createContext();
 
 export const SocketProvider = (props) => {
   const [socket, setSocket] = useState();
 
+  const { pushClaimRequestReceived } = useContext(AuctionsContext);
   const { user, setUser, token } = useContext(AuthContext);
   const [chats, setChats] = useState([]);
 
@@ -41,18 +38,12 @@ export const SocketProvider = (props) => {
 
     fetchMyChats();
     socket.on('newNotification', (data) => {
-      // console.log(`data`, data);
+      console.log(`data`, data);
 
-      console.log(
-        ` data?.userId?.toString()`,
-        data?.userId?.toString()
-      );
-      console.log(`user._id`, user._id);
-
-      if (
-        data?.userId?.toString().trim() !==
-        user?._id.toString().trim()
-      )
+      if (data.newNotification?.claimRequest) {
+        pushClaimRequestReceived(data.newNotification?.claimRequest);
+      }
+      if (data?.userId?.toString().trim() !== user?._id.toString().trim())
         return;
       // if (JSON.stringify(data.user._id) !== JSON.stringify(user._id)) return;
 
@@ -76,13 +67,10 @@ export const SocketProvider = (props) => {
         setChats((st) =>
           st.map((el) => {
             console.log(`el._id === chatId`, el._id === chatId);
-            console.log(
-              `{ ...el, messages: [...el.messages, message] }`,
-              {
-                ...el,
-                messages: [...el.messages, message],
-              }
-            );
+            console.log(`{ ...el, messages: [...el.messages, message] }`, {
+              ...el,
+              messages: [...el.messages, message],
+            });
             return el._id === chatId
               ? { ...el, messages: [...el.messages, message] }
               : el;

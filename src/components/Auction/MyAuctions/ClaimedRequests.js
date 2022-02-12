@@ -13,6 +13,7 @@ const ClaimRequests = () => {
     claimRequestReceived,
     loadingClaimRequests,
     updateClaimRequestSentById,
+    updateClaimRequestReceivedById,
   } = useContext(AuctionsContext);
 
   const { user } = useContext(AuthContext);
@@ -47,19 +48,30 @@ const ClaimRequests = () => {
   };
   return (
     <>
-      <Box display='flex' justifyContent='left' alignItems='center' mb={1}>
+      <Box display='flex' justifyContent='left' alignItems='center' mb={2}>
         <Button
           variant='contained'
-          color='primary'
+          color={filter === 'sent' ? 'primary' : 'default'}
           size='small'
           onClick={handleSent}
+          style={{
+            transition: '0.5s',
+            borderTopRightRadius: 0,
+            borderBottomRightRadius: 0,
+          }}
         >
           sent
         </Button>
         <Button
+          style={{
+            transition: '0.5s',
+            borderTopLeftRadius: 0,
+            borderBottomLeftRadius: 0,
+          }}
           variant='contained'
           color='success'
           size='small'
+          color={filter !== 'sent' ? 'primary' : 'default'}
           onClick={handleRecieved}
         >
           recieved
@@ -72,6 +84,7 @@ const ClaimRequests = () => {
         setFilter={setFilter}
         filter={filter}
         updateClaimRequestSentById={updateClaimRequestSentById}
+        updateClaimRequestReceivedById={updateClaimRequestReceivedById}
       />
     </>
   );

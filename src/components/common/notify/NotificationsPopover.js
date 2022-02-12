@@ -1,10 +1,4 @@
-import {
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 // import { Icon } from '@iconify/react';
 // import clockFill from '@iconify/icons-eva/clock-fill';
@@ -51,9 +45,18 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     '& .MuiPopover-paper': {
-      overflowY: 'hidden',
       maxHeight: 500,
+      overflowY: 'hidden',
+      width: 400,
     },
+    opacity: 1,
+    transform: 'none',
+    transition:
+      'opacity 343ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 228ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+    top: 54,
+    right: 80,
+    /* left: 53px; */
+    transformOrigin: '984px 0px',
   },
 }));
 
@@ -141,20 +144,14 @@ const NotificationsPopover = () => {
         >
           <Box sx={{ flexGrow: 1 }}>
             <Typography variant='subtitle1'>Notifications</Typography>
-            <Typography
-              variant='body2'
-              sx={{ color: 'text.secondary' }}
-            >
+            <Typography variant='body2' sx={{ color: 'text.secondary' }}>
               You have {totalUnRead} unread messages
             </Typography>
           </Box>
 
           {totalUnRead > 0 && (
             <Tooltip title=' Mark all as read'>
-              <IconButton
-                color='primary'
-                onClick={handleMarkAllAsRead}
-              >
+              <IconButton color='primary' onClick={handleMarkAllAsRead}>
                 <DoneAll />
               </IconButton>
             </Tooltip>

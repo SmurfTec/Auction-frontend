@@ -19,7 +19,7 @@ export const AuctionsProvider = ({ children }) => {
     // removeAuction,
     // clearAuctions,
   ] = useArray([], '_id');
-  const [loading, toggleLoading] = useToggleInput(true);
+  const [loading, toggleLoading, setLoading] = useToggleInput(true);
 
   // * Auctions are getting filtered based on their status to show
   // * On different pages , e.g leaderboard has "claimed" status auctions ,
@@ -40,10 +40,12 @@ export const AuctionsProvider = ({ children }) => {
     // removeMyAuction,
     // clearMyAuctions,
   ] = useArray([], '_id');
-  const [loadingMyAuctions, toggleLoadingMyAuctions] = useToggleInput(true);
+  const [loadingMyAuctions, toggleLoadingMyAuctions, setLoadingMyAuctions] =
+    useToggleInput(true);
 
   const [watchlist, setWatchlist] = useState([]);
-  const [loadingWatchlist, toggleLoadingWatchlist] = useToggleInput(true);
+  const [loadingWatchlist, toggleLoadingWatchlist, setLoadingWatchlist] =
+    useToggleInput(true);
 
   const [
     claimRequestSent,
@@ -64,8 +66,11 @@ export const AuctionsProvider = ({ children }) => {
     // removeClaimRequestReceived,
     // clearClaimRequestReceived,
   ] = useArray([], '_id');
-  const [loadingClaimRequests, toggleLoadingClaimRequests] =
-    useToggleInput(true);
+  const [
+    loadingClaimRequests,
+    toggleLoadingClaimRequests,
+    setLoadingClaimRequests,
+  ] = useToggleInput(true);
 
   const fetchMyAuctions = async () => {
     try {
@@ -75,6 +80,7 @@ export const AuctionsProvider = ({ children }) => {
     } catch (err) {
       // console.log(`err`, err)
     } finally {
+      console.log('toggleing toggleLoadingMyAuctions');
       toggleLoadingMyAuctions();
     }
   };
@@ -109,6 +115,7 @@ export const AuctionsProvider = ({ children }) => {
     } catch (err) {
       // console.log(`err`, err)
     } finally {
+      console.log('toggleing toggleLoadingWatchlist');
       toggleLoadingWatchlist();
     }
   };
@@ -118,7 +125,12 @@ export const AuctionsProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (!isLoggedIn) return;
+    if (!isLoggedIn) {
+      setLoadingMyAuctions(true);
+      setLoadingWatchlist(true);
+      setLoadingClaimRequests(true);
+      return;
+    }
     fetchClaimRequests();
     fetchMyAuctions();
     fetchWatchlist();
@@ -227,6 +239,7 @@ export const AuctionsProvider = ({ children }) => {
         loadingClaimRequests,
         updateClaimRequestReceivedById,
         updateClaimRequestSentById,
+        pushClaimRequestReceived,
       }}
     >
       {children}

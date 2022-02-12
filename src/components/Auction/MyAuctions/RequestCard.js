@@ -22,6 +22,7 @@ import Label from 'components/common/Label';
 
 const useStyles = makeStyles((theme) => ({
   card: {
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',

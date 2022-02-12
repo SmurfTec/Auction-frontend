@@ -126,6 +126,8 @@ const Profile = () => {
     if (!user.isVerified)
       return toast.error('Only verified users can attach account');
 
+    if (user.stripeAccount) return;
+
     const resData = await makeReq(`/users/account-onboard`);
     window.open(resData.url.url);
   };

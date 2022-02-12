@@ -1,5 +1,5 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 // import AuctionStepper from '../Details/AuctionStepper';
 import styles from 'styles/commonStyles';
 import { Skeleton, Pagination } from '@material-ui/lab';
@@ -7,28 +7,17 @@ import { useGaTracker } from 'hooks';
 import ClaimRequestCreater from './ClaimRequestCard';
 import RequestCard from './RequestCard';
 import { makeReq } from 'utils/makeReq';
+import queryString from 'query-string';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
-  auctDetailCont: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexWrap: 'nowrap',
-    flexDirection: 'row',
-
-    '& .MuiCard-root': {
-      marginBottom: 0,
-    },
-
-    [theme.breakpoints.up('md')]: {
-      minWidth: 650,
-    },
-    [theme.breakpoints.up('sm')]: {
-      alignItems: 'center',
-    },
-
-    [theme.breakpoints.down('xs')]: {
-      flexDirection: 'column',
-    },
+  ClaimRequestRoot: {
+    marginInline: 'auto',
+    // maxWidth: 600,
+    width: '95%',
+  },
+  ClaimRequestDescription: {
+    width: '100%',
   },
 }));
 
@@ -38,9 +27,13 @@ const ClaimRequestsList = ({
   setFilter,
   loading,
   updateClaimRequestSentById,
+  updateClaimRequestReceivedById,
 }) => {
   useGaTracker();
   const globalClasses = styles();
+  const classes = useStyles();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   // * Pagination Stuff
   const [page, setPage] = React.useState(1);
@@ -49,6 +42,33 @@ const ClaimRequestsList = ({
     setPage(newPage);
   };
   //* ---- //
+
+  const parsedQuery = useMemo(() => {
+    return queryString.parse(location.search);
+  }, [location.search]);
+
+  useEffect(() => {
+    console.log('parsedQuery', parsedQuery);
+    if (!parsedQuery.tab) return;
+
+    if (!['sent', 'received'].includes(parsedQuery.tab)) return;
+
+    setFilter(parsedQuery.tab);
+
+    if (!parsedQuery.claimRequest) return;
+    setTimeout(() => {
+      // navigate(`${location.pathname.slice(0, -1)}#${parsedQuery.claimRequest}`);
+      const targetCard = document.getElementById(parsedQuery.claimRequest);
+      const root = document.getElementById('root');
+
+      if (!root || !targetCard) return;
+
+      root.scroll({
+        top: targetCard.offsetHeight - targetCard.offsetTop,
+        behavior: 'smooth',
+      });
+    }, 500);
+  }, [parsedQuery.tab]);
 
   if (loading || !requests)
     return Array(10)
@@ -101,7 +121,10 @@ const ClaimRequestsList = ({
       'PATCH'
     );
     console.log('resData', resData);
-    updateClaimRequestSentById(resData.claimRequest?._id, resData.claimRequest);
+    updateClaimRequestReceivedById(
+      resData.claimRequest?._id,
+      resData.claimRequest
+    );
   };
 
   const handleAccept = async (e) => {
@@ -113,7 +136,7 @@ const ClaimRequestsList = ({
       'PATCH'
     );
     console.log('resData', resData);
-    window.open(resData.url);
+    window.open(resData.url, '_self');
   };
 
   return (
@@ -134,18 +157,15 @@ const ClaimRequestsList = ({
               )
               .map((request) => (
                 <div
-                  style={{
-                    marginInline: 'auto',
-                    // maxWidth: 600,
-                  }}
+                  id={request._id}
                   key={request._id}
-                  className={`${globalClasses.flexDisp} ${globalClasses.cardContainer}`}
+                  className={`${classes.ClaimRequestRoot} ${globalClasses.flexDisp} ${globalClasses.cardContainer}`}
                 >
                   <div
                     className={`${globalClasses.flexJustDisp} ${globalClasses.customStyledWidth}`}
                   >
                     <div
-                      className={`${globalClasses.customStyledBox} ${globalClasses.flexJustDisp} ${globalClasses.customStyledWidth}`}
+                      className={`${globalClasses.customStyledBox} ${globalClasses.flexJustDisp} ${globalClasses.customStyledWidth} ${classes.ClaimRequestDescription}`}
                     >
                       <ClaimRequestCreater user={request.user} />
                       <div
