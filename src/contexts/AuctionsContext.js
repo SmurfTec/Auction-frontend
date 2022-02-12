@@ -27,6 +27,8 @@ export const AuctionsProvider = ({ children }) => {
   // * Instead of fitlering auctions in all pages, I have making states here and applying filtering here
 
   const [publishedAuctions, setPublishedAuctions] = useState([]);
+  const [archivedAuctions, setArchivedAuctions] = useState([]);
+
   const [topAuctions, setTopAuctions] = useState([]); // $ for leaderboard
   const [unClaimedAuctions, setUnClaimedAuctions] = useState([]);
 
@@ -46,6 +48,13 @@ export const AuctionsProvider = ({ children }) => {
   const [watchlist, setWatchlist] = useState([]);
   const [loadingWatchlist, toggleLoadingWatchlist, setLoadingWatchlist] =
     useToggleInput(true);
+
+  const [claimedAuctions, setClaimedAuctions] = useState([]);
+  const [
+    loadingClaimedAuctions,
+    toggleLoadingClaimedAuctions,
+    setLoadingClaimedAuctions,
+  ] = useToggleInput(true);
 
   const [
     claimRequestSent,
@@ -119,6 +128,17 @@ export const AuctionsProvider = ({ children }) => {
       toggleLoadingWatchlist();
     }
   };
+  const fetchMyClaimedAuctions = async () => {
+    try {
+      const resData = await makeReq('/auctions/claimed-auctions');
+      // console.log(`resData`, resData);
+      setClaimedAuctions(resData.claimedAuctions);
+    } catch (err) {
+      // console.log(`err`, err)
+    } finally {
+      toggleLoadingClaimedAuctions();
+    }
+  };
 
   useEffect(() => {
     fetchAuctions();
@@ -134,6 +154,7 @@ export const AuctionsProvider = ({ children }) => {
     fetchClaimRequests();
     fetchMyAuctions();
     fetchWatchlist();
+    fetchMyClaimedAuctions();
   }, [isLoggedIn]);
 
   // * whenever auctions changed , We have to update published and leaderboard auctions
@@ -141,6 +162,7 @@ export const AuctionsProvider = ({ children }) => {
     if (loading || !auctions) return;
 
     setPublishedAuctions(auctions.filter((el) => el.status === 'published'));
+    setArchivedAuctions(auctions.filter((el) => el.status === 'archived'));
     setTopAuctions(auctions.filter((el) => el.status === 'claimed'));
     setUnClaimedAuctions(auctions.filter((el) => el.status === 'archived'));
   }, [auctions, loading]);
@@ -230,6 +252,7 @@ export const AuctionsProvider = ({ children }) => {
         addToWatchlist,
         isLoggedIn,
         publishedAuctions,
+        archivedAuctions,
         topAuctions,
         unClaimedAuctions,
         updateAuction,
@@ -240,6 +263,8 @@ export const AuctionsProvider = ({ children }) => {
         updateClaimRequestReceivedById,
         updateClaimRequestSentById,
         pushClaimRequestReceived,
+        claimedAuctions,
+        loadingClaimedAuctions,
       }}
     >
       {children}

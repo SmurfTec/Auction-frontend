@@ -1,9 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import {
   Box,
   Grid,
@@ -34,14 +29,14 @@ import { filterFalseValues } from 'utils/objectMethods';
 import { useGaTracker } from 'hooks';
 import ShareAuction from 'components/common/ShareAuction';
 import Search from 'components/common/Search';
-import bannerImg from 'assets/banner.svg';
+
 const HomePage = () => {
   useGaTracker();
   const location = useLocation();
 
   const globalClasses = styles();
   const customClasses = useStyles();
-  const { publishedAuctions, loading, addToWatchlist } =
+  const { publishedAuctions, archivedAuctions, loading, addToWatchlist } =
     useContext(AuctionsContext);
   const { categories, loading: loadingCategories } =
     useContext(CategoriesContext);
@@ -53,6 +48,7 @@ const HomePage = () => {
   const [categoriesFilters, setCategoriesFilters] = useState();
   const [locationFilter, setLocationFilter] = useState();
   const [priceFilter, setPriceFilter] = useState();
+  const [typeFilter, setTypeFilter] = useState();
   const [dateFilter, setDateFilter] = useState();
 
   // * Filter by search
@@ -103,18 +99,35 @@ const HomePage = () => {
     if (!locationFilter) return;
 
     if (locationFilter === 'all')
-      return setFilteredAuctions(publishedAuctions);
+      return setFilteredAuctions(
+        typeFilter === 'published' ? publishedAuctions : archivedAuctions
+      );
 
-    setFilteredAuctions(
-      publishedAuctions?.filter(
-        (el) => el.location === locationFilter.toLowerCase()
-      )
-    );
-  }, [locationFilter, publishedAuctions]);
+    if (typeFilter === 'published')
+      setFilteredAuctions(
+        publishedAuctions?.filter(
+          (el) => el.location === locationFilter.toLowerCase()
+        )
+      );
+    else
+      setFilteredAuctions(
+        archivedAuctions?.filter(
+          (el) => el.location === locationFilter.toLowerCase()
+        )
+      );
+  }, [locationFilter, publishedAuctions, archivedAuctions]);
+  useEffect(() => {
+    if (!typeFilter) return;
+
+    if (typeFilter === 'published')
+      return setFilteredAuctions(publishedAuctions);
+    else setFilteredAuctions(archivedAuctions);
+  }, [typeFilter, publishedAuctions, archivedAuctions]);
 
   useEffect(() => {
-    if (!categoriesFilters || !publishedAuctions) return;
-    let newAuctions = publishedAuctions;
+    if (!categoriesFilters || !publishedAuctions || !archivedAuctions) return;
+    let newAuctions =
+      typeFilter === 'published' ? publishedAuctions : archivedAuctions;
 
     // * obj ={ 1 : true , 2 :true, 3:Fasle , 4 :false}
     // * We have to filter false values
@@ -123,8 +136,7 @@ const HomePage = () => {
     // * We have to create array of ids
     filterCats = Object.keys(filterCats);
 
-    if (!filterCats.length)
-      return setFilteredAuctions(publishedAuctions);
+    if (!filterCats.length) return setFilteredAuctions(publishedAuctions);
 
     // console.log(
     //   `newAuctions cats`,
@@ -150,7 +162,7 @@ const HomePage = () => {
       return matched;
     });
     setFilteredAuctions(newAuctions);
-  }, [categoriesFilters, publishedAuctions]);
+  }, [categoriesFilters, publishedAuctions, archivedAuctions]);
 
   useEffect(() => {
     // console.log(`parsedQuery`, parsedQuery);
@@ -158,14 +170,19 @@ const HomePage = () => {
       return setFilteredAuctions(publishedAuctions || []);
     // console.log(`parsedQuery2`, parsedQuery);
 
-    setFilteredAuctions(
-      publishedAuctions?.filter((el) =>
-        el.title
-          .toLowerCase()
-          .includes(parsedQuery.search.toLowerCase())
-      )
-    );
-  }, [parsedQuery, publishedAuctions]);
+    if (typeFilter === 'published')
+      setFilteredAuctions(
+        publishedAuctions?.filter((el) =>
+          el.title.toLowerCase().includes(parsedQuery.search.toLowerCase())
+        )
+      );
+    else
+      setFilteredAuctions(
+        archivedAuctions?.filter((el) =>
+          el.title.toLowerCase().includes(parsedQuery.search.toLowerCase())
+        )
+      );
+  }, [parsedQuery, publishedAuctions, archivedAuctions]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -176,6 +193,12 @@ const HomePage = () => {
     // console.log(`e.`, filter);
 
     setPriceFilter(filter);
+  };
+  const handleTypeFilter = (e) => {
+    const { filter } = e.currentTarget.dataset;
+    // console.log(`e.`, filter);
+
+    setTypeFilter(filter);
   };
 
   const handleDateFilter = (e) => {
@@ -232,6 +255,48 @@ const HomePage = () => {
                     variant='subtitle1'
                     className={globalClasses.heading}
                   >
+                    Type
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <div className={customClasses.content}>
+                    <Typography
+                      variant='body1'
+                      style={{ cursor: 'pointer' }}
+                      onClick={handleTypeFilter}
+                      data-filter='published'
+                      className={clsx({
+                        [customClasses.activePrice]: typeFilter === 'published',
+                      })}
+                    >
+                      Published
+                    </Typography>
+                    <Divider />
+
+                    <Typography
+                      variant='body1'
+                      style={{ cursor: 'pointer' }}
+                      onClick={handleTypeFilter}
+                      data-filter='archived'
+                      className={clsx({
+                        [customClasses.activePrice]: typeFilter !== 'published',
+                      })}
+                    >
+                      Archived
+                    </Typography>
+                  </div>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion defaultExpanded>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls='panel1a-content'
+                  id='panel1a-header'
+                >
+                  <Typography
+                    variant='subtitle1'
+                    className={globalClasses.heading}
+                  >
                     Price
                   </Typography>
                 </AccordionSummary>
@@ -243,8 +308,7 @@ const HomePage = () => {
                       onClick={handlePriceFilter}
                       data-filter='priceAsc'
                       className={clsx({
-                        [customClasses.activePrice]:
-                          priceFilter === 'priceAsc',
+                        [customClasses.activePrice]: priceFilter === 'priceAsc',
                       })}
                     >
                       Price (high-low)
@@ -257,8 +321,7 @@ const HomePage = () => {
                       onClick={handlePriceFilter}
                       data-filter='priceDesc'
                       className={clsx({
-                        [customClasses.activePrice]:
-                          priceFilter !== 'priceAsc',
+                        [customClasses.activePrice]: priceFilter !== 'priceAsc',
                       })}
                     >
                       Price (low-high)
@@ -287,8 +350,7 @@ const HomePage = () => {
                       onClick={handleDateFilter}
                       data-filter='oldest'
                       className={clsx({
-                        [customClasses.activePrice]:
-                          dateFilter === 'oldest',
+                        [customClasses.activePrice]: dateFilter === 'oldest',
                       })}
                     >
                       Oldest
@@ -301,8 +363,7 @@ const HomePage = () => {
                       onClick={handleDateFilter}
                       data-filter='latest'
                       className={clsx({
-                        [customClasses.activePrice]:
-                          dateFilter === 'latest',
+                        [customClasses.activePrice]: dateFilter === 'latest',
                       })}
                     >
                       Latest
@@ -397,9 +458,7 @@ const HomePage = () => {
                                 <Checkbox
                                   color='primary'
                                   name={cat._id}
-                                  checked={
-                                    categoriesFilters?.[cat._id]
-                                  }
+                                  checked={categoriesFilters?.[cat._id]}
                                   onChange={handleCategoryChange}
                                 />
                               }
@@ -476,9 +535,7 @@ const HomePage = () => {
 
               <Pagination
                 color='primary'
-                count={Math.ceil(
-                  publishedAuctions.length / rowsPerPage
-                )}
+                count={Math.ceil(publishedAuctions.length / rowsPerPage)}
                 page={page}
                 onChange={handleChangePage}
                 style={{

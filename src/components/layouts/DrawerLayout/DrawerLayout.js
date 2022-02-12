@@ -40,7 +40,7 @@ const drawerList = [
   },
   {
     id: 1123,
-    title: 'Unclaimed Bid',
+    title: 'Unclaimed Auctions',
     link: 'unclaimed',
     icon: <HourglassEmpty />,
   },
