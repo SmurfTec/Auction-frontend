@@ -56,7 +56,7 @@ const LeaderBoard = () => {
   useEffect(() => {
     if (loading || !topAuctions) return;
 
-    setFilteredAuctions(topAuctions.filter((el) => el.status === 'claimed'));
+    setFilteredAuctions(topAuctions);
   }, [topAuctions, loading]);
 
   // * Filter items when Category changes
@@ -117,18 +117,14 @@ const LeaderBoard = () => {
   useEffect(() => {
     if (!topAuctions) return;
 
-    let newAuctions = [];
-    // * Price true means (low-high)
-    if (inputState.price)
-      newAuctions = topAuctions.sort(
-        (a, b) => a.startingPrice - b.startingPrice
+    if (!inputState.price)
+      setFilteredAuctions((st) =>
+        st.sort((a, b) => a.winningPrice - b.winningPrice)
       );
     else
-      newAuctions = topAuctions.sort(
-        (a, b) => b.startingPrice - a.startingPrice
+      setFilteredAuctions((st) =>
+        st.sort((a, b) => b.winningPrice - a.winningPrice)
       );
-
-    setFilteredAuctions(newAuctions);
   }, [inputState.price, topAuctions]);
 
   // * Filter by search
@@ -351,7 +347,7 @@ const LeaderBoard = () => {
                                 variant='body2'
                                 className={globalClasses.upColor}
                               >
-                                {auc.winnerBid?.biddingPrice}
+                                {auc.winningPrice}
                               </Typography>
                             </TableCell>
                             <TableCell align='center'>
