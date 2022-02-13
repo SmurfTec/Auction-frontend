@@ -64,6 +64,10 @@ const GlobalStyles = withStyles((theme) => ({
       textAlign: 'center',
       color: '#000',
 
+      display: 'flex',
+      alignItems: 'center',
+      color: '#fff',
+
       '& img': {
         marginRight: '0.5rem',
       },

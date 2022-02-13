@@ -187,7 +187,7 @@ export default function FeaturedPost({ auction, addToWatchlist, isEdit }) {
                     onClick={handleBookMark}
                     // style={{ paddingInline: 0 }}
                   >
-                    <VisibilityIcon fontSize='small' color='primary' />
+                    <VisibilityIcon fontSize='small' color='default' />
                   </IconButton>
                 </Box>
               </Box>

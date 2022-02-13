@@ -19,21 +19,21 @@ const hoverStyles = {
 const SUCCESS = {
   lighter: '#E9FCD4',
   light: '#AAF27F',
-  main: '#54D62C',
+  main: '#33841a',
   dark: '#229A16',
   darker: '#08660D',
 };
 const WARNING = {
   lighter: '#FFF7CD',
   light: '#FFE16A',
-  main: '#FFC107',
+  main: '#694f00',
   dark: '#B78103',
   darker: '#7A4F01',
 };
 const ERROR = {
   lighter: '#FFE7D9',
   light: '#FFA48D',
-  main: '#FF4842',
+  main: '#a20500',
   dark: '#B72136',
   darker: '#7A0C2E',
 };
@@ -47,7 +47,7 @@ const Theme = ({ children }) => {
           // main: '#4B0082',
         },
 
-        secondary: { main: '#f50057' },
+        secondary: { main: '#a7003b' },
         success: { ...SUCCESS },
         warning: { ...WARNING },
         error: { ...ERROR },

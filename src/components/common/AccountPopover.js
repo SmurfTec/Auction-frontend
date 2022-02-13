@@ -16,6 +16,7 @@ import { toast } from 'react-toastify';
 import { AuthContext } from 'contexts/AuthContext';
 import userImg from 'assets/user.jpg';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const styles = makeStyles((theme) => ({
   iconButton: {
@@ -65,7 +66,8 @@ export default function AccountPopover() {
             }),
           }}
         >
-          <Avatar src={user.photo || userImg} alt='User' />
+          <AccountCircleIcon fontSize='large' />
+          {/* <Avatar src={AccountCircleIcon} alt='User' /> */}
         </IconButton>
       </div>
 

@@ -89,7 +89,7 @@ const ShareAuction = ({ auctionId }) => {
   return (
     <Box>
       <IconButton
-        color='primary'
+        color='default'
         aria-label='Share'
         aria-haspopup='true'
         className={classes.shareBtn}

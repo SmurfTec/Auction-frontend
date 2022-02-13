@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import circle from 'assets/LotPot_circle.png';
+import { Typography } from '@material-ui/core';
 
 function Logo({ w, h, comp }) {
   return (
@@ -11,6 +12,7 @@ function Logo({ w, h, comp }) {
         ) : ( */}
         <img src={circle} width={w} height={h} alt='LotPot Auction' />
         {/* )} */}
+        <Typography variant='h5'>Lotpot</Typography>
       </Link>
     </div>
   );

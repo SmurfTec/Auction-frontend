@@ -48,7 +48,7 @@ const HomePage = () => {
   const [categoriesFilters, setCategoriesFilters] = useState();
   const [locationFilter, setLocationFilter] = useState();
   const [priceFilter, setPriceFilter] = useState();
-  const [typeFilter, setTypeFilter] = useState();
+  const [typeFilter, setTypeFilter] = useState('published');
   const [dateFilter, setDateFilter] = useState();
 
   // * Filter by search
@@ -119,6 +119,7 @@ const HomePage = () => {
   useEffect(() => {
     if (!typeFilter) return;
 
+    console.log('publishedAuctions', publishedAuctions);
     if (typeFilter === 'published')
       return setFilteredAuctions(publishedAuctions);
     else setFilteredAuctions(archivedAuctions);
@@ -233,18 +234,18 @@ const HomePage = () => {
           <Grid item xs={12} sm={4} md={3}>
             <Typography variant='h5'>Filter By</Typography>
             <div className={customClasses.filter}>
-              <Accordion>
-                <AccordionDetails>
-                  <Typography
-                    variant='subtitle2'
-                    className={globalClasses.heading}
-                    style={{ cursor: 'pointer', marginTop: 5 }}
-                    data-filter='mostViewed'
-                  >
-                    Most Viewed
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
+              {/* <Accordion>
+                  <AccordionDetails>
+                    <Typography
+                      variant='subtitle2'
+                      className={globalClasses.heading}
+                      style={{ cursor: 'pointer', marginTop: 5 }}
+                      data-filter='mostViewed'
+                    >
+                      Most Viewed
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion> */}
               <Accordion defaultExpanded>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}

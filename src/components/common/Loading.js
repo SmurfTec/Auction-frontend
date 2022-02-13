@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box, Typography } from '@material-ui/core';
-import { PointSpreadLoading } from 'react-loadingg';
+import { JumpCircleLoading, PointSpreadLoading } from 'react-loadingg';
 import { useTheme } from '@material-ui/styles';
 
-const Loading = ({ noTitle }) => {
+const Loading = ({ noTitle = false }) => {
   const theme = useTheme();
 
   return (
@@ -13,18 +13,20 @@ const Loading = ({ noTitle }) => {
         style={{
           margin: 'auto',
           position: 'absolute',
-          inset: 0,
           minWidth: 'fit-content',
-          transform: 'translateY(-40px)',
+          top: '41%',
+          transform: 'translate(-50%,-50%)',
+          left: '50%',
         }}
       >
         {!noTitle && (
           <Typography variant='h3' color='primary'>
-            Auction App
+            Lotpot
           </Typography>
         )}
       </Box>
-      <PointSpreadLoading color={theme.palette.primary.main} />
+      <JumpCircleLoading color={theme.palette.primary.main} />
+      {/* <PointSpreadLoading color={theme.palette.primary.main} /> */}
     </Box>
   );
 };
