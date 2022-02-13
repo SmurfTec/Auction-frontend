@@ -6,6 +6,7 @@ import { footerInfo } from 'data';
 import Logo from './Logo';
 import { styles } from 'styles/FooterStyles';
 
+import TiktokIcon from 'assets/tiktok3.svg';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import YouTubeIcon from '@material-ui/icons/YouTube';
@@ -91,6 +92,20 @@ const Footer = () => {
                 <img src={GoogleIcon} alt='auction-facebook' />
               </Link> */}
 
+              <a
+                href='https://www.tiktok.com/@lotpot_marketplace?lang=en'
+                target='_blank'
+              >
+                <div className={`${classes.share} ${classes.twitter}`}>
+                  <img
+                    src={TiktokIcon}
+                    style={{
+                      width: 30,
+                      height: 25,
+                    }}
+                  />
+                </div>
+              </a>
               <a href='https://twitter.com/LOTPOT_' target='_blank'>
                 <div className={`${classes.share} ${classes.twitter}`}>
                   <TwitterIcon />
