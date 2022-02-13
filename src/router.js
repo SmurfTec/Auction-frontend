@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { AuthContext } from 'contexts/AuthContext';
 import { useGaTracker } from 'hooks';
 
-const Loading = lazy(() => import('components/common/Loading'));
+import Loading from 'components/common/Loading';
 const DrawerLayout = lazy(() =>
   import('components/layouts/DrawerLayout/DrawerLayout')
 );

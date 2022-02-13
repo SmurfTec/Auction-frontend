@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  TextField,
-  Typography,
-} from '@material-ui/core';
+import { Box, Button, Grid, TextField, Typography } from '@material-ui/core';
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import bgImg from 'assets/contact_bg.jpg';
@@ -19,7 +13,6 @@ import { useNavigate } from 'react-router-dom';
 const styles = makeStyles((theme) => ({
   container: {
     display: 'flex',
-    backgroundImage: `url(${bgImg})`,
     marginBottom: '-2.4rem',
   },
   innerCont: {
@@ -114,6 +107,7 @@ const ContactUs = () => {
                       fullWidth
                       variant='outlined'
                       required
+                      placeholder='The thing your mom calls you'
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -126,6 +120,7 @@ const ContactUs = () => {
                       variant='outlined'
                       required
                       type='email'
+                      placeholder='The thing with the @ in it’'
                     />
                   </Grid>
                   <Grid item xs={12} sm={12}>
@@ -139,6 +134,7 @@ const ContactUs = () => {
                       onChange={handleTxtChange}
                       fullWidth
                       required
+                      placeholder='Really? You’re really gonna do this? Okay thennn, write your message'
                     />
                   </Grid>
                   <Grid item xs={12} sm={12}>
@@ -148,7 +144,7 @@ const ContactUs = () => {
                       type='submit'
                       endIcon={<ArrowRightAltIcon />}
                     >
-                      Send Message
+                      Ruin Becky’s day. Send
                     </Button>
                   </Grid>
                 </Grid>
