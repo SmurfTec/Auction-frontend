@@ -4,6 +4,9 @@ import { AuthContext } from 'contexts/AuthContext';
 import { useGaTracker } from 'hooks';
 
 import Loading from 'components/common/Loading';
+
+const ConfirmMail = lazy(() => import('components/common/ConfirmMail'));
+const ResetPassword = lazy(() => import('components/common/ResetPassword'));
 const DrawerLayout = lazy(() =>
   import('components/layouts/DrawerLayout/DrawerLayout')
 );
@@ -28,6 +31,7 @@ const TermsOfService = lazy(() =>
 const Faq = lazy(() => import('components/Rules_Regulations/Faq'));
 const Register = lazy(() => import('components/common/Register'));
 const Login = lazy(() => import('components/common/Login'));
+const ForgotPassword = lazy(() => import('components/common/ForgotPassword'));
 const CommonLayout = lazy(() => import('components/layouts/CommonLayout'));
 const Chat = lazy(() => import('components/Chat'));
 const ClaimRequests = lazy(() =>
@@ -219,6 +223,30 @@ const Router = () => {
           element={
             <Suspense fallback={<Loading />}>
               <Login />
+            </Suspense>
+          }
+        />
+        <Route
+          path='/forgot-password'
+          element={
+            <Suspense fallback={<Loading />}>
+              <ForgotPassword />
+            </Suspense>
+          }
+        />
+        <Route
+          path='/resetPassword/:token'
+          element={
+            <Suspense fallback={<Loading />}>
+              <ResetPassword />
+            </Suspense>
+          }
+        />
+        <Route
+          path='/confirmMail/:token'
+          element={
+            <Suspense fallback={<Loading />}>
+              <ConfirmMail />
             </Suspense>
           }
         />

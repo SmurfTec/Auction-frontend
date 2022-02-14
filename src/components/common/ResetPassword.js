@@ -1,13 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Button,
   Grid,
   Typography,
   CircularProgress,
   TextField,
+  Checkbox,
 } from '@material-ui/core';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import {
+  Link,
+  NavLink,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import Box from '@material-ui/core/Box';
+import { Alert } from 'components/common/Alert';
 import useManyInputs from 'hooks/useManyInputs';
 import globalStyles from 'styles/commonStyles';
 import { useStyles as formStyles } from 'styles/FormLayoutStyles';
@@ -16,37 +24,38 @@ import { API_BASE_URL, handleCatch } from 'utils/makeReq';
 import axios from 'axios';
 import { useGaTracker } from 'hooks';
 
-const Login = () => {
+const ResetPassword = () => {
   useGaTracker();
   const { isLoggedIn, signInUser } = useContext(AuthContext);
   const classes = globalStyles();
   const formClasses = formStyles();
 
+  const { token } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
 
   const initialState = {
-    email: '',
     password: '',
+    passwordConfirm: '',
   };
 
   const [
     inputState,
     handleTxtChange,
-    ,
-    ,
+    handleToggleChange,
+    changeInput,
     resetState,
-    // setInputstate,
+    setInputstate,
   ] = useManyInputs(initialState);
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   let redirect = location.search ? location.search.split('=')[1] : '/';
 
   useEffect(() => {
     if (isLoggedIn) {
-      // console.log(`userr`, isLoggedIn);
-      navigate(redirect || '/');
+      navigate(redirect);
     }
   }, [isLoggedIn, navigate, redirect]);
 
@@ -54,13 +63,20 @@ const Login = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post(`${API_BASE_URL}/auth/login`, {
-        ...inputState,
-      });
-      // console.log(`res`, res);
+      if (inputState.password !== inputState.passwordConfirm) {
+        return setError('Passwords do not match');
+      } else {
+        const res = await axios.patch(
+          `${API_BASE_URL}/auth/resetPassword/${token}`,
+          {
+            ...inputState,
+          }
+        );
+        // console.log(`res`, res);
 
-      signInUser(res.data.token, res.data.user);
-      resetState();
+        signInUser(res.data.token, res.data.user);
+        resetState();
+      }
     } catch (error) {
       handleCatch(error);
     } finally {
@@ -72,14 +88,10 @@ const Login = () => {
     <div className={formClasses.mainContainer}>
       <div className={formClasses.formSelection}>
         <NavLink to='/login'>
-          <Typography variant='subtitle1' color='textPrimary'>
-            LOGIN
-          </Typography>
+          <Typography variant='subtitle1'>LOGIN</Typography>
         </NavLink>
         <NavLink to='/register'>
-          <Typography variant='subtitle1' color='textPrimary'>
-            JOIN
-          </Typography>
+          <Typography variant='subtitle1'>JOIN</Typography>
         </NavLink>
       </div>
       <div className={formClasses.formContent}>
@@ -89,23 +101,15 @@ const Login = () => {
           gutterBottom
           align='center'
         >
-          Welcome Back
+          Reset Password
         </Typography>
         <form onSubmit={onFormSubmit}>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <TextField
-                name='email'
-                value={inputState.email}
-                label='Email'
-                type='email'
-                onChange={handleTxtChange}
-                variant='outlined'
-                fullWidth
-                size='small'
-                InputProps={{ required: true }}
-              />
-            </Grid>
+            {error !== null && (
+              <Grid item xs={12}>
+                <Alert severity='error'>{error}</Alert>
+              </Grid>
+            )}
 
             <Grid item xs={12}>
               <TextField
@@ -118,8 +122,24 @@ const Login = () => {
                 fullWidth
                 size='small'
                 InputProps={{ required: true }}
+                inputProps={{ min: 8 }}
               />
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name='passwordConfirm'
+                value={inputState.passwordConfirm}
+                label='Confirm Password'
+                type='password'
+                onChange={handleTxtChange}
+                variant='outlined'
+                fullWidth
+                size='small'
+                InputProps={{ required: true }}
+                inputProps={{ min: 8 }}
+              />
+            </Grid>
+
             <Grid item xs={6}>
               <Button
                 type='submit'
@@ -131,45 +151,29 @@ const Login = () => {
                 {loading ? (
                   <CircularProgress size={20} color='inherit' />
                 ) : (
-                  'Sign In'
+                  'Reset Password'
                 )}
               </Button>
             </Grid>
             <Grid item xs={6}>
               <Box
+                className={classes.textWithlink}
                 sx={{
-                  width: 'fit-content',
-                  marginLeft: 'auto',
+                  columnGap: 4,
+                  height: '100%',
                 }}
-                className={classes.embedlinks}
               >
-                <Typography variant='body1' color='textSecondary'>
-                  <Link to='/forgot-password'>Forgot password ?</Link>
+                <Typography variant='body2'>
+                  already have account?{` `}
+                  <Link to='/login'>Login</Link>
                 </Typography>
               </Box>
             </Grid>
           </Grid>
         </form>
-
-        <Grid item xs={6} sm={12}>
-          <Box
-            mt={2}
-            className={classes.textWithlink}
-            sx={{
-              columnGap: 4,
-              height: '100%',
-              justifyContent: 'center',
-            }}
-          >
-            <Typography variant='body1'>
-              not a member?{` `}
-              <Link to='/register'>Join </Link>
-            </Typography>
-          </Box>
-        </Grid>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default ResetPassword;

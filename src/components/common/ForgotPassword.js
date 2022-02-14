@@ -15,8 +15,9 @@ import { AuthContext } from 'contexts/AuthContext';
 import { API_BASE_URL, handleCatch } from 'utils/makeReq';
 import axios from 'axios';
 import { useGaTracker } from 'hooks';
+import { toast } from 'react-toastify';
 
-const Login = () => {
+const ForgotPassword = () => {
   useGaTracker();
   const { isLoggedIn, signInUser } = useContext(AuthContext);
   const classes = globalStyles();
@@ -54,12 +55,12 @@ const Login = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post(`${API_BASE_URL}/auth/login`, {
+      const res = await axios.post(`${API_BASE_URL}/auth//forgot-password`, {
         ...inputState,
       });
       // console.log(`res`, res);
 
-      signInUser(res.data.token, res.data.user);
+      toast.success(res.data.message);
       resetState();
     } catch (error) {
       handleCatch(error);
@@ -106,20 +107,6 @@ const Login = () => {
                 InputProps={{ required: true }}
               />
             </Grid>
-
-            <Grid item xs={12}>
-              <TextField
-                name='password'
-                value={inputState.password}
-                label='Password'
-                type='password'
-                onChange={handleTxtChange}
-                variant='outlined'
-                fullWidth
-                size='small'
-                InputProps={{ required: true }}
-              />
-            </Grid>
             <Grid item xs={6}>
               <Button
                 type='submit'
@@ -131,22 +118,9 @@ const Login = () => {
                 {loading ? (
                   <CircularProgress size={20} color='inherit' />
                 ) : (
-                  'Sign In'
+                  'Reset Password'
                 )}
               </Button>
-            </Grid>
-            <Grid item xs={6}>
-              <Box
-                sx={{
-                  width: 'fit-content',
-                  marginLeft: 'auto',
-                }}
-                className={classes.embedlinks}
-              >
-                <Typography variant='body1' color='textSecondary'>
-                  <Link to='/forgot-password'>Forgot password ?</Link>
-                </Typography>
-              </Box>
             </Grid>
           </Grid>
         </form>
@@ -162,7 +136,7 @@ const Login = () => {
             }}
           >
             <Typography variant='body1'>
-              not a member?{` `}
+              Not a member?{` `}
               <Link to='/register'>Join </Link>
             </Typography>
           </Box>
@@ -172,4 +146,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;
