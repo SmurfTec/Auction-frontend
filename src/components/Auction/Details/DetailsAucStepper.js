@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   img: {
     width: '100%',
-    height: 170,
+    height: '100%',
     flexGrow: 1,
     display: 'block',
     overflow: 'hidden',
@@ -83,7 +83,7 @@ const DetailsAucStepper = ({ auction }) => {
     const arr = [];
 
     if (auction) {
-      arr.push({ type: 'video', url: auction['video'] });
+      if (auction.video) arr.push({ type: 'video', url: auction['video'] });
       auction?.images.map((i) => arr.push({ type: 'img', url: i }));
       setCarousel(arr);
     } else return;

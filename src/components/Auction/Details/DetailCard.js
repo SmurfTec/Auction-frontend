@@ -49,11 +49,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
     '& .MuiChip-root:first-child': {
       backgroundColor: theme.palette.warning.main,
-      boxShadow: `${theme.palette.warning.main}73 0px 0px 10px 0px`,
+      // boxShadow: `${theme.palette.warning.main}73 0px 0px 10px 0px`,
     },
     '& .MuiChip-root:last-child': {
       backgroundColor: theme.palette.success.main,
-      boxShadow: `${theme.palette.success.main}73 0px 0px 10px 0px`,
+      // boxShadow: `${theme.palette.success.main}73 0px 0px 10px 0px`,
     },
     '& .MuiChip-root': {
       marginRight: 10,
@@ -177,11 +177,11 @@ export default function FeaturedPost({ auction, handleBookmark, bookmaking }) {
                     onClick={handleBookmark}
                     style={{
                       marginLeft: 'auto',
-                      color: '#000',
+                      color: '#fff',
                     }}
                     // disabled
                   >
-                    <VisibilityIcon color='primary' />
+                    <VisibilityIcon color='default' />
                   </IconButton>
                 </Box>
               </Box>

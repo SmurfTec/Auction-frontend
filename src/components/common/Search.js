@@ -89,15 +89,16 @@ export default function CustomizedInputBase() {
           </div>
           <Typography
             variant='body2'
-            style={{ marginTop: '1rem', textAlign: 'center' }}
+            style={{
+              marginTop: '1rem',
+              textAlign: 'center',
+              fontStyle: 'italic',
+              fontSize: 12,
+            }}
           >
             The world’s biggest hypothetical marketplace – Propose, Bid or buy
-            any item or experience you’ve ever wanted.
-          </Typography>
-          {/* <Typography variant='caption' className={classes.caption}>
-            world’s biggest hypothetical marketplace propose, bid, buy
             any item or experience you’ve ever wanted
-          </Typography> */}
+          </Typography>
         </Box>
       </form>
     </>

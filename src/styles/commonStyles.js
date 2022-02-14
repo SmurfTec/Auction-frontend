@@ -190,7 +190,7 @@ const useStyles = makeStyles((theme) => ({
   },
   bannerImg: {
     position: 'relative',
-    height: '65vh',
+    height: '92vh',
     width: '100%',
     backgroundSize: 'cover',
     backgroundImage: `url(${heroImg})`,
@@ -198,14 +198,14 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: 'unset',
 
     [theme.breakpoints.up('md')]: {
-      height: '65vh',
+      height: '92vh',
     },
 
     [theme.breakpoints.down('md')]: {
-      height: '60vh',
+      height: '90vh',
     },
     [theme.breakpoints.down('sm')]: {
-      height: '45vh',
+      height: '91vh',
     },
 
     // backgroundColor: 'white',

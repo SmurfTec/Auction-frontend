@@ -27,12 +27,12 @@ const useStyles = makeStyles((theme) => ({
   },
   img: {
     width: '100%',
-    height: 200,
+    height: '100%',
     display: 'block',
     overflow: 'hidden',
-    objectFit: 'contain',
+    // objectFit: 'contain',
     backgroundColor: '#fff',
-    paddingTop: 20,
+    // paddingTop: 20,
     // [theme.breakpoints.down('sm')]: {
     //   height: 300,
     // },

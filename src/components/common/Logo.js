@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import circle from 'assets/LotPot_circle.png';
 import { Typography } from '@material-ui/core';
 
-function Logo({ w, h, comp }) {
+function Logo({ w, h, header = false }) {
   return (
     <div id='logo'>
       <Link component={Link} to='/'>
@@ -12,7 +12,12 @@ function Logo({ w, h, comp }) {
         ) : ( */}
         <img src={circle} width={w} height={h} alt='LotPot Auction' />
         {/* )} */}
-        <Typography variant='h5'>Lotpot</Typography>
+
+        {header && (
+          <Typography variant='subtitle2'>
+            <Link to='/'>Home</Link>
+          </Typography>
+        )}
       </Link>
     </div>
   );

@@ -304,7 +304,7 @@ const Faq = () => {
                 </p>
                 <p>
                   We literally value creativity – for simply creating an auction
-                  idea you receive 0.5% of the ticket price if it is claimed in
+                  idea you receive 1% of the ticket price if it is claimed in
                   the end. There’s no limit to the number of auctions you can
                   create, the only limit is creativity and there’s no end of
                   interesting things you could propose.
@@ -349,8 +349,8 @@ const Faq = () => {
               <Typography>
                 <p>
                   That’s bad luck but you should be proud – you made something
-                  interesting happen! And as a reward you’ll get 0.5% of the
-                  final price of the auction just for your creativity.{' '}
+                  interesting happen! And as a reward you’ll get 1% of the final
+                  price of the auction just for your creativity.{' '}
                 </p>
                 <p>
                   I can sense the hustler in you coming up with 20 ideas right
@@ -449,8 +449,8 @@ const Faq = () => {
                 </p>
                 <p>
                   *if you created an auction that you didn’t win and it gets
-                  claimed, then you get 0.5% of the price and we’ll pay that
-                  right to your registered account’s card details.
+                  claimed, then you get 1% of the price and we’ll pay that right
+                  to your registered account’s card details.
                 </p>
               </Typography>
             </AccordionDetails>

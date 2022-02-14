@@ -32,7 +32,9 @@ const Footer = () => {
               <Box sx={{ color: '#fff' }}>
                 <Typography variant='h5'>Disclosure</Typography>
               </Box>
-              <Typography variant='caption'>{footerInfo.decription}</Typography>
+              <Typography variant='p'>{footerInfo.decription1}</Typography>
+              <br />
+              <Typography variant='p'>{footerInfo.decription2}</Typography>
             </Box>
           </div>
 

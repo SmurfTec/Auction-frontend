@@ -19,21 +19,21 @@ const hoverStyles = {
 const SUCCESS = {
   lighter: '#E9FCD4',
   light: '#AAF27F',
-  main: '#33841a',
+  main: '#54D62C',
   dark: '#229A16',
   darker: '#08660D',
 };
 const WARNING = {
   lighter: '#FFF7CD',
   light: '#FFE16A',
-  main: '#694f00',
+  main: '#FFC107',
   dark: '#B78103',
   darker: '#7A4F01',
 };
 const ERROR = {
   lighter: '#FFE7D9',
   light: '#FFA48D',
-  main: '#a20500',
+  main: '#FF4842',
   dark: '#B72136',
   darker: '#7A0C2E',
 };
@@ -43,11 +43,11 @@ const Theme = ({ children }) => {
       palette: {
         type: 'dark',
         primary: {
-          main: '#7d2ae8',
+          main: '#883aed',
           // main: '#4B0082',
         },
 
-        secondary: { main: '#a7003b' },
+        secondary: { main: '#f50057' },
         success: { ...SUCCESS },
         warning: { ...WARNING },
         error: { ...ERROR },
@@ -104,10 +104,10 @@ const Theme = ({ children }) => {
         },
         MuiChip: {
           colorPrimary: {
-            boxShadow: `#7d2ae873 0px 0px 10px 0px`,
+            // boxShadow: `#7d2ae873 0px 0px 10px 0px`,
           },
           colorSecondary: {
-            boxShadow: `#f5005773 0px 0px 10px 0px`,
+            // boxShadow: `#f5005773 0px 0px 10px 0px`,
           },
         },
         MuiPagination: {
