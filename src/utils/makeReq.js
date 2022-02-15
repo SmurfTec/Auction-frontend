@@ -14,6 +14,7 @@ const API_BASE_ORIGIN = `https://auction-api1.herokuapp.com`;
 const handleCatch = (err) => {
   let errMsg = 'Something Went Wrong';
   if (err.message) errMsg = err.message;
+  if (err.response?.data?.message) errMsg = err.response?.data?.message;
   toast.error(errMsg);
 };
 
