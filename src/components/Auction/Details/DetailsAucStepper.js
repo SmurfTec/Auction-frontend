@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     display: 'block',
     overflow: 'hidden',
-    objectFit: 'contain',
+    objectFit: 'cover',
     backgroundColor: '#fff',
     [theme.breakpoints.down('sm')]: {
       height: 200,

@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
     overflow: 'hidden',
     // objectFit: 'contain',
+    // objectFit: 'cover',
     backgroundColor: '#fff',
     // paddingTop: 20,
     // [theme.breakpoints.down('sm')]: {

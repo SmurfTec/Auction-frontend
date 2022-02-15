@@ -190,23 +190,24 @@ const useStyles = makeStyles((theme) => ({
   },
   bannerImg: {
     position: 'relative',
-    height: '92vh',
+    height: '65vh',
     width: '100%',
-    backgroundSize: 'cover',
-    backgroundImage: `url(${heroImg})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'unset',
+    paddingTop: '5rem',
+    // backgroundSize: 'cover',
+    // backgroundImage: `url(${heroImg})`,
+    // backgroundRepeat: 'no-repeat',
+    // backgroundPosition: 'unset',
 
-    [theme.breakpoints.up('md')]: {
-      height: '92vh',
-    },
+    // [theme.breakpoints.up('md')]: {
+    //   height: '92vh',
+    // },
 
-    [theme.breakpoints.down('md')]: {
-      height: '90vh',
-    },
-    [theme.breakpoints.down('sm')]: {
-      height: '91vh',
-    },
+    // [theme.breakpoints.down('md')]: {
+    //   height: '90vh',
+    // },
+    // [theme.breakpoints.down('sm')]: {
+    //   height: '91vh',
+    // },
 
     // backgroundColor: 'white',
     // backgroundImage: "url('http://www.canvaz.com/portrait/charcoal-1.jpg')",
@@ -215,27 +216,14 @@ const useStyles = makeStyles((theme) => ({
     // backgroundPosition: 'left top',
   },
   bannerCont: {
-    position: 'absolute',
-    bottom: '0.6em',
-    top: '55%',
     height: 'fit-content',
     width: '100%',
-
+    margin: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      width: '60%',
+    },
     '& form': {
       margin: '0 auto',
-      [theme.breakpoints.up('md')]: {
-        width: '43%',
-        '& .MuiBox-root': {
-          marginLeft: 35,
-        },
-      },
-
-      [theme.breakpoints.down('sm')]: {
-        width: '45%',
-        '& .MuiBox-root': {
-          marginLeft: 35,
-        },
-      },
     },
   },
 }));

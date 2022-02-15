@@ -220,6 +220,15 @@ const HomePage = () => {
         {/* <HeroCarousel /> */}
         {/* <img src={bannerImg} alt='banner' width='100%' height='70%' /> */}
         <Box className={globalClasses.bannerImg}>
+          <Typography
+            variant='h1'
+            align='center'
+            style={{
+              color: '#D733DF',
+            }}
+          >
+            LOTPOT
+          </Typography>
           <div className={globalClasses.bannerCont}>
             <Search />
           </div>
