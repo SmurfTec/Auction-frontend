@@ -77,3 +77,7 @@ html {
     transform: rotate(360deg);
   }
 }
+
+.cookitContent {
+  flex: unset !important;
+}

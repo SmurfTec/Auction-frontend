@@ -57,7 +57,7 @@ const BidTable = ({
                 </TableCell>
 
                 <TableCell align='right'>
-                  <Typography variant='body2'>{bid.biddingPrice}</Typography>
+                  <Typography variant='body2'>${bid.biddingPrice}</Typography>
                 </TableCell>
                 <TableCell>
                   <Typography variant='body2'>

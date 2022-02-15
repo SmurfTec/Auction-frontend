@@ -188,6 +188,15 @@ const useStyles = makeStyles((theme) => ({
   upColor: {
     color: theme.custom.success,
   },
+  bannerText: {
+    color: '#D733DF',
+    fontSize: '10vw',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '13vw',
+    },
+    textShadow:
+      '0 0 0px #d733df, 0 0 0px #d733df, 0 0 12px #d733df, 0 0 0px #d733df, 0 0 0px #d733df',
+  },
   bannerImg: {
     position: 'relative',
     height: '65vh',

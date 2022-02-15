@@ -7,12 +7,7 @@ import {
   TextField,
   Checkbox,
 } from '@material-ui/core';
-import {
-  Link,
-  NavLink,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import { Alert } from 'components/common/Alert';
 import useManyInputs from 'hooks/useManyInputs';
@@ -22,6 +17,7 @@ import { AuthContext } from 'contexts/AuthContext';
 import { API_BASE_URL, handleCatch } from 'utils/makeReq';
 import axios from 'axios';
 import { useGaTracker } from 'hooks';
+import { toast } from 'react-toastify';
 
 const Register = () => {
   useGaTracker();
@@ -53,9 +49,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  let redirect = location.search
-    ? location.search.split('=')[1]
-    : '/';
+  let redirect = location.search ? location.search.split('=')[1] : '/';
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -75,7 +69,8 @@ const Register = () => {
         });
         // console.log(`res`, res);
 
-        signInUser(res.data.token, res.data.user);
+        toast.success(res.data.message);
+        // signInUser(res.data.token, res.data.user);
         resetState();
       }
     } catch (error) {

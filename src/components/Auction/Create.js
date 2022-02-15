@@ -7,6 +7,9 @@ import {
   FormControl,
   Grid,
   InputLabel,
+  List,
+  ListItem,
+  ListItemText,
   MenuItem,
   Paper,
   Select,
@@ -42,8 +45,7 @@ const Create = ({ isUpdate }) => {
     updateAuction,
   } = useContext(AuctionsContext);
   const [isSubmitting, toggleSubmitting] = useToggleInput(false);
-  const [validating, toggleValidating, setValidating] =
-    useToggleInput(true);
+  const [validating, toggleValidating, setValidating] = useToggleInput(true);
   const disabled = false;
   const { id } = useParams();
   const navigate = useNavigate();
@@ -60,20 +62,12 @@ const Create = ({ isUpdate }) => {
     twitterTarget: undefined,
     instagramTarget: undefined,
   };
-  const [
-    inputState,
-    handleTxtChange,
-    ,
-    changeInput,
-    ,
-    setInputstate,
-  ] = useManyInputs(initialState);
+  const [inputState, handleTxtChange, , changeInput, , setInputstate] =
+    useManyInputs(initialState);
   const [disable, setDisable] = React.useState(false);
   //   const [open, setOpen] = React.useState(false);
-  const [isImageUploading, toggleImageUploading] =
-    useToggleInput(false);
-  const [isVideoUploading, toggleVideoUploading] =
-    useToggleInput(false);
+  const [isImageUploading, toggleImageUploading] = useToggleInput(false);
+  const [isVideoUploading, toggleVideoUploading] = useToggleInput(false);
 
   const [isPublishOpen, togglePublishOpen] = useToggleInput(false);
 
@@ -117,8 +111,7 @@ const Create = ({ isUpdate }) => {
 
     if (isUpdate)
       updateAuction({ ...inputState, status }, id, toggleSubmitting);
-    else
-      createNewAuction({ ...inputState, status }, toggleSubmitting);
+    else createNewAuction({ ...inputState, status }, toggleSubmitting);
   };
 
   const handleTimeline = (e) => {
@@ -179,9 +172,7 @@ const Create = ({ isUpdate }) => {
       }
     } catch (err) {
       toast(
-        err?.response?.data?.message ||
-          err.message ||
-          'Something Went Wrong'
+        err?.response?.data?.message || err.message || 'Something Went Wrong'
       );
       // console.log(`err`, err);
     } finally {
@@ -243,325 +234,336 @@ const Create = ({ isUpdate }) => {
                 </Grid>
               </Grid>
             ) : (
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    name='title'
-                    value={inputState.title}
-                    label='Title'
-                    onChange={handleTxtChange}
-                    variant='outlined'
-                    fullWidth
-                    required
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  {/* <TextField
-                  name='location'
-                  value={inputState.location}
-                  label='Location'
-                  onChange={handleTxtChange}
-                  variant='outlined'
-                  required
-                /> */}
-                  <FormControl
-                    variant='outlined'
-                    className={classes.selectControl}
-                    fulWidth
-                  >
-                    <InputLabel
-                      htmlFor='outlined-age-native-simple'
-                      fullWidth
-                    >
-                      Location
-                    </InputLabel>
-                    <Select
-                      value={inputState.location}
-                      onChange={handleLocation}
-                      label='Location'
-                      fullWidth
-                      required
-                    >
-                      {locations.map((loc) => (
-                        <MenuItem key={loc} value={loc.toLowerCase()}>
-                          {loc}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    name='startingPrice'
-                    value={inputState.startingPrice}
-                    label='Starting Price'
-                    onChange={handleTxtChange}
-                    variant='outlined'
-                    fullWidth
-                    required
-                    type='number'
-                    inputProps={{ min: 10 }}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl
-                    variant='outlined'
-                    className={classes.selectControl}
-                    fulWidth
-                  >
-                    <InputLabel
-                      htmlFor='outlined-age-native-simple'
-                      fullWidth
-                    >
-                      TimeLine
-                    </InputLabel>
-                    <Select
-                      value={inputState.timeLine}
-                      onChange={handleTimeline}
-                      label='TimeLine'
-                      fullWidth
-                    >
-                      <MenuItem value={7}>1 week</MenuItem>
-                      <MenuItem value={14}>2 week</MenuItem>
-                      <MenuItem value={21}>3 week</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-
-                <Grid item xs={12} sm={8}>
-                  <Autocomplete
-                    className={classes.categories}
-                    multiple
-                    disabled={disabled || disable}
-                    id='categories'
-                    value={inputState.categories}
-                    onChange={handleCatOnChange}
-                    options={categories}
-                    required
-                    getOptionLabel={(option) => option.name}
-                    renderTags={(tagValue, getTagProps) =>
-                      tagValue.map((option, index) => (
-                        <Chip
-                          label={option.name}
-                          {...getTagProps({ index })}
-                          color='default'
-                          disabled={false}
-                        />
-                      ))
-                    }
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label='Categories'
-                        variant='outlined'
-                        //   placeholder='Favorites'
-                      />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <FormControl
-                    variant='outlined'
-                    className={classes.selectControl}
-                    fulWidth
-                  >
-                    <InputLabel
-                      htmlFor='outlined-age-native-simple'
-                      fullWidth
-                    >
-                      Auction Type
-                    </InputLabel>
-                    <Select
-                      value={inputState.type}
-                      onChange={handleType}
-                      label='Auction Type'
+              <>
+                <Typography variant='h5'>How It Works</Typography>
+                <List>
+                  <ListItem>
+                    <ListItemText
+                      secondary={`Thinking of a unique item or experience you want that doesn't exist yet or you can't find normally?`}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      secondary={`Enter its details below and publish it on lotpot to see it get claimed and come true!`}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      secondary={`Specific - if it's about someone or something specific, enter their social media handles so only they can get notified and come along to claim it and provide your item or service`}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      secondary={`Open-ended - if you want to select the best person to fulfill your dream and let anyone or more than one person offer to claim the auction once bidding stops, then select this option`}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      secondary={`If you don't end up being the top bidder on your auction idea, we'll still pay you 1% of the total price automatically to your connected account just for your idea, so keep 'em coming!`}
+                    />
+                  </ListItem>
+                </List>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name='title'
+                      value={inputState.title}
+                      label='Title'
+                      onChange={handleTxtChange}
+                      variant='outlined'
                       fullWidth
                       required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    {/* <TextField
+                    name='location'
+                    value={inputState.location}
+                    label='Location'
+                    onChange={handleTxtChange}
+                    variant='outlined'
+                    required
+                  /> */}
+                    <FormControl
+                      variant='outlined'
+                      className={classes.selectControl}
+                      fulWidth
                     >
-                      <MenuItem value={'specific'}>Specific</MenuItem>
-                      <MenuItem value={'openEnded'}>
-                        Open Ended
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-
-                {isSpecificAuction && (
-                  <>
-                    <Grid item xs={12}>
-                      <Typography
-                        variant='body2'
-                        style={{ color: '#7d2ae8' }}
+                      <InputLabel
+                        htmlFor='outlined-age-native-simple'
+                        fullWidth
                       >
-                        &nbsp; NOTE : Only a specific person can claim
-                        this type of auction
+                        Location
+                      </InputLabel>
+                      <Select
+                        value={inputState.location}
+                        onChange={handleLocation}
+                        label='Location'
+                        fullWidth
+                        required
+                      >
+                        {locations.map((loc) => (
+                          <MenuItem key={loc} value={loc.toLowerCase()}>
+                            {loc}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name='startingPrice'
+                      value={inputState.startingPrice}
+                      label='Starting Price $'
+                      onChange={handleTxtChange}
+                      variant='outlined'
+                      fullWidth
+                      required
+                      type='number'
+                      inputProps={{ min: 10 }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl
+                      variant='outlined'
+                      className={classes.selectControl}
+                      fulWidth
+                    >
+                      <InputLabel
+                        htmlFor='outlined-age-native-simple'
+                        fullWidth
+                      >
+                        TimeLine
+                      </InputLabel>
+                      <Select
+                        value={inputState.timeLine}
+                        onChange={handleTimeline}
+                        label='TimeLine'
+                        fullWidth
+                      >
+                        <MenuItem value={7}>1 week</MenuItem>
+                        <MenuItem value={14}>2 week</MenuItem>
+                        <MenuItem value={21}>3 week</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+
+                  <Grid item xs={12} sm={8}>
+                    <Autocomplete
+                      className={classes.categories}
+                      multiple
+                      disabled={disabled || disable}
+                      id='categories'
+                      value={inputState.categories}
+                      onChange={handleCatOnChange}
+                      options={categories}
+                      required
+                      getOptionLabel={(option) => option.name}
+                      renderTags={(tagValue, getTagProps) =>
+                        tagValue.map((option, index) => (
+                          <Chip
+                            label={option.name}
+                            {...getTagProps({ index })}
+                            color='default'
+                            disabled={false}
+                          />
+                        ))
+                      }
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label='Categories'
+                          variant='outlined'
+                          //   placeholder='Favorites'
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <FormControl
+                      variant='outlined'
+                      className={classes.selectControl}
+                      fulWidth
+                    >
+                      <InputLabel
+                        htmlFor='outlined-age-native-simple'
+                        fullWidth
+                      >
+                        Auction Type
+                      </InputLabel>
+                      <Select
+                        value={inputState.type}
+                        onChange={handleType}
+                        label='Auction Type'
+                        fullWidth
+                        required
+                      >
+                        <MenuItem value={'specific'}>Specific</MenuItem>
+                        <MenuItem value={'openEnded'}>Open Ended</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+
+                  {isSpecificAuction && (
+                    <>
+                      <Grid item xs={12}>
+                        <Typography
+                          variant='body2'
+                          style={{ color: '#7d2ae8' }}
+                        >
+                          &nbsp; NOTE : Only a specific person can claim this
+                          type of auction
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          name='twitterTarget'
+                          required
+                          value={inputState.twitterTarget}
+                          label='Twitter Username'
+                          onChange={handleTxtChange}
+                          variant='outlined'
+                          fullWidth
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          name='instagramTarget'
+                          required
+                          value={inputState.instagramTarget}
+                          label='Instagram Username'
+                          onChange={handleTxtChange}
+                          variant='outlined'
+                          fullWidth
+                        />
+                      </Grid>
+                    </>
+                  )}
+                  {!isSpecificAuction && (
+                    <Grid item xs={12}>
+                      <Typography variant='body2' style={{ color: '#7d2ae8' }}>
+                        &nbsp; NOTE : Anyone can claim this type of auction
                       </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        name='twitterTarget'
-                        required
-                        value={inputState.twitterTarget}
-                        label='Twitter Username'
-                        onChange={handleTxtChange}
-                        variant='outlined'
-                        fullWidth
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        name='instagramTarget'
-                        required
-                        value={inputState.instagramTarget}
-                        label='Instagram Username'
-                        onChange={handleTxtChange}
-                        variant='outlined'
-                        fullWidth
-                      />
-                    </Grid>
-                  </>
-                )}
-                {!isSpecificAuction && (
-                  <Grid item xs={12}>
-                    <Typography
-                      variant='body2'
-                      style={{ color: '#7d2ae8' }}
-                    >
-                      &nbsp; NOTE : Anyone can claim this type of
-                      auction
-                    </Typography>
+                  )}
+                  <Grid item xs={12} sm={12}>
+                    <TextField
+                      name='description'
+                      required
+                      multiline
+                      rows={4}
+                      value={inputState.description}
+                      label='Description'
+                      onChange={handleTxtChange}
+                      variant='outlined'
+                      fullWidth
+                    />
                   </Grid>
-                )}
-                <Grid item xs={12} sm={12}>
-                  <TextField
-                    name='description'
-                    required
-                    multiline
-                    rows={4}
-                    value={inputState.description}
-                    label='Description'
-                    onChange={handleTxtChange}
-                    variant='outlined'
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Box mt={2} className={classes.uploadDiv}>
-                    {inputState.images.length > 0 ? (
-                      <SimpleCarousel
-                        deleteImg={deleteImg}
-                        type='image'
-                        images={inputState.images}
-                      />
-                    ) : (
-                      <span>
-                        <ImageIcon fontSize='large' />
-                        Add upto 5 images
-                      </span>
-                    )}
-                  </Box>
-                  <Box mt={2}>
-                    <input
-                      accept='image/*'
-                      style={{ display: 'none' }}
-                      id='image'
-                      disabled={isImageUploading}
-                      multiple
-                      type='file'
-                      onChange={(e) =>
-                        handleImageUpload(
-                          e,
-                          {
-                            fileType: ['image/'],
-                          },
-                          toggleImageUploading,
-                          (img) => {
-                            setInputstate((st) => ({
-                              ...st,
-                              images: [...st.images, img],
-                            }));
-                          }
-                        )
-                      }
-                    />
-                    <label
-                      htmlFor='image'
-                      style={{ width: 'fit-content' }}
-                    >
-                      {' '}
-                      <Button
-                        className={classes.uploadBtn}
-                        variant='contained'
-                        color='primary'
-                        component='span'
+                  <Grid item xs={12} sm={6}>
+                    <Box mt={2} className={classes.uploadDiv}>
+                      {inputState.images.length > 0 ? (
+                        <SimpleCarousel
+                          deleteImg={deleteImg}
+                          type='image'
+                          images={inputState.images}
+                        />
+                      ) : (
+                        <span>
+                          <ImageIcon fontSize='large' />
+                          Add upto 5 images
+                        </span>
+                      )}
+                    </Box>
+                    <Box mt={2}>
+                      <input
+                        accept='image/*'
+                        style={{ display: 'none' }}
+                        id='image'
                         disabled={isImageUploading}
-                      >
-                        Upload Image
-                        {isImageUploading && (
-                          <CircularProgress size={25} />
-                        )}
-                      </Button>
-                    </label>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Box mt={2} className={classes.uploadDiv}>
-                    {inputState.video ? (
-                      <SimpleCarousel
-                        video={inputState.video}
-                        type='video'
+                        multiple
+                        type='file'
+                        onChange={(e) =>
+                          handleImageUpload(
+                            e,
+                            {
+                              fileType: ['image/'],
+                            },
+                            toggleImageUploading,
+                            (img) => {
+                              setInputstate((st) => ({
+                                ...st,
+                                images: [...st.images, img],
+                              }));
+                            }
+                          )
+                        }
                       />
-                    ) : (
-                      <span>
-                        <ImageIcon fontSize='large' />
-                        Add a Video
-                      </span>
-                    )}
-                  </Box>
-                  <Box mt={2}>
-                    <input
-                      accept='video/*'
-                      style={{ display: 'none' }}
-                      id='video'
-                      disabled={isVideoUploading}
-                      multiple
-                      type='file'
-                      onChange={(e) =>
-                        handleImageUpload(
-                          e,
-                          {
-                            fileType: ['video/'],
-                          },
-                          toggleVideoUploading,
-                          (vid) => {
-                            setInputstate((st) => ({
-                              ...st,
-                              video: vid,
-                            }));
-                          }
-                        )
-                      }
-                    />
-                    <label
-                      htmlFor='video'
-                      style={{ width: 'fit-content' }}
-                    >
-                      <Button
-                        className={classes.uploadBtn}
-                        variant='contained'
-                        color='primary'
-                        component='span'
+                      <label htmlFor='image' style={{ width: 'fit-content' }}>
+                        {' '}
+                        <Button
+                          className={classes.uploadBtn}
+                          variant='contained'
+                          color='primary'
+                          component='span'
+                          disabled={isImageUploading}
+                        >
+                          Upload Image
+                          {isImageUploading && <CircularProgress size={25} />}
+                        </Button>
+                      </label>
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Box mt={2} className={classes.uploadDiv}>
+                      {inputState.video ? (
+                        <SimpleCarousel video={inputState.video} type='video' />
+                      ) : (
+                        <span>
+                          <ImageIcon fontSize='large' />
+                          Add a Video
+                        </span>
+                      )}
+                    </Box>
+                    <Box mt={2}>
+                      <input
+                        accept='video/*'
+                        style={{ display: 'none' }}
+                        id='video'
                         disabled={isVideoUploading}
-                      >
-                        {isVideoUploading && (
-                          <CircularProgress size={25} />
-                        )}
-                        Upload Video
-                      </Button>
-                    </label>
-                  </Box>
+                        multiple
+                        type='file'
+                        onChange={(e) =>
+                          handleImageUpload(
+                            e,
+                            {
+                              fileType: ['video/'],
+                            },
+                            toggleVideoUploading,
+                            (vid) => {
+                              setInputstate((st) => ({
+                                ...st,
+                                video: vid,
+                              }));
+                            }
+                          )
+                        }
+                      />
+                      <label htmlFor='video' style={{ width: 'fit-content' }}>
+                        <Button
+                          className={classes.uploadBtn}
+                          variant='contained'
+                          color='primary'
+                          component='span'
+                          disabled={isVideoUploading}
+                        >
+                          {isVideoUploading && <CircularProgress size={25} />}
+                          Upload Video
+                        </Button>
+                      </label>
+                    </Box>
+                  </Grid>
                 </Grid>
-              </Grid>
+              </>
             )}
           </form>
           <Box mt={5}>

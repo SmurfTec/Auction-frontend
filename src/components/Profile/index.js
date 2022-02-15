@@ -83,6 +83,13 @@ const Profile = () => {
     });
     // console.log(`inputState`, inputState);
   };
+  const updateAbout = (e) => {
+    e.preventDefault();
+    updateMe({
+      about: inputState.about,
+    });
+    // console.log(`inputState`, inputState);
+  };
 
   const handleSaveCard = (e) => {
     e.preventDefault();
@@ -129,7 +136,7 @@ const Profile = () => {
     if (user.stripeAccount) return;
 
     const resData = await makeReq(`/users/account-onboard`);
-    window.open(resData.url.url);
+    window.open(resData.url.url, '_self');
   };
 
   return (
@@ -175,13 +182,15 @@ const Profile = () => {
               <Divider />
             </Box>
 
-            <TextField
-              name='about'
-              value={inputState.about}
-              label='Tap to add your bio'
-              onChange={handleTxtChange}
-              fullWidth
-            />
+            <form onSubmit={updateAbout}>
+              <TextField
+                name='about'
+                value={inputState.about}
+                label='Tap to add your bio'
+                onChange={handleTxtChange}
+                fullWidth
+              />
+            </form>
           </CardContent>
         </Card>
         <Card className={`${classes.card} ${classes.accountsCard} `}>

@@ -92,6 +92,11 @@ const AuctionDetails = () => {
         'You must validate your Social Accounts before claim!'
       );
     }
+    // * Check if user is verified,
+    if (!user.stripeAccount) {
+      toggleClaiming();
+      return toast.error('You must attach your stripe account before claiming');
+    }
 
     // * Check if user is tagged on specific,
     if (
@@ -142,6 +147,9 @@ const AuctionDetails = () => {
   };
 
   const handleSendClaim = (e) => {
+    // * Check if user has his stripe account attached
+    if (!user.stripeAccount)
+      return toast.error('Attach your stripe account before sending claim');
     const { bidid } = e.currentTarget.dataset;
     console.log('bidid', bidid);
     setClaimBidId(bidid);
@@ -197,10 +205,13 @@ const AuctionDetails = () => {
     if (!auction) return 0;
 
     // * for 1st bid , min amount is auction's startingPricce
-    if (!auction.bids.length) return auction.startingPrice + 1;
+    if (!auction.bids.length)
+      return Math.floor(auction.startingPrice + auction.startingPrice * 0.05);
 
     // * as bids are sorted as latest first, so first bid's value should be highest
-    return auction.bids[0].biddingPrice + 1;
+    return Math.floor(
+      auction.bids[0].biddingPrice + auction.bids[0].biddingPrice * 0.05
+    );
   }, [auction]);
 
   const isMyAuction = useMemo(() => {

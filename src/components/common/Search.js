@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CustomizedInputBase() {
+export default function CustomizedInputBase({ noText = false }) {
   const classes = useStyles();
   const [search, handleChange] = useTextInput('');
   const [hover, handleHover] = useToggleInput(false);
@@ -87,18 +87,20 @@ export default function CustomizedInputBase() {
               style={{ cursor: 'text' }}
             />
           </div>
-          <Typography
-            variant='body2'
-            style={{
-              marginTop: '1rem',
-              textAlign: 'center',
-              fontStyle: 'italic',
-              fontSize: 12,
-            }}
-          >
-            The world’s biggest hypothetical marketplace – Propose, Bid or buy
-            any item or experience you’ve ever wanted
-          </Typography>
+          {!noText && (
+            <Typography
+              variant='body2'
+              style={{
+                marginTop: '1rem',
+                textAlign: 'center',
+                fontStyle: 'italic',
+                fontSize: 12,
+              }}
+            >
+              The world’s biggest hypothetical marketplace – Propose, Bid or buy
+              any item or experience you’ve ever wanted
+            </Typography>
+          )}
         </Box>
       </form>
     </>

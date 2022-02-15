@@ -130,7 +130,7 @@ const Chat = () => {
               <img src={chatImg} alt='chat' />
               <Typography variant='h4'>Chat</Typography>
             </div> */}
-            <SearchBar />
+            <SearchBar noText />
           </div>
           <Box>
             <Divider />

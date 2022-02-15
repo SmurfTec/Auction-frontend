@@ -223,9 +223,7 @@ const HomePage = () => {
           <Typography
             variant='h1'
             align='center'
-            style={{
-              color: '#D733DF',
-            }}
+            className={globalClasses.bannerText}
           >
             LOTPOT
           </Typography>
@@ -279,7 +277,7 @@ const HomePage = () => {
                         [customClasses.activePrice]: typeFilter === 'published',
                       })}
                     >
-                      Published
+                      Live Auctions
                     </Typography>
                     <Divider />
 
@@ -292,7 +290,7 @@ const HomePage = () => {
                         [customClasses.activePrice]: typeFilter !== 'published',
                       })}
                     >
-                      Archived
+                      Claimable Auctions
                     </Typography>
                   </div>
                 </AccordionDetails>

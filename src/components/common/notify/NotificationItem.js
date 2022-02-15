@@ -33,7 +33,7 @@ const renderContent = (notification) => {
         variant='body2'
         sx={{ color: 'text.secondary' }}
       >
-        &nbsp; {noCase(notification.description)}
+        &nbsp; {noCase(notification.description?.slice(0, 100))}
       </Typography>
     </Typography>
   );

@@ -35,7 +35,7 @@ const CreateBidForm = ({
 
       <Box mt={2}>
         <Typography variant='subtitle2'>
-          Bid Amount : Minimum Bid {startingPrice}
+          Bid Amount : Minimum Bid ${startingPrice}
         </Typography>
       </Box>
       <form onSubmit={handleAddBid}>
