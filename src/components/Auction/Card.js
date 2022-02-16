@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-start',
   },
   cardIntro: {
-    flexBasis: '50%',
+    flexBasis: '73%',
     '& h5': {
       textAlign: 'left',
     },
@@ -120,7 +120,14 @@ export default function FeaturedPost({ auction, addToWatchlist, isEdit }) {
   };
 
   return (
-    <Box className={globalClasses.flexAlignDisp} sx={{ columnGap: 10 }}>
+    <Box
+      className={globalClasses.flexAlignDisp}
+      sx={{ columnGap: 10 }}
+      style={{
+        height: '100%',
+        // paddingTop: 40,
+      }}
+    >
       <Card className={customClasses.card}>
         <CardActionArea
           onClick={() => {
