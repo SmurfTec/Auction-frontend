@@ -121,7 +121,14 @@ export default function RequestCard({
             </Button>
             <Box className={customClasses.cardIntroBox}>
               <Box className={customClasses.cardIntro}>
-                <Typography component='h2' variant='body1'>
+                <Typography
+                  component='h2'
+                  variant='body1'
+                  style={{
+                    wordBreak: 'break-all',
+                    marginRight: 10,
+                  }}
+                >
                   {message}
                 </Typography>
               </Box>
