@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     rowGap: 5,
     justifyContent: 'flex-end',
     '& .MuiChip-root:first-child': {
-      backgroundColor: theme.palette.warning.main,
+      backgroundColor: theme.palette.primary.main,
       // boxShadow: `${theme.palette.warning.main}73 0px 0px 10px 0px`,
     },
     '& .MuiChip-root:last-child': {
@@ -104,6 +104,7 @@ export default function FeaturedPost({ auction, addToWatchlist, isEdit }) {
     createdAt,
     publishDate,
     categories,
+    type,
   } = auction;
 
   const handleBookMark = (e) => {
@@ -139,6 +140,17 @@ export default function FeaturedPost({ auction, addToWatchlist, isEdit }) {
                   <Edit fontSize='small' color='primary' />
                 </IconButton>
               )}
+              <Typography
+                variant='body2'
+                style={{
+                  fontStyle: 'italic',
+                  position: 'absolute',
+                  right: 10,
+                }}
+                color='primary'
+              >
+                type : {type}
+              </Typography>
               <Box className={customClasses.cardIntroBox}>
                 <Box className={customClasses.cardIntro}>
                   <Typography component='h2' variant='h4'>

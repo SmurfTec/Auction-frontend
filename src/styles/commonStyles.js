@@ -199,9 +199,9 @@ const useStyles = makeStyles((theme) => ({
   },
   bannerImg: {
     position: 'relative',
-    height: '65vh',
+    height: '43vh',
     width: '100%',
-    paddingTop: '5rem',
+    paddingTop: '2rem',
     // backgroundSize: 'cover',
     // backgroundImage: `url(${heroImg})`,
     // backgroundRepeat: 'no-repeat',

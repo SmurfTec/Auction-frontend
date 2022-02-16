@@ -13,7 +13,7 @@ import { SocketContext } from 'contexts/SocketContext';
 import { useTextInput } from 'hooks';
 import { useToggleInput } from 'hooks';
 import { AuthContext } from 'contexts/AuthContext';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { makeReq } from 'utils/makeReq';
 import useStyles from './styles';
 import ChatItem from './ChatItem';
@@ -165,8 +165,25 @@ const Chat = () => {
                   ))}
           </List>
         </Grid>
-        <Grid item xs={8} style={{ minHeight: '70vh' }}>
+        <Grid
+          item
+          xs={8}
+          style={{
+            minHeight: '70vh',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+          }}
+        >
           <List id='messageArea' className={classes.messageArea}>
+            <Typography
+              variant='h5'
+              component={Link}
+              to={`/auctionDetails/${activeChat?.auction?._id}`}
+              style={{ textDecoration: 'none' }}
+            >
+              Auction : {activeChat?.auction?.title}
+            </Typography>
             {activeChat?.messages &&
               activeChat.messages.map((message) => (
                 <React.Fragment key={message._id}>
@@ -179,9 +196,16 @@ const Chat = () => {
                 </React.Fragment>
               ))}
           </List>
-          <Divider />
+          {/* <Divider /> */}
           {activeChat && (
-            <Grid container style={{ padding: '13px', alignItems: 'center' }}>
+            <Grid
+              container
+              style={{
+                padding: '13px',
+                alignItems: 'center',
+                borderTop: '1px solid rgba(255, 255, 255, 0.12)',
+              }}
+            >
               <Grid item xs={10}>
                 <form id='messageForm' onSubmit={handleCreateMessage}>
                   <div className={classes.typeMessage}>

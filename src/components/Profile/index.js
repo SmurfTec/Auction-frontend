@@ -13,7 +13,6 @@ import {
 } from '@material-ui/core';
 import React, { useEffect, useContext } from 'react';
 
-import userImg from 'assets/user.jpg';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import useManyInputs from 'hooks/useManyInputs';
@@ -25,6 +24,7 @@ import { makeReq, handleCatch, API_BASE_URL } from 'utils/makeReq';
 import InstagramLogin from 'react-instagram-oauth';
 import { useGaTracker } from 'hooks';
 import { toast } from 'react-toastify';
+import { AccountCircle } from '@material-ui/icons';
 
 const Profile = () => {
   useGaTracker();
@@ -133,10 +133,13 @@ const Profile = () => {
     if (!user.isVerified)
       return toast.error('Only verified users can attach account');
 
-    if (user.stripeAccount) return;
-
     const resData = await makeReq(`/users/account-onboard`);
     window.open(resData.url.url, '_self');
+  };
+
+  const viewStripeDashboard = async () => {
+    const resData = await makeReq(`/users/account-dashboard`);
+    window.open(resData.url);
   };
 
   return (
@@ -147,12 +150,8 @@ const Profile = () => {
         >
           <CardContent>
             <div className={classes.profileImg}>
-              <Avatar
-                src={userImg}
-                alt='User'
-                size='large'
-                className={classes.large}
-              />
+              <AccountCircle className={classes.large} />
+              {/* <Avatar alt='User' size='large' className={classes.large} /> */}
             </div>
 
             <div className={classes.content}>
@@ -365,16 +364,25 @@ const Profile = () => {
             style={{ textAlign: 'center' }}
           >
             {/* <Box sx={{ textAlign: 'center', maxWidth: 300, margin: '0 auto' }}> */}
-            <Button
-              onClick={handleConnectAccount}
-              variant='contained'
-              className={`${classes.twtIcon} ${classes.twitterHover}`}
-              color='secondary'
-            >
-              {user?.stripeAccount
-                ? 'Stripe Account Connected'
-                : 'Connect Account'}
-            </Button>
+            {!user.stripeAccount?.id ? (
+              <Button
+                onClick={handleConnectAccount}
+                variant='contained'
+                className={`${classes.twtIcon} ${classes.twitterHover}`}
+                color='secondary'
+              >
+                Connect Stripe
+              </Button>
+            ) : (
+              <Button
+                onClick={viewStripeDashboard}
+                variant='contained'
+                className={`${classes.twtIcon} ${classes.twitterHover}`}
+                color='secondary'
+              >
+                Stripe Dashboard
+              </Button>
+            )}
             {/* <Typography variant='subtitle2'>Credit or Debit Card</Typography> */}
             <Box mt={2}>
               {/* <form onSubmit={handleSaveCard} id='cardform'>

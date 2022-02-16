@@ -14,7 +14,6 @@ import {
 import MenuPopover from './MenuPopover';
 import { toast } from 'react-toastify';
 import { AuthContext } from 'contexts/AuthContext';
-import userImg from 'assets/user.jpg';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 

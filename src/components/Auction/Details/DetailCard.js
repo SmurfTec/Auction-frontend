@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     rowGap: 5,
     justifyContent: 'flex-end',
     '& .MuiChip-root:first-child': {
-      backgroundColor: theme.palette.warning.main,
+      backgroundColor: theme.palette.primary.main,
       // boxShadow: `${theme.palette.warning.main}73 0px 0px 10px 0px`,
     },
     '& .MuiChip-root:last-child': {
@@ -89,8 +89,7 @@ export default function FeaturedPost({ auction, handleBookmark, bookmaking }) {
     description,
     categories,
     status,
-    timeLine,
-    claimExpiry,
+    type,
   } = auction;
 
   return (
@@ -156,9 +155,23 @@ export default function FeaturedPost({ auction, handleBookmark, bookmaking }) {
                   flexDirection: 'column',
                 }}
               >
-                <Typography variant='body1' paragraph>
-                  {description}
-                </Typography>
+                <Box>
+                  <Chip
+                    size='small'
+                    variant='outlined'
+                    label={`type : ${type}`}
+                    color='primary'
+                    style={{
+                      marginLeft: 'auto',
+                      display: 'flex',
+                      width: 'fit-content',
+                      marginBottom: '1rem',
+                    }}
+                  />
+                  <Typography variant='body1' paragraph>
+                    {description}
+                  </Typography>
+                </Box>
 
                 <Box mt={1} display='flex' alignItems='center'>
                   <Box className={classes.cardCategories}>

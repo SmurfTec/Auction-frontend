@@ -9,6 +9,7 @@ import RequestCard from './RequestCard';
 import { makeReq } from 'utils/makeReq';
 import queryString from 'query-string';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
   ClaimRequestRoot: {
@@ -104,6 +105,7 @@ const ClaimRequestsList = ({
       'PATCH'
     );
     console.log('resData', resData);
+    toast.success('Payment Request Sent Successfully!');
     updateClaimRequestSentById(resData.claimRequest?._id, resData.claimRequest);
   };
 
