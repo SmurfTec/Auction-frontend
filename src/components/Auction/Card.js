@@ -140,17 +140,6 @@ export default function FeaturedPost({ auction, addToWatchlist, isEdit }) {
                   <Edit fontSize='small' color='primary' />
                 </IconButton>
               )}
-              <Typography
-                variant='body2'
-                style={{
-                  fontStyle: 'italic',
-                  position: 'absolute',
-                  right: 10,
-                }}
-                color='primary'
-              >
-                type : {type}
-              </Typography>
               <Box className={customClasses.cardIntroBox}>
                 <Box className={customClasses.cardIntro}>
                   <Typography component='h2' variant='h4'>
@@ -160,6 +149,22 @@ export default function FeaturedPost({ auction, addToWatchlist, isEdit }) {
                     ${startingPrice}
                   </Typography>
 
+                  {auction.type === 'specific' && (
+                    <Typography
+                      component='h2'
+                      variant='subtitle1'
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(
+                          `http://www.twitter.com/${auction.twitterTarget}`
+                        );
+                      }}
+                      className={globalClasses.taggedPerson}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      @{auction.twitterTarget}
+                    </Typography>
+                  )}
                   <Typography variant='subtitle1' paragraph>
                     {location}
                   </Typography>
@@ -207,6 +212,15 @@ export default function FeaturedPost({ auction, addToWatchlist, isEdit }) {
               <div className={customClasses.createdInfo}>
                 <Typography variant='body2' color='textSecondary'>
                   Published By : {user?.name}
+                </Typography>
+                <Typography
+                  variant='body2'
+                  color='textSecondary'
+                  style={{
+                    fontStyle: 'italic',
+                  }}
+                >
+                  type : {type}
                 </Typography>
                 <Typography variant='body2' color='textSecondary'>
                   Published{' '}

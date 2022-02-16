@@ -9,6 +9,8 @@ import { Box, Chip, IconButton } from '@material-ui/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { calculateCountdown } from 'utils/dateFunctions';
 import { useGaTracker } from 'hooks';
+import { Link } from 'react-router-dom';
+import useGlobalStyles from 'styles/commonStyles';
 const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
@@ -66,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
 export default function FeaturedPost({ auction, handleBookmark, bookmaking }) {
   useGaTracker();
   const classes = useStyles();
+  const globalClasses = useGlobalStyles();
 
   const timeLeft = useMemo(() => {
     if (!auction) return;
@@ -118,6 +121,21 @@ export default function FeaturedPost({ auction, handleBookmark, bookmaking }) {
                 <Typography variant='h3' color='textSecondary'>
                   $ {status === 'published' ? startingPrice : winningPrice}
                 </Typography>
+                {auction.type === 'specific' && (
+                  <Typography
+                    className={globalClasses.taggedPerson}
+                    component='h2'
+                    variant='subtitle1'
+                    onClick={() => {
+                      window.open(
+                        `http://www.twitter.com/${auction.twitterTarget}`
+                      );
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    @{auction.twitterTarget}
+                  </Typography>
+                )}
 
                 <Box
                   mt={4}
@@ -156,18 +174,6 @@ export default function FeaturedPost({ auction, handleBookmark, bookmaking }) {
                 }}
               >
                 <Box>
-                  <Chip
-                    size='small'
-                    variant='outlined'
-                    label={`type : ${type}`}
-                    color='primary'
-                    style={{
-                      marginLeft: 'auto',
-                      display: 'flex',
-                      width: 'fit-content',
-                      marginBottom: '1rem',
-                    }}
-                  />
                   <Typography variant='body1' paragraph>
                     {description}
                   </Typography>
@@ -225,6 +231,9 @@ export default function FeaturedPost({ auction, handleBookmark, bookmaking }) {
             <div className={classes.createdInfo}>
               <Typography variant='body1' color='textSecondary'>
                 Published By : {user?.name}
+              </Typography>
+              <Typography variant='body1' color='textSecondary'>
+                type {type}
               </Typography>
               <Typography variant='body1' color='textSecondary'>
                 Created At : {new Date(createdAt).toLocaleDateString()}

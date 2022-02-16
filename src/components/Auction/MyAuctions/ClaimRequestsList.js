@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   ClaimRequestRoot: {
     marginInline: 'auto',
     // maxWidth: 600,
-    width: '95%',
+    width: '85%',
   },
   ClaimRequestDescription: {
     width: '100%',

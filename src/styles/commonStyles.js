@@ -3,6 +3,11 @@ import heroImg from 'assets/banner.svg';
 
 const useStyles = makeStyles((theme) => ({
   // ^ Common for all
+  taggedPerson: {
+    '&:hover': {
+      color: theme.palette.primary.main,
+    },
+  },
   embedlinks: {
     '& a': {
       color: theme.palette.text.secondary,
@@ -189,17 +194,17 @@ const useStyles = makeStyles((theme) => ({
     color: theme.custom.success,
   },
   bannerText: {
-    color: '#D733DF',
+    color: 'violet',
     fontSize: '10vw',
     [theme.breakpoints.down('xs')]: {
       fontSize: '13vw',
     },
     textShadow:
-      '0 0 0px #d733df, 0 0 0px #d733df, 0 0 12px #d733df, 0 0 0px #d733df, 0 0 0px #d733df',
+      '0 0 0px violet, 0 0 0px violet, 0 0 12px violet, 0 0 0px violet, 0 0 0px violet',
   },
   bannerImg: {
     position: 'relative',
-    height: '43vh',
+    height: '46vh',
     width: '100%',
     paddingTop: '2rem',
     // backgroundSize: 'cover',

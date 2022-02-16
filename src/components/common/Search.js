@@ -89,12 +89,14 @@ export default function CustomizedInputBase({ noText = false }) {
           </div>
           {!noText && (
             <Typography
-              variant='body2'
+              variant='h6'
               style={{
                 marginTop: '1rem',
                 textAlign: 'center',
                 fontStyle: 'italic',
-                fontSize: 12,
+                width: 600,
+                marginInline: 'auto',
+                // fontSize: 12,
               }}
             >
               The world’s biggest hypothetical marketplace – Propose, Bid or buy
