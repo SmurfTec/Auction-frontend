@@ -31,6 +31,19 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '#7d2ae873 0px 0px 10px 0px',
     backgroundColor: theme.custom.borders,
   },
+  searchTxt: {
+    marginTop: '1rem',
+    textAlign: 'center',
+    fontStyle: 'italic',
+    width: 600,
+    marginInline: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      width: 400,
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: 300,
+    },
+  },
   searchBox: {
     height: 45,
     // width: '100%',
@@ -87,22 +100,20 @@ export default function CustomizedInputBase({ noText = false }) {
               style={{ cursor: 'text' }}
             />
           </div>
-          {!noText && (
+          {/* {!noText && (
             <Typography
               variant='h6'
-              style={{
-                marginTop: '1rem',
-                textAlign: 'center',
-                fontStyle: 'italic',
-                width: 600,
-                marginInline: 'auto',
-                // fontSize: 12,
-              }}
+              className={classes.searchTxt}
+              style={
+                {
+                  // fontSize: 12,
+                }
+              }
             >
               The world’s biggest hypothetical marketplace – Propose, Bid or buy
               any item or experience you’ve ever wanted
             </Typography>
-          )}
+          )} */}
         </Box>
       </form>
     </>

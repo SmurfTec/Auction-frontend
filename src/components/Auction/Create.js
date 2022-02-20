@@ -207,62 +207,77 @@ const Create = ({ isUpdate }) => {
       </Box>
       <div className={classes.root}>
         <Paper className={classes.paper}>
-          <form id='createform' onSubmit={handleSubmit}>
-            {validating ? (
-              <Grid container spacing={3}>
-                {Array(4)
-                  .fill()
-                  .map((_, idx) => (
-                    <Grid key={idx} item xs={12} sm={6}>
-                      <Skeleton />
-                    </Grid>
-                  ))}
-                <Grid item xs={12} sm={8}>
-                  <Skeleton />
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <Skeleton />
-                </Grid>
-                <Grid item xs={12} sm={12}>
-                  <Skeleton />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Skeleton />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Skeleton />
-                </Grid>
+          {validating ? (
+            <Grid container spacing={3}>
+              {Array(4)
+                .fill()
+                .map((_, idx) => (
+                  <Grid key={idx} item xs={12} sm={6}>
+                    <Skeleton />
+                  </Grid>
+                ))}
+              <Grid item xs={12} sm={8}>
+                <Skeleton />
               </Grid>
-            ) : (
-              <>
-                <Typography variant='h5'>How It Works</Typography>
-                <List>
-                  <ListItem>
-                    <ListItemText
-                      secondary={`Thinking of a unique item or experience you want that doesn't exist yet or you can't find normally?`}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemText
-                      secondary={`Enter its details below and publish it on lotpot to see it get claimed and come true!`}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemText
-                      secondary={`Specific - if it's about someone or something specific, enter their social media handles so only they can get notified and come along to claim it and provide your item or service`}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemText
-                      secondary={`Open-ended - if you want to select the best person to fulfill your dream and let anyone or more than one person offer to claim the auction once bidding stops, then select this option`}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemText
-                      secondary={`If you don't end up being the top bidder on your auction idea, we'll still pay you 1% of the total price automatically to your connected account just for your idea, so keep 'em coming!`}
-                    />
-                  </ListItem>
-                </List>
+              <Grid item xs={12} sm={4}>
+                <Skeleton />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <Skeleton />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Skeleton />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Skeleton />
+              </Grid>
+            </Grid>
+          ) : (
+            <>
+              <Typography gutterBottom variant='h5'>
+                How It Works
+              </Typography>
+              <ul style={{ marginLeft: '1rem' }}>
+                <li>
+                  <Typography gutterBottom variant='body2'>
+                    Thinking of a unique item or experience you want that
+                    doesn't exist yet or you can't find normally?
+                  </Typography>
+                </li>
+                <li>
+                  <Typography gutterBottom variant='body2'>
+                    Enter its details below and publish it on lotpot to see it
+                    get claimed and come true!
+                  </Typography>
+                </li>
+                <li>
+                  <Typography gutterBottom variant='body2'>
+                    Specific - if it's about someone or something specific,
+                    enter their social media handles so only they can get
+                    notified and come along to claim it and provide your item or
+                    service
+                  </Typography>
+                </li>
+                <li>
+                  <Typography gutterBottom variant='body2'>
+                    Open-ended - if you want to select the best person to
+                    fulfill your dream and let anyone or more than one person
+                    offer to claim the auction once bidding stops, then select
+                    this option
+                  </Typography>
+                </li>
+                <li>
+                  <Typography gutterBottom variant='body2'>
+                    If you don't end up being the top bidder on your auction
+                    idea, we'll still pay you 1% of the total price
+                    automatically to your connected account just for your idea,
+                    so keep 'em coming!
+                  </Typography>
+                </li>
+              </ul>
+              <br />
+
+              <form id='createform' onSubmit={handleSubmit}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <TextField
@@ -563,9 +578,9 @@ const Create = ({ isUpdate }) => {
                     </Box>
                   </Grid>
                 </Grid>
-              </>
-            )}
-          </form>
+              </form>
+            </>
+          )}
           <Box mt={5}>
             <Divider />
           </Box>
