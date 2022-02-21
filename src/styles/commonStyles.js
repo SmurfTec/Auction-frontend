@@ -212,9 +212,10 @@ const useStyles = makeStyles((theme) => ({
     height: '92vh',
     width: '100%',
     backgroundSize: 'cover',
-    backgroundImage: `url(${md4})`,
+    background: `linear-gradient(to bottom, rgba(0,0,0,0) 20%, rgba(0,0,0,1)), url(${md4})`,
+    // backgroundImage: `url(${md4})`,
     backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'unset',
+    backgroundPosition: 'center',
 
     [theme.breakpoints.up('md')]: {
       height: '92vh',
@@ -225,11 +226,11 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down('sm')]: {
       height: '91vh',
-      backgroundImage: `url(${md4})`,
       backgroundPosition: 'center',
     },
     [theme.breakpoints.down('xs')]: {
-      backgroundImage: `url(${xs})`,
+      background: `linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,1)), url(${xs})`,
+      backgroundPosition: 'center',
       height: '45vh',
     },
   },
