@@ -212,7 +212,8 @@ const useStyles = makeStyles((theme) => ({
     height: '92vh',
     width: '100%',
     backgroundSize: 'cover',
-    background: `linear-gradient(to bottom, rgba(0,0,0,0) 20%, rgba(0,0,0,1)), url(${md4})`,
+    background: `linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,1)), url(${md4})`,
+    backgroundRepeat: 'no-repeat',
     // backgroundImage: `url(${md4})`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
@@ -225,13 +226,15 @@ const useStyles = makeStyles((theme) => ({
       height: '90vh',
     },
     [theme.breakpoints.down('sm')]: {
-      height: '91vh',
+      height: '50vh',
       backgroundPosition: 'center',
+      background: `linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,1)), url(${md1})`,
     },
     [theme.breakpoints.down('xs')]: {
       background: `linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,1)), url(${xs})`,
       backgroundPosition: 'center',
       height: '45vh',
+      backgroundSize: 'cover',
     },
   },
   bannerCont: {
