@@ -230,6 +230,12 @@ const useStyles = makeStyles((theme) => ({
       backgroundRepeat: 'no-repeat !important',
       background: `linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,1)), url(${md1})`,
     },
+    ['@media (min-height: 780px) and (max-width: 768px)']: {
+      height: '40vh',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat !important',
+      background: `linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,1)), url(${md1})`,
+    },
     [theme.breakpoints.down('xs')]: {
       background: `linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,1)), url(${xs})`,
       backgroundPosition: 'center',
@@ -249,6 +255,9 @@ const useStyles = makeStyles((theme) => ({
       '& .MuiBox-root': {
         marginLeft: 35,
       },
+    },
+    ['@media (min-height: 780px) and (max-width: 768px)']: {
+      marginLeft: '1rem',
     },
 
     [theme.breakpoints.down('sm')]: {
