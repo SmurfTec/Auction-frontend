@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     // },
   },
   mobileStepper: {
-    backgroundColor: 'transparent',
+    backgroundColor: theme.custom.svg,
     '& svg': {
       color: '#dcd9d4',
     },

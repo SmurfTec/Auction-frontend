@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiCardActionArea-root': {
       display: 'flex',
       // backgroundColor: '#1a1d1e',
-      backgroundColor: theme.custom.darkFore,
+      backgroundColor: theme.custom.svg,
     },
   },
   cardDetails: {
