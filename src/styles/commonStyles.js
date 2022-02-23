@@ -218,7 +218,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: 'center',
 
     [theme.breakpoints.up('md')]: {
-      height: '92vh',
+      height: '100vh',
     },
 
     [theme.breakpoints.down('md')]: {
