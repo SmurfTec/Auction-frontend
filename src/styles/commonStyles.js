@@ -209,13 +209,12 @@ const useStyles = makeStyles((theme) => ({
   },
   bannerImg: {
     position: 'relative',
-    height: '92vh',
+    height: '110vh',
     width: '100%',
     backgroundSize: 'cover',
     background: `linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,1)), url(${md4})`,
-    backgroundRepeat: 'no-repeat',
+    backgroundRepeat: 'no-repeat !important',
     // backgroundImage: `url(${md4})`,
-    backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
 
     [theme.breakpoints.up('md')]: {
@@ -226,8 +225,9 @@ const useStyles = makeStyles((theme) => ({
       height: '90vh',
     },
     [theme.breakpoints.down('sm')]: {
-      height: '50vh',
+      height: '60vh',
       backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat !important',
       background: `linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,1)), url(${md1})`,
     },
     [theme.breakpoints.down('xs')]: {
