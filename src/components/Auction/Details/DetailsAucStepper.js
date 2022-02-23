@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#fff',
     [theme.breakpoints.down('sm')]: {
       height: 200,
+      objectFit: 'contain',
     },
   },
   mobileStepper: {

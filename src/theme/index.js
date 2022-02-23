@@ -76,9 +76,9 @@ const Theme = ({ children }) => {
         up: '#34c77b',
 
         // darkFore: '#1a1d1e',
-        darkFore: '#212324',
+        darkFore: '#17191A',
         borders: bordersColor,
-        svg: '#dcd9d4',
+        svg: '#212324',
         hover: hoverColor,
       },
       overrides: {

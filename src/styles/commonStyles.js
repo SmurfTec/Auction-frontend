@@ -230,8 +230,14 @@ const useStyles = makeStyles((theme) => ({
       backgroundRepeat: 'no-repeat !important',
       background: `linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,1)), url(${md1})`,
     },
+    ['@media (min-height: 780px) and (max-width: 900px)']: {
+      height: '41vh',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat !important',
+      background: `linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,1)), url(${md1})`,
+    },
     ['@media (min-height: 780px) and (max-width: 768px)']: {
-      height: '40vh',
+      height: '41vh',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat !important',
       background: `linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,1)), url(${md1})`,
