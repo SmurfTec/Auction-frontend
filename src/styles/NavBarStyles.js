@@ -14,6 +14,12 @@ const useStyles = makeStyles((theme) => ({
       alignSelf: 'start',
     },
   },
+  NavPadding: {
+    paddingTop: 64,
+    [theme.breakpoints.down('xs')]: {
+      paddingTop: 55,
+    },
+  },
   Appbar: {
     // // backgroundColor: '#212325',
     backgroundColor: theme.custom.darkFore,

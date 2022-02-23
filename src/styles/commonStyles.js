@@ -218,14 +218,14 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: 'center',
 
     [theme.breakpoints.up('md')]: {
-      height: '100vh',
+      height: '110vh',
     },
 
     [theme.breakpoints.down('md')]: {
-      height: '90vh',
+      height: '92vh',
     },
     [theme.breakpoints.down('sm')]: {
-      height: '60vh',
+      height: '80vh',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat !important',
       background: `linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgba(0,0,0,1)), url(${md1})`,

@@ -197,7 +197,7 @@ const Navbar = (props) => {
         </Toolbar>
       </AppBar>
 
-      <Box paddingTop={'64px'} />
+      <Box className={classes.NavPadding} />
 
       <Drawer
         anchor='left'
