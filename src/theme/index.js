@@ -84,7 +84,7 @@ const Theme = ({ children }) => {
       overrides: {
         MuiPaper: {
           root: {
-            backgroundColor: '#1a1d1e',
+            backgroundColor: '#212324',
           },
         },
         MuiOutlinedInput: {
