@@ -41,6 +41,12 @@ const Profile = () => {
       cardNumber: '',
       cvc: '',
     },
+    instagramProfile: {
+      userId: '',
+      username: '',
+      displayName: '',
+      email: '',
+    },
   };
 
   const [inputState, handleTxtChange, , changeInput, , setInputstate] =
@@ -124,6 +130,13 @@ const Profile = () => {
     // }
   };
 
+  const handleInstagramForm = (e) => {
+    e.preventDefault();
+    updateMe({
+      instagramProfile: inputState.instagramProfile,
+    });
+  };
+
   const handleInstaCallback = (err, data) => {
     console.log(`err`, err);
     console.log(`data`, data);
@@ -165,7 +178,7 @@ const Profile = () => {
                 className={classes.displayFlex}
                 sx={{ columnGap: 10 }}
               >
-                <Chip
+                {/* <Chip
                   label={0}
                   icon={<TwitterIcon />}
                   className={classes.twtIcon}
@@ -174,7 +187,7 @@ const Profile = () => {
                   label={0}
                   icon={<InstagramIcon />}
                   className={classes.insIcon}
-                />
+                /> */}
               </Box>
             </div>
             <Box my={3}>
@@ -228,9 +241,28 @@ const Profile = () => {
               }}
             >
               <Typography variant='subtitle2' align='center'>
-                Use the button below to verify and pair your instagram account
+                Enter Your Instagram Username
               </Typography>
-              <Box mt={2}>
+              <form onSubmit={handleInstagramForm} id='instagram'>
+                <TextField
+                  name='instagramProfile'
+                  value={inputState.instagramProfile.username}
+                  label='Username'
+                  onChange={(e) =>
+                    setInputstate((st) => ({
+                      ...st,
+                      instagramProfile: {
+                        ...st.instagramProfile,
+                        username: e.target.value,
+                      },
+                    }))
+                  }
+                  fullWidth
+                  required
+                  type='string'
+                />
+              </form>{' '}
+              {/* <Box mt={2}>
                 <Button
                   variant='contained'
                   className={`${classes.insIcon} ${classes.instaHover}`}
@@ -244,7 +276,7 @@ const Profile = () => {
                   appSecret='69c5334dbef99fe12f59b66c3505798e'
                   redirectUri='https://auction-api1.herokuapp.com/api/social/instagram/callback/'
                 />
-              </Box>
+              </Box> */}
             </Box>
           </CardContent>
         </Card>
