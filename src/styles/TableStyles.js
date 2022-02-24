@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tableRow: {
     '& .MuiTableCell-stickyHeader': {
-      backgroundColor: theme.custom.darkFore,
+      backgroundColor: theme.custom.svg,
     },
   },
   hoverRow: {
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
       cursor: 'pointer',
       transition: 'all 0.2s ease 0s',
       boxShadow: 'rgba(4, 17, 29, 0.25) 0px 0px 8px 0px',
-      backgroundColor: '#1e1a1e',
+      backgroundColor: theme.custom.svg,
     },
   },
   pagination: {

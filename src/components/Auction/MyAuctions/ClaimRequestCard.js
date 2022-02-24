@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     // maxWidth: 350,
     flex: 2,
-    backgroundColor: theme.custom.darkFore,
+    backgroundColor: theme.custom.svg,
     borderRight: `1px solid ${theme.custom.borders}`,
     [theme.breakpoints.up('md')]: {
       maxWidth: 350,
