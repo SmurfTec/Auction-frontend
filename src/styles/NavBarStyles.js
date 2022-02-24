@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   Appbar: {
     // // backgroundColor: '#212325',
-    backgroundColor: theme.custom.darkFore,
+    backgroundColor: theme.custom.svg,
     '& .MuiToolbar-regular': {
       alignItems: 'center',
       justifyContent: 'space-between',

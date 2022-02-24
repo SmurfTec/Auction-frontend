@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 export const styles = makeStyles((theme) => ({
   root: {
     color: '#fff',
-    backgroundColor: theme.custom.darkFore,
+    backgroundColor: theme.custom.svg,
     padding: 25,
     userSelect: 'none',
   },
