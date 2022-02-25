@@ -71,7 +71,7 @@ const Register = () => {
 
         toast.success(res.data.message);
         // signInUser(res.data.token, res.data.user);
-        resetState();
+        // resetState();
       }
     } catch (error) {
       handleCatch(error);
