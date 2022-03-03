@@ -1,7 +1,6 @@
 import { Box, Button, Grid, TextField, Typography } from '@material-ui/core';
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import bgImg from 'assets/contact_bg.jpg';
 import useManyInputs from 'hooks/useManyInputs';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import axios from 'axios';

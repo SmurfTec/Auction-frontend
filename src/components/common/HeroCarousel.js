@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 // import auctionmg from 'assets/auctionBanner.jpg';
 import auctionHero from 'assets/auctionHero.jpg';
-import { Box, Button, Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 // import { auctions } from 'data';
 import styles from 'styles/heroCarouselStyles';
 import { AuctionsContext } from 'contexts/AuctionsContext';
