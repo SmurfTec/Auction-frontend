@@ -16,8 +16,8 @@ import { toast } from 'react-toastify';
 
 //*
 
-const API_BASE_URL = `https://34.252.188.12:5000/api`;
-const API_BASE_ORIGIN = `https://34.252.188.12:5000`;
+const API_BASE_URL = `https://cors-everywhere.herokuapp.com/http://34.252.188.12:5000/api`;
+const API_BASE_ORIGIN = `https://cors-everywhere.herokuapp.com/http://34.252.188.12:5000`;
 
 const handleCatch = (err) => {
   let errMsg = 'Something Went Wrong';
