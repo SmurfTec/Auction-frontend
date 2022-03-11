@@ -16,8 +16,8 @@ import { toast } from 'react-toastify';
 
 //*
 
-const API_BASE_URL = `https://cors-everywhere.herokuapp.com/http://34.252.188.12:5000/api`;
-const API_BASE_ORIGIN = `https://cors-everywhere.herokuapp.com/http://34.252.188.12:5000`;
+const API_BASE_URL = `https://34.252.188.12:5000/api`;
+const API_BASE_ORIGIN = `https://34.252.188.12:5000/`;
 
 const handleCatch = (err) => {
   let errMsg = 'Something Went Wrong';
@@ -62,3 +62,13 @@ const makeReq = (
 };
 
 export { API_BASE_URL, API_BASE_ORIGIN, makeReq, handleCatch };
+
+// fetch('https://lotpot.io:5000/api/auctions')
+//   .then((res) => {
+//     console.log('res');
+//     console.log(res);
+//   })
+//   .catch((err) => {
+//     console.log('err');
+//     console.log(err);
+//   });
