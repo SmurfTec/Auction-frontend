@@ -121,7 +121,7 @@ const Chat = () => {
   };
 
   return (
-    <Container sx={{ paddingTop: 2, maxWidth: 'unset' }}>
+    <Container style={{ paddingBlock: '2rem' }}>
       <Grid container component={Paper} className={classes.chatSection}>
         <Grid item xs={4} className={classes.borderRight500}>
           {/* <Divider /> */}
@@ -176,14 +176,16 @@ const Chat = () => {
           }}
         >
           <List id='messageArea' className={classes.messageArea}>
-            <Typography
-              variant='h5'
-              component={Link}
-              to={`/auctionDetails/${activeChat?.auction?._id}`}
-              style={{ textDecoration: 'none' }}
-            >
-              Auction : {activeChat?.auction?.title}
-            </Typography>
+            {activeChat && (
+              <Typography
+                variant='h5'
+                component={Link}
+                to={`/auctionDetails/${activeChat?.auction?._id}`}
+                style={{ textDecoration: 'none' }}
+              >
+                Auction : {activeChat?.auction?.title}
+              </Typography>
+            )}
             {activeChat?.messages &&
               activeChat.messages.map((message) => (
                 <React.Fragment key={message._id}>

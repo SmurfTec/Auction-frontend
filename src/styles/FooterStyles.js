@@ -35,6 +35,9 @@ export const styles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     marginBottom: '0.5em',
+    '& .MuiButton-outlined': {
+      color: '#fff !important',
+    },
     '& span': {
       fontWeight: 500,
     },

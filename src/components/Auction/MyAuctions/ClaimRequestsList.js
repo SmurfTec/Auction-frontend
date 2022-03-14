@@ -190,13 +190,14 @@ const ClaimRequestsList = ({
                   </div>
                 </div>
               ))}
-
-            <Pagination
-              color='primary'
-              count={Math.ceil(requests.length / rowsPerPage)}
-              page={page}
-              onChange={handleChangePage}
-            />
+            {requests.length > rowsPerPage && (
+              <Pagination
+                color='primary'
+                count={Math.ceil(requests.length / rowsPerPage)}
+                page={page}
+                onChange={handleChangePage}
+              />
+            )}
           </>
         ) : (
           <Box mt={4}>

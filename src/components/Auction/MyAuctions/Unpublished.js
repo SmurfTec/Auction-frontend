@@ -1,9 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-  useMemo,
-} from 'react';
+import React, { useContext, useEffect, useState, useMemo } from 'react';
 import AuctionList from './AuctionList';
 import { AuctionsContext } from 'contexts/AuctionsContext';
 import { useLocation } from 'react-router-dom';
@@ -12,14 +7,15 @@ import { useGaTracker } from 'hooks';
 
 const Unpulished = ({ status }) => {
   useGaTracker();
-  const { myAuctions, loadingMyAuctions } =
+  const { myAuctions, loadingMyAuctions, fetchMyAuctions } =
     useContext(AuctionsContext);
   const [data, setdata] = useState([]);
 
   const location = useLocation();
 
   useEffect(() => {
-    if (loadingMyAuctions || !myAuctions) return;
+    if (!myAuctions) return fetchMyAuctions();
+    if (loadingMyAuctions) return;
 
     setdata(myAuctions.filter((el) => el.status === status));
   }, [myAuctions, loadingMyAuctions, status]);
@@ -31,25 +27,20 @@ const Unpulished = ({ status }) => {
 
   useEffect(() => {
     // console.log(`parsedQuery`, parsedQuery);
+    if (!myAuctions) return;
     if (!parsedQuery.search)
-      return setdata(
-        myAuctions.filter((el) => el.status === status) || []
-      );
+      return setdata(myAuctions.filter((el) => el.status === status) || []);
 
     setdata(
       myAuctions?.filter(
         (el) =>
           el.status === status &&
-          el.title
-            .toLowerCase()
-            .includes(parsedQuery.search.toLowerCase())
+          el.title.toLowerCase().includes(parsedQuery.search.toLowerCase())
       )
     );
   }, [parsedQuery, status]);
 
-  return (
-    <AuctionList isEdit auctions={data} loading={loadingMyAuctions} />
-  );
+  return <AuctionList isEdit auctions={data} loading={loadingMyAuctions} />;
 };
 
 export default Unpulished;

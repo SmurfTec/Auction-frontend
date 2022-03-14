@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AuctionList = ({ auctions, loading, isEdit }) => {
+const AuctionList = ({ auctions = [], loading, isEdit }) => {
   useGaTracker();
   const globalClasses = styles();
   const customClasses = useStyles();
@@ -106,12 +106,14 @@ const AuctionList = ({ auctions, loading, isEdit }) => {
                 </div>
               ))}
 
-            <Pagination
-              color='primary'
-              count={Math.ceil(auctions.length / rowsPerPage)}
-              page={page}
-              onChange={handleChangePage}
-            />
+            {auctions.length > rowsPerPage && (
+              <Pagination
+                color='primary'
+                count={Math.ceil(auctions.length / rowsPerPage)}
+                page={page}
+                onChange={handleChangePage}
+              />
+            )}
           </>
         ) : (
           <Box mt={4}>

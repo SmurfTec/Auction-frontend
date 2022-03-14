@@ -42,6 +42,7 @@ const Create = ({ isUpdate }) => {
     isLoggedIn,
     myAuctions,
     loadingMyAuctions,
+    fetchMyAuctions,
     updateAuction,
   } = useContext(AuctionsContext);
   const [isSubmitting, toggleSubmitting] = useToggleInput(false);
@@ -79,8 +80,10 @@ const Create = ({ isUpdate }) => {
       console.log('here');
       return setValidating(false);
     }
-    if (!isLoggedIn || !myAuctions || loadingMyAuctions)
-      return toggleValidating();
+
+    if (!myAuctions) return fetchMyAuctions();
+
+    if (!isLoggedIn || loadingMyAuctions) return toggleValidating();
 
     // * Find Auction
     let editAuc = myAuctions.find((el) => el._id === id);
@@ -88,7 +91,7 @@ const Create = ({ isUpdate }) => {
 
     setInputstate({ ...editAuc });
 
-    toggleValidating();
+    setValidating(false);
   }, [isUpdate, myAuctions, loadingMyAuctions, isLoggedIn]);
 
   const handleSubmit = (e) => {
@@ -161,7 +164,7 @@ const Create = ({ isUpdate }) => {
             `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/auto/upload`,
             formData
           );
-          const uploadedImage = res.data.url;
+          const uploadedImage = res.data.secure_url;
 
           cb(uploadedImage);
         };

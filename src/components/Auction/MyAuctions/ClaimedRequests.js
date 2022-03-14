@@ -14,6 +14,8 @@ const ClaimRequests = () => {
     loadingClaimRequests,
     updateClaimRequestSentById,
     updateClaimRequestReceivedById,
+    fetchClaimRequests,
+    claimRequestsFetched,
   } = useContext(AuctionsContext);
 
   const { user } = useContext(AuthContext);
@@ -22,6 +24,12 @@ const ClaimRequests = () => {
   const [filter, setFilter] = useState('sent');
 
   useEffect(() => {
+    console.log('claimRequestsFetched', claimRequestsFetched);
+
+    if (!claimRequestsFetched) {
+      console.log('fetcin cliain');
+      return fetchClaimRequests();
+    }
     if (loadingClaimRequests || !user) return;
 
     // console.log('filter', filter);
@@ -69,7 +77,6 @@ const ClaimRequests = () => {
             borderBottomLeftRadius: 0,
           }}
           variant='contained'
-          color='success'
           size='small'
           color={filter !== 'sent' ? 'primary' : 'default'}
           onClick={handleRecieved}

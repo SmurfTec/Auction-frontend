@@ -278,7 +278,8 @@ const LeaderBoard = () => {
                             ))}
                         </TableRow>
                       ))
-                  : filteredAuctions
+                  : filteredAuctions.length > 0
+                  ? filteredAuctions
                       .slice(
                         (page - 1) * rowsPerPage,
                         (page - 1) * rowsPerPage + rowsPerPage
@@ -362,18 +363,31 @@ const LeaderBoard = () => {
                             </TableCell>
                           </TableRow>
                         );
-                      })}
+                      })
+                  : Array(3)
+                      .fill()
+                      .map((_, idx) => (
+                        <TableRow>
+                          {Array(6)
+                            .fill()
+                            .map(() => (
+                              <TableCell></TableCell>
+                            ))}
+                        </TableRow>
+                      ))}
               </TableBody>
             </Table>
           </TableContainer>
           <Box mt={2}>
-            <Pagination
-              color='primary'
-              count={Math.ceil(topAuctions.length / rowsPerPage)}
-              page={page}
-              onChange={handleChangePage}
-              className={customClasses.pagination}
-            />
+            {topAuctions.length > rowsPerPage && (
+              <Pagination
+                color='primary'
+                count={Math.ceil(topAuctions.length / rowsPerPage)}
+                page={page}
+                onChange={handleChangePage}
+                className={customClasses.pagination}
+              />
+            )}
           </Box>
         </div>
       </Container>

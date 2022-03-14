@@ -10,6 +10,7 @@ import {
   CardHeader,
   Card,
   Grid,
+  IconButton,
 } from '@material-ui/core';
 import React, { useEffect, useContext } from 'react';
 
@@ -24,7 +25,8 @@ import { makeReq, handleCatch, API_BASE_URL } from 'utils/makeReq';
 import InstagramLogin from 'react-instagram-oauth';
 import { useGaTracker } from 'hooks';
 import { toast } from 'react-toastify';
-import { AccountCircle } from '@material-ui/icons';
+import { AccountCircle, CameraAlt } from '@material-ui/icons';
+import axios from 'axios';
 
 const Profile = () => {
   useGaTracker();
@@ -155,6 +157,55 @@ const Profile = () => {
     window.open(resData.url);
   };
 
+  const handleImage = async (e, options, toggleFunc, cb) => {
+    toggleFunc();
+    const selectedFile = e.target.files[0];
+
+    // * whoever calls the func, give us options in 2nd param,
+    // *
+    const { fileType } = options;
+    try {
+      if (selectedFile && selectedFile.type.includes(fileType)) {
+        let reader = new FileReader();
+        reader.readAsDataURL(selectedFile);
+        reader.onloadend = async (e) => {
+          //console.log(`result onLoadEnd`, e.target.result);
+          const file = e.target.result;
+
+          // TODO  Delete Image from cloudinary if it exists on this user
+
+          // // * 1 Upload Image on Cloudinary
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('folder', 'auction-app');
+          formData.append(
+            'upload_preset',
+            process.env.REACT_APP_CLOUDINARY_PRESET
+          );
+
+          const res = await axios.post(
+            `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/auto/upload`,
+            formData
+          );
+          const uploadedImage = res.data.secure_url;
+
+          cb(uploadedImage);
+        };
+      } else {
+        toast.error(
+          `Only ${fileType?.[0].split('/')[0]} files are acceptable !`
+        );
+      }
+    } catch (err) {
+      toast(
+        err?.response?.data?.message || err.message || 'Something Went Wrong'
+      );
+      // console.log(`err`, err);
+    } finally {
+      toggleFunc();
+    }
+  };
+
   return (
     <>
       <div className={classes.root}>
@@ -162,10 +213,54 @@ const Profile = () => {
           className={`${classes.card} ${classes.showOverflow} ${classes.defaultCard}`}
         >
           <CardContent>
-            <div className={classes.profileImg}>
-              <AccountCircle className={classes.large} />
-              {/* <Avatar alt='User' size='large' className={classes.large} /> */}
-            </div>
+            <label
+              htmlFor='photo'
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+                marginTop: '-3rem',
+              }}
+            >
+              <div>
+                <Avatar
+                  alt='User'
+                  variant='rounded'
+                  size='large'
+                  className={classes.large}
+                  src={inputState.photo && inputState.photo}
+                >
+                  {!inputState.photo && (
+                    <AccountCircle className={classes.large} />
+                  )}
+                </Avatar>
+              </div>
+
+              <div>
+                <CameraAlt />
+              </div>
+            </label>
+            <input
+              id='photo'
+              type='file'
+              onChange={(e) => {
+                handleImage(
+                  e,
+                  {
+                    fileType: ['image/'],
+                  },
+                  () => {},
+                  (img) => {
+                    changeInput('photo', img);
+                    updateMe({
+                      photo: img,
+                    });
+                  }
+                );
+              }}
+              style={{ display: 'none' }}
+            />
 
             <div className={classes.content}>
               <Typography variant='h5'>{`${inputState.firstName} ${inputState.lastName}`}</Typography>

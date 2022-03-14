@@ -34,8 +34,9 @@ const useStyles = makeStyles((theme) => ({
     // objectFit: 'cover',
     backgroundColor: '#fff',
     // paddingTop: 20,
+    maxHeight: 200,
     // [theme.breakpoints.down('sm')]: {
-    //   height: 300,
+    //   maxHeight: 300,
     // },
 
     // [theme.breakpoints.up('md')]: {

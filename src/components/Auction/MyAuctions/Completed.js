@@ -9,11 +9,14 @@ const Completed = () => {
     user,
     claimedAuctions,
     loadingClaimedAuctions: loading,
+    fetchMyClaimedAuctions,
   } = React.useContext(AuctionsContext);
   const [data, setdata] = React.useState([]);
 
   useEffect(() => {
-    if (loading || !claimedAuctions || !user) return;
+    if (!claimedAuctions) return fetchMyClaimedAuctions();
+
+    if (loading || !user) return;
 
     setdata(
       claimedAuctions.filter((el) => el.winningBig?.user?._id === user?._id)

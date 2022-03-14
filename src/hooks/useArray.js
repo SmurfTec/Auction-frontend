@@ -4,6 +4,7 @@ export default function useArray(defaultValue = [], idKey = 'id') {
   const [array, setArray] = useState(defaultValue);
 
   const push = (element, position = 'end') => {
+    if (!array) setArray([element]);
     if (position === 'start') setArray((a) => [element, ...a]);
     else setArray((a) => [...a, element]);
   };

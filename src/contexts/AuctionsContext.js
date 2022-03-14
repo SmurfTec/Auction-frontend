@@ -30,7 +30,7 @@ export const AuctionsProvider = ({ children }) => {
   const [archivedAuctions, setArchivedAuctions] = useState([]);
 
   const [topAuctions, setTopAuctions] = useState([]); // $ for leaderboard
-  const [unClaimedAuctions, setUnClaimedAuctions] = useState([]);
+  const [unClaimedAuctions, setUnClaimedAuctions] = useState();
 
   // * My Auctions
   const [
@@ -41,21 +41,22 @@ export const AuctionsProvider = ({ children }) => {
     updateMyAuctionById,
     // removeMyAuction,
     // clearMyAuctions,
-  ] = useArray([], '_id');
+  ] = useArray(null, '_id');
   const [loadingMyAuctions, toggleLoadingMyAuctions, setLoadingMyAuctions] =
     useToggleInput(true);
 
-  const [watchlist, setWatchlist] = useState([]);
+  const [watchlist, setWatchlist] = useState();
   const [loadingWatchlist, toggleLoadingWatchlist, setLoadingWatchlist] =
     useToggleInput(true);
 
-  const [claimedAuctions, setClaimedAuctions] = useState([]);
+  const [claimedAuctions, setClaimedAuctions] = useState();
   const [
     loadingClaimedAuctions,
     toggleLoadingClaimedAuctions,
     setLoadingClaimedAuctions,
   ] = useToggleInput(true);
 
+  const [claimRequestsFetched, setClaimRequestsFetched] = useState(false);
   const [
     claimRequestSent,
     setClaimRequestSent,
@@ -64,7 +65,7 @@ export const AuctionsProvider = ({ children }) => {
     updateClaimRequestSentById,
     // removeClaimRequestSent,
     // clearClaimRequestSent,
-  ] = useArray([], '_id');
+  ] = useArray(null, '_id');
 
   const [
     claimRequestReceived,
@@ -74,7 +75,7 @@ export const AuctionsProvider = ({ children }) => {
     updateClaimRequestReceivedById,
     // removeClaimRequestReceived,
     // clearClaimRequestReceived,
-  ] = useArray([], '_id');
+  ] = useArray(null, '_id');
   const [
     loadingClaimRequests,
     toggleLoadingClaimRequests,
@@ -88,8 +89,8 @@ export const AuctionsProvider = ({ children }) => {
       setMyAuctions(resData.auctions);
     } catch (err) {
       // console.log(`err`, err)
+      setMyAuctions([]);
     } finally {
-      console.log('toggleing toggleLoadingMyAuctions');
       toggleLoadingMyAuctions();
     }
   };
@@ -97,10 +98,14 @@ export const AuctionsProvider = ({ children }) => {
     try {
       const resData = await makeReq('/claim-requests/me');
       console.log(`resData-claimRequests`, resData);
+      setClaimRequestsFetched(true);
       setClaimRequestSent(resData.claimRequestsSent.data);
       setClaimRequestReceived(resData.claimRequestsReceived.data);
     } catch (err) {
       // console.log(`err`, err)
+      setClaimRequestsFetched(true);
+      setClaimRequestSent([]);
+      setClaimRequestReceived([]);
     } finally {
       toggleLoadingClaimRequests();
     }
@@ -123,6 +128,7 @@ export const AuctionsProvider = ({ children }) => {
       setWatchlist(resData.watchlist);
     } catch (err) {
       // console.log(`err`, err)
+      setWatchlist([]);
     } finally {
       console.log('toggleing toggleLoadingWatchlist');
       toggleLoadingWatchlist();
@@ -134,6 +140,7 @@ export const AuctionsProvider = ({ children }) => {
       // console.log(`resData`, resData);
       setClaimedAuctions(resData.claimedAuctions);
     } catch (err) {
+      setClaimedAuctions([]);
       // console.log(`err`, err)
     } finally {
       toggleLoadingClaimedAuctions();
@@ -151,10 +158,6 @@ export const AuctionsProvider = ({ children }) => {
       setLoadingClaimRequests(true);
       return;
     }
-    fetchClaimRequests();
-    fetchMyAuctions();
-    fetchWatchlist();
-    fetchMyClaimedAuctions();
   }, [isLoggedIn]);
 
   // * whenever auctions changed , We have to update published and leaderboard auctions
@@ -265,6 +268,11 @@ export const AuctionsProvider = ({ children }) => {
         pushClaimRequestReceived,
         claimedAuctions,
         loadingClaimedAuctions,
+        fetchClaimRequests,
+        fetchWatchlist,
+        fetchMyClaimedAuctions,
+        fetchMyAuctions,
+        claimRequestsFetched,
       }}
     >
       {children}

@@ -28,6 +28,7 @@ const styles = makeStyles((theme) => ({
   large: {
     width: theme.spacing(12),
     height: theme.spacing(12),
+    borderRadius: '50%',
   },
   content: {
     // borderRadius: 12,

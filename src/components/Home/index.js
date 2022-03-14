@@ -541,15 +541,17 @@ const HomePage = () => {
                   );
                 })}
 
-              <Pagination
-                color='primary'
-                count={Math.ceil(publishedAuctions.length / rowsPerPage)}
-                page={page}
-                onChange={handleChangePage}
-                style={{
-                  margin: 'auto',
-                }}
-              />
+              {publishedAuctions.length > rowsPerPage && (
+                <Pagination
+                  color='primary'
+                  count={Math.ceil(publishedAuctions.length / rowsPerPage)}
+                  page={page}
+                  onChange={handleChangePage}
+                  style={{
+                    margin: 'auto',
+                  }}
+                />
+              )}
             </div>
           </Grid>
         </Grid>

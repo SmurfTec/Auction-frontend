@@ -67,6 +67,9 @@ const Simpleimages = ({ type, images, video, deleteImg }) => {
 
   const handleDeleteImg = () => {
     deleteImg(activeStep);
+    setTimeout(() => {
+      handleBack();
+    }, 200);
   };
 
   return (
