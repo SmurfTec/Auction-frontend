@@ -11,6 +11,12 @@ import { AuctionsProvider } from 'contexts/AuctionsContext';
 import { CategoriesProvider } from 'contexts/CategoriesContext';
 import { SocketProvider } from 'contexts/SocketContext';
 
+if (process.env.NODE_ENV === 'production') {
+  console.log = () => {};
+  console.error = () => {};
+  console.debug = () => {};
+}
+
 ReactDOM.render(
   <BrowserRouter>
     <AuthProvider>
