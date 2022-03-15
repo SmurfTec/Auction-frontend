@@ -12,7 +12,7 @@ const styles = makeStyles((theme) => ({
     borderRadius: 10,
 
     [theme.breakpoints.up('sm')]: {
-      width: '70%',
+      width: '80%',
     },
   },
   uploadFile: {

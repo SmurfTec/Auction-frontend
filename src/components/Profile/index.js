@@ -49,6 +49,7 @@ const Profile = () => {
       displayName: '',
       email: '',
     },
+    photo: '',
   };
 
   const [inputState, handleTxtChange, , changeInput, , setInputstate] =
@@ -67,13 +68,6 @@ const Profile = () => {
       }));
     }
   }, [user, navigate]);
-
-  const handleChangeCardDetails = (e) => {
-    changeInput('paymentDetails', {
-      ...inputState.paymentDetails,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const handleAddForm = (e) => {
     e.preventDefault();
@@ -112,24 +106,10 @@ const Profile = () => {
       return window.open(`https://twitter.com/${user.twitterProfile.username}`);
     }
     window.open(`${API_BASE_URL}/social/twitter?token=${token}`, '_self');
-
-    // try {
-    //   const res = await makeReq(`/social/twitter`);
-    // } catch (err) {
-    //   handleCatch(err);
-    // } finally {
-    // }
   };
 
   const handleInstagramClick = async () => {
     window.open(`${API_BASE_URL}/social/instagram`, '_self');
-
-    // try {
-    //   const res = await makeReq(`/social/instagram`);
-    // } catch (err) {
-    //   handleCatch(err);
-    // } finally {
-    // }
   };
 
   const handleInstagramForm = (e) => {
@@ -221,6 +201,8 @@ const Profile = () => {
                 alignItems: 'center',
                 flexDirection: 'column',
                 marginTop: '-3rem',
+                width: 'fit-content',
+                marginInline: 'auto',
               }}
             >
               <div>
@@ -296,6 +278,7 @@ const Profile = () => {
                 label='Tap to add your bio'
                 onChange={handleTxtChange}
                 fullWidth
+                multiline
               />
             </form>
           </CardContent>
@@ -564,11 +547,11 @@ const Profile = () => {
             {/* </Box> */}
           </CardContent>
         </Card>
-        <Link to='#' mt={3} onClick={logoutUser}>
+        {/* <Link to='#' mt={3} onClick={logoutUser}>
           <Typography style={{ marginTop: '1rem' }} variant='subtitle2'>
             Log out
           </Typography>
-        </Link>
+        </Link> */}
       </div>
     </>
   );
