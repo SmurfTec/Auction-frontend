@@ -265,7 +265,6 @@ const AuctionDetails = () => {
                       globalClasses={globalClasses}
                       tableClasses={tableClasses}
                       bids={auction.bids}
-                      isMyAuction={isMyAuction}
                       showClaim={
                         auction.status === 'archived' &&
                         auction.type === 'openEnded'
