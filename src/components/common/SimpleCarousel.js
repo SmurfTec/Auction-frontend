@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { MobileStepper, Paper, Button, IconButton } from '@material-ui/core';
-import EmbedVideo from './EmbedVideo';
 
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
 import CancelIcon from '@material-ui/icons/Cancel';

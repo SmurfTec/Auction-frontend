@@ -7,10 +7,6 @@ const useToggleInput = (initialState = false) => {
     setState((st) => !st);
   };
 
-  const resetState = () => {
-    setState(initialState);
-  };
-
   return [state, toggleInput, setState];
 };
 

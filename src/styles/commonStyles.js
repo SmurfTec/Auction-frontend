@@ -1,8 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import heroImg from 'assets/banner.svg';
 import md1 from 'assets/banner/md1.svg';
-import md2 from 'assets/banner/md2.svg';
-import md3 from 'assets/banner/md3.svg';
 import md4 from 'assets/banner/md4.svg';
 import xs from 'assets/banner/xs.svg';
 

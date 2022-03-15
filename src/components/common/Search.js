@@ -1,10 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import Search from '@material-ui/icons/Search';
 import { useTextInput, useToggleInput } from 'hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
-// import { useThemeContext } from 'Components/theme';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -100,20 +99,6 @@ export default function CustomizedInputBase({ noText = false }) {
               style={{ cursor: 'text' }}
             />
           </div>
-          {/* {!noText && (
-            <Typography
-              variant='h6'
-              className={classes.searchTxt}
-              style={
-                {
-                  // fontSize: 12,
-                }
-              }
-            >
-              The world’s biggest hypothetical marketplace – Propose, Bid or buy
-              any item or experience you’ve ever wanted
-            </Typography>
-          )} */}
         </Box>
       </form>
     </>

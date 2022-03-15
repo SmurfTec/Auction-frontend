@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
 import { noCase } from 'change-case';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 
 // import { Icon } from '@iconify/react';
 // import clockFill from '@iconify/icons-eva/clock-fill';
 // import doneAllFill from '@iconify/icons-eva/done-all-fill';
-
-import { useTheme } from '@material-ui/core/styles';
 
 import {
   Box,
@@ -21,7 +19,6 @@ import {
 } from '@material-ui/core';
 
 import { AccessTime } from '@material-ui/icons';
-import circle from 'assets/LotPot_circle.png';
 import Logo from '../Logo';
 
 const renderContent = (notification) => {
@@ -56,7 +53,6 @@ const renderContent = (notification) => {
 
 const NotificationItem = ({ notification }) => {
   const { title } = renderContent(notification);
-  const theme = useTheme();
   const navigate = useNavigate();
 
   const handleNotificationClick = () => {

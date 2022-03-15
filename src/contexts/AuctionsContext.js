@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
 import { useArray, useToggleInput } from 'hooks';
 import { makeReq, handleCatch } from 'utils/makeReq';
 import { AuthContext } from './AuthContext';
@@ -19,7 +19,7 @@ export const AuctionsProvider = ({ children }) => {
     // removeAuction,
     // clearAuctions,
   ] = useArray([], '_id');
-  const [loading, toggleLoading, setLoading] = useToggleInput(true);
+  const [loading, toggleLoading] = useToggleInput(true);
 
   // * Auctions are getting filtered based on their status to show
   // * On different pages , e.g leaderboard has "claimed" status auctions ,
@@ -50,17 +50,14 @@ export const AuctionsProvider = ({ children }) => {
     useToggleInput(true);
 
   const [claimedAuctions, setClaimedAuctions] = useState();
-  const [
-    loadingClaimedAuctions,
-    toggleLoadingClaimedAuctions,
-    setLoadingClaimedAuctions,
-  ] = useToggleInput(true);
+  const [loadingClaimedAuctions, toggleLoadingClaimedAuctions] =
+    useToggleInput(true);
 
   const [claimRequestsFetched, setClaimRequestsFetched] = useState(false);
   const [
     claimRequestSent,
     setClaimRequestSent,
-    pushClaimRequestSent,
+    ,
     ,
     updateClaimRequestSentById,
     // removeClaimRequestSent,
@@ -110,7 +107,8 @@ export const AuctionsProvider = ({ children }) => {
       toggleLoadingClaimRequests();
     }
   };
-  const fetchAuctions = async () => {
+
+  const fetchAuctions = useCallback(async () => {
     try {
       const resData = await makeReq('/auctions');
       // console.log(`resData`, resData);
@@ -120,7 +118,8 @@ export const AuctionsProvider = ({ children }) => {
     } finally {
       toggleLoading();
     }
-  };
+  }, []);
+
   const fetchWatchlist = async () => {
     try {
       const resData = await makeReq('/auctions/watchlist');
@@ -149,7 +148,7 @@ export const AuctionsProvider = ({ children }) => {
 
   useEffect(() => {
     fetchAuctions();
-  }, []);
+  }, [fetchAuctions]);
 
   useEffect(() => {
     if (!isLoggedIn) {

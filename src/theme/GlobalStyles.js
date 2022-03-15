@@ -63,7 +63,6 @@ const GlobalStyles = withStyles((theme) => ({
     },
     '#logo': {
       textAlign: 'center',
-      color: '#000',
 
       display: 'flex',
       alignItems: 'center',

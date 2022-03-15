@@ -5,7 +5,6 @@ import {
   Box,
   Divider,
   Typography,
-  Avatar,
   IconButton,
   makeStyles,
   MenuItem,
@@ -66,7 +65,6 @@ export default function AccountPopover() {
           }}
         >
           <AccountCircleIcon fontSize='large' />
-          {/* <Avatar src={AccountCircleIcon} alt='User' /> */}
         </IconButton>
       </div>
 

@@ -21,7 +21,7 @@ import { toast } from 'react-toastify';
 
 const Register = () => {
   useGaTracker();
-  const { isLoggedIn, signInUser } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const classes = globalStyles();
   const formClasses = formStyles();
 
@@ -37,14 +37,8 @@ const Register = () => {
     privacy: false,
   };
 
-  const [
-    inputState,
-    handleTxtChange,
-    handleToggleChange,
-    changeInput,
-    resetState,
-    setInputstate,
-  ] = useManyInputs(initialState);
+  const [inputState, handleTxtChange, handleToggleChange] =
+    useManyInputs(initialState);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

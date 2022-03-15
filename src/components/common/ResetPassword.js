@@ -5,7 +5,6 @@ import {
   Typography,
   CircularProgress,
   TextField,
-  Checkbox,
 } from '@material-ui/core';
 import {
   Link,
@@ -39,14 +38,8 @@ const ResetPassword = () => {
     passwordConfirm: '',
   };
 
-  const [
-    inputState,
-    handleTxtChange,
-    handleToggleChange,
-    changeInput,
-    resetState,
-    setInputstate,
-  ] = useManyInputs(initialState);
+  const [inputState, handleTxtChange, , , resetState, setInputstate] =
+    useManyInputs(initialState);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

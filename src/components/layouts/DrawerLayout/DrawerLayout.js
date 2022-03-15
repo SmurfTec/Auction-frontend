@@ -1,6 +1,5 @@
 import React from 'react';
 import clsx from 'clsx';
-import { useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
@@ -61,7 +60,6 @@ const drawerList = [
 const DrawerLayout = () => {
   useGaTracker();
   const classes = useStyles();
-  const theme = useTheme();
   const location = useLocation();
 
   const [open, setOpen] = React.useState(false);

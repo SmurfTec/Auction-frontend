@@ -22,7 +22,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from 'styles/AccountStyles';
 import { AuthContext } from 'contexts/AuthContext';
 import { makeReq, handleCatch, API_BASE_URL } from 'utils/makeReq';
-import InstagramLogin from 'react-instagram-oauth';
 import { useGaTracker } from 'hooks';
 import { toast } from 'react-toastify';
 import { AccountCircle, CameraAlt } from '@material-ui/icons';
