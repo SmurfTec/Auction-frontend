@@ -63,7 +63,8 @@ const styles = makeStyles((theme) => ({
   verfIcon: {
     marginLeft: 10,
     color: '#FFF',
-    backgroundColor: theme.custom.success,
+    backgroundColor: (props) =>
+      props.isVerified ? theme.custom.success : theme.palette.error.main,
   },
   twitterHover: {
     '&:hover': {

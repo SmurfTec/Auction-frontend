@@ -29,8 +29,10 @@ import axios from 'axios';
 
 const Profile = () => {
   useGaTracker();
-  const classes = styles();
-  const { user, updateMe, logoutUser, token } = useContext(AuthContext);
+  const { user, updateMe, token } = useContext(AuthContext);
+  const classes = styles({
+    isVerified: user?.isVerified,
+  });
   const initialState = {
     firstName: '',
     lastName: '',
@@ -247,7 +249,10 @@ const Profile = () => {
               <Typography variant='h5'>{`${inputState.firstName} ${inputState.lastName}`}</Typography>
               <Typography variant='subtitle1' color='textSecondary'>
                 {user?.email}
-                <Chip label='verified' className={classes.verfIcon} />
+                <Chip
+                  label={user.isVerified ? 'verified' : 'Not-Verified'}
+                  className={classes.verfIcon}
+                />
               </Typography>
               <Box
                 mt={1}
@@ -270,7 +275,13 @@ const Profile = () => {
               <Divider />
             </Box>
 
-            <form onSubmit={updateAbout}>
+            <form
+              onSubmit={updateAbout}
+              style={{
+                display: 'flex',
+                gap: 20,
+              }}
+            >
               <TextField
                 name='about'
                 value={inputState.about}
@@ -279,6 +290,9 @@ const Profile = () => {
                 fullWidth
                 multiline
               />
+              <Button type='submit' variant='contained' color='secondary'>
+                Save
+              </Button>
             </form>
           </CardContent>
         </Card>
