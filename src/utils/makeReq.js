@@ -11,13 +11,17 @@ import { toast } from 'react-toastify';
 
 // * Production URLs
 //
-const API_BASE_URL = `https://lotpot.io:5000/api`;
-const API_BASE_ORIGIN = `https://lotpot.io:5000`;
+// const API_BASE_URL = `https://lotpot.io:5000/api`;
+// const API_BASE_ORIGIN = `https://lotpot.io:5000`;
+
+const API_BASE_URL = `http://134.209.25.67/api`;
+const API_BASE_ORIGIN = `http://http://134.209.25.67`;
 
 const handleCatch = (err) => {
   let errMsg = 'Something Went Wrong';
   if (err.message) errMsg = err.message;
-  if (err.response?.data?.message) errMsg = err.response?.data?.message;
+  if (err.response?.data?.message)
+    errMsg = err.response?.data?.message;
   toast.error(errMsg);
 };
 
@@ -45,15 +49,17 @@ const makeReq = (
   if (body) {
     config.body = JSON.stringify(body);
   }
-  return fetch(`${API_BASE_URL}${endpoint}`, config).then(async (res) => {
-    const data = await res.json();
-    // console.log(`data`, data);
-    if (res.ok) {
-      return data;
-    } else {
-      return Promise.reject(data);
+  return fetch(`${API_BASE_URL}${endpoint}`, config).then(
+    async (res) => {
+      const data = await res.json();
+      // console.log(`data`, data);
+      if (res.ok) {
+        return data;
+      } else {
+        return Promise.reject(data);
+      }
     }
-  });
+  );
 };
 
 export { API_BASE_URL, API_BASE_ORIGIN, makeReq, handleCatch };
